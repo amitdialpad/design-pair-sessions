@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/design-pair-sessions/',
   title: 'Design Pair Sessions',
   description: '1:1 training for designers learning to build with AI',
   themeConfig: {
