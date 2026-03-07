@@ -16,7 +16,7 @@ cd ~/beacon-app
 pnpm dev
 ```
 
-Open http://localhost:3000 in your browser. Dev tools: Ctrl/Cmd + D.
+Open `http://localhost:3000` in your browser. Dev tools: Ctrl/Cmd + D.
 
 ## Five prompts to start with
 
