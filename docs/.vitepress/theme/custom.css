@@ -1,0 +1,321 @@
+/* Design Pair Sessions — Delphi-inspired dark theme
+   Amber/gold accents, monospace typography, dark background */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ─── Dark mode variables (default) ─── */
+
+:root {
+  /* Brand accent: amber/gold */
+  --vp-c-brand-1: #d4952a;
+  --vp-c-brand-2: #c4882a;
+  --vp-c-brand-3: #b47b24;
+  --vp-c-brand-soft: rgba(212, 149, 42, 0.12);
+
+  /* Typography */
+  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+.dark {
+  /* Background tones — near-black with warm undertone */
+  --vp-c-bg: #0d0c0a;
+  --vp-c-bg-alt: #141310;
+  --vp-c-bg-elv: #1a1916;
+  --vp-c-bg-soft: #1e1d1a;
+
+  /* Text — warm light tones */
+  --vp-c-text-1: #e8dcc8;
+  --vp-c-text-2: #b8ad9a;
+  --vp-c-text-3: #8a8070;
+
+  /* Brand accent */
+  --vp-c-brand-1: #d4952a;
+  --vp-c-brand-2: #e0a040;
+  --vp-c-brand-3: #c4882a;
+  --vp-c-brand-soft: rgba(212, 149, 42, 0.14);
+
+  /* Borders — subtle warm */
+  --vp-c-border: rgba(212, 149, 42, 0.12);
+  --vp-c-divider: rgba(212, 149, 42, 0.08);
+  --vp-c-gutter: #141310;
+
+  /* Code blocks */
+  --vp-code-block-bg: #141310;
+  --vp-code-bg: rgba(212, 149, 42, 0.08);
+  --vp-c-code-dimm: rgba(212, 149, 42, 0.06);
+
+  /* Sidebar */
+  --vp-sidebar-bg-color: #0d0c0a;
+
+  /* Nav */
+  --vp-nav-bg-color: rgba(13, 12, 10, 0.85);
+
+  /* Custom badges */
+  --vp-badge-info-border: rgba(212, 149, 42, 0.2);
+  --vp-badge-info-text: #d4952a;
+  --vp-badge-info-bg: rgba(212, 149, 42, 0.08);
+
+  /* Button brand */
+  --vp-button-brand-border: #d4952a;
+  --vp-button-brand-text: #0d0c0a;
+  --vp-button-brand-bg: #d4952a;
+  --vp-button-brand-hover-border: #e0a040;
+  --vp-button-brand-hover-text: #0d0c0a;
+  --vp-button-brand-hover-bg: #e0a040;
+  --vp-button-brand-active-border: #c4882a;
+  --vp-button-brand-active-text: #0d0c0a;
+  --vp-button-brand-active-bg: #c4882a;
+
+  /* Alt button */
+  --vp-button-alt-border: rgba(212, 149, 42, 0.2);
+  --vp-button-alt-text: #e8dcc8;
+  --vp-button-alt-bg: rgba(212, 149, 42, 0.06);
+  --vp-button-alt-hover-border: rgba(212, 149, 42, 0.35);
+  --vp-button-alt-hover-text: #e8dcc8;
+  --vp-button-alt-hover-bg: rgba(212, 149, 42, 0.1);
+
+  /* Home hero */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #d4952a 0%, #e8dcc8 60%);
+  --vp-home-hero-image-background-image: none;
+}
+
+/* ─── Light mode overrides ─── */
+
+:root:not(.dark) {
+  --vp-c-bg: #faf8f5;
+  --vp-c-bg-alt: #f3f0eb;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #f0ede7;
+
+  --vp-c-text-1: #1a1916;
+  --vp-c-text-2: #5a5548;
+  --vp-c-text-3: #8a8070;
+
+  --vp-c-brand-1: #9e7322;
+  --vp-c-brand-2: #b4842a;
+  --vp-c-brand-3: #c4942a;
+  --vp-c-brand-soft: rgba(158, 115, 34, 0.1);
+
+  --vp-c-border: rgba(158, 115, 34, 0.15);
+  --vp-c-divider: rgba(158, 115, 34, 0.1);
+
+  --vp-code-block-bg: #f3f0eb;
+  --vp-code-bg: rgba(158, 115, 34, 0.06);
+
+  --vp-button-brand-border: #9e7322;
+  --vp-button-brand-text: #faf8f5;
+  --vp-button-brand-bg: #9e7322;
+  --vp-button-brand-hover-border: #b4842a;
+  --vp-button-brand-hover-text: #faf8f5;
+  --vp-button-brand-hover-bg: #b4842a;
+
+  --vp-button-alt-border: rgba(158, 115, 34, 0.25);
+  --vp-button-alt-text: #1a1916;
+  --vp-button-alt-bg: rgba(158, 115, 34, 0.06);
+  --vp-button-alt-hover-border: rgba(158, 115, 34, 0.4);
+  --vp-button-alt-hover-text: #1a1916;
+  --vp-button-alt-hover-bg: rgba(158, 115, 42, 0.1);
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #9e7322 0%, #1a1916 70%);
+}
+
+/* ─── Global typography ─── */
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  font-family: var(--vp-font-family-mono);
+  letter-spacing: -0.02em;
+}
+
+.vp-doc h1 {
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.vp-doc h2 {
+  font-weight: 600;
+  font-size: 1.35rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc h3 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Inline code styling */
+.vp-doc :not(pre) > code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background-color: var(--vp-code-bg);
+  color: var(--vp-c-brand-1);
+}
+
+/* ─── Blockquotes — warm accent border ─── */
+
+.vp-doc blockquote {
+  border-left: 3px solid var(--vp-c-brand-1);
+  background-color: var(--vp-c-bg-soft);
+  padding: 0.8rem 1.2rem;
+  border-radius: 0 8px 8px 0;
+  color: var(--vp-c-text-2);
+}
+
+/* ─── Tables — clean, warm borders ─── */
+
+.vp-doc table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.vp-doc th {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-brand-1);
+  border-bottom: 2px solid var(--vp-c-border);
+}
+
+.vp-doc tr {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc tr:hover {
+  background-color: var(--vp-c-bg-soft);
+}
+
+/* ─── Sidebar polish ─── */
+
+.VPSidebar .group + .group {
+  padding-top: 0.8rem;
+  margin-top: 0.4rem;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.VPSidebarItem .text {
+  font-size: 0.88rem;
+}
+
+.VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+/* ─── Home page features — card styling ─── */
+
+.VPFeature {
+  border: 1px solid var(--vp-c-border) !important;
+  border-radius: 12px !important;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.VPFeature:hover {
+  border-color: rgba(212, 149, 42, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(212, 149, 42, 0.06);
+  transform: translateY(-1px);
+}
+
+.VPFeature .title {
+  font-family: var(--vp-font-family-mono);
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+
+/* ─── Home hero tagline ─── */
+
+.VPHero .tagline {
+  color: var(--vp-c-text-2);
+  font-size: 1.05rem;
+}
+
+.VPHero .text {
+  font-family: var(--vp-font-family-mono);
+}
+
+/* ─── Nav bar — just the toggle, nothing else ─── */
+
+.VPNav .VPNavBar {
+  background: var(--vp-c-bg) !important;
+  border-bottom: none !important;
+}
+
+.VPNav .content {
+  border-bottom: none !important;
+}
+
+/* Keep the site title visible */
+
+.VPNavBarMenu {
+  display: none !important;
+}
+
+.VPNavBarSearch {
+  display: none !important;
+}
+
+.VPLocalNav {
+  display: none !important;
+}
+
+:root {
+  --vp-nav-height: 40px !important;
+}
+
+/* ─── Content width ─── */
+
+.VPDoc .container {
+  max-width: 820px !important;
+}
+
+/* ─── Scrollbar (dark mode) ─── */
+
+.dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(212, 149, 42, 0.15);
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 149, 42, 0.25);
+}
+
+/* ─── Strong/bold — subtle amber tint ─── */
+
+.vp-doc strong {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+/* ─── Links ─── */
+
+.vp-doc a {
+  text-decoration-color: rgba(212, 149, 42, 0.3);
+  text-underline-offset: 3px;
+}
+
+.vp-doc a:hover {
+  text-decoration-color: var(--vp-c-brand-1);
+}
+
+/* ─── HR dividers ─── */
+
+.vp-doc hr {
+  border-color: var(--vp-c-divider);
+}
