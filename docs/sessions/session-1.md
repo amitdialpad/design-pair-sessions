@@ -15,13 +15,15 @@ AI exposed this. It also provides the way out. Not by making you an engineer. By
 Your facilitator walks through the full design rhythm on a real task. Not slides. Not a prepared demo. Real work.
 
 You'll see:
+- **Starting the work:** `/project-start` to create a Jira ticket and branch before anything else
 - **Research:** pushing a PRD into Claude, pulling Jira context, checking Amplitude data
-- **Figma to code:** pointing Claude at a Figma frame, getting a code starting point, evaluating the result
-- **The build loop:** describing what you want, Claude generating code, checking it in the browser, giving feedback, iterating
+- **Shaping:** using `/shaping` to turn research into a clear, bounded problem statement
+- **Breadboarding:** using `/breadboarding` to map every screen, component, and data flow before building
+- **Tickets:** using `/jira-create` to slice the breadboard into individual Jira tickets
+- **Building:** `/feature-dev` takes a ticket and builds it — describe, generate, check in the browser, iterate
 - **When Claude gets it wrong:** this will happen. Iteration is normal, not failure.
 - **Design judgment as the quality gate:** spacing, alignment, interaction quality, edge cases. Claude writes code. The designer decides if it's good.
-- **Sharing:** pushing a change, getting a preview link, sending it for feedback
-- **Commands in action:** at least one of `/shaping`, `/pr-prep`, or `/simplify` used at the right moment
+- **Sharing:** a draft PR or `/pr-create` gives you a preview link to send in Dialpad
 
 **What to pay attention to:**
 - Your facilitator isn't writing code. They're describing what they want and critiquing what they see.

@@ -32,13 +32,13 @@ This isn't a test. There's no grade. You'll get stuck. That's normal. Getting st
 
 **Evaluate.** Does it look right? Feel right? Work for edge cases? Is it accessible? Ask Claude to check.
 
-**Share.** Push what you built. Get a preview link. Send it to someone for a direction check.
+**Share.** Run `/pr-create` to get a preview link, or open a draft PR for an early direction check. Send the link in Dialpad.
 
 ## When you get stuck
 
 1. Tell Claude what's wrong. Describe what you see vs. what you expected.
 2. If that doesn't work, paste the error (if there is one) and ask Claude to explain it.
-3. If you're still stuck, ask Your facilitator. That's what the navigator is for.
+3. If you're still stuck, ask your facilitator. That's what the navigator is for.
 4. If a conversation gets tangled, start a new Claude session. Fresh context helps.
 
 ## Wrapping up

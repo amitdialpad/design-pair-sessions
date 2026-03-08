@@ -8,19 +8,20 @@ You don't switch between "design mode" and "engineering mode." You move fluidly 
 
 | What you're doing | Where you are |
 |---|---|
+| Starting a ticket and branch | `/project-start` in Beacon |
 | Analyzing a PRD, competitive research, checking Amplitude | Claude conversation |
-| Exploring layouts, trying visual directions | Claude in terminal, Windsurf, sketching, even Figma |
-| Testing whether an idea actually works as UI | Claude Code + browser |
-| Pushing a prototype frame into Figma for review | Figma MCP |
-| Getting feedback on a design direction | Dialpad, then Claude prompt |
+| Exploring layouts, trying visual directions | Sketching, Figma, or Claude in terminal |
 | Formalizing requirements after you understand the problem | `/shaping` in Beacon |
 | Mapping how all the pieces connect | `/breadboarding` in Beacon |
-| Building a slice properly with tests | `/feature-dev` in Beacon |
+| Slicing the breadboard into Jira tickets | `/jira-create` in Beacon |
+| Building each piece of your design into working UI | `/feature-dev` in Beacon |
+| Checking your UI against Dialpad's design principles | Ask Claude: *"Run the dialpad-design agent"* |
+| Getting early directional feedback | Loom, or open a draft PR and share the preview link in Dialpad |
 | Checking if the code is ready to share | `/pr-prep` in Beacon |
-| Checking if the design follows Dialpad's tenets | `dialpad-design` agent |
-| Going back to Figma because the feedback changed the layout | Figma again |
+| Creating the PR and sharing the preview link | `/pr-create` in Beacon → send link in Dialpad |
+| Pushing a frame into Figma for refinement | Figma MCP |
 
-There's no fixed order. You go where the work takes you.
+Research and exploration are flexible. Go where the work takes you. Once you're in Beacon, the pipeline flows in order: start → shape → breadboard → ticket → build → prep → ship.
 
 ## Research (ongoing, not a phase)
 
@@ -93,7 +94,7 @@ Claude writes code. You decide if it's good. "Good" for a designer means somethi
 
 **Does it work for everyone?** Ask Claude to check accessibility: *"Check this for accessibility: keyboard navigation, contrast, ARIA labels."* Beacon's `/pr-prep` does this too, but checking early is better than checking at the end.
 
-**Does it follow Dialpad's design principles?** The `dialpad-design` agent reviews against 7 tenets. You can ask it directly: *"Review the UI I just built for the settings feature."*
+**Does it follow Dialpad's design principles?** The `dialpad-design` agent reviews against Dialpad's design principles. You can ask it directly: *"Review the UI I just built for the settings feature."*
 
 **Does it handle the edges?** New user with no data. Power user with too much data. Slow network. Error during submission. Long text that overflows.
 
@@ -109,7 +110,7 @@ Separate from building and iterating. After the main work is done, a dedicated p
 - Responsive: works at different sizes?
 - Accessibility: keyboard nav, contrast, screen reader
 
-This is where the difference shows between "it works" and "it works well." Ask Claude to audit for WCAG issues. Use the `dialpad-design` agent for a tenet check. Then look at it yourself.
+This is where the difference shows between "it works" and "it works well." Ask Claude to audit for WCAG issues. Use the `dialpad-design` agent for a design principles check. Then look at it yourself.
 
 ## Events follow design
 
@@ -125,11 +126,13 @@ You don't need to memorize a pipeline. Just recognize the moment.
 | "I know enough about this problem to write it down" | `/shaping` |
 | "I've picked a direction, let me map the pieces" | `/breadboarding` |
 | "This slice is ready to build properly" | `/feature-dev` |
+| "I've got my breadboard, time to create tickets" | `/jira-create` |
 | "I need a new component scaffolded" | `/component-create` |
 | "Let me clean up what I just built" | `/simplify` |
 | "Is this ready for review?" | `/pr-prep` |
 | "Time to open the PR" | `/pr-create` |
-| "Does this UI follow our design tenets?" | `dialpad-design` agent |
+| "I've got PR feedback to triage" | `/pr-comments` |
+| "Does this UI follow Dialpad's design principles?" | `dialpad-design` agent |
 | "What bugs might be hiding?" | `/bug-hunt` |
 | "I have a Design Studio prototype to bring over" | `/prototype-migrate` |
 | "Lint/type errors need fixing" | `/fix-quick` |

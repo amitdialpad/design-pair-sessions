@@ -16,11 +16,11 @@ Your facilitator drives through the full rhythm:
 2. **Explore options.** Maybe check Figma for visual direction. Maybe ask Claude what Dialtone components fit.
 3. **Build the first version.** Describe what we want. Claude generates code. Check it in the browser. React to what we see.
 4. **Iterate.** Something won't be right. Fix it. Something else won't be right. Fix that too. This is the loop.
-5. **Evaluate.** Does it look right? Feel right? Handle edge cases? Follow the design tenets?
+5. **Evaluate.** Does it look right? Feel right? Handle edge cases? Follow Dialpad's design principles?
 
 **Your job as navigator:**
 - Ask "why did you choose that?" when a decision isn't obvious
-- Call out things that look off visually (you'll spot things Your facilitator might miss)
+- Call out things that look off visually (you'll spot things your facilitator might miss)
 - Ask "what happens if...?" for edge cases (no data, too much data, error state)
 - Don't hold back. The point of pairing is two sets of eyes, two perspectives.
 
