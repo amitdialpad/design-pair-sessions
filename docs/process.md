@@ -9,7 +9,7 @@ You don't switch between "design mode" and "engineering mode." You move fluidly 
 | What you're doing | Where you are |
 |---|---|
 | Analyzing a PRD, competitive research, checking Amplitude | Claude conversation |
-| Exploring layouts, trying visual directions | Claude in terminal, Windsurf, paper & pen, even Figma |
+| Exploring layouts, trying visual directions | Claude in terminal, Windsurf, sketching, even Figma |
 | Testing whether an idea actually works as UI | Claude Code + browser |
 | Pushing a prototype frame into Figma for review | Figma MCP |
 | Getting feedback on a design direction | Dialpad, then Claude prompt |
