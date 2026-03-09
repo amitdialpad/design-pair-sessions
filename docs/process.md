@@ -6,7 +6,7 @@ You're always designing. Sometimes designing means typing a slash command. Somet
 
 You don't switch between "design mode" and "engineering mode." You move fluidly between tools depending on what the work needs.
 
-Always open Claude Code from inside the Beacon folder: `cd ~/beacon-app` → `claude`. The Beacon commands only work from there. Each project gets its own isolated workspace — `/project-start` handles the ticket, branch, and setup for you.
+Always open Claude Code from inside the Beacon folder: `cd ~/beacon-app` → `claude`. The Beacon commands only work from there. Each project gets its own isolated workspace. `/project-start` handles the ticket, branch, and setup for you.
 
 | What you're doing | Where you are |
 |---|---|

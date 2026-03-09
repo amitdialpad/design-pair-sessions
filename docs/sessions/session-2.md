@@ -1,45 +1,37 @@
 # Session 2: Pair build
 
-**Format:** Your facilitator drives first half. You drive second half. Your facilitator navigates.
+**Format:** You work on a real task together. Both of you thinking throughout. One at the keyboard at a time.
 
 **Duration:** 60 min
 
-This is the actual pairing session. We pick a small, real task and build it together. The driver controls Claude Code. The navigator watches, asks questions, and catches things the driver misses.
+We pick something small and real, and build it together. You're both in it from the start: calling things out, questioning decisions, catching what the other misses. The keyboard switches halfway.
 
-## Part 1: Your facilitator drives (25-30 min)
+## Part 1: Getting it started (15 min)
 
-We start from a real problem. Not a tutorial exercise. Something small enough to finish but real enough to matter.
+Your facilitator picks up the keyboard to get something on the screen. You're not watching. You're in it. Call things out, question decisions, spot what looks off. You saw the rhythm in Session 1. Now you're working alongside it.
 
-Your facilitator drives through the full rhythm:
-
-1. **Understand the task.** Pull context from Jira or a PRD. What are we building? What are the constraints?
-2. **Explore options.** Maybe check Figma for visual direction. Maybe ask Claude what Dialtone components fit.
-3. **Build the first version.** Describe what we want. Claude generates code. Check it in the browser. React to what we see.
-4. **Iterate.** Something won't be right. Fix it. Something else won't be right. Fix that too. This is the loop.
-5. **Evaluate.** Does it look right? Feel right? Handle edge cases? Follow Dialpad's design principles?
-
-**Your job as navigator:**
 - Ask "why did you choose that?" when a decision isn't obvious
-- Call out things that look off visually (you'll spot things your facilitator might miss)
-- Ask "what happens if...?" for edge cases (no data, too much data, error state)
-- Don't hold back. The point of pairing is two sets of eyes, two perspectives.
+- Call out anything that looks off visually. You'll fix it when you take over.
+- Ask "what happens if...?" for edge cases you spot
 
-## Part 2: You drive (25-30 min)
+## Part 2: You drive (35-40 min)
 
-You take over Claude Code. Your facilitator navigates.
+You take over. Your facilitator navigates.
 
-You'll make changes to what we just built, or start a new small piece. The thing you're doing:
+This is the whole session. Everything else was setup for this moment.
 
 - **Describe** what you want to Claude in plain language
 - **Look** at the result in the browser
-- **React** honestly. "The spacing is wrong." "That's not the right component." "What about the hover state?"
-- **Tell Claude** to fix what's wrong
+- **React** honestly: "the spacing is wrong", "that's not the right component", "what about the hover state?"
+- **Tell Claude** to fix it
 - **Check** the result again
 
-Your facilitator is there if you get stuck. But the goal is for you to feel the loop: describe, see, critique, adjust. That's the whole thing.
+Repeat until it's right. Your facilitator is there if you get stuck, but the goal is for you to feel the loop yourself.
 
-**Things you might try:**
-- Change a color, spacing, or component choice
+Once you're happy with it: ask Claude to check accessibility: keyboard navigation, contrast, focus states. This isn't a final step, it's part of every build.
+
+**Things to try if you're not sure where to start:**
+- Fix something that looked off during Part 1
 - Add a missing state (loading, empty, error)
 - Ask Claude to explain something in the code you don't understand
 - Ask Claude to search Dialtone for a component or icon

@@ -20,9 +20,10 @@ You'll see:
 - **Shaping:** using `/shaping` to turn research into a clear, bounded problem statement
 - **Breadboarding:** using `/breadboarding` to map every screen, component, and data flow before building
 - **Tickets:** using `/jira-create` to slice the breadboard into individual Jira tickets
-- **Building:** `/feature-dev` takes a ticket and builds it — describe, generate, check in the browser, iterate
+- **Building:** `/feature-dev` takes a ticket and builds it. Describe what you want, check the result in the browser, iterate.
 - **When Claude gets it wrong:** this will happen. Iteration is normal, not failure.
 - **Design judgment as the quality gate:** spacing, alignment, interaction quality, edge cases. Claude writes code. The designer decides if it's good.
+- **Accessibility check:** keyboard navigation, contrast, ARIA labels. Ask Claude directly: *"Check this for accessibility."* This is not a polish step. It's part of every build.
 - **Sharing:** a draft PR or `/pr-create` gives you a preview link to send in Dialpad
 
 **What to pay attention to:**
