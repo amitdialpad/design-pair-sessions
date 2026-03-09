@@ -8,6 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Welcome', link: '/' },
       { text: 'The process', link: '/process' },
+      { text: 'Beacon toolkit', link: '/toolkit' },
       { text: 'Project IRL', link: '/story' },
       {
         text: 'Pair sessions',
@@ -18,17 +19,11 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Beacon',
-        items: [
-          { text: 'The toolkit', link: '/toolkit' },
-          { text: "What's new", link: '/whats-new' },
-        ],
-      },
-      {
         text: 'Reference',
         items: [
           { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
+          { text: "What's new", link: '/whats-new' },
         ],
       },
     ],
@@ -38,6 +33,7 @@ export default defineConfig({
         items: [
           { text: 'Welcome', link: '/' },
           { text: 'The process', link: '/process' },
+          { text: 'Beacon toolkit', link: '/toolkit' },
           { text: 'Project IRL', link: '/story' },
         ],
       },
@@ -50,17 +46,11 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Beacon',
-        items: [
-          { text: 'The toolkit', link: '/toolkit' },
-          { text: "What's new", link: '/whats-new' },
-        ],
-      },
-      {
         text: 'Reference',
         items: [
           { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
+          { text: "What's new", link: '/whats-new' },
         ],
       },
     ],

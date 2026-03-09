@@ -12,24 +12,22 @@ AI exposed this. It also provides the way out. Not by making you an engineer. By
 
 ## Part 2: Live walkthrough (30-40 min)
 
-Your facilitator walks through the full design rhythm on a real task. Not slides. Not a prepared demo. Real work.
+Your facilitator walks through the full design rhythm on a real, in-flight task. Not slides. Not a prepared demo. Real work.
 
 You'll see:
-- **Starting the work:** `/project-start` to create a Jira ticket and branch before anything else
-- **Research:** pushing a PRD into Claude, pulling Jira context, checking Amplitude data
-- **Shaping:** using `/shaping` to turn research into a clear, bounded problem statement
-- **Breadboarding:** using `/breadboarding` to map every screen, component, and data flow before building
-- **Tickets:** using `/jira-create` to slice the breadboard into individual Jira tickets
-- **Building:** `/feature-dev` takes a ticket and builds it. Describe what you want, check the result in the browser, iterate.
-- **When Claude gets it wrong:** this will happen. Iteration is normal, not failure.
-- **Design judgment as the quality gate:** spacing, alignment, interaction quality, edge cases. Claude writes code. The designer decides if it's good.
-- **Accessibility check:** keyboard navigation, contrast, ARIA labels. Ask Claude directly: *"Check this for accessibility."* This is not a polish step. It's part of every build.
-- **Sharing:** a draft PR or `/pr-create` gives you a preview link to send in Dialpad
+- **Research, two tracks:** internal signals first (Amplitude, Jira history, code context), then external competitive analysis generated into structured markdown. Both get a manual verification pass.
+- **Persisting useful queries:** saving queries that worked as reusable skills so context isn't lost and you're not repeating yourself every session.
+- **Problem framing:** interrogating the source docs, discarding outdated requirements, and defining a tight v0 slice before touching implementation.
+- **Starting the build:** `/project-start` to create a Jira ticket and branch.
+- **Shaping:** `/shaping` to formalize requirements and cap scope deliberately. This is where you say what's in and what's out.
+- **Breadboarding:** `/breadboarding` to translate the defined workflow into interface structure.
+
+This is where the session ends. Building, design judgment, accessibility, and sharing are Session 2.
 
 **What to pay attention to:**
-- Your facilitator isn't writing code. They're describing what they want and critiquing what they see.
-- Their Dialtone knowledge steers the output ("use DtBanner with kind warning"). Your design system knowledge does the same thing.
-- When they check spacing, alignment, hover states, that's the part Claude can't do. That's you.
+- Your facilitator isn't writing code. They're describing what they want and directing the output.
+- Watch how scope gets controlled. Every time something could grow, they cut it back. That's intentional.
+- Research happens before the first command is typed. The build is informed, not exploratory.
 
 ## Part 3: Open conversation (10 min)
 
@@ -37,11 +35,19 @@ What worries you most about this? What surprised you? What did you expect to be 
 
 No wrong answers. This is the session where we get the fear on the table so we can work through it.
 
+## Before this session (setup required)
+
+Your facilitator will check these are in place before starting. If they're not, the session will be spent on setup rather than work.
+
+- Visual IDE with an embedded terminal (Windsurf recommended)
+- Claude Code running in smart terminal mode
+- Data sources connected: Amplitude MCP, Jira CLI
+
 ## Before next session
 
 - Read [The process](/process) on this site. That's the workflow you just saw.
 - Skim [The toolkit](/toolkit) to see what commands exist. You don't need to memorize them.
-- Open your terminal once. Cmd + Space, type "Terminal", hit Enter. Type `ls`, press Enter. That's it.
+- Session 2 picks up where this one ended: you'll drive the build.
 
 ## Reference
 

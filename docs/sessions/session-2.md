@@ -4,21 +4,21 @@
 
 **Duration:** 60 min
 
-We pick something small and real, and build it together. You're both in it from the start: calling things out, questioning decisions, catching what the other misses. The keyboard switches halfway.
+You're coming in with a breadboard from Session 1. This session is the build. Your facilitator takes the first ticket, you take the next one.
 
-## Part 1: Getting it started (15 min)
+## Part 1: Facilitator builds the first ticket (20 min)
 
-Your facilitator picks up the keyboard to get something on the screen. You're not watching. You're in it. Call things out, question decisions, spot what looks off. You saw the rhythm in Session 1. Now you're working alongside it.
+Your facilitator picks up the first ticket from the breadboard and runs `/feature-dev`. You're not watching. You're in it: calling things out, questioning decisions, catching what looks off.
 
-- Ask "why did you choose that?" when a decision isn't obvious
-- Call out anything that looks off visually. You'll fix it when you take over.
-- Ask "what happens if...?" for edge cases you spot
+Watch specifically for:
+- How they describe what they want to Claude. Plain language, not technical spec.
+- How they evaluate the result in the browser. Spacing, alignment, hover states, edge cases.
+- How they react when something is wrong. They describe it, not debug it.
+- How they check accessibility before moving on: *"Check this for keyboard navigation, contrast, and focus states."*
 
 ## Part 2: You drive (35-40 min)
 
-You take over. Your facilitator navigates.
-
-This is the whole session. Everything else was setup for this moment.
+You take the next ticket. Your facilitator navigates.
 
 - **Describe** what you want to Claude in plain language
 - **Look** at the result in the browser
@@ -26,15 +26,14 @@ This is the whole session. Everything else was setup for this moment.
 - **Tell Claude** to fix it
 - **Check** the result again
 
-Repeat until it's right. Your facilitator is there if you get stuck, but the goal is for you to feel the loop yourself.
+Repeat until it's right. Then check accessibility before you move on.
 
-Once you're happy with it: ask Claude to check accessibility: keyboard navigation, contrast, focus states. This isn't a final step, it's part of every build.
+When you're done: run `/pr-create` to get a preview link and send it in Dialpad. That's the full loop.
 
-**Things to try if you're not sure where to start:**
-- Fix something that looked off during Part 1
+**If you're not sure where to start:**
+- Ask Claude what the ticket needs. It has the breadboard context.
 - Add a missing state (loading, empty, error)
-- Ask Claude to explain something in the code you don't understand
-- Ask Claude to search Dialtone for a component or icon
+- Ask Claude to search Dialtone for the right component or icon
 
 ## Part 3: Reflection (5 min)
 
