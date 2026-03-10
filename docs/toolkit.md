@@ -121,7 +121,7 @@ Output: a single report telling you what's blocking, what's a warning, what's a 
 
 Creates the PR. Writes a human-friendly description (for stakeholders, not just engineers), pushes the code, opens it on GitHub. Picks a contextual GIF because Josh believes PRs should have personality.
 
-Add `skip review` to skip the AI review step (good for docs, skill updates, small changes). Add `new gif` if you want a different GIF. Add `make it a draft PR` to open it as a draft — useful for early direction checks before it's ready for full review.
+Add `skip review` to skip the AI review step (good for docs, skill updates, small changes). Add `new gif` if you want a different GIF. Add `make it a draft PR` to open it as a draft. Useful for early direction checks before it's ready for full review.
 
 **Use when:** `/pr-prep` is clean and you're ready to share. Or use draft mode to share a preview link before the work is finished.
 
