@@ -72,7 +72,7 @@ for item in items:
     if category:
         meta += f' · {category}'
 
-    block = f'**[{title}]({link})**\n<small>{meta}</small>'
+    block = f'**[{title}]({link})**<br><small>{meta}</small>'
     if desc:
         block += f'\n\n{desc}'
 
