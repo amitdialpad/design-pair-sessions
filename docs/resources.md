@@ -77,6 +77,13 @@ Full details on the [toolkit page](/toolkit). This is just the list.
 | `/perf-check` | Analyze performance |
 | `/prototype-migrate` | Migrate Design Studio prototype to Beacon |
 
+## Claude Code guides (Josh Hynes)
+
+| Guide | What's in it |
+|-------|-------------|
+| [Claude Code: From Zero to Daily Driver](https://gist.github.com/hynes-dialpad/9cd9ca443f7c0e5a6caf8f97d85f563a) | Installation, mental models, session management, CLAUDE.md setup, common failure patterns, daily habits. Written for the Dialpad team. |
+| [Skills vs Subagents vs Commands](https://gist.github.com/hynes-dialpad/d38e4408b51c89b500a9dff541cb95ca) | Clears up the most confusing part of Claude Code's extension model. |
+
 ## Learning resources
 
 | Resource | What it is |
