@@ -6,9 +6,9 @@
 
 ## Part 1: Why this matters (10 min)
 
-The industry told designers for 15 years: "you don't need to be technical." That advice cost designers strategic influence. Entry-level design hiring dropped 50%. Design leadership roles disappeared. Not because of AI. Because designers couldn't participate in the conversations where product decisions happen.
+Not to make you an engineer. To give you enough understanding of the medium to evaluate output, join technical conversations, and make your case for users in terms that land.
 
-AI exposed this. It also provides the way out. Not by making you an engineer. By giving you enough understanding of the medium to evaluate output, join technical conversations, and make your case for users in terms that land.
+That's the bar. That's what this session is about.
 
 ## Part 2: Live walkthrough (30-40 min)
 

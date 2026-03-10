@@ -59,14 +59,6 @@ and a primary action button. Use Dialtone components and tokens.
 
 Full list on the [toolkit page](/toolkit).
 
-## The feedback loop
-
-1. Get specific feedback from a specific person
-2. Paste it into Claude as a prompt
-3. Claude makes the change
-4. Check the result in the browser
-5. Push, share the preview link, get confirmation
-
 ## Figma and code
 
 | Do this in Figma | Do this in code |

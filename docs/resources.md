@@ -53,29 +53,6 @@ These live in the [beacon-app repo](https://github.com/dialpad/beacon-app). Clau
 | Icons | [dialtone.dialpad.com/icons](https://dialtone.dialpad.com/icons/) |
 | Content guidelines | [dialtone.dialpad.com/guides/content](https://dialtone.dialpad.com/guides/content/) |
 
-## Beacon commands (quick reference)
-
-Full details on the [toolkit page](/toolkit). This is just the list.
-
-| Command | One-liner |
-|---------|-----------|
-| `/project-start` | Create ticket and branch |
-| `/shaping` | Interactive problem shaping |
-| `/breadboarding` | Map places, affordances, wiring |
-| `/feature-start` | Analyze and scaffold a feature |
-| `/feature-dev` | Full build pipeline via feature-team agent |
-| `/component-create` | Scaffold a Vue component with tests |
-| `/test-create` | Generate tests for existing code |
-| `/simplify` | Clean up recently changed files |
-| `/pr-prep` | 6-wave quality review |
-| `/pr-create` | Create and push PR |
-| `/pr-complete` | Jira to Done, return to main |
-| `/pr-comments` | Triage PR review comments |
-| `/jira-create` | Create a ticket for something you found |
-| `/fix-quick` | Fix lint, type, format errors |
-| `/bug-hunt` | Find bugs in a feature |
-| `/perf-check` | Analyze performance |
-| `/prototype-migrate` | Migrate Design Studio prototype to Beacon |
 
 ## Claude Code guides (Josh Hynes)
 

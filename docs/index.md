@@ -25,6 +25,6 @@ After the sessions, this site is yours. Come back whenever you need to.
 
 ## Why this exists
 
-For 15 years, designers were told they didn't need to be technical. That advice sounded generous. It wasn't. It cut designers out of the conversations where product decisions actually happen.
+Designers have always been told they don't need to be technical. That advice sounded generous. It wasn't. It cut designers out of the conversations where product decisions actually happen.
 
 AI didn't cause this. It made it visible. And it also happens to be the way out.
