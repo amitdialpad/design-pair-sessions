@@ -28,7 +28,7 @@ You take the next ticket. Your facilitator navigates.
 
 Repeat until it's right. Then check accessibility before you move on.
 
-When you're done: run `/pr-create` to get a preview link and send it in Dialpad. That's the full loop.
+When you're done: run `/pr-create` to get a preview link and send it in Dialpad. If the work isn't finished yet, `/pr-create make it a draft PR` opens a draft so you can share early for a direction check. That's the full loop.
 
 **If you're not sure where to start:**
 - Ask Claude what the ticket needs. It has the breadboard context.
