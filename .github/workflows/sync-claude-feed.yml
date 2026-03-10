@@ -1,0 +1,28 @@
+name: Sync Claude Feed
+
+on:
+  schedule:
+    # Run daily at 10 AM UTC (3 AM PT / 3:30 PM IST)
+    - cron: '0 10 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Claude feed
+        run: |
+          bash scripts/update-claude-feed.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/whats-new.md
+          git diff --cached --quiet || git commit -m "sync: claude feed updated $(date -u +%Y-%m-%d)"
+          git push
