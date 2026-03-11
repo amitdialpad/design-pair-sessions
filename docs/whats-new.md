@@ -39,5 +39,5 @@ We're introducing Cowork and plugin updates that let enterprises customize Claud
 
 New plugins built for how finance actually works, plus cross-app workflows that move with you from Excel to PowerPoint to final deliverable.
 
-*Updated March 10, 2026*
+*Updated March 11, 2026*
 <!-- CLAUDE_FEED_END -->
