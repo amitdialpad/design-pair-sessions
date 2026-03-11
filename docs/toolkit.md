@@ -48,6 +48,8 @@ The output is a set of tables:
 
 After breadboarding, the map gets sliced into **vertical increments**. Each slice cuts through all layers (UI, logic, data) and ends in something you can demo. "Open the view, see real data" is a valid first slice. "Set up the database tables" is not, because there's nothing to show. Each slice becomes a PR.
 
+**How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done — that way each slice ships safely without exposing unfinished work.
+
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
 ### Building
