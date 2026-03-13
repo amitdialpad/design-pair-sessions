@@ -42,6 +42,7 @@ These live in the [beacon-app repo](https://github.com/dialpad/beacon-app). Clau
 | Jira MCP / CLI | Pull ticket context, related tickets, acceptance criteria into Claude. [Jira CLI setup](https://github.com/ankitpokhrel/jira-cli). |
 | Amplitude MCP | User behavior data, funnels, drop-offs directly in Claude conversations. |
 | [GitHub CLI](https://cli.github.com) | Create PRs, manage branches from the terminal. Used by Beacon's `/pr-create` command. |
+| [Skill Creator](https://claude.com/plugins/skill-creator) | Build, test, and compare Claude skills without code. Install via `/plugin` in Claude, find `skill-creator` under `claude-plugins-official`. |
 
 ## Dialtone references
 

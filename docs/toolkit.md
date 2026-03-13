@@ -4,6 +4,8 @@ Everything Josh built into Beacon's `.claude/` directory, explained for designer
 
 You don't need to memorize this. Claude knows all of it. But knowing what exists helps you ask for the right thing at the right time.
 
+> Just want quick prompts to try? See [Getting started](/cheat-sheet).
+
 ## Commands
 
 Commands are slash commands you type in Claude Code. They trigger specific workflows. Think of them like Figma plugins: you invoke them when you need them.
@@ -248,6 +250,8 @@ Skills are knowledge that Claude loads when relevant. You don't invoke them. The
 | `media-device-enforcer` | WebRTC device patterns for meetings |
 
 The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, and `frontend-patterns`. The rest help Claude write better code, which means the code it writes for you is already following the rules.
+
+**Want to build your own skills?** The [Skill Creator plugin](https://claude.com/plugins/skill-creator) in Claude's Plugin Marketplace now lets you create, test, and improve skills without writing code. You can run a skill against test prompts, grade outputs against expectations, and do A/B comparisons between versions. Install it in Claude by typing `/plugin` and finding `skill-creator` under `claude-plugins-official`.
 
 ## Rules
 
