@@ -11,6 +11,12 @@ Changes detected in [beacon-app/.claude/](https://github.com/dialpad/beacon-app/
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude now creates interactive charts, diagrams and visualizations](https://claude.com/blog/claude-builds-visuals)**<br><small>Mar 12, 2026</small>
+
+Ask Claude to explain a concept or analyze your data, and it can respond with interactive charts, diagrams, and visualizations — rendered inline as part of the conversation.
+
+---
+
 **[Advancing Claude for Excel and PowerPoint](https://claude.com/blog/claude-excel-powerpoint-updates)**<br><small>Mar 11, 2026 · Enterprise AI</small>
 
 Claude for Excel and PowerPoint now share full context across open files, and skills make any workflow instantly repeatable.
@@ -33,11 +39,5 @@ Practical guidance on how to structure agent tasks using three common workflow p
 
 Skill authors now have tools to verify their skills work, catch regressions, and improve descriptions—no coding required.
 
----
-
-**[Cowork and plugins for teams across the enterprise](https://claude.com/blog/cowork-plugins-across-enterprise)**<br><small>Feb 24, 2026 · Agents</small>
-
-We're introducing Cowork and plugin updates that let enterprises customize Claude to how you work. Plugins turn Claude into specialized agents for every role and department. Now, you can build private marketplaces to distribute them across your organization.
-
-*Updated March 12, 2026*
+*Updated March 13, 2026*
 <!-- CLAUDE_FEED_END -->
