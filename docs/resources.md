@@ -33,7 +33,7 @@ These live in the [beacon-app repo](https://github.com/dialpad/beacon-app). Clau
 | [docs/development/engineering-guide-for-designers.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/engineering-guide-for-designers.md) | How Beacon's codebase is organized and why. Code structure, Vue patterns, data storage, Git, PR hygiene. Read it once. |
 | [docs/development/adding-data-to-beacon.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/adding-data-to-beacon.md) | Beacon's data layer: schema design, the controller pattern, mock data pipeline. Read before adding any new entity type. |
 
-The engineering guide is worth reading in full at least once. Josh wrote it specifically for designers working in Beacon. It explains how the code is organized, why things work the way they do, and what to expect when you're reviewing Claude's output. After the first read, keep it open whenever something in the code surprises you.
+Josh wrote this for designers working in Beacon. It covers how the code is organized, why things work the way they do, and what to expect when reviewing Claude's output. Read it once. Keep it open whenever something in the code surprises you.
 
 ## Tools
 

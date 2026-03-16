@@ -105,7 +105,7 @@ Max 9 slices. If you need more, the shape is too large for one cycle. Each slice
 
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done — that way each slice ships safely without exposing unfinished work.
 
-**Where the documents go:** Shaping and breadboarding documents are saved to `/docs/plans/` on your branch while you work. When the branch merges, they're auto-cleared. Move anything you want to keep — requirements, the fit check, slice definitions — to the Jira ticket before merging.
+**Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When the branch merges, that folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.
 
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
