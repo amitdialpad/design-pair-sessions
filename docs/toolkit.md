@@ -105,6 +105,8 @@ Max 9 slices. If you need more, the shape is too large for one cycle. Each slice
 
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done — that way each slice ships safely without exposing unfinished work.
 
+**Where the documents go:** Shaping and breadboarding documents are saved to `/docs/plans/` on your branch while you work. When the branch merges, they're auto-cleared. Move anything you want to keep — requirements, the fit check, slice definitions — to the Jira ticket before merging.
+
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
 
@@ -211,7 +213,7 @@ Analyzes components for performance issues: unnecessary re-renders, missing memo
 
 #### `/jira-create`
 
-Creates Jira tickets for new work or things you discovered while building. Useful when you find a bug or a needed improvement that isn't your current scope.
+Creates Jira tickets for new work or things you discovered while building. Sets a story point estimate automatically. Useful when you find a bug or a needed improvement that isn't your current scope.
 
 **Use when:** You found something that needs a ticket but shouldn't derail your current work.
 
