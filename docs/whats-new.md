@@ -39,5 +39,5 @@ Claude Code now dispatches a team of agents on every PR to catch bugs that skims
 
 Practical guidance on how to structure agent tasks using three common workflow patterns, with tradeoffs and benefits for each.
 
-*Updated March 15, 2026*
+*Updated March 16, 2026*
 <!-- CLAUDE_FEED_END -->
