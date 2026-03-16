@@ -22,37 +22,129 @@ When it's done, it suggests `/shaping` as the next step but doesn't start it aut
 
 #### `/shaping`
 
-Interactive conversation that helps you define the problem and explore solutions before building. Not a form to fill out. A back-and-forth with Claude where you work through what you're trying to solve.
+Interactive conversation that helps you define the problem and pick a solution approach before building. Not a form to fill out. A back-and-forth with Claude where you work through what you're trying to solve.
 
-Two ways in:
+**Shaping answers:** what problem are we solving, and what's the right approach?
+
+**Two ways in:**
 - **Start from the problem.** Describe what's wrong, what users need, what constraints exist. Requirements emerge from the conversation.
-- **Start from a solution.** You already have an idea. Sketch it out and extract the requirements as you go.
+- **Start from a solution.** You already have an idea. Sketch it as Shape A. Claude extracts the implicit requirements from it, then checks what it misses.
 
-What you end up with:
-- **Requirements** (R0, R1, R2...): numbered, tracked by status (core goal, must-have, nice-to-have, undecided, out). You negotiate these with Claude. Max 9 top-level.
-- **Shapes** (A, B, C...): mutually exclusive solution approaches. Each broken into parts (mechanisms) that describe what you'd actually build.
-- **Fit check**: a pass/fail matrix. Requirements as rows, shapes as columns. If a shape passes everything but still feels wrong, there's a missing requirement.
+Both paths end at the fit check.
 
-The output is a shaping document that becomes the source of truth for the feature.
+**What you end up with:**
+
+**R — Requirements** (R0, R1, R2...): What must be true for any solution to be correct. Not a feature list. Not acceptance criteria. The outcome, not the mechanism. Each R gets a status: *core goal*, *must-have*, *nice-to-have*, or *out*. Max 9 top-level.
+
+**S — Shapes** (A, B, C...): Mutually exclusive solution approaches. Each shape is broken into numbered parts (A1, A2, A3...) describing exactly what you'd build.
+
+Parts are mechanisms, not intentions:
+
+*Intention:* "Handle Power Dialer billing"
+*Mechanism:* "New Transaction entries with `type: 'Power Dialer'` and `walletSource: 'Calling Commit'` added to MOCK_TRANSACTIONS in billingMockData.ts"
+
+**Fit check**: Requirements as rows, shapes as columns. Binary pass/fail. If a shape passes everything but still feels wrong, there's a missing requirement. This is what turns a discussion into a decision.
+
+**One shape or multiple?** Use multiple shapes when there's a real architectural fork: "do we build a new controller or extend the existing one?" Use a single shape when the solution space is already constrained, the PRD specifies the approach, or there's no meaningful choice to make.
+
+**When to skip shaping:**
+- Single-file bug fix
+- One obvious approach with no alternatives
+- PRD fully specifies the mechanism
+
+**Don't skip shaping when:**
+- Multiple valid approaches exist
+- Scope is unclear or contested
+- You need alignment before building
 
 **Use when:** You've done enough research to describe the problem. You're formalizing what you know, not discovering it from scratch.
 
 #### `/breadboarding`
 
-Maps a selected shape into concrete pieces. Answers: where do users go, what can they do at each place, and what makes it work?
+Takes the selected shape and traces every part of it through the real codebase. You cannot breadboard without a selected shape.
 
-The output is a set of tables:
-- **Places**: bounded contexts of interaction. Simple test: can you interact with what's behind? No = different place. A modal is a place. A dropdown is not.
-- **UI affordances**: things users see and act on (buttons, inputs, lists), mapped to Dialtone or Vue components
-- **Code affordances**: composables, controllers, services that make the UI work
-- **Data stores**: where state lives
-- **Wiring**: how everything connects (what triggers what, where data flows)
+**Breadboarding answers:** where exactly does this approach land in the code, and how does everything wire together?
 
-After breadboarding, the map gets sliced into **vertical increments**. Each slice cuts through all layers (UI, logic, data) and ends in something you can demo. "Open the view, see real data" is a valid first slice. "Set up the database tables" is not, because there's nothing to show. Each slice becomes a PR.
+One rule: every name in a breadboard must point to something real in the code. Not "the database" but `MOCK_TRANSACTIONS`. Not "the filter logic" but `sortedAndFilteredTransactions` in `UsageHistoryTab.vue`. Vague names reveal vague thinking.
+
+**The four tables:**
+
+**P — Places**: Bounded contexts of interaction. Test: can you interact with what's behind this affordance without leaving the current context? No means it's a different Place. A modal is a Place. A dropdown is not.
+
+**U — UI affordances**: What the user sees and acts on. Vue components, Dialtone components, buttons, inputs, rendered rows.
+
+**N — Code affordances**: What makes the UI work. Composables, computed properties, functions, mock data exports.
+
+**S — Data stores**: Where data lives. Mock data exports, Pinia stores, reactive refs, IndexedDB tables.
+
+**Wiring — two columns every row has:**
+- **Wires Out**: what this affordance triggers or calls
+- **Returns To**: where this affordance's output flows back to
+
+Example:
+```
+User selects "Power Dialer" from the channel filter (U13)
+  Wires Out: N7 — sortedAndFilteredTransactions recomputes
+  N7 Returns To: U18 — transaction table re-renders with PD rows only
+```
+
+**New affordances** added by the shape get a prefix: UA1 (new UI from Shape A), NA1 (new code from Shape A). Once built, they drop the prefix and become standard U and N.
+
+**Completeness check** before finishing:
+1. Every U that displays data has an N feeding it
+2. Every N that changes state has a U showing it
+3. Every IndexedDB write has a BroadcastChannel notify (Beacon architecture)
+
+A UI affordance with no data source means something is missing. The breadboard catches that before you write a line of code.
+
+**Slicing — how breadboarding ends:**
+
+Affordances group into **vertical implementation slices** (V1, V2...). Each slice cuts through all layers (UI, logic, data) and ends in something you can demo. "See Power Dialer rows in the table, filter to PD only" is a valid slice. "Set up all the mock data" is not. Nothing to show.
+
+Max 9 slices. If you need more, the shape is too large for one cycle. Each slice becomes a PR.
 
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done — that way each slice ships safely without exposing unfinished work.
 
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
+
+#### Real example: PowerDialer Billing (DP-180151)
+
+**Problem:** Power Dialer calls were being silently absorbed by Unlimited bundles. No billing visibility, no wallet isolation, no way for finance to distinguish automated vs. human call spend.
+
+**Shaping produced:**
+- 7 requirements (R0 through R7), 1 descoped (R8: analytics, owned by another team)
+- Single Shape A: extend the existing Credits & Usage page, no architectural fork
+- All 7 must-haves passed the fit check
+
+```
+R0  PD transactions as distinct type in Usage History      Core goal
+R1  Filters to isolate PD transactions                     Must-have
+R6  Hard-block UI when credits = $0 and auto-recharge off  Must-have
+```
+
+**What breadboarding revealed:**
+
+Shape A8 said: "isDialerBlocked computed + critical DtNotice with Enable Auto-Recharge CTA."
+
+Breadboarding forced the question: what feeds `isDialerBlocked`? The answer was NA7 — a ZERO_CREDITS_SCENARIO mock data export that wasn't in the shape at all. Without breadboarding, we would have written the computed and had nothing to test it against.
+
+Wiring traced for R6:
+```
+NA7 (ZERO_CREDITS_SCENARIO) feeds activeScenario
+NA8 (isDialerBlocked): callingBalance ≤ 0 AND overflowBalance ≤ 0 AND autoRechargeEnabled === false
+  Returns To: UA6 (DtNotice kind="error", "Power Dialer suspended")
+UA7 ("Enable Auto-Recharge" button) Wires Out: P3 (Add Credits Panel opens)
+```
+
+**Slices:**
+```
+V1  PD in Usage History        2 files   R0, R1, R4
+V2  PD in Plan Usage Balance   2 files   R2, R7
+V3  Wallet signal + warning    3 files   R3, R5
+V4  Hard-block safeguard       2 files   R6
+```
+
+4 slices. All demo-able. Each became a PR.
 
 ### Building
 
