@@ -107,44 +107,6 @@ Max 9 slices. If you need more, the shape is too large for one cycle. Each slice
 
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
-#### Real example: PowerDialer Billing (DP-180151)
-
-**Problem:** Power Dialer calls were being silently absorbed by Unlimited bundles. No billing visibility, no wallet isolation, no way for finance to distinguish automated vs. human call spend.
-
-**Shaping produced:**
-- 7 requirements (R0 through R7), 1 descoped (R8: analytics, owned by another team)
-- Single Shape A: extend the existing Credits & Usage page, no architectural fork
-- All 7 must-haves passed the fit check
-
-```
-R0  PD transactions as distinct type in Usage History      Core goal
-R1  Filters to isolate PD transactions                     Must-have
-R6  Hard-block UI when credits = $0 and auto-recharge off  Must-have
-```
-
-**What breadboarding revealed:**
-
-Shape A8 said: "isDialerBlocked computed + critical DtNotice with Enable Auto-Recharge CTA."
-
-Breadboarding forced the question: what feeds `isDialerBlocked`? The answer was NA7 — a ZERO_CREDITS_SCENARIO mock data export that wasn't in the shape at all. Without breadboarding, we would have written the computed and had nothing to test it against.
-
-Wiring traced for R6:
-```
-NA7 (ZERO_CREDITS_SCENARIO) feeds activeScenario
-NA8 (isDialerBlocked): callingBalance ≤ 0 AND overflowBalance ≤ 0 AND autoRechargeEnabled === false
-  Returns To: UA6 (DtNotice kind="error", "Power Dialer suspended")
-UA7 ("Enable Auto-Recharge" button) Wires Out: P3 (Add Credits Panel opens)
-```
-
-**Slices:**
-```
-V1  PD in Usage History        2 files   R0, R1, R4
-V2  PD in Plan Usage Balance   2 files   R2, R7
-V3  Wallet signal + warning    3 files   R3, R5
-V4  Hard-block safeguard       2 files   R6
-```
-
-4 slices. All demo-able. Each became a PR.
 
 ### Building
 
