@@ -104,6 +104,13 @@ Affordances group into **vertical implementation slices** (V1, V2...). Each slic
 
 Max 9 slices. If you need more, the shape is too large for one cycle. Each slice becomes a PR.
 
+Slices follow a consistent order:
+1. Foundation and data layer
+2. Core component
+3. Required functionality (may be multiple slices)
+4. Code extraction for anything the new work displaced
+5. Unit tests and documentation
+
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done. That way each slice ships safely without exposing unfinished work.
 
 **Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When the branch merges, that folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.

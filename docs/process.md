@@ -86,6 +86,8 @@ Push for specifics when you get feedback. Different people catch different thing
 
 The loop is tight: feedback, prompt, change, evaluate, share. What used to be a multi-day cycle (get feedback, open Figma, redesign, re-spec, hand to engineer, wait for build, review) compresses into minutes.
 
+When you run `/pr-create`, two independent AI reviewers run automatically on the PR — GPT-4.1 and Claude Sonnet 4.6. They post findings as inline comments on the code. The full review takes around 7-10 minutes. Once it's done, run `/pr-comments` to pull the feedback into Claude and triage what to fix.
+
 ## Evaluating what Claude builds
 
 Claude writes code. You decide if it's good. "Good" for a designer means something different than "good" for an engineer.
@@ -99,6 +101,24 @@ Claude writes code. You decide if it's good. "Good" for a designer means somethi
 **Does it follow Dialpad's design principles?** The `dialpad-design` agent reviews against Dialpad's design principles. You can ask it directly: *"Review the UI I just built for the settings feature."*
 
 **Does it handle the edges?** New user with no data. Power user with too much data. Slow network. Error during submission. Long text that overflows.
+
+## Testing what you built
+
+After `/feature-dev` finishes, before moving to `/pr-prep`, ask:
+
+```
+How do I test this?
+```
+
+Claude comes back with a checklist based on what was just built. Work through it and report back — pass, fail, or describe what went wrong:
+
+```
+1. Pass
+2. Pass
+3. Fail — the empty state shows even when there is data
+```
+
+Claude fixes what's broken. Repeat until everything passes. Then run `/pr-prep`.
 
 ## The polish pass
 
