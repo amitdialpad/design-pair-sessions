@@ -26,11 +26,12 @@ Interactive conversation that helps you define the problem and pick a solution a
 
 **Shaping answers:** what problem are we solving, and what's the right approach?
 
-**Two ways in:**
+**Three ways in:**
 - **Start from the problem.** Describe what's wrong, what users need, what constraints exist. Requirements emerge from the conversation.
 - **Start from a solution.** You already have an idea. Sketch it as Shape A. Claude extracts the implicit requirements from it, then checks what it misses.
+- **Start from a vague goal.** You know roughly what you want but can't articulate it yet. Claude runs a Discovery session first — exploring the problem space with you before any shaping begins. It won't push you to pick a shape until the problem is clear.
 
-Both paths end at the fit check.
+All paths end at the fit check.
 
 **What you end up with:**
 
@@ -57,7 +58,7 @@ Parts are mechanisms, not intentions:
 - Scope is unclear or contested
 - You need alignment before building
 
-**Use when:** You've done enough research to describe the problem. You're formalizing what you know, not discovering it from scratch.
+**Use when:** You have a problem to solve, a solution to test, or even just a vague goal. You don't need it figured out before you start.
 
 #### `/breadboarding`
 
@@ -170,7 +171,7 @@ The quality gate before you open a PR. Runs 6 waves of automated checks:
 2. **Gate decision**: stops you if the build or types are broken
 3. **Scope analysis**: classifies what changed, cleans up AI attribution in commit messages
 4. **Team review** (parallel agents): code reviewer, pattern reviewer, test analyzer, silent failure hunter, comment analyzer, type design analyzer. Each runs independently and reports back.
-5. **Static analysis**: accessibility audit (catches clickable divs, missing alt text, broken tab order), documentation audit, Dialtone compliance check
+5. **Static analysis**: accessibility audit (catches clickable divs, missing alt text, broken tab order), documentation audit, Dialtone compliance check, design review (layout, typography, color, voice & tone, interaction patterns)
 6. **Code simplifier**: optional cleanup if nothing is blocking
 
 Output: a single report telling you what's blocking, what's a warning, what's a suggestion, and what's done well. Does not create the PR.
@@ -217,6 +218,12 @@ Creates Jira tickets for new work or things you discovered while building. Sets 
 
 **Use when:** You found something that needs a ticket but shouldn't derail your current work.
 
+#### `/debug-trace`
+
+When a bug isn't getting resolved and Claude keeps reading more and more code to find it, stop and use this instead. It adds debug logs to the specific code you point at. Those logs output to the browser console at runtime. Share the console output with Claude to pinpoint the problem — much faster than letting it read files.
+
+**Use when:** You're going in circles on a bug and need to see actual runtime state, not more code analysis.
+
 #### `/prototype-migrate`
 
 For existing Design Studio work. The `prototype-analyzer` agent reads your prototype, compares it against Beacon's architecture, identifies what already exists in Beacon, what's missing, what conflicts with Beacon's patterns, and estimates complexity.
@@ -260,7 +267,7 @@ Agents are specialized workers that commands delegate to. You usually don't invo
 | `feature-team` | Orchestrates the full build pipeline: research, plan, implement, test, review, quality | `/feature-dev` |
 | `prototype-analyzer` | Inventories a prototype and maps it against Beacon | `/prototype-migrate` |
 | `codebase-pattern-reviewer` | Reads adjacent code to catch semantic duplication and architectural drift | `/pr-prep` (Wave 3) |
-| `dialpad-design` | Reviews UI against Dialpad's 7 Design Tenets | Automatically on UI work, or ask directly |
+| `dialpad-design` | Reviews UI against Dialpad's 7 Design Tenets, covering layout, voice & tone, interaction, animation, motion, typography, and color | Automatically on UI work, as part of `/pr-prep`, or ask directly |
 | `documentation-architect` | Ensures docs exist and are accurate | `/pr-prep` (Wave 4) |
 | `error-resolver` | Diagnoses and fixes errors | When something breaks |
 | `web-research-specialist` | Researches external libraries and patterns | `/shaping` spikes |
@@ -304,6 +311,8 @@ Skills are knowledge that Claude loads when relevant. You don't invoke them. The
 | `unit-testing` | Vitest patterns, mock typing, component stubs |
 | `workflow-edit` | Safe editing of GitHub Actions workflows |
 | `media-device-enforcer` | WebRTC device patterns for meetings |
+| `feature-flags` | How to create feature flags consistently in Beacon |
+| `jira-management` | Lets Claude create and update Jira tickets naturally — say "update the Jira" or "create a ticket" and it handles it. Different from `/jira-create`, which is a user command you invoke manually. |
 
 The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, and `frontend-patterns`. The rest help Claude write better code, which means the code it writes for you is already following the rules.
 
