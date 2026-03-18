@@ -6,7 +6,7 @@ export default defineConfig({
   description: '1:1 training for designers learning to build with AI',
   themeConfig: {
     nav: [
-      { text: 'Welcome', link: '/' },
+      { text: 'Overview', link: '/' },
       { text: 'The process', link: '/process' },
       { text: 'Beacon toolkit', link: '/toolkit' },
       {
@@ -31,7 +31,7 @@ export default defineConfig({
       {
         text: '',
         items: [
-          { text: 'Welcome', link: '/' },
+          { text: 'Overview', link: '/' },
           { text: 'The process', link: '/process' },
           { text: 'Beacon toolkit', link: '/toolkit' },
         ],
