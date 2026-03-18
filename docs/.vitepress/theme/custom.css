@@ -139,8 +139,6 @@
 .vp-doc h2 {
   font-weight: 600;
   font-size: 1.35rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .vp-doc h3 {
