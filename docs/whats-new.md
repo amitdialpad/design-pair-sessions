@@ -47,7 +47,7 @@ Beacon has a settings area (gear icon) and an Agents Studio area (1/0 icon in th
 
 Design Studio prototypes can't be ported into Beacon wholesale. Use `/prototype-migrate` to map what carries over and what needs to be rebuilt.
 
----
+:::details View past updates
 
 **March 13, 2026: Beacon updates**
 
@@ -56,6 +56,8 @@ New [Adding data to Beacon](https://github.com/dialpad/beacon-app/blob/main/docs
 Plan files in `/docs/plans/` are deleted when a branch merges. Move anything worth keeping to Jira before you merge.
 
 `/jira-create` now sets story points automatically.
+
+:::
 
 ---
 

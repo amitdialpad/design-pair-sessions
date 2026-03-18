@@ -50,7 +50,8 @@ target    = sys.argv[2]
 with open(feed_file) as f:
     root = ET.fromstring(f.read())
 
-items = root.findall('.//item')[:5]
+VISIBLE = 4
+items = root.findall('.//item')[:9]
 blocks = []
 
 for item in items:
@@ -81,9 +82,20 @@ for item in items:
 
 updated = datetime.utcnow().strftime('%B %-d, %Y')
 separator = '\n\n---\n\n'
+
+visible_blocks = blocks[:VISIBLE]
+older_blocks = blocks[VISIBLE:]
+
+body = separator.join(visible_blocks)
+
+if older_blocks:
+    body += '\n\n:::details View past updates\n\n'
+    body += separator.join(older_blocks)
+    body += '\n\n:::'
+
 new_block = (
     '<!-- CLAUDE_FEED_START -->\n'
-    + separator.join(blocks)
+    + body
     + f'\n\n*Updated {updated}*\n'
     + '<!-- CLAUDE_FEED_END -->'
 )
