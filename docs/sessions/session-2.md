@@ -20,15 +20,25 @@ Watch specifically for:
 
 You take the next ticket. Your facilitator navigates.
 
-- **Describe** what you want to Claude in plain language
+When you run `/feature-dev`, it runs a pipeline: research, plan, implement, test, review. You'll see phases completing and a review gate between each one. Nothing moves forward without your approval. It takes a few minutes. That's normal.
+
+The loop:
+
+- **Describe** what you want in plain language
 - **Look** at the result in the browser
 - **React** honestly: "the spacing is wrong", "that's not the right component", "what about the hover state?"
 - **Tell Claude** to fix it
 - **Check** the result again
 
+Plain language means describing what you see and what you want, not how to build it:
+
+> "Add a warning banner at the top of the page that only shows when the balance is below $10" ✓
+>
+> "Create a DtNotice with kind='warning' that conditionally renders based on isLowBalance" ✗
+
 Repeat until it's right. Then check accessibility before you move on.
 
-When you're done: run `/pr-create` to get a preview link and send it in Dialpad. If the work isn't finished yet, `/pr-create make it a draft PR` opens a draft so you can share early for a direction check. That's the full loop.
+When you're done: run `/pr-create` to get a preview link and send it in Dialpad. If the work isn't finished, `/pr-create make it a draft PR` opens a draft so you can share early for a direction check. That's the full loop.
 
 **If you're not sure where to start:**
 - Ask Claude what the ticket needs. It has the breadboard context.
@@ -37,7 +47,10 @@ When you're done: run `/pr-create` to get a preview link and send it in Dialpad.
 
 ## Part 3: Reflection (5 min)
 
-What felt natural? What felt scary? What do you want more practice with?
+- When you described what you wanted — did it come out as plain language or did you try to write it like code?
+- When something came back wrong — did you know how to describe the problem?
+- What felt like your judgment call, not Claude's?
+- What do you want more practice with before Session 3?
 
 ## Before next session
 
