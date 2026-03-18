@@ -9,7 +9,6 @@ export default defineConfig({
       { text: 'Welcome', link: '/' },
       { text: 'The process', link: '/process' },
       { text: 'Beacon toolkit', link: '/toolkit' },
-      { text: 'Project IRL', link: '/story' },
       {
         text: 'Pair sessions',
         items: [
@@ -23,6 +22,7 @@ export default defineConfig({
         items: [
           { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
+          { text: 'Project IRL', link: '/story' },
           { text: "What's new", link: '/whats-new' },
         ],
       },
@@ -34,7 +34,6 @@ export default defineConfig({
           { text: 'Welcome', link: '/' },
           { text: 'The process', link: '/process' },
           { text: 'Beacon toolkit', link: '/toolkit' },
-          { text: 'Project IRL', link: '/story' },
         ],
       },
       {
@@ -50,6 +49,7 @@ export default defineConfig({
         items: [
           { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
+          { text: 'Project IRL', link: '/story' },
           { text: "What's new", link: '/whats-new' },
         ],
       },
