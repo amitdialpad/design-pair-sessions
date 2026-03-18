@@ -29,15 +29,15 @@ Interactive conversation that helps you define the problem and pick a solution a
 **Three ways in:**
 - **Start from the problem.** Describe what's wrong, what users need, what constraints exist. Requirements emerge from the conversation.
 - **Start from a solution.** You already have an idea. Sketch it as Shape A. Claude extracts the implicit requirements from it, then checks what it misses.
-- **Start from a vague goal.** You know roughly what you want but can't articulate it yet. Claude runs a Discovery session first — exploring the problem space with you before any shaping begins. It won't push you to pick a shape until the problem is clear.
+- **Start from a vague goal.** You know roughly what you want but can't articulate it yet. Claude runs a Discovery session first, exploring with you before any shaping begins. It won't push you to pick a shape until the problem is clear.
 
 All paths end at the fit check.
 
 **What you end up with:**
 
-**R — Requirements** (R0, R1, R2...): What must be true for any solution to be correct. Not a feature list. Not acceptance criteria. The outcome, not the mechanism. Each R gets a status: *core goal*, *must-have*, *nice-to-have*, or *out*. Max 9 top-level.
+**R: Requirements** (R0, R1, R2...): What must be true for any solution to be correct. Not a feature list. Not acceptance criteria. The outcome, not the mechanism. Each R gets a status: *core goal*, *must-have*, *nice-to-have*, or *out*. Max 9 top-level.
 
-**S — Shapes** (A, B, C...): Mutually exclusive solution approaches. Each shape is broken into numbered parts (A1, A2, A3...) describing exactly what you'd build.
+**S: Shapes** (A, B, C...): Mutually exclusive solution approaches. Each shape is broken into numbered parts (A1, A2, A3...) describing exactly what you'd build.
 
 Parts are mechanisms, not intentions:
 
@@ -70,15 +70,15 @@ One rule: every name in a breadboard must point to something real in the code. N
 
 **The four tables:**
 
-**P — Places**: Bounded contexts of interaction. Test: can you interact with what's behind this affordance without leaving the current context? No means it's a different Place. A modal is a Place. A dropdown is not.
+**P: Places**: Bounded contexts of interaction. Test: can you interact with what's behind this affordance without leaving the current context? No means it's a different Place. A modal is a Place. A dropdown is not.
 
-**U — UI affordances**: What the user sees and acts on. Vue components, Dialtone components, buttons, inputs, rendered rows.
+**U: UI affordances**: What the user sees and acts on. Vue components, Dialtone components, buttons, inputs, rendered rows.
 
-**N — Code affordances**: What makes the UI work. Composables, computed properties, functions, mock data exports.
+**N: Code affordances**: What makes the UI work. Composables, computed properties, functions, mock data exports.
 
-**S — Data stores**: Where data lives. Mock data exports, Pinia stores, reactive refs, IndexedDB tables.
+**S: Data stores**: Where data lives. Mock data exports, Pinia stores, reactive refs, IndexedDB tables.
 
-**Wiring — two columns every row has:**
+**Wiring: two columns every row has:**
 - **Wires Out**: what this affordance triggers or calls
 - **Returns To**: where this affordance's output flows back to
 
@@ -98,13 +98,13 @@ User selects "Power Dialer" from the channel filter (U13)
 
 A UI affordance with no data source means something is missing. The breadboard catches that before you write a line of code.
 
-**Slicing — how breadboarding ends:**
+**Slicing: how breadboarding ends:**
 
 Affordances group into **vertical implementation slices** (V1, V2...). Each slice cuts through all layers (UI, logic, data) and ends in something you can demo. "See Power Dialer rows in the table, filter to PD only" is a valid slice. "Set up all the mock data" is not. Nothing to show.
 
 Max 9 slices. If you need more, the shape is too large for one cycle. Each slice becomes a PR.
 
-**How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done — that way each slice ships safely without exposing unfinished work.
+**How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done. That way each slice ships safely without exposing unfinished work.
 
 **Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When the branch merges, that folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.
 
@@ -220,7 +220,7 @@ Creates Jira tickets for new work or things you discovered while building. Sets 
 
 #### `/debug-trace`
 
-When a bug isn't getting resolved and Claude keeps reading more and more code to find it, stop and use this instead. It adds debug logs to the specific code you point at. Those logs output to the browser console at runtime. Share the console output with Claude to pinpoint the problem — much faster than letting it read files.
+When a bug isn't getting resolved and Claude keeps reading more and more code to find it, stop and use this instead. It adds debug logs to the specific code you point at. Those logs output to the browser console at runtime. Share the console output with Claude to pinpoint the problem. Much faster than letting it read files.
 
 **Use when:** You're going in circles on a bug and need to see actual runtime state, not more code analysis.
 
@@ -312,7 +312,7 @@ Skills are knowledge that Claude loads when relevant. You don't invoke them. The
 | `workflow-edit` | Safe editing of GitHub Actions workflows |
 | `media-device-enforcer` | WebRTC device patterns for meetings |
 | `feature-flags` | How to create feature flags consistently in Beacon |
-| `jira-management` | Lets Claude create and update Jira tickets naturally — say "update the Jira" or "create a ticket" and it handles it. Different from `/jira-create`, which is a user command you invoke manually. |
+| `jira-management` | Lets Claude create and update Jira tickets naturally. Say "update the Jira" or "create a ticket" and it handles it. Different from `/jira-create`, which is a user command you invoke manually. |
 
 The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, and `frontend-patterns`. The rest help Claude write better code, which means the code it writes for you is already following the rules.
 

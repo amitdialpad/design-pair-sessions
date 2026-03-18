@@ -27,7 +27,7 @@ pnpm install
 pnpm approve-builds
 ```
 
-`approve-builds` is one-time. You'll see a list of builds — select "electron" and confirm. Then run these in two separate terminal windows:
+`approve-builds` is one-time. You'll see a list of builds. Select "electron" and confirm. Then run these in two separate terminal windows:
 
 ```
 # Terminal 1

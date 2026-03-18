@@ -47,8 +47,8 @@ When you're done: run `/pr-create` to get a preview link and send it in Dialpad.
 
 ## Part 3: Reflection (5 min)
 
-- When you described what you wanted — did it come out as plain language or did you try to write it like code?
-- When something came back wrong — did you know how to describe the problem?
+- When you described what you wanted: did it come out as plain language or did you try to write it like code?
+- When something came back wrong: did you know how to describe the problem?
 - What felt like your judgment call, not Claude's?
 - What do you want more practice with before Session 3?
 
