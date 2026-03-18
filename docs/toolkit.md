@@ -230,6 +230,8 @@ For existing Design Studio work. The `prototype-analyzer` agent reads your proto
 
 The output is a gap analysis that feeds directly into `/shaping`. Your prototype isn't wasted. It's a starting point.
 
+One thing to know: Design Studio prototypes can't be dropped into Beacon as-is. They have to come over in pieces. This command maps the gap so you know which pieces, in what order.
+
 **Use when:** You have a Design Studio prototype and want to plan its Beacon version.
 
 ### Advanced (you'll find these when you need them)
