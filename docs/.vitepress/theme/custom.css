@@ -337,3 +337,46 @@
 .vp-doc hr {
   border-color: var(--vp-c-divider);
 }
+
+/* ─── Details / collapsible — plain text, no box ─── */
+
+.vp-doc .custom-block.details {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.vp-doc .custom-block.details summary {
+  font-size: 0.875rem;
+  color: var(--vp-c-brand-1);
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.vp-doc .custom-block.details summary::-webkit-details-marker {
+  display: none;
+}
+
+.vp-doc .custom-block.details summary::before {
+  content: '›';
+  font-size: 1rem;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.vp-doc .custom-block.details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.vp-doc .custom-block.details[open] {
+  padding-top: 0;
+}
+
+.vp-doc .custom-block.details > *:not(summary) {
+  margin-top: 1.2rem;
+}
