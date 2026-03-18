@@ -20,7 +20,24 @@ BeaconComposer recipe is live with dedicated content slots and rich text renderi
 
 New Contact Center schema: contact centers, memberships, settings, managed phone numbers, operator skills, operating hour profiles, dispositions, and groups. The data layer is built. UI is next. Ask Josh if you want to start it.
 
-Beacon now runs as an Electron desktop app. Setup instructions in #ai-coding.
+Beacon now runs as an Electron desktop app. To set it up:
+
+```
+pnpm install
+pnpm approve-builds
+```
+
+`approve-builds` is one-time. You'll see a list of builds — select "electron" and confirm. Then run these in two separate terminal windows:
+
+```
+# Terminal 1
+pnpm dev
+
+# Terminal 2
+pnpm electron:dev
+```
+
+The Apple top bar gets a Server menu for switching between your localhost and the main URL. A few things are still rough (DevTools PiP, OS notifications) but it works.
 
 ---
 
