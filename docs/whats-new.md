@@ -1,8 +1,36 @@
 # What's new in Beacon
 
-Changes detected in [beacon-app/.claude/](https://github.com/dialpad/beacon-app/tree/main/.claude). Updated daily. When changes appear here, the [toolkit](/toolkit) page may need updating.
+Recent updates to Beacon from Josh — features, schema changes, and Claude tool improvements. The toolkit page reflects all of these.
 
-*No changes detected yet. This page updates automatically when Josh modifies commands, skills, agents, hooks, or rules in Beacon.*
+**March 18, 2026 — Claude tool updates**
+
+Expanded `dialpad-design` agents now cover layout, voice & tone, interaction, animation, motion, typography, and color. `/pr-prep` includes a design review check as part of the static analysis wave.
+
+`/shaping` has a new Discovery mode. If your goal is vague, Claude will explore the problem space with you before pushing to pick a shape. You no longer need it figured out before you start.
+
+New `/debug-trace` command: adds debug logs to the code you point at, outputs runtime state to the console. Use it when you're going in circles on a bug instead of letting Claude keep reading files.
+
+New skills: `feature-flags` (create flags consistently) and `jira-management` (say "update the Jira" or "create a ticket" — Claude handles it without a slash command).
+
+---
+
+**March 18, 2026 — Beacon features**
+
+BeaconComposer recipe is live with dedicated content slots and rich text rendering in conversation rows. Storybook for unmigrated Beacon components coming soon.
+
+New Contact Center schema: contact centers, memberships, settings, managed phone numbers, operator skills, operating hour profiles, dispositions, and groups. The data layer is built. UI is next — ask Josh if you want to start it.
+
+Beacon now runs as an Electron desktop app. Setup instructions in #ai-coding.
+
+---
+
+**March 13, 2026 — Beacon updates**
+
+New [Adding data to Beacon](https://github.com/dialpad/beacon-app/blob/main/docs/development/adding-data-to-beacon.md) guide: schema design, the controller pattern, and the mock data pipeline. Read it before adding any new entity type.
+
+Plan files in `/docs/plans/` are deleted when a branch merges. Move anything worth keeping to Jira before you merge.
+
+`/jira-create` now sets story points automatically.
 
 ---
 
