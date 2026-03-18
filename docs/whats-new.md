@@ -14,14 +14,6 @@ New skills: `feature-flags` (create flags consistently) and `jira-management` (s
 
 ---
 
-**March 17, 2026: Beacon areas to know about**
-
-Beacon has a settings area (gear icon) and an Agents Studio area (1/0 icon in the left sidebar). Agents Studio is not finished yet. Both exist if you need them as a starting point for design work.
-
-Design Studio prototypes can't be ported into Beacon wholesale. Use `/prototype-migrate` to map what carries over and what needs to be rebuilt.
-
----
-
 **March 18, 2026: Beacon features**
 
 BeaconComposer recipe is live with dedicated content slots and rich text rendering in conversation rows. Storybook for unmigrated Beacon components coming soon.
@@ -46,6 +38,14 @@ pnpm electron:dev
 ```
 
 The Apple top bar gets a Server menu for switching between your localhost and the main URL. A few things are still rough (DevTools PiP, OS notifications) but it works.
+
+---
+
+**March 17, 2026: Beacon areas to know about**
+
+Beacon has a settings area (gear icon) and an Agents Studio area (1/0 icon in the left sidebar). Agents Studio is not finished yet. Both exist if you need them as a starting point for design work.
+
+Design Studio prototypes can't be ported into Beacon wholesale. Use `/prototype-migrate` to map what carries over and what needs to be rebuilt.
 
 ---
 
