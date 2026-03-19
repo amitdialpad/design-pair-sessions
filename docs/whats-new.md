@@ -66,6 +66,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Code with Claude comes to San Francisco, London, and Tokyo](https://claude.com/blog/code-with-claude-san-francisco-london-tokyo)**<br><small>Mar 18, 2026 · Claude Code</small>
+
+Technical sessions, live demos of new capabilities, and office hours with Anthropic engineers—watch live or apply to attend.
+
+---
+
 **[1M context is now generally available for Opus 4.6 and Sonnet 4.6](https://claude.com/blog/1m-context-ga)**<br><small>Mar 13, 2026 · Product announcements</small>
 
 Standard pricing now applies across the full 1M window for both models, with no long-context premium. Media limits expand to 600 images or PDF pages.
@@ -82,13 +88,13 @@ Ask Claude to explain a concept or analyze your data, and it can respond with in
 
 Claude for Excel and PowerPoint now share full context across open files, and skills make any workflow instantly repeatable.
 
----
+:::details View past updates
 
 **[Bringing Code Review to Claude Code](https://claude.com/blog/code-review)**<br><small>Mar 9, 2026 · Claude Code</small>
 
 Claude Code now dispatches a team of agents on every PR to catch bugs that skims miss. Available in research preview for Team and Enterprise.
 
-:::details View past updates
+---
 
 **[Common workflow patterns for AI agents—and when to use them](https://claude.com/blog/common-workflow-patterns-for-ai-agents-and-when-to-use-them)**<br><small>Mar 5, 2026 · Agents</small>
 
@@ -112,13 +118,7 @@ We're introducing Cowork and plugin updates that let enterprises customize Claud
 
 New plugins built for how finance actually works, plus cross-app workflows that move with you from Excel to PowerPoint to final deliverable.
 
----
-
-**[How AI helps break the cost barrier to COBOL modernization](https://claude.com/blog/how-ai-helps-break-cost-barrier-cobol-modernization)**<br><small>Feb 23, 2026 · Claude Code</small>
-
-The economics of COBOL modernization have shifted. AI makes the economics work by automating what used to require armies of consultants.
-
 :::
 
-*Updated March 18, 2026*
+*Updated March 19, 2026*
 <!-- CLAUDE_FEED_END -->
