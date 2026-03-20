@@ -66,6 +66,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Product management on the AI exponential](https://claude.com/blog/product-management-on-the-ai-exponential)**<br><small>Mar 19, 2026 · Claude Code</small>
+
+Claude Code’s Head of Product Cat Wu shares how teams should rethink their workflows and roadmaps in the face of rapidly evolving model intelligence.
+
+---
+
 **[Code with Claude comes to San Francisco, London, and Tokyo](https://claude.com/blog/code-with-claude-san-francisco-london-tokyo)**<br><small>Mar 18, 2026 · Claude Code</small>
 
 Technical sessions, live demos of new capabilities, and office hours with Anthropic engineers—watch live or apply to attend.
@@ -82,13 +88,13 @@ Standard pricing now applies across the full 1M window for both models, with no 
 
 Ask Claude to explain a concept or analyze your data, and it can respond with interactive charts, diagrams, and visualizations — rendered inline as part of the conversation.
 
----
+:::details View past updates
 
 **[Advancing Claude for Excel and PowerPoint](https://claude.com/blog/claude-excel-powerpoint-updates)**<br><small>Mar 11, 2026 · Enterprise AI</small>
 
 Claude for Excel and PowerPoint now share full context across open files, and skills make any workflow instantly repeatable.
 
-:::details View past updates
+---
 
 **[Bringing Code Review to Claude Code](https://claude.com/blog/code-review)**<br><small>Mar 9, 2026 · Claude Code</small>
 
@@ -112,13 +118,7 @@ Skill authors now have tools to verify their skills work, catch regressions, and
 
 We're introducing Cowork and plugin updates that let enterprises customize Claude to how you work. Plugins turn Claude into specialized agents for every role and department. Now, you can build private marketplaces to distribute them across your organization.
 
----
-
-**[Cowork and plugins for finance](https://claude.com/blog/cowork-plugins-finance)**<br><small>Feb 24, 2026 · Enterprise AI</small>
-
-New plugins built for how finance actually works, plus cross-app workflows that move with you from Excel to PowerPoint to final deliverable.
-
 :::
 
-*Updated March 19, 2026*
+*Updated March 20, 2026*
 <!-- CLAUDE_FEED_END -->
