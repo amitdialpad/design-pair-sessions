@@ -20,6 +20,12 @@ When it's done, it suggests `/shaping` as the next step but doesn't start it aut
 
 **Use when:** You're starting something new and need a ticket and branch.
 
+#### `/framing-doc`
+
+Use this before `/shaping` when you're working from raw source material — transcripts, Slack threads, Jira tickets, research notes. It turns that material into an evidence-based problem frame. Every claim in the Problem and Outcome must trace back to a specific person or moment in the source, or it gets dropped.
+
+**Use when:** You have raw material and need to distill it into a solid problem frame before shaping begins.
+
 #### `/shaping`
 
 Interactive conversation that helps you define the problem and pick a solution approach before building. Not a form to fill out. A back-and-forth with Claude where you work through what you're trying to solve.
@@ -44,7 +50,7 @@ Parts are mechanisms, not intentions:
 *Intention:* "Handle Power Dialer billing"
 *Mechanism:* "New Transaction entries with `type: 'Power Dialer'` and `walletSource: 'Calling Commit'` added to MOCK_TRANSACTIONS in billingMockData.ts"
 
-**Fit check**: Requirements as rows, shapes as columns. Binary pass/fail. If a shape passes everything but still feels wrong, there's a missing requirement. This is what turns a discussion into a decision.
+**Fit check**: Requirements as rows, shapes as columns. Binary pass/fail. If a shape passes everything but still feels wrong, there's a missing requirement. This is what turns a discussion into a decision. For early-stage work where requirements aren't fully defined yet, there's also a macro fit-check: two columns (Addressed? / Answered?) that catch gaps before committing to a shape. 🟡 change markers track what shifted during the session.
 
 **One shape or multiple?** Use multiple shapes when there's a real architectural fork: "do we build a new controller or extend the existing one?" Use a single shape when the solution space is already constrained, the PRD specifies the approach, or there's no meaningful choice to make.
 
@@ -60,7 +66,13 @@ Parts are mechanisms, not intentions:
 
 **Use when:** You have a problem to solve, a solution to test, or even just a vague goal. You don't need it figured out before you start.
 
-#### `/breadboarding`
+#### `/kickoff-doc`
+
+For collaborative work. Takes a kickoff transcript and turns it into a territory-based builder reference document. Design decisions go inline where they matter, not in a grab-bag section at the end. Structured around the work, not the timeline.
+
+**Use when:** You're kicking off a project with others and need a shared reference that captures what was decided and where it applies.
+
+#### `/breadboard`
 
 Takes the selected shape and traces every part of it through the real codebase. You cannot breadboard without a selected shape.
 
@@ -113,7 +125,7 @@ Slices follow a consistent order:
 
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done. That way each slice ships safely without exposing unfinished work.
 
-**Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When the branch merges, that folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.
+**Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When you run `/pr-prep`, it copies those documents into the PR so reviewers can read through your plan. When the branch merges, the folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.
 
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
@@ -178,7 +190,7 @@ The quality gate before you open a PR. Runs 6 waves of automated checks:
 2. **Gate decision**: stops you if the build or types are broken
 3. **Scope analysis**: classifies what changed, cleans up AI attribution in commit messages
 4. **Team review** (parallel agents): code reviewer, pattern reviewer, test analyzer, silent failure hunter, comment analyzer, type design analyzer. Each runs independently and reports back.
-5. **Static analysis**: accessibility audit (catches clickable divs, missing alt text, broken tab order), documentation audit, Dialtone compliance check, design review (layout, typography, color, voice & tone, interaction patterns)
+5. **Static analysis**: accessibility audit (catches clickable divs, missing alt text, broken tab order), documentation audit, Dialtone compliance check, design review (layout, typography, color, voice & tone, interaction patterns), breadboard-reflection audit (verifies the breadboard against what was actually built)
 6. **Code simplifier**: optional cleanup if nothing is blocking
 
 Output: a single report telling you what's blocking, what's a warning, what's a suggestion, and what's done well. Does not create the PR.
@@ -206,6 +218,18 @@ Pulls automated review comments from your PR and helps you triage them: which on
 **Use when:** Your PR has review feedback and you want to work through it systematically.
 
 ### Along the way
+
+#### `/breadboard-reflection`
+
+Two-phase audit for verifying a breadboard against the actual code. First phase looks at what's there (SEE). Second phase checks if it's right (REFLECT). Includes a naming test — affordances should use single-verb names — and a design smells catalog. Also runs automatically as part of `/pr-prep` Wave 5.
+
+**Use when:** You want to verify your breadboard reflects what was actually built, not just what was planned.
+
+#### `/branch-prune`
+
+Cleans up local branches that were deleted on the server when a PR was merged or closed. Keeps your local repo tidy without having to remember the git commands.
+
+**Use when:** Your branch list is cluttered with old work.
 
 #### `/bug-hunt`
 

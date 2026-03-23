@@ -2,6 +2,28 @@
 
 Recent updates to Beacon from Josh: features, schema changes, and Claude tool improvements. The toolkit page reflects all of these.
 
+**March 23, 2026: Planning tools overhaul**
+
+`/breadboarding` is now `/breadboard`. The command is significantly enhanced with better chunking, navigation wiring rules, support for multi-system diagrams, and labeled flows.
+
+Two new commands in the planning pipeline: `/framing-doc` (turn raw source material into an evidence-based problem frame before shaping) and `/kickoff-doc` (for collaborative work — creates a territory-based builder reference from a kickoff transcript).
+
+New `/breadboard-reflection` command: two-phase audit that verifies a breadboard against what was actually built. Also runs automatically in `/pr-prep` Wave 5.
+
+`/shaping` updated with a macro fit-check for early-stage work and 🟡 change markers. When you run `/pr-prep`, it now copies your shaping and breadboarding documents into the PR so reviewers can read them.
+
+New `/branch-prune` command: cleans up local branches that were deleted on the server after a PR merged.
+
+All Claude tools in Beacon were rewritten based on updated Anthropic best practices. Things should trigger more reliably.
+
+---
+
+**March 23, 2026: AI writing tools**
+
+Beacon's autocomplete and AI writing tools are updated. You can now preview copy before accepting it and refine further with follow-up prompts. Try it.
+
+---
+
 **March 18, 2026: Claude tool updates**
 
 Expanded `dialpad-design` agents now cover layout, voice & tone, interaction, animation, motion, typography, and color. `/pr-prep` includes a design review check as part of the static analysis wave.
