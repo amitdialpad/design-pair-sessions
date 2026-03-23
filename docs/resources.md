@@ -66,6 +66,16 @@ Josh wrote this for designers working in Beacon. It covers how the code is organ
 | [Claude Code: From Zero to Daily Driver](https://gist.github.com/hynes-dialpad/9cd9ca443f7c0e5a6caf8f97d85f563a) | Installation, mental models, session management, CLAUDE.md setup, common failure patterns, daily habits. Written for the Dialpad team. |
 | [Skills vs Subagents vs Commands](https://gist.github.com/hynes-dialpad/d38e4408b51c89b500a9dff541cb95ca) | Clears up the most confusing part of Claude Code's extension model. |
 
+Josh also built a [daily workflow system](https://gist.github.com/hynes-dialpad/c92af436741c6beccd5f586edf25c060) — progress tracked automatically, open items surfaced every morning, nothing falling through the cracks. It has three parts:
+
+| Part | What it does |
+|------|-------------|
+| [Notes system](https://gist.github.com/hynes-dialpad/c92af436741c6beccd5f586edf25c060#file-setup-notes-system-md) | Three hooks that auto-maintain session notes as you work. No manual logging. Survives context compression. |
+| [Integrations](https://gist.github.com/hynes-dialpad/c92af436741c6beccd5f586edf25c060#file-setup-integrations-md) | Glean (calendar + email), GitHub CLI, Jira CLI, Dialpad MCP. Feed live data into the daily commands. All optional. |
+| [Daily commands](https://gist.github.com/hynes-dialpad/c92af436741c6beccd5f586edf25c060#file-setup-daily-commands-md) | `/day-start` (morning briefing), `/day-wrap` (end of day), `/wrap` (end of session), `/snippet` (weekly update), `/reflect` (extract learnings). |
+
+Install integrations first, then daily commands. The install prompt asks which integrations you have and skips the rest. Start with just the notes system if you want to keep it simple.
+
 ## Learning resources
 
 | Resource | What it is |
