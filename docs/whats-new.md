@@ -88,6 +88,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use)**<br><small>Mar 23, 2026 · Product announcements</small>
+
+Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
+
+---
+
 **[Product management on the AI exponential](https://claude.com/blog/product-management-on-the-ai-exponential)**<br><small>Mar 19, 2026 · Claude Code</small>
 
 Claude Code’s Head of Product Cat Wu shares how teams should rethink their workflows and roadmaps in the face of rapidly evolving model intelligence.
@@ -104,13 +110,13 @@ Technical sessions, live demos of new capabilities, and office hours with Anthro
 
 Standard pricing now applies across the full 1M window for both models, with no long-context premium. Media limits expand to 600 images or PDF pages.
 
----
+:::details View past updates
 
 **[Claude now creates interactive charts, diagrams and visualizations](https://claude.com/blog/claude-builds-visuals)**<br><small>Mar 12, 2026</small>
 
 Ask Claude to explain a concept or analyze your data, and it can respond with interactive charts, diagrams, and visualizations — rendered inline as part of the conversation.
 
-:::details View past updates
+---
 
 **[Advancing Claude for Excel and PowerPoint](https://claude.com/blog/claude-excel-powerpoint-updates)**<br><small>Mar 11, 2026 · Enterprise AI</small>
 
@@ -134,13 +140,7 @@ Practical guidance on how to structure agent tasks using three common workflow p
 
 Skill authors now have tools to verify their skills work, catch regressions, and improve descriptions—no coding required.
 
----
-
-**[Cowork and plugins for teams across the enterprise](https://claude.com/blog/cowork-plugins-across-enterprise)**<br><small>Feb 24, 2026 · Agents</small>
-
-We're introducing Cowork and plugin updates that let enterprises customize Claude to how you work. Plugins turn Claude into specialized agents for every role and department. Now, you can build private marketplaces to distribute them across your organization.
-
 :::
 
-*Updated March 23, 2026*
+*Updated March 24, 2026*
 <!-- CLAUDE_FEED_END -->
