@@ -88,6 +88,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Auto mode for Claude Code](https://claude.com/blog/auto-mode)**<br><small>Mar 24, 2026 · Claude Code</small>
+
+Auto mode lets Claude Code make permission decisions with built-in safeguards — fewer interruptions than default, less risk than skipping permissions.
+
+---
+
 **[Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use)**<br><small>Mar 23, 2026 · Product announcements</small>
 
 Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
@@ -104,13 +110,13 @@ Claude Code’s Head of Product Cat Wu shares how teams should rethink their wor
 
 Technical sessions, live demos of new capabilities, and office hours with Anthropic engineers—watch live or apply to attend.
 
----
+:::details View past updates
 
 **[1M context is now generally available for Opus 4.6 and Sonnet 4.6](https://claude.com/blog/1m-context-ga)**<br><small>Mar 13, 2026 · Product announcements</small>
 
 Standard pricing now applies across the full 1M window for both models, with no long-context premium. Media limits expand to 600 images or PDF pages.
 
-:::details View past updates
+---
 
 **[Claude now creates interactive charts, diagrams and visualizations](https://claude.com/blog/claude-builds-visuals)**<br><small>Mar 12, 2026</small>
 
@@ -134,13 +140,7 @@ Claude Code now dispatches a team of agents on every PR to catch bugs that skims
 
 Practical guidance on how to structure agent tasks using three common workflow patterns, with tradeoffs and benefits for each.
 
----
-
-**[Improving skill-creator: Test, measure, and refine Agent Skills](https://claude.com/blog/improving-skill-creator-test-measure-and-refine-agent-skills)**<br><small>Mar 3, 2026 · Claude Code</small>
-
-Skill authors now have tools to verify their skills work, catch regressions, and improve descriptions—no coding required.
-
 :::
 
-*Updated March 24, 2026*
+*Updated March 25, 2026*
 <!-- CLAUDE_FEED_END -->
