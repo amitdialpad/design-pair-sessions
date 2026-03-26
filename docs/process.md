@@ -49,6 +49,14 @@ You'll build things that get killed. Layouts that don't work. Features that live
 
 You're not implementing finished Figma mocks. You're using Claude as a co-builder to test whether ideas work. Claude Code is a pair partner with guardrails: one step, manual test, commit. Claude touches only the files for the current step. No autonomous refactoring unless asked. The designer directs, Claude builds, the designer evaluates.
 
+## Structure before variation
+
+Visual exploration becomes more valuable when the underlying structure is solid. Build the data and logic layer cleanly first — with a clear separation between model, controller, and view — and you gain real freedom in the view. You can try multiple layouts, discard the ones that don't work, and keep the structure intact. The view reacts to what the controller says. It does not contain mixed logic.
+
+The inverse is harder. Exploring visually on top of a tangled data model means every visual change risks breaking something structural.
+
+For multiple UI states (error, loading, empty, restricted access, overdue conditions), prefer simulated controls over proliferating feature flags. A controls panel that lets you switch between states and watch the view react is more flexible, more testable, and easier to share than a flag for every condition.
+
 ## Figma and code: when to be where
 
 **Start in Figma when** you need to explore visual directions quickly. Layout options, component choices, spacing, visual hierarchy. Figma is faster than code for purely visual exploration. You can try 5 layout variants in Figma in the time it takes to build one in code.
@@ -87,6 +95,20 @@ Push for specifics when you get feedback. Different people catch different thing
 The loop is tight: feedback, prompt, change, evaluate, share. What used to be a multi-day cycle (get feedback, open Figma, redesign, re-spec, hand to engineer, wait for build, review) compresses into minutes.
 
 When you run `/pr-create`, two independent AI reviewers run automatically on the PR — GPT-4.1 and Claude Sonnet 4.6. They post findings as inline comments on the code. The full review takes around 7-10 minutes. Once it's done, run `/pr-comments` to pull the feedback into Claude and triage what to fix.
+
+## Staying clean while exploring
+
+Exploration creates mess. The mess is fine during exploration. It is not fine when it outlives the decision that created it.
+
+**Dead code.** Remove unused code before merging. AI tools treat dead code as equally important as live code, so anything left behind becomes part of the context future work builds on. Experiments that did not win should not outlive the decision.
+
+**Draft PRs.** A draft PR signals "not ready for review." Use it for work that is exploratory or incomplete. Once it is ready, un-draft it and explicitly ask for review. The draft status is not just a label — it preserves your exploration space until you actually want input.
+
+**Smaller PRs over stacked chains.** Stacked PRs create downstream blockage when an early assumption turns out to be wrong. Isolate foundational changes into their own PRs so each one can be reviewed and merged independently.
+
+**Plan files before complex code.** For anything structurally involved, write a plan file before building. Share it with a collaborator for early feedback. A one-page plan reviewed early prevents a week of rework.
+
+**Explicit blocking.** For foundational PRs that unblock downstream work, say so directly: "I'm blocked on this, I need a fast review." Reviewers cannot prioritize what they do not know is urgent.
 
 ## Evaluating what Claude builds
 

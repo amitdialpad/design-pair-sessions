@@ -111,3 +111,7 @@ Accessibility is part of design, not an add-on. Ask Claude to check. Then verify
 The design doc comes after building, not before. It captures decisions you've already made.
 
 Events follow design. You design the correct user behavior first, then define what to track.
+
+Structure before variation. Get the data layer and model/controller/view separation right first. Visual freedom follows structural discipline.
+
+Remove dead code before merging. AI tools treat unused code as equally important as live code. Experiments that did not win should not outlive the decision.
