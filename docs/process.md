@@ -51,11 +51,11 @@ You're not implementing finished Figma mocks. You're using Claude as a co-builde
 
 ## Structure before variation
 
-Visual exploration becomes more valuable when the underlying structure is solid. Build the data and logic layer cleanly first — with a clear separation between model, controller, and view — and you gain real freedom in the view. You can try multiple layouts, discard the ones that don't work, and keep the structure intact. The view reacts to what the controller says. It does not contain mixed logic.
+Visual exploration gets more valuable when the underlying structure is solid. Build the data and logic layer first, with a clean separation between model, controller, and view. Once that is done, you have real freedom in the view. Try layouts, discard what does not work, keep the structure intact. The view reacts to what the controller says. It does not contain mixed logic.
 
 The inverse is harder. Exploring visually on top of a tangled data model means every visual change risks breaking something structural.
 
-For multiple UI states (error, loading, empty, restricted access, overdue conditions), prefer simulated controls over proliferating feature flags. A controls panel that lets you switch between states and watch the view react is more flexible, more testable, and easier to share than a flag for every condition.
+For multiple UI states (error, loading, empty, restricted access), prefer simulated controls over a flag for every condition. A controls panel lets you switch between states and watch the view react. That is more flexible and easier to share.
 
 ## Figma and code: when to be where
 
@@ -100,11 +100,11 @@ When you run `/pr-create`, two independent AI reviewers run automatically on the
 
 Exploration creates mess. The mess is fine during exploration. It is not fine when it outlives the decision that created it.
 
-**Dead code.** Remove unused code before merging. AI tools treat dead code as equally important as live code, so anything left behind becomes part of the context future work builds on. Experiments that did not win should not outlive the decision.
+**Dead code.** Remove unused code before merging. AI tools treat dead code as equally important as live code. Anything left behind becomes part of the context future work builds on. Experiments that did not win should not outlive the decision.
 
-**Draft PRs.** A draft PR signals "not ready for review." Use it for work that is exploratory or incomplete. Once it is ready, un-draft it and explicitly ask for review. The draft status is not just a label — it preserves your exploration space until you actually want input.
+**Draft PRs.** A draft PR signals "not ready for review." Use it for work that is exploratory or incomplete. Once it is ready, un-draft it and ask for review. A draft is not just a label. It keeps your work yours until you want input.
 
-**Smaller PRs over stacked chains.** Stacked PRs create downstream blockage when an early assumption turns out to be wrong. Isolate foundational changes into their own PRs so each one can be reviewed and merged independently.
+**Smaller PRs over stacked chains.** Stacked PRs block downstream work when an early assumption turns out to be wrong. Isolate foundational changes into their own PRs. Each one can be reviewed and merged independently.
 
 **Plan files before complex code.** For anything structurally involved, write a plan file before building. Share it with a collaborator for early feedback. A one-page plan reviewed early prevents a week of rework.
 
