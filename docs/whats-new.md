@@ -2,6 +2,12 @@
 
 Recent updates to Beacon from Josh: features, schema changes, and Claude tool improvements. The toolkit page reflects all of these.
 
+**March 26, 2026: Shaping skills now based on Ryan Singer's official ShapeUp patterns**
+
+Ryan Singer (creator of the ShapeUp methodology) released his own official shaping skills. Josh incorporated them into Beacon this week while keeping the Beacon-specific additions. The March 23 commands below are the result. One addition not in that entry: `/shaping` now includes upstream/downstream skill references — pointers to adjacent skills that feed in or out of the shaping step.
+
+---
+
 **March 23, 2026: Planning tools overhaul**
 
 `/breadboarding` is now `/breadboard`. The command is significantly enhanced with better chunking, navigation wiring rules, support for multi-system diagrams, and labeled flows.

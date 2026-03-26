@@ -52,6 +52,8 @@ Parts are mechanisms, not intentions:
 
 **Fit check**: Requirements as rows, shapes as columns. Binary pass/fail. If a shape passes everything but still feels wrong, there's a missing requirement. This is what turns a discussion into a decision. For early-stage work where requirements aren't fully defined yet, there's also a macro fit-check: two columns (Addressed? / Answered?) that catch gaps before committing to a shape. 🟡 change markers track what shifted during the session.
 
+**Upstream/downstream skill references**: The shaping document includes pointers to the skills that feed into it (e.g. `/framing-doc`) and the skills it feeds into (e.g. `/breadboard`). Useful orientation for knowing where you are in the pipeline.
+
 **One shape or multiple?** Use multiple shapes when there's a real architectural fork: "do we build a new controller or extend the existing one?" Use a single shape when the solution space is already constrained, the PRD specifies the approach, or there's no meaningful choice to make.
 
 **When to skip shaping:**
