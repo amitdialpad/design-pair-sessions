@@ -94,6 +94,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Harnessing Claude鈥檚 intelligence](https://claude.com/blog/harnessing-claudes-intelligence)**<br><small>Apr 2, 2026</small>
+
+Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
+
+---
+
 **[Audit Claude Platform activity with the Compliance API](https://claude.com/blog/claude-platform-compliance-api)**<br><small>Mar 30, 2026 路 Product announcements</small>
 
 The Compliance API gives admins programmatic access to audit logs across their Claude Platform organization.
@@ -110,13 +116,13 @@ Auto mode lets Claude Code make permission decisions with built-in safeguards 鈥
 
 Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
 
----
+:::details View past updates
 
 **[Product management on the AI exponential](https://claude.com/blog/product-management-on-the-ai-exponential)**<br><small>Mar 19, 2026 路 Claude Code</small>
 
 Claude Code鈥檚 Head of Product Cat Wu shares how teams should rethink their workflows and roadmaps in the face of rapidly evolving model intelligence.
 
-:::details View past updates
+---
 
 **[Code with Claude comes to San Francisco, London, and Tokyo](https://claude.com/blog/code-with-claude-san-francisco-london-tokyo)**<br><small>Mar 18, 2026 路 Claude Code</small>
 
@@ -140,13 +146,7 @@ Ask Claude to explain a concept or analyze your data, and it can respond with in
 
 Claude for Excel and PowerPoint now share full context across open files, and skills make any workflow instantly repeatable.
 
----
-
-**[Bringing Code Review to Claude Code](https://claude.com/blog/code-review)**<br><small>Mar 9, 2026 路 Claude Code</small>
-
-Claude Code now dispatches a team of agents on every PR to catch bugs that skims miss. Available in research preview for Team and Enterprise.
-
 :::
 
-*Updated April 2, 2026*
+*Updated April 3, 2026*
 <!-- CLAUDE_FEED_END -->
