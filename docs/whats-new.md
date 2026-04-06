@@ -148,5 +148,5 @@ Claude for Excel and PowerPoint now share full context across open files, and sk
 
 :::
 
-*Updated April 5, 2026*
+*Updated April 6, 2026*
 <!-- CLAUDE_FEED_END -->
