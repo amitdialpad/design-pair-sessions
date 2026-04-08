@@ -94,6 +94,12 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How and when to use subagents in Claude Code](https://claude.com/blog/subagents-in-claude-code)**<br><small>Apr 7, 2026 · Claude Code</small>
+
+When to delegate research, parallelize tasks, or get a fresh review with Claude Code subagents—and when to stick with the main session.
+
+---
+
 **[Harnessing Claude’s intelligence](https://claude.com/blog/harnessing-claudes-intelligence)**<br><small>Apr 2, 2026</small>
 
 Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
@@ -110,13 +116,13 @@ The Compliance API gives admins programmatic access to audit logs across their C
 
 Auto mode lets Claude Code make permission decisions with built-in safeguards — fewer interruptions than default, less risk than skipping permissions.
 
----
+:::details View past updates
 
 **[Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use)**<br><small>Mar 23, 2026 · Product announcements</small>
 
 Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
 
-:::details View past updates
+---
 
 **[Product management on the AI exponential](https://claude.com/blog/product-management-on-the-ai-exponential)**<br><small>Mar 19, 2026 · Claude Code</small>
 
@@ -140,13 +146,7 @@ Standard pricing now applies across the full 1M window for both models, with no 
 
 Ask Claude to explain a concept or analyze your data, and it can respond with interactive charts, diagrams, and visualizations — rendered inline as part of the conversation.
 
----
-
-**[Advancing Claude for Excel and PowerPoint](https://claude.com/blog/claude-excel-powerpoint-updates)**<br><small>Mar 11, 2026 · Enterprise AI</small>
-
-Claude for Excel and PowerPoint now share full context across open files, and skills make any workflow instantly repeatable.
-
 :::
 
-*Updated April 7, 2026*
+*Updated April 8, 2026*
 <!-- CLAUDE_FEED_END -->
