@@ -94,6 +94,18 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Carta Healthcare gets AI to reason like a clinical abstractor](https://claude.com/blog/carta-healthcare-clinical-abstractor)**<br><small>Apr 8, 2026 · Enterprise AI</small>
+
+How Carta Healthcare used Claude and context engineering to build Lighthouse, a clinical abstraction platform reaching 99% accuracy across 22,000 cases a year.
+
+---
+
+**[Claude Managed Agents: get to production 10x faster](https://claude.com/blog/claude-managed-agents)**<br><small>Apr 8, 2026</small>
+
+Introducing Claude Managed Agents, a suite of composable APIs for building and deploying cloud-hosted agents at scale.
+
+---
+
 **[How and when to use subagents in Claude Code](https://claude.com/blog/subagents-in-claude-code)**<br><small>Apr 7, 2026 · Claude Code</small>
 
 When to delegate research, parallelize tasks, or get a fresh review with Claude Code subagents—and when to stick with the main session.
@@ -104,7 +116,7 @@ When to delegate research, parallelize tasks, or get a fresh review with Claude 
 
 Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
 
----
+:::details View past updates
 
 **[Audit Claude Platform activity with the Compliance API](https://claude.com/blog/claude-platform-compliance-api)**<br><small>Mar 30, 2026 · Product announcements</small>
 
@@ -116,7 +128,7 @@ The Compliance API gives admins programmatic access to audit logs across their C
 
 Auto mode lets Claude Code make permission decisions with built-in safeguards — fewer interruptions than default, less risk than skipping permissions.
 
-:::details View past updates
+---
 
 **[Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use)**<br><small>Mar 23, 2026 · Product announcements</small>
 
@@ -134,19 +146,7 @@ Claude Code’s Head of Product Cat Wu shares how teams should rethink their wor
 
 Technical sessions, live demos of new capabilities, and office hours with Anthropic engineers—watch live or apply to attend.
 
----
-
-**[1M context is now generally available for Opus 4.6 and Sonnet 4.6](https://claude.com/blog/1m-context-ga)**<br><small>Mar 13, 2026 · Product announcements</small>
-
-Standard pricing now applies across the full 1M window for both models, with no long-context premium. Media limits expand to 600 images or PDF pages.
-
----
-
-**[Claude now creates interactive charts, diagrams and visualizations](https://claude.com/blog/claude-builds-visuals)**<br><small>Mar 12, 2026</small>
-
-Ask Claude to explain a concept or analyze your data, and it can respond with interactive charts, diagrams, and visualizations — rendered inline as part of the conversation.
-
 :::
 
-*Updated April 8, 2026*
+*Updated April 9, 2026*
 <!-- CLAUDE_FEED_END -->
