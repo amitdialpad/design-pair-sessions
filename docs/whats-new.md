@@ -94,6 +94,18 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Making Claude Cowork ready for enterprise](https://claude.com/blog/cowork-for-enterprise)**<br><small>Apr 9, 2026 路 Product announcements</small>
+
+Claude Cowork is now generally available on all paid plans. Within companies, Claude Cowork has become a key part of how teams operate: handling tasks, drafting project deliverables, and keeping teams up to date.
+
+---
+
+**[The advisor strategy: Give agents an intelligence boost](https://claude.com/blog/the-advisor-strategy)**<br><small>Apr 9, 2026 路 Product announcements</small>
+
+Pair Opus as an advisor with Sonnet or Haiku as an executor, and get Opus-level intelligence in your agents at a fraction of the cost.
+
+---
+
 **[How Carta Healthcare gets AI to reason like a clinical abstractor](https://claude.com/blog/carta-healthcare-clinical-abstractor)**<br><small>Apr 8, 2026 路 Enterprise AI</small>
 
 How Carta Healthcare used Claude and context engineering to build Lighthouse, a clinical abstraction platform reaching 99% accuracy across 22,000 cases a year.
@@ -104,7 +116,7 @@ How Carta Healthcare used Claude and context engineering to build Lighthouse, a 
 
 Introducing Claude Managed Agents, a suite of composable APIs for building and deploying cloud-hosted agents at scale.
 
----
+:::details View past updates
 
 **[How and when to use subagents in Claude Code](https://claude.com/blog/subagents-in-claude-code)**<br><small>Apr 7, 2026 路 Claude Code</small>
 
@@ -116,7 +128,7 @@ When to delegate research, parallelize tasks, or get a fresh review with Claude 
 
 Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
 
-:::details View past updates
+---
 
 **[Audit Claude Platform activity with the Compliance API](https://claude.com/blog/claude-platform-compliance-api)**<br><small>Mar 30, 2026 路 Product announcements</small>
 
@@ -134,19 +146,7 @@ Auto mode lets Claude Code make permission decisions with built-in safeguards 鈥
 
 Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
 
----
-
-**[Product management on the AI exponential](https://claude.com/blog/product-management-on-the-ai-exponential)**<br><small>Mar 19, 2026 路 Claude Code</small>
-
-Claude Code鈥檚 Head of Product Cat Wu shares how teams should rethink their workflows and roadmaps in the face of rapidly evolving model intelligence.
-
----
-
-**[Code with Claude comes to San Francisco, London, and Tokyo](https://claude.com/blog/code-with-claude-san-francisco-london-tokyo)**<br><small>Mar 18, 2026 路 Claude Code</small>
-
-Technical sessions, live demos of new capabilities, and office hours with Anthropic engineers鈥攚atch live or apply to attend.
-
 :::
 
-*Updated April 9, 2026*
+*Updated April 10, 2026*
 <!-- CLAUDE_FEED_END -->
