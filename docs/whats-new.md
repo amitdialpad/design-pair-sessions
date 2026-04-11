@@ -94,11 +94,29 @@ Plan files in `/docs/plans/` are deleted when a branch merges. Move anything wor
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)**<br><small>Apr 10, 2026 · Agents</small>
+
+Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
+
+---
+
+**[Seeing like an agent: how we design tools in Claude Code](https://claude.com/blog/seeing-like-an-agent)**<br><small>Apr 10, 2026 · Claude Code</small>
+
+Building Claude Code: How Anthropic designs and refines AI agent tools like AskUserQuestion and Task tool. The key is progressive disclosure and learning to "see like an agent" to maximize effectiveness.
+
+---
+
+**[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026 · Agents</small>
+
+We share our initial set of recommendations to shore up your defenses based on our own findings and security practices.
+
+---
+
 **[Making Claude Cowork ready for enterprise](https://claude.com/blog/cowork-for-enterprise)**<br><small>Apr 9, 2026 · Product announcements</small>
 
 Claude Cowork is now generally available on all paid plans. Within companies, Claude Cowork has become a key part of how teams operate: handling tasks, drafting project deliverables, and keeping teams up to date.
 
----
+:::details View past updates
 
 **[The advisor strategy: Give agents an intelligence boost](https://claude.com/blog/the-advisor-strategy)**<br><small>Apr 9, 2026 · Product announcements</small>
 
@@ -116,7 +134,7 @@ How Carta Healthcare used Claude and context engineering to build Lighthouse, a 
 
 Introducing Claude Managed Agents, a suite of composable APIs for building and deploying cloud-hosted agents at scale.
 
-:::details View past updates
+---
 
 **[How and when to use subagents in Claude Code](https://claude.com/blog/subagents-in-claude-code)**<br><small>Apr 7, 2026 · Claude Code</small>
 
@@ -128,25 +146,7 @@ When to delegate research, parallelize tasks, or get a fresh review with Claude 
 
 Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
 
----
-
-**[Audit Claude Platform activity with the Compliance API](https://claude.com/blog/claude-platform-compliance-api)**<br><small>Mar 30, 2026 · Product announcements</small>
-
-The Compliance API gives admins programmatic access to audit logs across their Claude Platform organization.
-
----
-
-**[Auto mode for Claude Code](https://claude.com/blog/auto-mode)**<br><small>Mar 24, 2026 · Claude Code</small>
-
-Auto mode lets Claude Code make permission decisions with built-in safeguards — fewer interruptions than default, less risk than skipping permissions.
-
----
-
-**[Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use)**<br><small>Mar 23, 2026 · Product announcements</small>
-
-Claude now opens your apps, navigates your browser, and runs your dev tools to complete tasks. Assign from your phone with Dispatch. Research preview on macOS.
-
 :::
 
-*Updated April 10, 2026*
+*Updated April 11, 2026*
 <!-- CLAUDE_FEED_END -->
