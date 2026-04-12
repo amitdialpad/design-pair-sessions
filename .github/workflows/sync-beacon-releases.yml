@@ -19,6 +19,7 @@ jobs:
       - name: Fetch and sync Beacon releases
         env:
           GH_TOKEN: ${{ secrets.BEACON_PAT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_PAIR_SESSIONS }}
         id: sync
         run: python3 scripts/sync-releases.py
         continue-on-error: true
