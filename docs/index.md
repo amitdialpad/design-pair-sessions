@@ -79,6 +79,41 @@ When something in Beacon feels fake or weirdly simple, that's the thing telling 
 ### Week of 6–12 Apr 2026
 
 #### What actually changed
+The AI summarize pill now morphs between states and has a share button. Pass summaries to teammates without leaving the tool.
+
+Billing data got a real upgrade. `billingPlanUsage` is gone. Usage now reflects an actual date window instead of a frozen snapshot, so you're seeing accurate numbers.
+
+The licenses/SKU data layer is in place and time-filtered. Pull what you need without stale data getting in the way.
+
+Contact center views navigation is scaffolded out in v1 and v2. The foundational structure exists. If you're building on top of this, talk to Josh first.
+
+Credits and usage billing page is redesigned. v3 layout is cleaner and easier to read.
+
+#### The bigger shift
+Billing and usage data across Beacon is getting more precise. The shift is away from snapshots and toward actual time windows. This matters for any design that relies on accurate usage reporting.
+
+#### Where things are still messy
+Contact center views navigation is still foundational. The components exist but the next phase hasn't started yet.
+
+#### What's coming next
+More work on the contact center views navigation likely comes next. The scaffold is ready for it.
+
+#### Try this
+If you're building anything with billing or usage data, grab the new time-filtered `billingPlanUsage` layer and test it against a specific date range. You'll see the difference immediately compared to the old snapshot approach.
+
+#### Quick notes
+- Email HTML in the docs got fixed for proper table layout
+- Design skill ecosystem is reorganized around advisory skills
+- The summarize pill now has better visual transitions between states
+
+#### One thing to remember
+Billing data now reflects real time windows, not snapshots, so designs that depend on usage reporting are more accurate.
+
+---
+
+### Week of 6–12 Apr 2026
+
+#### What actually changed
 Josh shipped a new AI summarize pill that morphs between states and includes a share button. You can now pass summaries directly to teammates instead of copying them manually.
 
 The billing data layer got a real upgrade. `billingPlanUsage` is gone. Usage now reflects an actual date window instead of just a snapshot, which means the numbers you're looking at actually mean something.
