@@ -50,7 +50,7 @@ and a primary action button. Use Dialtone components and tokens.
 | I need a ticket and branch | `/project-start` |
 | I know enough to formalize the problem | `/shaping` |
 | I've picked a direction, map the pieces | `/breadboarding` |
-| This slice is ready to build | `/feature-dev` |
+| This slice is ready to build | `/feature-team` |
 | Clean up what I just built | `/simplify` |
 | Is this ready for review? | `/pr-prep` |
 | Time to open the PR | `/pr-create` |

@@ -16,7 +16,7 @@ Always open Claude Code from inside the Beacon folder: `cd ~/beacon-app` → `cl
 | Formalizing requirements after you understand the problem | `/shaping` in Beacon |
 | Mapping how all the pieces connect | `/breadboard` in Beacon |
 | Slicing the breadboard into Jira tickets | `/jira-create` in Beacon |
-| Building each piece of your design into working UI | `/feature-dev` in Beacon |
+| Building each piece of your design into working UI | `/feature-team` in Beacon |
 | Checking your UI against Dialpad's design principles | Ask Claude: *"Run the dialpad-design agent"* |
 | Getting early directional feedback | Loom, or open a draft PR and share the preview link in Dialpad |
 | Checking if the code is ready to share | `/pr-prep` in Beacon |
@@ -126,7 +126,7 @@ Claude writes code. You decide if it's good. "Good" for a designer means somethi
 
 ## Testing what you built
 
-After `/feature-dev` finishes, before moving to `/pr-prep`, ask:
+After `/feature-team` finishes, before moving to `/pr-prep`, ask:
 
 ```
 How do I test this?
@@ -170,7 +170,7 @@ You don't need to memorize a pipeline. Just recognize the moment.
 | "I have raw source material to turn into a problem frame" | `/framing-doc` |
 | "I know enough about this problem to write it down" | `/shaping` |
 | "I've picked a direction, let me map the pieces" | `/breadboard` |
-| "This slice is ready to build properly" | `/feature-dev` |
+| "This slice is ready to build properly" | `/feature-team` |
 | "I've got my breadboard, time to create tickets" | `/jira-create` |
 | "I need a new component scaffolded" | `/component-create` |
 | "Let me clean up what I just built" | `/simplify` |
@@ -188,6 +188,6 @@ For what each command, agent, skill, rule, and hook actually does, see [The Beac
 
 ## What the commands don't do
 
-`/shaping` can list requirements. It can't tell you which ones matter most to users. `/breadboard` can map affordances. It can't tell you if the flow feels right. `/pr-prep` can catch accessibility violations. It can't tell you if the empty state is inviting or just blank. `/feature-dev` can build what you describe. It can't tell you what to describe.
+`/shaping` can list requirements. It can't tell you which ones matter most to users. `/breadboard` can map affordances. It can't tell you if the flow feels right. `/pr-prep` can catch accessibility violations. It can't tell you if the empty state is inviting or just blank. `/feature-team` can build what you describe. It can't tell you what to describe.
 
 Your eye for spacing, typography, interaction quality, user empathy, edge cases, and the full user journey: that's what makes the output good. The commands make you fast. Your design training makes the result worth shipping.

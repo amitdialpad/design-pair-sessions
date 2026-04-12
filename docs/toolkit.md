@@ -134,23 +134,17 @@ Slices follow a consistent order:
 
 ### Building
 
-#### `/feature-dev`
+#### `/feature-team`
 
 The main build command. Hands your work to the `feature-team` agent, which orchestrates multiple specialized agents through a pipeline: research, plan, implement, test, pattern review, quality.
 
 It's smart about what you give it:
 - **Shaped slice** (has a Jira ticket, demo statement, or breadboard reference): skips research and planning, starts building
-- **Vague description**: runs the full pipeline from scratch
+- **Vague description**: runs the full pipeline from scratch. Checks if a feature flag is needed before starting.
 
 You have review gates between every phase. Nothing proceeds without your approval. This isn't autonomous. You're directing the work.
 
 **Use when:** A slice is defined enough to build. You have a clear picture of what the result should be.
-
-#### `/feature-start`
-
-Lighter than `/feature-dev`. Analyzes a feature, plans it, and scaffolds the starting files. Good for when you want to understand the scope before committing to a full build.
-
-**Use when:** You want to explore what building something would involve before actually building it.
 
 #### `/component-create`
 
@@ -251,6 +245,18 @@ Creates Jira tickets for new work or things you discovered while building. Sets 
 
 **Use when:** You found something that needs a ticket but shouldn't derail your current work.
 
+#### `/jira-done`
+
+Transitions a Jira ticket to Done. Pass the ticket key: `/jira-done DDT-1402`. If you don't pass one, it reads the ticket from your current branch name.
+
+**Use when:** Closing out a ticket after a PR merges.
+
+#### `/team-cleanup`
+
+Shuts down any currently active agent team and cleans up leftover teammates. Use this if a command fails with "Already leading team" — it means a previous workflow left an agent running.
+
+**Use when:** Something went wrong mid-build and the next command refuses to start.
+
 #### `/debug-trace`
 
 When a bug isn't getting resolved and Claude keeps reading more and more code to find it, stop and use this instead. It adds debug logs to the specific code you point at. Those logs output to the browser console at runtime. Share the console output with Claude to pinpoint the problem. Much faster than letting it read files.
@@ -281,10 +287,6 @@ Migrates old components to current Vue 3 patterns and Beacon conventions. TypeSc
 
 Audits project dependencies: security vulnerabilities, available updates, unused packages, bundle sizes.
 
-#### `/dialtone-typography-migrate`
-
-Migrates old typography CSS classes to the DtText component. Specific to Beacon's ongoing typography cleanup.
-
 #### `/batch` (Claude Code built-in)
 
 Orchestrates the same change across many files in parallel. Each unit gets its own isolated copy of the codebase, runs `/simplify` on its changes, and opens a PR. For when you need the same pattern applied across 30+ files.
@@ -299,14 +301,13 @@ Agents are specialized workers that commands delegate to. You usually don't invo
 
 | Agent | What it does | Called by |
 |---|---|---|
-| `feature-team` | Orchestrates the full build pipeline: research, plan, implement, test, review, quality | `/feature-dev` |
+| `feature-team` | Orchestrates the full build pipeline: research, plan, implement, test, review, quality | `/feature-team` |
 | `prototype-analyzer` | Inventories a prototype and maps it against Beacon | `/prototype-migrate` |
 | `codebase-pattern-reviewer` | Reads adjacent code to catch semantic duplication and architectural drift | `/pr-prep` (Wave 3) |
 | `dialpad-design` | Reviews UI against Dialpad's 7 Design Tenets, covering layout, voice & tone, interaction, animation, motion, typography, and color | Automatically on UI work, as part of `/pr-prep`, or ask directly |
 | `documentation-architect` | Ensures docs exist and are accurate | `/pr-prep` (Wave 4) |
 | `error-resolver` | Diagnoses and fixes errors | When something breaks |
 | `web-research-specialist` | Researches external libraries and patterns | `/shaping` spikes |
-| `dialtone-typography-agent` | Enforces DtText usage | `/pr-prep`, hooks |
 | `code-refactor-master` | Handles complex multi-file refactors | When refactoring is needed |
 | `refactor-swarm-orchestrator` | Coordinates parallel refactoring agents | Large refactors |
 | `webrtc-debugger` | Debugs meeting/call related issues | Meeting feature work |
@@ -334,7 +335,9 @@ Skills are knowledge that Claude loads when relevant. You don't invoke them. The
 | `accessibility-patterns` | WCAG 2.1 AA compliance: ARIA, keyboard nav, focus management, semantic HTML |
 | `frontend-patterns` | Vue 3/TypeScript patterns, MVC architecture, component conventions |
 | `data-architecture-enforcer` | Beacon's cache-first controller pattern, IndexedDB, cross-tab sync |
-| `dialtone-typography-enforcer` | DtText component usage, typography hierarchy, migration patterns |
+| `type-design` | Typography hierarchy, vertical rhythm, tone-as-architecture, density-aware sizing. Activates when building components with text content or making type decisions |
+| `motion-design` | Whether to animate, easing curves, timing, entry/exit patterns, reduced-motion. Activates when adding transitions, animations, or hover effects |
+| `interaction-design` | Keyboard contracts, focus management, action placement, touch patterns, ARIA. Builds accessibility into design decisions rather than auditing after the fact |
 | `code-quality` | Max complexity 8, no unused variables, files under 500 lines, no `any` types |
 | `permission-patterns` | How to gate features by admin role |
 | `mock-data-generator` | How to generate realistic test data |
@@ -349,7 +352,7 @@ Skills are knowledge that Claude loads when relevant. You don't invoke them. The
 | `feature-flags` | How to create feature flags consistently in Beacon |
 | `jira-management` | Lets Claude create and update Jira tickets naturally. Say "update the Jira" or "create a ticket" and it handles it. Different from `/jira-create`, which is a user command you invoke manually. |
 
-The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, and `frontend-patterns`. The rest help Claude write better code, which means the code it writes for you is already following the rules.
+The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, `frontend-patterns`, and the three design advisory skills — `type-design`, `motion-design`, and `interaction-design`. These three replaced the old `dialtone-typography-enforcer` skill. Instead of enforcing CSS migration rules, they teach Claude design thinking: typography hierarchy, when to animate, and how interactive elements should behave. They load automatically when relevant.
 
 **Want to build your own skills?** The [Skill Creator plugin](https://claude.com/plugins/skill-creator) in Claude's Plugin Marketplace now lets you create, test, and improve skills without writing code. You can run a skill against test prompts, grade outputs against expectations, and do A/B comparisons between versions. Install it in Claude by typing `/plugin` and finding `skill-creator` under `claude-plugins-official`.
 

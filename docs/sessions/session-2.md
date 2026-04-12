@@ -8,7 +8,7 @@ You're coming in with a breadboard from Session 1. This session is the build. Yo
 
 ## Part 1: Facilitator builds the first ticket (20 min)
 
-Your facilitator picks up the first ticket from the breadboard and runs `/feature-dev`. You're not watching. You're in it: calling things out, questioning decisions, catching what looks off.
+Your facilitator picks up the first ticket from the breadboard and runs `/feature-team`. You're not watching. You're in it: calling things out, questioning decisions, catching what looks off.
 
 Watch specifically for:
 - How they describe what they want to Claude. Plain language, not technical spec.
@@ -20,7 +20,7 @@ Watch specifically for:
 
 You take the next ticket. Your facilitator navigates.
 
-When you run `/feature-dev`, it runs a pipeline: research, plan, implement, test, review. You'll see phases completing and a review gate between each one. Nothing moves forward without your approval. It takes a few minutes. That's normal.
+When you run `/feature-team`, it runs a pipeline: research, plan, implement, test, review. You'll see phases completing and a review gate between each one. Nothing moves forward without your approval. It takes a few minutes. That's normal.
 
 The loop:
 
