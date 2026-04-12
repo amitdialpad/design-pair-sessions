@@ -42,40 +42,6 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
-### Week of 7–13 Apr 2026
-
-#### What actually changed
-
-`/feature-dev` and `/feature-start` are gone. They've been merged into one: `/feature-team`. Same job, cleaner name. If you've been using either, update your muscle memory. Two new ones also landed quietly: `/jira-done` (marks a ticket done without leaving the terminal) and `/team-cleanup` (tidies up after a build). Also: three new advisory skills: `type-design`, `motion-design`, `interaction-design`. Think of them like asking a specialist to look over your shoulder. Run one after you build something and it'll flag where the craft could be sharper.
-
-#### The bigger shift
-
-Beacon is a prototyping tool. Treat it like one that matters. The data in it should behave like real data. When you catch yourself faking a scenario just to test something, stop. Use a proper scenario instead. If the right one doesn't exist yet, that's a gap worth raising. Get the system design right first, then realistic data, then reusable scenarios, then automation. UI is last. You verify the structure is right through the UI. You don't start there.
-
-#### Where things are still messy
-
-Not every flow has a scenario that covers it yet. The scenario system is there, it's just not complete. So you'll probably hit gaps. The gap itself is useful information. It means something real hasn't been modelled yet.
-
-#### What's coming next
-
-The Contact Center schema shipped: contact centers, memberships, operator skills, operating hour profiles. The data layer is built. The UI layer is next. If any of your upcoming work touches contact center flows, check in before you start designing. The structure is fresh.
-
-#### Try this
-
-Run `type-design`, `motion-design`, or `interaction-design` after your next build. Pick whichever feels most relevant to what you made. It takes 30 seconds and you'll almost always get at least one thing worth acting on.
-
-#### Quick notes
-
-- The homepage now auto-syncs Beacon releases. No need to check GitHub manually
-- If you're testing something in Beacon and it only looks right with 10 records, try it with 300. Small and large environments behave differently
-- For design principle checks: you can ask Claude to run the `dialpad-design` agent any time, not just at the PR stage
-
-#### One thing to remember
-
-When something in Beacon feels fake or weirdly simple, that's the thing telling you the data model needs fixing. It's not a small thing to clean up later. It's the work.
-
----
-
 ### Week of 6–12 Apr 2026
 
 #### What actually changed

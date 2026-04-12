@@ -204,8 +204,8 @@ def _inline(text: str) -> str:
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(
         r"`([^`]+)`",
-        r'<code style="background:#f5efe3;padding:2px 6px;border-radius:3px;'
-        r'font-family:Courier New,monospace;font-size:13px;color:#8a5f1a">\1</code>',
+        r'<code style="background:#2a2720;padding:2px 7px;border-radius:3px;'
+        r'font-family:Courier New,monospace;font-size:13px;color:#d4a84b">\1</code>',
         text,
     )
     return text
@@ -213,9 +213,9 @@ def _inline(text: str) -> str:
 
 def markdown_to_html(text: str) -> str:
     """
-    Convert newsletter markdown to email-safe HTML.
-    Uses table rows for layout, all styles inline (Gmail-safe).
-    Skips the ### heading line — the caller extracts it for the header.
+    Convert newsletter markdown to dark-theme email-safe HTML.
+    All styles inline (Gmail-safe).
+    Skips the ### heading line — extracted separately for the header.
     """
     lines = text.splitlines()
     parts = []
@@ -223,18 +223,17 @@ def markdown_to_html(text: str) -> str:
 
     LABEL_STYLE = (
         "font-family:Arial,Helvetica,sans-serif;"
-        "font-size:11px;font-weight:700;text-transform:uppercase;"
-        "letter-spacing:0.1em;color:#9e7322;"
-        "padding:20px 0 6px;border-top:1px solid #e8e2d8;"
-        "margin:0"
+        "font-size:10px;font-weight:700;text-transform:uppercase;"
+        "letter-spacing:0.12em;color:#c4922a;"
+        "padding:28px 0 10px;margin:0;display:block"
     )
     P_STYLE = (
-        "font-family:Georgia,serif;font-size:15px;line-height:1.6;"
-        "color:#2d2a24;margin:0 0 14px 0"
+        "font-family:Georgia,serif;font-size:16px;line-height:1.7;"
+        "color:#c8c2b8;margin:0 0 16px 0"
     )
     LI_STYLE = (
-        "font-family:Georgia,serif;font-size:15px;line-height:1.6;"
-        "color:#2d2a24;margin:0 0 8px 0"
+        "font-family:Georgia,serif;font-size:16px;line-height:1.7;"
+        "color:#c8c2b8;margin:0 0 10px 0"
     )
 
     def close_list():
@@ -254,13 +253,12 @@ def markdown_to_html(text: str) -> str:
         elif line.startswith("- "):
             if not in_list:
                 parts.append(
-                    '<ul style="margin:0 0 16px 0;padding-left:22px">'
+                    '<ul style="margin:0 0 16px 0;padding-left:20px">'
                 )
                 in_list = True
             parts.append(f'<li style="{LI_STYLE}">{_inline(line[2:])}</li>')
         elif line.strip() in ("", "---"):
             close_list()
-            # Blank lines and dividers: let section labels provide spacing
         else:
             close_list()
             parts.append(f'<p style="{P_STYLE}">{_inline(line)}</p>')
@@ -287,46 +285,58 @@ def build_html_email(issue: str) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
-<body style="margin:0;padding:0;background-color:#f0ece4">
+<body style="margin:0;padding:0;background-color:#111010">
 <table width="100%" cellpadding="0" cellspacing="0" border="0"
-       style="background-color:#f0ece4">
+       style="background-color:#111010">
   <tr>
-    <td align="center" style="padding:32px 16px">
+    <td align="center" style="padding:0">
 
-      <!-- Card -->
       <table width="600" cellpadding="0" cellspacing="0" border="0"
-             style="max-width:600px;width:100%;background:#ffffff">
+             style="max-width:600px;width:100%;background-color:#111010">
 
         <!-- Header -->
         <tr>
-          <td style="background-color:#1a1916;padding:28px 36px 24px">
-            <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;
-                      font-size:11px;font-weight:700;letter-spacing:0.14em;
-                      text-transform:uppercase;color:#d4952a">
+          <td style="padding:48px 48px 8px">
+            <p style="margin:0 0 16px 0;font-family:Arial,Helvetica,sans-serif;
+                      font-size:10px;font-weight:700;letter-spacing:0.18em;
+                      text-transform:uppercase;color:#c4922a">
               Beacon Brief
             </p>
-            <p style="margin:0;font-family:Georgia,serif;font-size:26px;
-                      font-weight:700;color:#f0e8d8;line-height:1.2">
+            <p style="margin:0;font-family:Georgia,serif;font-size:36px;
+                      font-weight:700;color:#f0e8d8;line-height:1.15;
+                      letter-spacing:-0.01em">
               {week_heading}
             </p>
           </td>
         </tr>
 
+        <!-- Divider -->
+        <tr>
+          <td style="padding:24px 48px 0">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td style="border-top:1px solid #2e2c28;font-size:0;line-height:0">&nbsp;</td></tr>
+            </table>
+          </td>
+        </tr>
+
         <!-- Body -->
         <tr>
-          <td style="padding:8px 36px 24px">
+          <td style="padding:4px 48px 48px">
             {body_html}
           </td>
         </tr>
 
         <!-- Footer -->
         <tr>
-          <td style="padding:16px 36px 28px;border-top:2px solid #f0ece4">
+          <td style="padding:0 48px 48px">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td style="border-top:1px solid #2e2c28;font-size:0;line-height:0;padding-bottom:20px">&nbsp;</td></tr>
+            </table>
             <p style="margin:0;font-family:Arial,Helvetica,sans-serif;
-                      font-size:12px;color:#999;line-height:1.6">
-              Beacon Brief is a weekly digest for Dialpad designers.&nbsp;
+                      font-size:12px;color:#5a5650;line-height:1.6">
+              Beacon Brief &mdash; weekly digest for Dialpad designers.&nbsp;
               <a href="https://amitdialpad.github.io/design-pair-sessions/"
-                 style="color:#9e7322;text-decoration:none">
+                 style="color:#c4922a;text-decoration:none">
                 View on the site
               </a>
             </p>
@@ -334,7 +344,6 @@ def build_html_email(issue: str) -> str:
         </tr>
 
       </table>
-      <!-- /Card -->
 
     </td>
   </tr>
