@@ -74,6 +74,41 @@ Run `type-design`, `motion-design`, or `interaction-design` after your next buil
 
 When something in Beacon feels fake or weirdly simple, that's the thing telling you the data model needs fixing. It's not a small thing to clean up later. It's the work.
 
+---
+
+### Week of 6–12 Apr 2026
+
+#### What actually changed
+Josh shipped a new AI summarize pill that morphs between states and includes a share button. You can now pass summaries directly to teammates instead of copying them manually.
+
+The billing data layer got a real upgrade. `billingPlanUsage` is gone. Usage now reflects an actual date window instead of just a snapshot, which means the numbers you're looking at actually mean something.
+
+Credits & usage billing page went to v3. The layout is clearer and the data sits better on the page.
+
+Contact center views navigation scaffold landed in v1 and v2 flavors. It's the foundation for browsing between views. If you're planning to build on top of this, talk to Josh first.
+
+Design skill ecosystem got reorganized into advisory skills for better structure.
+
+#### The bigger shift
+The pattern here is about making data more honest and navigation more intentional. Snapshots became time windows. Navigation got scaffolding before features got built on top. The summarize pill now invites collaboration instead of just sitting there.
+
+#### Where things are still messy
+Contact center views are foundational right now. They're ready for the next phase but that phase hasn't started yet.
+
+#### What's coming next
+The contact center navigation scaffold suggests there's more view browsing and switching coming. The billing redesign probably means more focus on how usage data gets presented across the product.
+
+#### Try this
+If you're working with usage data in a prototype, switch to the new time-filtered billing layer instead of the old snapshot. You'll see how much clearer it is when the data actually represents a date range.
+
+#### Quick notes
+- Summarize pill now has a share action. Test it with your teammates.
+- Contact center navigation v1 and v2 are both available. Pick one based on your use case.
+- Email delivery for this newsletter just shipped, so you should see it land in your inbox next week.
+
+#### One thing to remember
+Data windows beat snapshots. Always know what time period you're actually looking at.
+
 <!-- BEACON_BRIEF_END -->
 
 ## What's new in Claude
