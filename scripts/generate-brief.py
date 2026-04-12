@@ -199,70 +199,167 @@ def load_recipients() -> list[str]:
     return []
 
 
-def markdown_to_html(text: str) -> str:
-    """Minimal markdown to HTML conversion for email."""
-    lines = text.splitlines()
-    html_lines = []
-    for line in lines:
-        # h3 — week heading
-        if line.startswith("### "):
-            html_lines.append(f'<h2 style="font-family:monospace;font-size:18px;margin:0 0 4px">{line[4:]}</h2>')
-        # h4 — section labels
-        elif line.startswith("#### "):
-            label = line[5:].upper()
-            html_lines.append(f'<p style="font-family:monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#9e7322;margin:20px 0 4px">{label}</p>')
-        # bullet
-        elif line.startswith("- "):
-            html_lines.append(f'<li style="margin:4px 0">{_inline(line[2:])}</li>')
-        # blank
-        elif line.strip() == "":
-            html_lines.append("<br>")
-        # divider
-        elif line.strip() == "---":
-            html_lines.append('<hr style="border:none;border-top:1px solid #e0d8cc;margin:24px 0">')
-        else:
-            html_lines.append(f'<p style="margin:4px 0 12px">{_inline(line)}</p>')
-    return "\n".join(html_lines)
-
-
 def _inline(text: str) -> str:
     """Convert inline markdown (bold, code) to HTML."""
-    # Bold
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
-    # Inline code
-    text = re.sub(r"`([^`]+)`", r'<code style="background:#f3ede3;padding:1px 5px;border-radius:3px;font-size:0.9em">\1</code>', text)
+    text = re.sub(
+        r"`([^`]+)`",
+        r'<code style="background:#f5efe3;padding:2px 6px;border-radius:3px;'
+        r'font-family:Courier New,monospace;font-size:13px;color:#8a5f1a">\1</code>',
+        text,
+    )
     return text
 
 
-def send_email(subject: str, plain_text: str, html_body: str, recipients: list[str]) -> bool:
+def markdown_to_html(text: str) -> str:
+    """
+    Convert newsletter markdown to email-safe HTML.
+    Uses table rows for layout, all styles inline (Gmail-safe).
+    Skips the ### heading line — the caller extracts it for the header.
+    """
+    lines = text.splitlines()
+    parts = []
+    in_list = False
+
+    LABEL_STYLE = (
+        "font-family:Arial,Helvetica,sans-serif;"
+        "font-size:11px;font-weight:700;text-transform:uppercase;"
+        "letter-spacing:0.1em;color:#9e7322;"
+        "padding:20px 0 6px;border-top:1px solid #e8e2d8;"
+        "margin:0"
+    )
+    P_STYLE = (
+        "font-family:Georgia,serif;font-size:15px;line-height:1.6;"
+        "color:#2d2a24;margin:0 0 14px 0"
+    )
+    LI_STYLE = (
+        "font-family:Georgia,serif;font-size:15px;line-height:1.6;"
+        "color:#2d2a24;margin:0 0 8px 0"
+    )
+
+    def close_list():
+        nonlocal in_list
+        if in_list:
+            parts.append('</ul>')
+            in_list = False
+
+    for line in lines:
+        if line.startswith("### "):
+            close_list()
+            # Week heading handled by the outer template
+        elif line.startswith("#### "):
+            close_list()
+            label = line[5:]
+            parts.append(f'<p style="{LABEL_STYLE}">{label.upper()}</p>')
+        elif line.startswith("- "):
+            if not in_list:
+                parts.append(
+                    '<ul style="margin:0 0 16px 0;padding-left:22px">'
+                )
+                in_list = True
+            parts.append(f'<li style="{LI_STYLE}">{_inline(line[2:])}</li>')
+        elif line.strip() in ("", "---"):
+            close_list()
+            # Blank lines and dividers: let section labels provide spacing
+        else:
+            close_list()
+            parts.append(f'<p style="{P_STYLE}">{_inline(line)}</p>')
+
+    close_list()
+    return "\n".join(parts)
+
+
+def extract_week_heading(text: str) -> str:
+    """Pull the ### Week of... line out of the issue text."""
+    for line in text.splitlines():
+        if line.startswith("### "):
+            return line[4:].strip()
+    return "This week"
+
+
+def build_html_email(issue: str) -> str:
+    week_heading = extract_week_heading(issue)
+    body_html    = markdown_to_html(issue)
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body style="margin:0;padding:0;background-color:#f0ece4">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background-color:#f0ece4">
+  <tr>
+    <td align="center" style="padding:32px 16px">
+
+      <!-- Card -->
+      <table width="600" cellpadding="0" cellspacing="0" border="0"
+             style="max-width:600px;width:100%;background:#ffffff">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#1a1916;padding:28px 36px 24px">
+            <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;
+                      font-size:11px;font-weight:700;letter-spacing:0.14em;
+                      text-transform:uppercase;color:#d4952a">
+              Beacon Brief
+            </p>
+            <p style="margin:0;font-family:Georgia,serif;font-size:26px;
+                      font-weight:700;color:#f0e8d8;line-height:1.2">
+              {week_heading}
+            </p>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:8px 36px 24px">
+            {body_html}
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="padding:16px 36px 28px;border-top:2px solid #f0ece4">
+            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;
+                      font-size:12px;color:#999;line-height:1.6">
+              Beacon Brief is a weekly digest for Dialpad designers.&nbsp;
+              <a href="https://amitdialpad.github.io/design-pair-sessions/"
+                 style="color:#9e7322;text-decoration:none">
+                View on the site
+              </a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+      <!-- /Card -->
+
+    </td>
+  </tr>
+</table>
+</body>
+</html>"""
+
+
+def send_email(subject: str, plain_text: str, issue: str, recipients: list[str]) -> bool:
     gmail_user = os.environ.get("GMAIL_USER", "").strip()
     gmail_pass = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
 
     if not gmail_user or not gmail_pass:
         print("[warn] GMAIL_USER or GMAIL_APP_PASSWORD not set — skipping email", file=sys.stderr)
         return False
-
     if not recipients:
-        print("[warn] No recipients in brief-recipients.json — skipping email", file=sys.stderr)
+        print("[warn] No recipients found — skipping email", file=sys.stderr)
         return False
 
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"]    = f"Beacon Brief <{gmail_user}>"
-    msg["To"]      = ", ".join(recipients)
+    html_full = build_html_email(issue)
 
-    html_full = f"""
-    <html><body style="font-family:Georgia,serif;font-size:15px;line-height:1.6;color:#1a1916;max-width:600px;margin:0 auto;padding:32px 24px">
-    <p style="font-family:monospace;font-size:13px;color:#9e7322;font-weight:600;letter-spacing:0.06em;margin:0 0 4px">BEACON BRIEF</p>
-    {html_body}
-    <hr style="border:none;border-top:1px solid #e0d8cc;margin:32px 0 16px">
-    <p style="font-size:12px;color:#8a8070">
-      You're receiving this because you're on the Beacon Brief list.<br>
-      <a href="https://amitdialpad.github.io/design-pair-sessions/" style="color:#9e7322">View on the site</a>
-    </p>
-    </body></html>
-    """
-
+    msg             = MIMEMultipart("alternative")
+    msg["Subject"]  = subject
+    msg["From"]     = f"Beacon Brief <{gmail_user}>"
+    msg["To"]       = ", ".join(recipients)
     msg.attach(MIMEText(plain_text, "plain"))
     msg.attach(MIMEText(html_full, "html"))
 
@@ -310,8 +407,7 @@ def main():
     recipients = load_recipients()
     _, _, week_label = get_week_range()
     subject = f"Beacon Brief: week of {week_label}"
-    html_body = markdown_to_html(issue)
-    send_email(subject, issue, html_body, recipients)
+    send_email(subject, issue, issue, recipients)
 
     print(f"Done. Week of {week_range} added.")
     sys.exit(0)
