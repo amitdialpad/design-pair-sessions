@@ -16,8 +16,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Fetch and sync Beacon releases
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: sync
         run: python3 scripts/sync-releases.py
         continue-on-error: true
