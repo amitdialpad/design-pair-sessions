@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync-feed:
@@ -26,3 +27,8 @@ jobs:
           git add docs/whats-new.md
           git diff --cached --quiet || git commit -m "sync: claude feed updated $(date -u +%Y-%m-%d)"
           git push
+
+      - name: Trigger site deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions

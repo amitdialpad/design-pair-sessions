@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync-check:
@@ -31,3 +32,9 @@ jobs:
           git add docs/whats-new.md scripts/manifest.json
           git diff --cached --quiet || git commit -m "sync: beacon toolkit changes detected $(date -u +%Y-%m-%d)"
           git push
+
+      - name: Trigger site deploy
+        if: steps.sync.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions
