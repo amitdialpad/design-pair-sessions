@@ -91,6 +91,6 @@ Install integrations first, then daily commands. The install prompt asks which i
 - [The toolkit](/toolkit) for every command explained for designers
 - [Getting started](/cheat-sheet) for quick reference
 - [Project IRL](/story) for the full arc
-- [What's new](/whats-new) for Beacon toolkit changes
+- [What's new](/) for Beacon toolkit changes
 - #ai-coding on Dialpad
 - Your facilitator, DM anytime

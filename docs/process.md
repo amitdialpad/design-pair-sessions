@@ -57,13 +57,13 @@ The inverse is harder. Exploring visually on top of a tangled data model means e
 
 For multiple UI states (error, loading, empty, restricted access), prefer simulated controls over a flag for every condition. A controls panel lets you switch between states and watch the view react. That is more flexible and easier to share.
 
-## Beacon is a production environment, not a demo
+## Treat Beacon like the real thing
 
-This is a mindset shift worth saying directly. Beacon is not a mock UI playground. The data in it should behave like production data. The scenarios should represent real product situations. When something feels fake or oversimplified, that is a signal to fix the data model, not work around it.
+Beacon is a prototyping tool. But treat the data in it like it matters. The scenarios should represent real product situations. When something feels fake or oversimplified, that is a signal to fix the data model, not work around it.
 
 In practice, this means:
 
-**Use scenarios, not one-off data.** Beacon has a scenario system for generating realistic mock data: support desk, sales team, onboarding flow. These are reusable. If you find yourself manually creating data to test a flow, stop and use a scenario instead. Designers should not have to "prepare data" to work. If the right scenario doesn't exist, that is a product gap — worth raising, not patching.
+**Use scenarios, not one-off data.** Beacon has a scenario system for generating realistic mock data: support desk, sales team, onboarding flow. These are reusable. If you find yourself manually creating data to test a flow, stop and use a scenario instead. Designers should not have to "prepare data" to work. If the right scenario doesn't exist, that is a product gap. Worth raising, not patching.
 
 **Data is shared across features.** Different parts of the product use the same underlying data. Do not create isolated, feature-specific data just to make one view work. If a billing page and a settings page both need company data, they pull from the same source. Building private data models for individual features is a pattern to avoid.
 
@@ -108,7 +108,7 @@ Push for specifics when you get feedback. Different people catch different thing
 
 The loop is tight: feedback, prompt, change, evaluate, share. What used to be a multi-day cycle (get feedback, open Figma, redesign, re-spec, hand to engineer, wait for build, review) compresses into minutes.
 
-When you run `/pr-create`, two independent AI reviewers run automatically on the PR — GPT-4.1 and Claude Sonnet 4.6. They post findings as inline comments on the code. The full review takes around 7-10 minutes. Once it's done, run `/pr-comments` to pull the feedback into Claude and triage what to fix.
+When you run `/pr-create`, two independent AI reviewers run automatically on the PR: GPT-4.1 and Claude Sonnet 4.6. They post findings as inline comments on the code. The full review takes around 7-10 minutes. Once it's done, run `/pr-comments` to pull the feedback into Claude and triage what to fix.
 
 ## Staying clean while exploring
 
@@ -146,12 +146,12 @@ After `/feature-team` finishes, before moving to `/pr-prep`, ask:
 How do I test this?
 ```
 
-Claude comes back with a checklist based on what was just built. Work through it and report back — pass, fail, or describe what went wrong:
+Claude comes back with a checklist based on what was just built. Work through it and report back. Pass, fail, or describe what went wrong:
 
 ```
 1. Pass
 2. Pass
-3. Fail — the empty state shows even when there is data
+3. Fail: the empty state shows even when there is data
 ```
 
 Claude fixes what's broken. Repeat until everything passes. Then run `/pr-prep`.

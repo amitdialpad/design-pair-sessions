@@ -35,7 +35,7 @@ REPO = "dialpad/beacon-app"
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_DIR = SCRIPT_DIR.parent
 STATE_FILE = SCRIPT_DIR / "last-beacon-release.json"
-WHATS_NEW = PROJECT_DIR / "docs" / "whats-new.md"
+WHATS_NEW = PROJECT_DIR / "docs" / "index.md"
 MARKER_START = "<!-- BEACON_RELEASES_START -->"
 MARKER_END = "<!-- BEACON_RELEASES_END -->"
 VISIBLE_COUNT = 4
@@ -329,7 +329,6 @@ def format_release(release: dict) -> str | None:
     lines = [f"**[{name}]({link}) — {date}**"]
     if body:
         lines += ["", body]
-    lines += ["", "---"]
     return "\n".join(lines)
 
 
@@ -344,9 +343,9 @@ def build_section(releases: list) -> str:
     older = formatted[VISIBLE_COUNT:]
     parts = list(visible)
     if older:
-        inner = "\n\n".join(older)
+        inner = "\n\n---\n\n".join(older)
         parts.append(f":::details View older releases\n\n{inner}\n\n:::")
-    return "\n\n".join(parts)
+    return "\n\n---\n\n".join(parts)
 
 
 def update_whats_new(section_content: str) -> bool:

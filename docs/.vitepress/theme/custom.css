@@ -314,6 +314,21 @@
   background: rgba(212, 149, 42, 0.25);
 }
 
+/* ─── Newsletter section labels (h4) ─── */
+
+.vp-doc h4 {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-brand-1);
+  margin-top: 1.6rem;
+  margin-bottom: 0.3rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 /* ─── Strong/bold — subtle amber tint ─── */
 
 .vp-doc strong {

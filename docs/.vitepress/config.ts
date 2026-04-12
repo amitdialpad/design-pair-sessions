@@ -2,11 +2,11 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/design-pair-sessions/',
-  title: 'Design Pair Sessions',
-  description: '1:1 training for designers learning to build with AI',
+  title: 'Design with Beacon',
+  description: 'A living guide to building with AI at Dialpad',
   themeConfig: {
     nav: [
-      { text: 'Overview', link: '/' },
+      { text: 'Home', link: '/' },
       { text: 'The process', link: '/process' },
       { text: 'Beacon toolkit', link: '/toolkit' },
       {
@@ -18,12 +18,11 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Reference',
+        text: 'More',
         items: [
-          { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
           { text: 'Project IRL', link: '/story' },
-          { text: "What's new", link: '/whats-new' },
+          { text: 'Resources', link: '/resources' },
         ],
       },
     ],
@@ -31,7 +30,7 @@ export default defineConfig({
       {
         text: '',
         items: [
-          { text: 'Overview', link: '/' },
+          { text: 'Home', link: '/' },
           { text: 'The process', link: '/process' },
           { text: 'Beacon toolkit', link: '/toolkit' },
         ],
@@ -47,13 +46,12 @@ export default defineConfig({
       {
         text: 'Reference',
         items: [
-          { text: 'Resources', link: '/resources' },
           { text: 'Getting started', link: '/cheat-sheet' },
           { text: 'Project IRL', link: '/story' },
-          { text: "What's new", link: '/whats-new' },
+          { text: 'Resources', link: '/resources' },
         ],
       },
     ],
-    outline: 'deep',
+    outline: { level: [2, 3] },
   },
 })

@@ -5,7 +5,7 @@
 set -e
 
 FEED_URL="https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_claude.xml"
-TARGET="docs/whats-new.md"
+TARGET="docs/index.md"
 FEED_TMP=$(mktemp)
 
 # Download feed

@@ -56,7 +56,7 @@ Everything from these sessions is on this site for reference:
 - [The toolkit](/toolkit) for every command, agent, skill, rule, and hook explained
 - [Getting started](/cheat-sheet) for quick reference prompts and translations
 - [Resources](/resources) for all links
-- [What's new](/whats-new) for Beacon toolkit changes
+- [What's new](/) for Beacon toolkit changes
 
 Your facilitator is available on Dialpad anytime you're stuck.
 

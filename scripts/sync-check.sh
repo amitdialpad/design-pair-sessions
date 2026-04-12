@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 MANIFEST="$SCRIPT_DIR/manifest.json"
 NEW_MANIFEST="$SCRIPT_DIR/manifest.new.json"
-WHATS_NEW="$PROJECT_DIR/docs/whats-new.md"
+WHATS_NEW="$PROJECT_DIR/docs/index.md"
 TODAY=$(date -u +%Y-%m-%d)
 
 if [ ! -f "$MANIFEST" ]; then
