@@ -19,6 +19,8 @@ jobs:
       - name: Generate Beacon Brief
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_PAIR_SESSIONS }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         id: brief
         run: python3 scripts/generate-brief.py
         continue-on-error: true

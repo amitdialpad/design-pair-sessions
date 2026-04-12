@@ -22,17 +22,21 @@ from __future__ import annotations
 import json
 import os
 import re
+import smtplib
 import subprocess
 import sys
 from datetime import datetime, timezone, timedelta
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-PROJECT_DIR = Path(__file__).parent.parent
-INDEX        = PROJECT_DIR / "docs" / "index.md"
-WEEKLY_NOTES = PROJECT_DIR / "scripts" / "weekly-notes.md"
+PROJECT_DIR    = Path(__file__).parent.parent
+INDEX          = PROJECT_DIR / "docs" / "index.md"
+WEEKLY_NOTES   = PROJECT_DIR / "scripts" / "weekly-notes.md"
 ARCHIVE_SCRIPT = PROJECT_DIR / "scripts" / "archive-briefs.py"
+RECIPIENTS     = PROJECT_DIR / "scripts" / "brief-recipients.json"
 
 MARKER_START    = "<!-- BEACON_BRIEF_START -->"
 MARKER_END      = "<!-- BEACON_BRIEF_END -->"
@@ -186,6 +190,94 @@ def prepend_to_brief(content: str, issue: str) -> str:
     )
 
 
+# ── Email ─────────────────────────────────────────────────────────────────────
+
+def load_recipients() -> list[str]:
+    if RECIPIENTS.exists():
+        data = json.loads(RECIPIENTS.read_text())
+        return data.get("recipients", [])
+    return []
+
+
+def markdown_to_html(text: str) -> str:
+    """Minimal markdown to HTML conversion for email."""
+    lines = text.splitlines()
+    html_lines = []
+    for line in lines:
+        # h3 — week heading
+        if line.startswith("### "):
+            html_lines.append(f'<h2 style="font-family:monospace;font-size:18px;margin:0 0 4px">{line[4:]}</h2>')
+        # h4 — section labels
+        elif line.startswith("#### "):
+            label = line[5:].upper()
+            html_lines.append(f'<p style="font-family:monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#9e7322;margin:20px 0 4px">{label}</p>')
+        # bullet
+        elif line.startswith("- "):
+            html_lines.append(f'<li style="margin:4px 0">{_inline(line[2:])}</li>')
+        # blank
+        elif line.strip() == "":
+            html_lines.append("<br>")
+        # divider
+        elif line.strip() == "---":
+            html_lines.append('<hr style="border:none;border-top:1px solid #e0d8cc;margin:24px 0">')
+        else:
+            html_lines.append(f'<p style="margin:4px 0 12px">{_inline(line)}</p>')
+    return "\n".join(html_lines)
+
+
+def _inline(text: str) -> str:
+    """Convert inline markdown (bold, code) to HTML."""
+    # Bold
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    # Inline code
+    text = re.sub(r"`([^`]+)`", r'<code style="background:#f3ede3;padding:1px 5px;border-radius:3px;font-size:0.9em">\1</code>', text)
+    return text
+
+
+def send_email(subject: str, plain_text: str, html_body: str, recipients: list[str]) -> bool:
+    gmail_user = os.environ.get("GMAIL_USER", "").strip()
+    gmail_pass = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+
+    if not gmail_user or not gmail_pass:
+        print("[warn] GMAIL_USER or GMAIL_APP_PASSWORD not set — skipping email", file=sys.stderr)
+        return False
+
+    if not recipients:
+        print("[warn] No recipients in brief-recipients.json — skipping email", file=sys.stderr)
+        return False
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"]    = f"Beacon Brief <{gmail_user}>"
+    msg["To"]      = ", ".join(recipients)
+
+    html_full = f"""
+    <html><body style="font-family:Georgia,serif;font-size:15px;line-height:1.6;color:#1a1916;max-width:600px;margin:0 auto;padding:32px 24px">
+    <p style="font-family:monospace;font-size:13px;color:#9e7322;font-weight:600;letter-spacing:0.06em;margin:0 0 4px">BEACON BRIEF</p>
+    {html_body}
+    <hr style="border:none;border-top:1px solid #e0d8cc;margin:32px 0 16px">
+    <p style="font-size:12px;color:#8a8070">
+      You're receiving this because you're on the Beacon Brief list.<br>
+      <a href="https://amitdialpad.github.io/design-pair-sessions/" style="color:#9e7322">View on the site</a>
+    </p>
+    </body></html>
+    """
+
+    msg.attach(MIMEText(plain_text, "plain"))
+    msg.attach(MIMEText(html_full, "html"))
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(gmail_user, gmail_pass)
+            server.sendmail(gmail_user, recipients, msg.as_string())
+        print(f"  Email sent to: {', '.join(recipients)}")
+        return True
+    except Exception as e:
+        print(f"[warn] Email send failed: {e}", file=sys.stderr)
+        return False
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -212,6 +304,14 @@ def main():
     print(f"  {result.stdout.strip()}")
     if result.returncode != 0:
         print(f"[warn] archive-briefs: {result.stderr.strip()}", file=sys.stderr)
+
+    # Send email
+    print("  Sending email...")
+    recipients = load_recipients()
+    _, _, week_label = get_week_range()
+    subject = f"Beacon Brief: week of {week_label}"
+    html_body = markdown_to_html(issue)
+    send_email(subject, issue, html_body, recipients)
 
     print(f"Done. Week of {week_range} added.")
     sys.exit(0)
