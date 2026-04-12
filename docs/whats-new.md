@@ -3,6 +3,112 @@
 Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/releases). Toolkit page reflects these changes.
 
 <!-- BEACON_RELEASES_START -->
+
+**[Beacon v2026.4.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.27) — 11 April 2026**
+
+## What's Changed
+* feat: DDT-1679 dialpad ai summarize pill with morphing states and share action by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/598
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.26...v2026.4.27
+
+---
+
+**[Beacon v2026.4.26](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.26) — 11 April 2026**
+
+## What's Changed
+* claude: NO-JIRA restructure design skill ecosystem into advisory skills by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/596
+* data: DDT-1758 add license/sku entities, replace billingplanusage with time-filtered usage by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/597
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.25...v2026.4.26
+
+---
+
+**[Beacon v2026.4.25](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.25) — 9 April 2026**
+
+## What's Changed
+* feat: DDT-1643 type-safe entity/operation names in broadcast and sync layer by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/595
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.24...v2026.4.25
+
+---
+
+**[Beacon v2026.4.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.24) — 9 April 2026**
+
+## What's Changed
+* bug: DDT-1766 inbox thread reply indicators and thread panel opening by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/593
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.23...v2026.4.24
+
+---
+
+:::details View older releases
+
+**[Beacon v2026.4.23](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.23) — 9 April 2026**
+
+## What's Changed
+* refactor: NO-JIRA simplify permission guard and reduce router tech debt by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/591
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.22...v2026.4.23
+
+---
+
+**[Beacon v2026.4.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.22) — 9 April 2026**
+
+## What's Changed
+* feat: DDT-1718 DDT-1759 DDT-1760 cc views navigation scaffold (v1 + v2) by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/589
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.21...v2026.4.22
+
+---
+
+**[Beacon v2026.4.21](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.21) — 8 April 2026**
+
+## What's Changed
+* refactor: DDT-1642 consolidate duplicate rich text extraction functions by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/590
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.20...v2026.4.21
+
+---
+
+**[Beacon v2026.4.20](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.20) — 8 April 2026**
+
+## What's Changed
+* refactor: DDT-1776 migrate all controllers to createLruCache by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/586
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.19...v2026.4.20
+
+---
+
+**[Beacon v2026.4.19](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.19) — 8 April 2026**
+
+## What's Changed
+* chore: DDT-1773 consolidate BillingChannel, require billing fields by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/587
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.18...v2026.4.19
+
+---
+
+**[Beacon v2026.4.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.18) — 7 April 2026**
+
+## What's Changed
+* feat: DP-175824 DDT-1756 credits & usage billing page v3 by @hynes-dialpad in https://github.com/dialpad/beacon-app/pull/567
+
+
+**Full Changelog**: https://github.com/dialpad/beacon-app/compare/v2026.4.17...v2026.4.18
+
+---
+
+:::
+
 <!-- BEACON_RELEASES_END -->
 
 **March 26, 2026: Shaping skills now based on Ryan Singer's official ShapeUp patterns**
