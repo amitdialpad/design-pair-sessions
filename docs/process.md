@@ -57,6 +57,20 @@ The inverse is harder. Exploring visually on top of a tangled data model means e
 
 For multiple UI states (error, loading, empty, restricted access), prefer simulated controls over a flag for every condition. A controls panel lets you switch between states and watch the view react. That is more flexible and easier to share.
 
+## Beacon is a production environment, not a demo
+
+This is a mindset shift worth saying directly. Beacon is not a mock UI playground. The data in it should behave like production data. The scenarios should represent real product situations. When something feels fake or oversimplified, that is a signal to fix the data model, not work around it.
+
+In practice, this means:
+
+**Use scenarios, not one-off data.** Beacon has a scenario system for generating realistic mock data: support desk, sales team, onboarding flow. These are reusable. If you find yourself manually creating data to test a flow, stop and use a scenario instead. Designers should not have to "prepare data" to work. If the right scenario doesn't exist, that is a product gap — worth raising, not patching.
+
+**Data is shared across features.** Different parts of the product use the same underlying data. Do not create isolated, feature-specific data just to make one view work. If a billing page and a settings page both need company data, they pull from the same source. Building private data models for individual features is a pattern to avoid.
+
+**The order of priorities matters.** When building, Josh's explicit ordering is: correct system design → realistic data → reusable scenarios → automation → UI comes after. Getting the structure and data right is the work. UI is how you verify the structure is right.
+
+**Size matters for testing.** Beacon supports small, medium, and large environment configurations. Each reflects real behavioral differences: feature availability, usage patterns, system complexity. Test against more than one. An empty-state screen that looks fine with 10 records can fall apart at 10,000.
+
 ## Figma and code: when to be where
 
 **Start in Figma when** you need to explore visual directions quickly. Layout options, component choices, spacing, visual hierarchy. Figma is faster than code for purely visual exploration. You can try 5 layout variants in Figma in the time it takes to build one in code.
