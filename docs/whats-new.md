@@ -1,6 +1,9 @@
 # What's new in Beacon
 
-Recent updates to Beacon from Josh: features, schema changes, and Claude tool improvements. The toolkit page reflects all of these.
+Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/releases). Toolkit page reflects these changes.
+
+<!-- BEACON_RELEASES_START -->
+<!-- BEACON_RELEASES_END -->
 
 **March 26, 2026: Shaping skills now based on Ryan Singer's official ShapeUp patterns**
 
