@@ -113,7 +113,7 @@ Building Claude Code: How Anthropic designs and refines AI agent tools like AskU
 
 ---
 
-**[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026 · Agents</small>
+**[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026</small>
 
 We share our initial set of recommendations to shore up your defenses based on our own findings and security practices.
 
@@ -149,11 +149,11 @@ When to delegate research, parallelize tasks, or get a fresh review with Claude 
 
 ---
 
-**[Harnessing Claude's intelligence](https://claude.com/blog/harnessing-claudes-intelligence)**<br><small>Apr 2, 2026</small>
+**[Harnessing Claude’s intelligence](https://claude.com/blog/harnessing-claudes-intelligence)**<br><small>Apr 2, 2026</small>
 
 Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
 
 :::
 
-*Updated April 12, 2026*
+*Updated April 13, 2026*
 <!-- CLAUDE_FEED_END -->
