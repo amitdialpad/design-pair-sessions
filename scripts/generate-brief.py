@@ -390,6 +390,12 @@ def main():
     _, _, week_range = get_week_range()
     print(f"Generating Beacon Brief for week of {week_range}...")
 
+    # Guard: skip if a brief for this week already exists
+    existing_content = INDEX.read_text()
+    if f"### Week of {week_range}" in existing_content:
+        print(f"Brief for week of {week_range} already exists — skipping.")
+        sys.exit(1)
+
     releases = get_releases_section()
     git_log  = get_git_log()
     notes    = get_weekly_notes()
