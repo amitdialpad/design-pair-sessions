@@ -37,6 +37,7 @@ INDEX          = PROJECT_DIR / "docs" / "index.md"
 WEEKLY_NOTES   = PROJECT_DIR / "scripts" / "weekly-notes.md"
 ARCHIVE_SCRIPT = PROJECT_DIR / "scripts" / "archive-briefs.py"
 RECIPIENTS     = PROJECT_DIR / "scripts" / "brief-recipients.json"
+DM_RECIPIENTS  = PROJECT_DIR / "scripts" / "brief-dm-recipients.json"
 
 MARKER_START    = "<!-- BEACON_BRIEF_START -->"
 MARKER_END      = "<!-- BEACON_BRIEF_END -->"
@@ -384,6 +385,66 @@ def send_email(subject: str, plain_text: str, issue: str, recipients: list[str])
         return False
 
 
+# ── Dialpad DM ───────────────────────────────────────────────────────────────
+
+def load_dm_recipients() -> list[str]:
+    if DM_RECIPIENTS.exists():
+        data = json.loads(DM_RECIPIENTS.read_text())
+        return data.get("contact_keys", [])
+    return []
+
+
+def send_dialpad_dms(week_range: str, contact_keys: list[str]) -> bool:
+    """Send a short DM notification to each contact_key via the Dialpad internal API.
+
+    Auth: DIALPAD_BEARER_TOKEN env var (session token from browser).
+    If the token is expired (HTTP 401), logs a warning and skips silently.
+    """
+    token = os.environ.get("DIALPAD_BEARER_TOKEN", "").strip()
+    if not token:
+        print("[warn] DIALPAD_BEARER_TOKEN not set — skipping DM", file=sys.stderr)
+        return False
+    if not contact_keys:
+        print("[warn] No DM recipients configured — skipping", file=sys.stderr)
+        return False
+
+    site_url = "https://amitdialpad.github.io/design-pair-sessions/"
+    text = f"Beacon Brief: week of {week_range} is out. {site_url}"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Api-Version": "1",
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json",
+    }
+    sent, failed = 0, 0
+    for contact_key in contact_keys:
+        payload = json.dumps({"contact_key": contact_key, "text": text}).encode()
+        req = Request(
+            "https://dialpad.com/api/feed/message/",
+            data=payload,
+            headers=headers,
+        )
+        try:
+            with urlopen(req, timeout=15) as resp:
+                if resp.status == 200:
+                    sent += 1
+                else:
+                    print(f"[warn] DM to {contact_key}: HTTP {resp.status}", file=sys.stderr)
+                    failed += 1
+        except Exception as e:
+            msg = str(e)
+            if "401" in msg:
+                print("[warn] DIALPAD_BEARER_TOKEN expired — update the GitHub secret", file=sys.stderr)
+            else:
+                print(f"[warn] DM send failed for {contact_key}: {e}", file=sys.stderr)
+            failed += 1
+
+    if sent:
+        print(f"  Dialpad DM sent to {sent} recipient(s).")
+    return sent > 0
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -423,6 +484,11 @@ def main():
     _, _, week_label = get_week_range()
     subject = f"Beacon Brief: week of {week_label}"
     send_email(subject, issue, issue, recipients)
+
+    # Send Dialpad DMs
+    print("  Sending Dialpad DMs...")
+    dm_recipients = load_dm_recipients()
+    send_dialpad_dms(week_label, dm_recipients)
 
     print(f"Done. Week of {week_range} added.")
     sys.exit(0)

@@ -21,6 +21,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_PAIR_SESSIONS }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIALPAD_BEARER_TOKEN: ${{ secrets.DIALPAD_BEARER_TOKEN }}
         id: brief
         run: python3 scripts/generate-brief.py
         continue-on-error: true
