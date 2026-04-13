@@ -48,13 +48,18 @@ RELEASES_END    = "<!-- BEACON_RELEASES_END -->"
 # ── Date helpers ──────────────────────────────────────────────────────────────
 
 def get_week_range() -> tuple[str, str, str]:
-    """Return (mon_str, sun_str, label) for the current week."""
+    """Return (mon_str, sun_str, label) for the week that just ended (Mon–Sun).
+
+    The brief runs on Monday and recaps the previous week.
+    On Monday Apr 13 → returns Mon Apr 6 – Sun Apr 12.
+    """
     today = datetime.now(timezone.utc)
-    monday = today - timedelta(days=today.weekday())
-    sunday = monday + timedelta(days=6)
+    # Yesterday is the Sunday that closed the previous week
+    sunday = today - timedelta(days=today.weekday() + 1)
+    monday = sunday - timedelta(days=6)
     mon_str = monday.strftime("%-d %b %Y")
     sun_str = sunday.strftime("%-d %b %Y")
-    # Short label e.g. "7–13 Apr 2026"
+    # Short label e.g. "6–12 Apr 2026"
     label = f"{monday.day}–{sun_str}"
     return mon_str, sun_str, label
 
