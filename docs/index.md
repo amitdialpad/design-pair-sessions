@@ -12,41 +12,25 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 **[Beacon v2026.4.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.29) — 12 April 2026**
 
-Feed area now reclaims space when you collapse the right panel. This gives you more room to work with your design feed without wasting screen real estate.
+Feed area now reclaims space when you collapse the right panel. The layout is more efficient and gives you more room to work with your components when you don't need the side panel open.
 
 ---
 
 **[Beacon v2026.4.28](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.28) — 12 April 2026**
 
-Fixed star icon incorrectly appearing next to channels in system sidebar groups. It should only show for favorited items.
+Fixed star icon appearing incorrectly on channels within system sidebar groups. The icon now only shows where it should.
 
 ---
 
 **[Beacon v2026.4.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.27) — 11 April 2026**
 
-Dialpad AI summarize pill now has morphing states and a share action. The pill animates between states as it processes, and you can share summaries directly from the component.
+Dialpad AI summarize pill now includes morphing state animations and a share action. The pill smoothly transitions between states as it processes, and you can now share summaries directly from the component.
 
 ---
 
 **[Beacon v2026.4.26](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.26) — 11 April 2026**
 
-New licensing and usage data layer: added license and SKU entities to Beacon's schema, plus replaced the old billing plan usage model with time-filtered usage queries. This gives you better control over viewing usage data across specific date ranges. The design skill ecosystem has also been restructured into advisory skills for cleaner organization. Ask Josh if you're planning work that touches billing or licensing flows.
-
----
-
-:::details View older releases
-
-**[Beacon v2026.4.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.24) — 9 April 2026**
-
-Fixed inbox thread reply indicators and thread panel opening behavior.
-
----
-
-**[Beacon v2026.4.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.22) — 9 April 2026**
-
-Contact Center views navigation scaffold is now in place (v1 + v2). The foundation for navigating between different CC views has been built out. More UI work coming next—check with Josh if you want to start building on top of this.
-
-:::
+New license and SKU entities in the data layer, plus time-filtered usage queries replacing the old billing plan usage model. The design skill ecosystem has been restructured into advisory skills for better organization. Ask Josh if you're working on billing or licensing features and want the details on the new schema.
 
 <!-- BEACON_RELEASES_END -->
 
