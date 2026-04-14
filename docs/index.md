@@ -139,5 +139,5 @@ Three patterns for building on the Claude Platform that keep pace with Claude's 
 
 :::
 
-*Updated April 13, 2026*
+*Updated April 14, 2026*
 <!-- CLAUDE_FEED_END -->
