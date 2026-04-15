@@ -79,6 +79,18 @@ Real data windows beat snapshots. Push for time-filtered, scoped data in your pr
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code)**<br><small>Apr 14, 2026 · Product announcements</small>
+
+Define repeatable routines that work your backlog, review your PRs, and respond to events in the cloud.
+
+---
+
+**[Redesigning Claude Code on desktop for parallel agents](https://claude.com/blog/claude-code-desktop-redesign)**<br><small>Apr 14, 2026</small>
+
+Today, we're releasing a redesign of the Claude Code desktop app, built to help you run more Claude Code tasks at once.
+
+---
+
 **[Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)**<br><small>Apr 10, 2026 · Agents</small>
 
 Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
@@ -89,7 +101,7 @@ Five multi-agent coordination patterns, their trade-offs, and when to evolve fro
 
 Building Claude Code: How Anthropic designs and refines AI agent tools like AskUserQuestion and Task tool. The key is progressive disclosure and learning to "see like an agent" to maximize effectiveness.
 
----
+:::details View past updates
 
 **[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026</small>
 
@@ -101,7 +113,7 @@ We share our initial set of recommendations to shore up your defenses based on o
 
 Claude Cowork is now generally available on all paid plans. Within companies, Claude Cowork has become a key part of how teams operate: handling tasks, drafting project deliverables, and keeping teams up to date.
 
-:::details View past updates
+---
 
 **[The advisor strategy: Give agents an intelligence boost](https://claude.com/blog/the-advisor-strategy)**<br><small>Apr 9, 2026 · Product announcements</small>
 
@@ -119,19 +131,7 @@ How Carta Healthcare used Claude and context engineering to build Lighthouse, a 
 
 Introducing Claude Managed Agents, a suite of composable APIs for building and deploying cloud-hosted agents at scale.
 
----
-
-**[How and when to use subagents in Claude Code](https://claude.com/blog/subagents-in-claude-code)**<br><small>Apr 7, 2026 · Claude Code</small>
-
-When to delegate research, parallelize tasks, or get a fresh review with Claude Code subagents—and when to stick with the main session.
-
----
-
-**[Harnessing Claude’s intelligence](https://claude.com/blog/harnessing-claudes-intelligence)**<br><small>Apr 2, 2026</small>
-
-Three patterns for building on the Claude Platform that keep pace with Claude's evolving intelligence while balancing latency and cost.
-
 :::
 
-*Updated April 14, 2026*
+*Updated April 15, 2026*
 <!-- CLAUDE_FEED_END -->
