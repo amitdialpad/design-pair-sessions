@@ -34,6 +34,46 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 6–12 Apr 2026
+
+Josh shipped three releases this week, and they're all about getting you more space and better context while you work. The callbar now shows which Power Dialer campaign a call belongs to, so you don't have to hunt through panels to figure out what you're looking at. The feed area expands when you collapse the right panel, giving you breathing room to actually see your designs. And we fixed a bug where star icons were showing up next to channels they shouldn't have been. None of these are earth-shattering, but together they make Beacon feel a bit less cluttered and a bit more aware of what you're trying to do.
+
+#### What actually changed
+
+Power Dialer campaign context displays in the callbar. Calls now show which campaign they belong to without requiring you to open other panels.
+
+The feed area now expands to fill available horizontal space when you collapse the right panel. You get actual room to work instead of a cramped center column.
+
+Fixed star icons appearing next to channels in system sidebar groups. Only favorited items should show the star now.
+
+#### The bigger shift
+
+The pattern here is removing friction between you and your work. Less clicking to find context. More space to see what you're designing. Fewer visual false positives that make you second-guess what you're seeing.
+
+#### Where things are still messy
+
+Nothing reported as actively broken this week. The docs site had a fix for heading navigation that was causing false skips, but that's backend stuff.
+
+#### What's coming next
+
+Probably more panel and layout refinements. The expansion of the feed area suggests Josh is thinking about how designers actually use the workspace and where their attention needs to go.
+
+#### Try this
+
+Collapse your right panel right now and watch the feed expand. If you're working on anything with a lot of detail, you'll probably notice the difference immediately. It's a small thing that makes a real difference when you're trying to see the whole picture.
+
+#### Quick notes
+
+- v2026.4.35 ships campaign context in callbar
+- v2026.4.29 fixes feed area expansion on right panel collapse
+- v2026.4.28 removes incorrect star icons from channel lists
+
+#### One thing to remember
+
+Less hunting for context means more time actually designing.
+
+---
+
 ### Week of 6–12 Apr 2026 [prev]
 
 #### What actually changed
