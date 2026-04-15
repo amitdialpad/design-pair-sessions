@@ -10,27 +10,21 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
+**[Beacon v2026.4.35](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.35) — 14 April 2026**
+
+Power Dialer campaign context now shows in the callbar. You can see which campaign a call belongs to at a glance without digging into other panels.
+
+---
+
 **[Beacon v2026.4.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.29) — 12 April 2026**
 
-Feed area now reclaims space when you collapse the right panel. The layout is more efficient and gives you more room to work with your components when you don't need the side panel open.
+Feed area now expands to fill available space when you collapse the right panel, giving you more room to see your design work.
 
 ---
 
 **[Beacon v2026.4.28](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.28) — 12 April 2026**
 
-Fixed star icon appearing incorrectly on channels within system sidebar groups. The icon now only shows where it should.
-
----
-
-**[Beacon v2026.4.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.27) — 11 April 2026**
-
-Dialpad AI summarize pill now includes morphing state animations and a share action. The pill smoothly transitions between states as it processes, and you can now share summaries directly from the component.
-
----
-
-**[Beacon v2026.4.26](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.26) — 11 April 2026**
-
-New license and SKU entities in the data layer, plus time-filtered usage queries replacing the old billing plan usage model. The design skill ecosystem has been restructured into advisory skills for better organization. Ask Josh if you're working on billing or licensing features and want the details on the new schema.
+Fixed star icon incorrectly appearing next to channels in system sidebar groups. They should only show for favorited items.
 
 <!-- BEACON_RELEASES_END -->
 
