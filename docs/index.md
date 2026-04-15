@@ -72,46 +72,6 @@ Collapse your right panel right now and watch the feed expand. If you're working
 
 Less hunting for context means more time actually designing.
 
----
-
-### Week of 6–12 Apr 2026 [prev]
-
-#### What actually changed
-
-The AI summarize pill got morphing states and a share button. It now transitions smoothly between states and lets you send summaries directly to teammates without extra steps.
-
-Billing data got a real overhaul. `billingPlanUsage` is gone. Usage now shows an actual date window instead of a frozen snapshot, so you're looking at real time-filtered data. The Credits & usage billing page redesigned to v3 with better organization.
-
-Contact center views navigation scaffold shipped in v1 and v2. The foundational structure is there for browsing and moving between views. Components are ready. Talk to Josh if you're building on top of this.
-
-Design skill ecosystem got restructured into advisory skills for clearer organization.
-
-#### The bigger shift
-
-Billing and usage tooling is moving toward real-time, scoped data instead of static snapshots. That surfaces better information for decision-making.
-
-#### Where things are still messy
-
-The contact center views scaffold is foundational only. Navigation works. UI is there. But there's still work ahead on what actually lives in those views.
-
-#### What's coming next
-
-The contact center views will start filling in with actual content and workflows. Billing pages will probably see more refinement based on what people actually need to see.
-
-#### Try this
-
-Grab the new summarize pill in v2026.4.27 and test the morphing states. Try sharing a summary to a teammate. It's faster than copy-paste and shows where Claude Code integration is heading.
-
-#### Quick notes
-
-- `billingPlanUsage` is deprecated. Switch to time-filtered usage calls if you have prototypes using the old data.
-- Contact center navigation scaffold lives in v2026.4.22. Reach out to Josh before you build on it.
-- Design skills ecosystem is reorganized. Check your current advisory skill references if you use them in prototypes.
-
-#### One thing to remember
-
-Real data windows beat snapshots. Push for time-filtered, scoped data in your prototypes instead of static views.
-
 <!-- BEACON_BRIEF_END -->
 
 ## What's new in Claude
