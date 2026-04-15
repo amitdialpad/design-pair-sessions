@@ -140,6 +140,8 @@ Write the newsletter in this exact format. If a section has nothing real to say,
 
 ### Week of {week_range}
 
+[Write an opening summary here — no heading, just prose. This is the most important part of the brief. Most designers will read only this and nothing else, so it needs to stand on its own. Cover what actually changed this week and what it means for design work. Be specific — name the features, explain what they do. Write as much as the week demands: a quiet week gets a short paragraph, a big week earns more. No length limit. Plain language, no jargon, no hedging. Someone who reads only this section should leave knowing whether this week was significant, what shipped, and whether any of it affects their current work.]
+
 #### What actually changed
 [Specific commands, features, or data model changes that shipped. Name them. Explain what they do or unlock.]
 
@@ -210,8 +212,8 @@ def _inline(text: str) -> str:
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(
         r"`([^`]+)`",
-        r'<code style="background:#2a2720;padding:2px 7px;border-radius:3px;'
-        r'font-family:Courier New,monospace;font-size:13px;color:#d4a84b">\1</code>',
+        r'<code style="background:#f0ede8;padding:2px 6px;border-radius:3px;'
+        r'font-family:Courier New,monospace;font-size:13px;color:#333333">\1</code>',
         text,
     )
     return text
@@ -219,27 +221,34 @@ def _inline(text: str) -> str:
 
 def markdown_to_html(text: str) -> str:
     """
-    Convert newsletter markdown to dark-theme email-safe HTML.
-    All styles inline (Gmail-safe).
+    Convert newsletter markdown to email-safe HTML. All styles inline (Gmail-safe).
     Skips the ### heading line — extracted separately for the header.
+    Paragraphs before the first #### heading are treated as the TL;DR opener
+    and rendered with a left accent border.
     """
     lines = text.splitlines()
     parts = []
     in_list = False
+    past_first_section = False  # flips on first #### heading
+    tldr_open = False            # tracks whether the left-border div is open
 
+    TLDR_P_STYLE = (
+        "font-family:Georgia,serif;font-size:18px;line-height:1.8;"
+        "color:#1a1a1a;margin:0 0 20px 0"
+    )
     LABEL_STYLE = (
         "font-family:Arial,Helvetica,sans-serif;"
         "font-size:10px;font-weight:700;text-transform:uppercase;"
-        "letter-spacing:0.12em;color:#c4922a;"
-        "padding:28px 0 10px;margin:0;display:block"
+        "letter-spacing:0.12em;color:#999999;"
+        "padding:28px 0 8px;margin:0;display:block"
     )
     P_STYLE = (
         "font-family:Georgia,serif;font-size:16px;line-height:1.7;"
-        "color:#c8c2b8;margin:0 0 16px 0"
+        "color:#333333;margin:0 0 16px 0"
     )
     LI_STYLE = (
         "font-family:Georgia,serif;font-size:16px;line-height:1.7;"
-        "color:#c8c2b8;margin:0 0 10px 0"
+        "color:#333333;margin:0 0 10px 0"
     )
 
     def close_list():
@@ -248,28 +257,52 @@ def markdown_to_html(text: str) -> str:
             parts.append('</ul>')
             in_list = False
 
+    def close_tldr():
+        nonlocal tldr_open
+        if tldr_open:
+            parts.append('</div>')
+            tldr_open = False
+
     for line in lines:
         if line.startswith("### "):
             close_list()
-            # Week heading handled by the outer template
+            # Week heading handled by the outer template — skip
         elif line.startswith("#### "):
             close_list()
+            if not past_first_section:
+                close_tldr()
+                past_first_section = True
+                # Thin rule separating the TL;DR from the detail sections
+                parts.append(
+                    '<table width="100%" cellpadding="0" cellspacing="0" border="0"'
+                    ' style="margin:32px 0 0"><tr>'
+                    '<td style="border-top:1px solid #e8e4e0;font-size:0;line-height:0">'
+                    '&nbsp;</td></tr></table>'
+                )
             label = line[5:]
             parts.append(f'<p style="{LABEL_STYLE}">{label.upper()}</p>')
         elif line.startswith("- "):
             if not in_list:
-                parts.append(
-                    '<ul style="margin:0 0 16px 0;padding-left:20px">'
-                )
+                parts.append('<ul style="margin:0 0 16px 0;padding-left:20px">')
                 in_list = True
             parts.append(f'<li style="{LI_STYLE}">{_inline(line[2:])}</li>')
         elif line.strip() in ("", "---"):
             close_list()
         else:
             close_list()
-            parts.append(f'<p style="{P_STYLE}">{_inline(line)}</p>')
+            if not past_first_section:
+                if not tldr_open:
+                    parts.append(
+                        '<div style="border-left:3px solid #c4922a;'
+                        'padding-left:20px;margin:24px 0 4px 0">'
+                    )
+                    tldr_open = True
+                parts.append(f'<p style="{TLDR_P_STYLE}">{_inline(line)}</p>')
+            else:
+                parts.append(f'<p style="{P_STYLE}">{_inline(line)}</p>')
 
     close_list()
+    close_tldr()
     return "\n".join(parts)
 
 
@@ -291,14 +324,13 @@ def build_html_email(issue: str) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
-<body style="margin:0;padding:0;background-color:#111010">
-<table width="100%" cellpadding="0" cellspacing="0" border="0"
-       style="background-color:#111010">
+<body style="margin:0;padding:0;background-color:#ffffff">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="center" style="padding:0">
 
       <table width="600" cellpadding="0" cellspacing="0" border="0"
-             style="max-width:600px;width:100%;background-color:#111010">
+             style="max-width:600px;width:100%">
 
         <!-- Header -->
         <tr>
@@ -309,7 +341,7 @@ def build_html_email(issue: str) -> str:
               Beacon Brief
             </p>
             <p style="margin:0;font-family:Georgia,serif;font-size:36px;
-                      font-weight:700;color:#f0e8d8;line-height:1.15;
+                      font-weight:700;color:#1a1a1a;line-height:1.15;
                       letter-spacing:-0.01em">
               {week_heading}
             </p>
@@ -320,7 +352,7 @@ def build_html_email(issue: str) -> str:
         <tr>
           <td style="padding:24px 48px 0">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr><td style="border-top:1px solid #2e2c28;font-size:0;line-height:0">&nbsp;</td></tr>
+              <tr><td style="border-top:1px solid #e8e4e0;font-size:0;line-height:0">&nbsp;</td></tr>
             </table>
           </td>
         </tr>
@@ -336,10 +368,10 @@ def build_html_email(issue: str) -> str:
         <tr>
           <td style="padding:0 48px 48px">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr><td style="border-top:1px solid #2e2c28;font-size:0;line-height:0;padding-bottom:20px">&nbsp;</td></tr>
+              <tr><td style="border-top:1px solid #e8e4e0;font-size:0;line-height:0;padding-bottom:20px">&nbsp;</td></tr>
             </table>
             <p style="margin:0;font-family:Arial,Helvetica,sans-serif;
-                      font-size:12px;color:#5a5650;line-height:1.6">
+                      font-size:12px;color:#999999;line-height:1.6">
               Beacon Brief &mdash; weekly digest for Dialpad designers.&nbsp;
               <a href="https://amitdialpad.github.io/design-pair-sessions/"
                  style="color:#c4922a;text-decoration:none">

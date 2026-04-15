@@ -34,7 +34,7 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
-### Week of 6–12 Apr 2026
+### Week of 6–12 Apr 2026 [prev]
 
 #### What actually changed
 
