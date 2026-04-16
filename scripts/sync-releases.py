@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 Fetch beacon-app GitHub releases via API, rewrite them for designers using
 Claude, detect documentation changes, and update the site content.
@@ -53,7 +54,7 @@ DOC_FILES = [
 HUMANIZE_PROMPT = """\
 You are writing changelog entries for product designers at Dialpad who use \
 a tool called Beacon — an AI-assisted design system app built by their tech lead Josh.
-
+{components_section}
 Write a two-part structured entry:
 
 HEADLINE: A short phrase (5–8 words max) naming what actually changed. \
@@ -64,8 +65,12 @@ Good examples: "Power Dialer campaign context in the callbar", \
 "Credits & usage billing page redesigned"
 
 BODY: 1–2 sentences. Say what this means for someone using the tool. \
-Be specific. Skip PR numbers, Jira IDs (DDT-1234, NO-JIRA), GitHub usernames \
-(@hynes-dialpad etc). If there is an invitation to ask Josh, include it naturally.
+Use the changed component names above as location clues — e.g. "CallbarPanel.vue" \
+means the callbar, "ContactsView.vue" means the Contacts section, \
+"LeftSidebarExpandedMenu.vue" means the left nav. Be specific. \
+Skip PR numbers, Jira IDs (DDT-1234, NO-JIRA), GitHub usernames \
+(@hynes-dialpad etc). If there is an invitation to ask Josh, include it naturally. \
+Never use em dashes (—). Break clauses with a period instead.
 
 If the release contains only internal refactors, dependency bumps, or changes \
 with no visible impact for designers, respond with exactly: SKIP
@@ -154,6 +159,43 @@ def fetch_pr_bodies(release: dict) -> str:
     return "\n\n---\n\n".join(parts)
 
 
+# Source dirs and patterns that indicate a visible UI change
+_COMPONENT_DIRS = ("src/components/", "src/composables/", "src/views/", "src/config/")
+_SKIP_PATTERNS = (".spec.", ".test.", "__tests__")
+
+
+def fetch_changed_files(tag: str, base_tag: str) -> list[tuple[str, str]]:
+    """
+    Returns (filename, status) pairs for UI-relevant files changed between
+    base_tag and tag. Uses GitHub's compare API. Returns [] on any error.
+    Capped at 25 files to keep prompt size manageable.
+    """
+    result = subprocess.run(
+        ["gh", "api", f"repos/{REPO}/compare/{base_tag}...{tag}",
+         "--jq", "[.files[] | {name: .filename, status: .status}]"],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0 or not result.stdout.strip():
+        return []
+
+    try:
+        files = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return []
+
+    relevant = []
+    for f in files:
+        name = f.get("name", "")
+        status = f.get("status", "modified")
+        if not any(name.startswith(d) for d in _COMPONENT_DIRS):
+            continue
+        if any(p in name for p in _SKIP_PATTERNS):
+            continue
+        relevant.append((name.split("/")[-1], status))
+
+    return relevant[:25]
+
+
 # ── Claude API helpers ────────────────────────────────────────────────────────
 
 def _claude(prompt: str, max_tokens: int = 400) -> str | None:
@@ -183,12 +225,27 @@ def _claude(prompt: str, max_tokens: int = 400) -> str | None:
         return None
 
 
-def humanize_release(tag: str, notes: str) -> tuple[str, str] | str | None:
+def humanize_release(
+    tag: str,
+    notes: str,
+    changed_files: list[tuple[str, str]] | None = None,
+) -> tuple[str, str] | str | None:
     """
     Rewrite raw release notes for designers.
     Returns (headline, body) tuple, "" (skip), or None (API error — fallback to raw).
+    changed_files: list of (filename, status) pairs from fetch_changed_files().
     """
-    result = _claude(HUMANIZE_PROMPT.format(tag=tag, notes=notes.strip()))
+    if changed_files:
+        lines = "\n".join(f"  - {name} ({status})" for name, status in changed_files)
+        components_section = f"\nChanged components in this release:\n{lines}\n"
+    else:
+        components_section = ""
+
+    result = _claude(HUMANIZE_PROMPT.format(
+        tag=tag,
+        notes=notes.strip(),
+        components_section=components_section,
+    ), max_tokens=500)
     if result is None:
         return None
     if result.strip() == "SKIP":
@@ -322,14 +379,18 @@ def format_date(iso_str: str) -> str:
     return dt.strftime("%-d %B %Y")
 
 
-def format_release(release: dict) -> str | None:
+def format_release(release: dict, prev_tag: str | None = None) -> str | None:
     tag = release["tag_name"]
     name = (release.get("name") or tag).strip()
     date = format_date(release["published_at"])
     raw_body = (release.get("body") or "").strip().replace("\r\n", "\n")
     link = f"https://github.com/{REPO}/releases/tag/{tag}"
 
-    rewritten = humanize_release(tag, raw_body) if raw_body else None
+    changed_files = fetch_changed_files(tag, prev_tag) if prev_tag else []
+    if changed_files:
+        print(f"  {tag}: {len(changed_files)} UI file(s) changed")
+
+    rewritten = humanize_release(tag, raw_body, changed_files) if raw_body else None
 
     if rewritten is None:
         # API unavailable — fall back to raw notes with tag as headline
@@ -354,7 +415,13 @@ def format_release(release: dict) -> str | None:
 
 def build_section(releases: list) -> str:
     releases = sorted(releases, key=lambda r: r["published_at"], reverse=True)
-    formatted = [e for r in releases if (e := format_release(r)) is not None]
+    formatted = []
+    for i, release in enumerate(releases):
+        # The previous release (older) is the next item in the newest-first list
+        prev_tag = releases[i + 1]["tag_name"] if i + 1 < len(releases) else None
+        entry = format_release(release, prev_tag)
+        if entry is not None:
+            formatted.append(entry)
 
     if not formatted:
         return ""
