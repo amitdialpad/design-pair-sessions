@@ -10,83 +10,75 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Canvas AI connects to @dialpad conversations**
+**Canvas AI conversation repository with Dialpad integration**
 
-Pull real conversation context directly into your design work while you're building. Useful when you want to reference actual user interactions instead of made-up copy.
+Beacon now connects AI conversations directly to Dialpad's messaging infrastructure through new canvas conversation hooks and updated composer logic. The left sidebar, message composer, and inbox feed have been enhanced to support this integration. Ask Josh if you need details on how conversations persist and sync across the canvas.
 
 <span class="release-meta">[v2026.4.38](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.38) · 15 April 2026</span>
 
 ---
 
-**Power Dialer campaign context in the callbar**
+**Power Dialer campaign context added to callbar**
 
-You'll see which campaign a call belongs to alongside your call details — no more switching tabs to find out.
+The callbar now displays Power Dialer campaign information, giving you immediate context about active campaigns during calls. Check the ActiveCallOverlay and CallbarOverlays components to see the new campaign details in action.
 
 <span class="release-meta">[v2026.4.35](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.35) · 14 April 2026</span>
 
 ---
 
-**Feed gains space when right panel collapses**
+**Feed area reclaims space when right panel collapses**
 
-The layout reflows properly when you close the right panel, giving you more room to work instead of leaving a gap.
+The feed now dynamically expands to use available width when you close the right panel, eliminating wasted whitespace. This layout adjustment happens in the resizable group logic that manages panel sizing.
 
 <span class="release-meta">[v2026.4.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.29) · 12 April 2026</span>
 
 ---
 
-**Star icon fixed in sidebar channel groups**
+**Star icon removed from channel system sidebar groups**
 
-It was showing on all channels — now only appears on items you've actually favorited.
+The favorite star that was incorrectly appearing next to channels in system sidebar groups has been fixed. This cleans up the visual hierarchy in the sidebar and ensures only appropriate items show favoriting options.
 
 <span class="release-meta">[v2026.4.28](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.28) · 12 April 2026</span>
 
 ---
 
-**AI summary pill gets animated states and a share action**
+**AI summary pill gains morphing states and sharing**
 
-The pill morphs smoothly as it processes, and you can share summaries directly from the component without leaving the conversation.
+The SummarizePill component now supports animated state transitions and includes a share action. This enhancement appears in the feed message list, giving designers new interactive patterns to reference when building AI-assisted features.
 
 <span class="release-meta">[v2026.4.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.27) · 11 April 2026</span>
 
 ---
 
-**Design skills reorganized; licensing data layer added**
+**Inbox thread replies display and panel opening fixed**
 
-License and SKU entities are now in the data layer, and billing plan usage supports time-based filtering. Ask Josh if you're working on licensing or billing features.
-
-<span class="release-meta">[v2026.4.26](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.26) · 11 April 2026</span>
-
----
-
-**Inbox thread replies and panel open behavior fixed**
-
-New reply indicators display correctly, and clicking into a thread opens the panel reliably instead of sometimes doing nothing.
+The inbox detail feed now correctly shows reply indicators and opens thread panels as expected. This fixes inconsistent behavior when navigating between conversations in the inbox view.
 
 <span class="release-meta">[v2026.4.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.24) · 9 April 2026</span>
 
 ---
 
-**Contact Center navigation scaffold live**
+**Contact Center navigation scaffold ships**
 
-The foundational nav structure for v1 and v2 Contact Center views is in place. UI work comes next — reach out to Josh if you're planning to work in this area.
+The left sidebar and contact center views now support navigation between different CC sections. This includes new list components and updated favorites, groups, and sidebar data handling to power the navigation experience. Reach out to Josh if you need details on how the new CcList and CcListRow components integrate with existing sidebar patterns.
 
 <span class="release-meta">[v2026.4.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.22) · 9 April 2026</span>
 
 ---
 
-:::details View older releases
+**Credits and usage billing page redesigned**
 
-**Credits & usage billing page redesigned**
-
-Cleaner layout with better visibility into remaining credits, usage breakdown, and spending at a glance.
+The billing section now features a completely redesigned credits and usage interface with new components for wallet management, transaction history, and plan usage tracking. Designers can explore the updated BillingControls, WalletCard, PlanUsageBalanceTable, and related views to see the new layout and data presentation patterns. Reach out to Josh if you have questions about the new billing architecture or want to customize these components for your needs.
 
 <span class="release-meta">[v2026.4.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.18) · 7 April 2026</span>
 
 ---
 
-**Hovercard phone numbers fixed; PR prep improved**
+:::details View older releases
 
-Numbers display correctly in hovercards. The PR prep workflow was also refined to focus on outcomes, making reviews smoother.
+**User hovercard phone numbers fixed**
+
+Phone numbers now display correctly in user hovercards across Beacon. The underlying phone formatting logic has been improved to ensure consistent, reliable number presentation when you hover over user profiles.
 
 <span class="release-meta">[v2026.4.17](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.17) · 7 April 2026</span>
 
