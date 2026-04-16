@@ -326,10 +326,11 @@ def format_release(release: dict) -> str | None:
     else:
         body = rewritten
 
-    lines = [f"**[{name}]({link}) — {date}**"]
-    if body:
-        lines += ["", body]
-    return "\n".join(lines)
+    if not body:
+        return None
+
+    meta = f'<span class="release-meta">[{tag}]({link}) · {date}</span>'
+    return f"{body}\n\n{meta}"
 
 
 def build_section(releases: list) -> str:

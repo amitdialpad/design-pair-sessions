@@ -353,6 +353,26 @@
   border-color: var(--vp-c-divider);
 }
 
+/* ─── Beacon releases — version metadata ─── */
+
+.vp-doc .release-meta {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--vp-c-text-3);
+  opacity: 0.55;
+}
+
+.vp-doc .release-meta a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-doc .release-meta a:hover {
+  opacity: 1;
+  color: var(--vp-c-brand-1);
+}
+
 /* ─── Details / collapsible — plain text, no box ─── */
 
 .vp-doc .custom-block.details {
