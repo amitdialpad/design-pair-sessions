@@ -51,29 +51,26 @@ DOC_FILES = [
 ]
 
 HUMANIZE_PROMPT = """\
-You are updating a changelog page for product designers at Dialpad who use \
+You are writing changelog entries for product designers at Dialpad who use \
 a tool called Beacon — an AI-assisted design system app built by their tech lead Josh.
 
-Convert these GitHub release notes into a plain-English update entry that \
-designers would find useful. Focus on what actually changed for users of the \
-tool, not implementation details. Skip PR numbers, Jira ticket IDs \
-(like DDT-1234 or NO-JIRA), and GitHub usernames (@hynes-dialpad etc).
+Write a two-part structured entry:
 
-Write 1–3 short paragraphs. Be specific about what the feature or change \
-actually does or enables. Use the same concise, human style as these examples:
+HEADLINE: A short phrase (5–8 words max) naming what actually changed. \
+Write it like a newspaper headline — specific, no filler, no "now" or "update". \
+Good examples: "Power Dialer campaign context in the callbar", \
+"AI summary pill gets animated states and share", \
+"Contact Center navigation scaffold live", \
+"Credits & usage billing page redesigned"
 
-- "New `/debug-trace` command: adds debug logs to the code you point at, \
-outputs runtime state to the console. Use it when you're going in circles on a bug."
-- "BeaconComposer recipe is live with dedicated content slots and rich text \
-rendering in conversation rows."
-- "`/breadboard` command significantly enhanced with better chunking, navigation \
-wiring rules, and support for multi-system diagrams."
-- "New Contact Center schema: contact centers, memberships, settings, managed \
-phone numbers, operator skills, operating hour profiles. The data layer is built. \
-UI is next. Ask Josh if you want to start it."
+BODY: 1–2 sentences. Say what this means for someone using the tool. \
+Be specific. Skip PR numbers, Jira IDs (DDT-1234, NO-JIRA), GitHub usernames \
+(@hynes-dialpad etc). If there is an invitation to ask Josh, include it naturally.
 
 If the release contains only internal refactors, dependency bumps, or changes \
 with no visible impact for designers, respond with exactly: SKIP
+
+Return only HEADLINE and BODY lines — no extra commentary.
 
 Release {tag}:
 {notes}"""
@@ -186,15 +183,31 @@ def _claude(prompt: str, max_tokens: int = 400) -> str | None:
         return None
 
 
-def humanize_release(tag: str, notes: str) -> str | None:
+def humanize_release(tag: str, notes: str) -> tuple[str, str] | str | None:
     """
     Rewrite raw release notes for designers.
-    Returns rewritten text, "" (skip), or None (fallback to raw).
+    Returns (headline, body) tuple, "" (skip), or None (API error — fallback to raw).
     """
     result = _claude(HUMANIZE_PROMPT.format(tag=tag, notes=notes.strip()))
     if result is None:
-        return None  # no key or API error — use raw notes
-    return "" if result == "SKIP" else result
+        return None
+    if result.strip() == "SKIP":
+        return ""
+
+    headline = ""
+    body_parts: list[str] = []
+    in_body = False
+    for line in result.strip().splitlines():
+        if line.startswith("HEADLINE:"):
+            headline = line[len("HEADLINE:"):].strip()
+        elif line.startswith("BODY:"):
+            body_parts.append(line[len("BODY:"):].strip())
+            in_body = True
+        elif in_body and line.strip():
+            body_parts.append(line.strip())
+
+    body = " ".join(body_parts).strip()
+    return (headline, body) if headline else None
 
 
 def extract_doc_patches(new_releases: list) -> list[dict]:
@@ -319,24 +332,21 @@ def format_release(release: dict) -> str | None:
     rewritten = humanize_release(tag, raw_body) if raw_body else None
 
     if rewritten is None:
+        # API unavailable — fall back to raw notes with tag as headline
+        headline = name
         body = raw_body
     elif rewritten == "":
         print(f"  skipping {tag} (internal change, not surfaced in whats-new)")
         return None
     else:
-        body = rewritten
+        headline, body = rewritten
 
-    if not body:
+    if not headline:
         return None
 
-    # Bold the first sentence so VitePress renders a visible heading
-    m = re.search(r'\.\s', body)
-    if m:
-        first = body[:m.start() + 1].strip()
-        rest = body[m.start() + 1:].strip()
-        formatted = f"**{first}**\n\n{rest}" if rest else f"**{first}**"
-    else:
-        formatted = f"**{body}**"
+    formatted = f"**{headline}**"
+    if body:
+        formatted += f"\n\n{body}"
 
     meta = f'<span class="release-meta">[{tag}]({link}) · {date}</span>'
     return f"{formatted}\n\n{meta}"
