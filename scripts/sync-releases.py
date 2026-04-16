@@ -38,7 +38,7 @@ STATE_FILE = SCRIPT_DIR / "last-beacon-release.json"
 WHATS_NEW = PROJECT_DIR / "docs" / "index.md"
 MARKER_START = "<!-- BEACON_RELEASES_START -->"
 MARKER_END = "<!-- BEACON_RELEASES_END -->"
-VISIBLE_COUNT = 4
+VISIBLE_COUNT = 8
 
 # Files to scan and patch for command/skill/agent changes
 DOC_FILES = [
