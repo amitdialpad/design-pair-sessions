@@ -10,21 +10,15 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
+**[Beacon v2026.4.38](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.38) — 15 April 2026**
+
+Canvas AI conversation repository with Dialpad integration. The AI can now reference your Dialpad org's conversation history and context when helping you design—giving it better information to work from when you're iterating on ideas or troubleshooting design decisions.
+
+---
+
 **[Beacon v2026.4.35](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.35) — 14 April 2026**
 
-Power Dialer campaign context now shows in the callbar. You can see which campaign a call belongs to at a glance without digging into other panels.
-
----
-
-**[Beacon v2026.4.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.29) — 12 April 2026**
-
-Feed area now expands to fill available space when you collapse the right panel, giving you more room to see your design work.
-
----
-
-**[Beacon v2026.4.28](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.28) — 12 April 2026**
-
-Fixed star icon incorrectly appearing next to channels in system sidebar groups. They should only show for favorited items.
+Power Dialer campaign context now appears in the callbar. You'll see relevant campaign information when you're working with Power Dialer calls, giving you better context without having to hunt for details elsewhere.
 
 <!-- BEACON_RELEASES_END -->
 
