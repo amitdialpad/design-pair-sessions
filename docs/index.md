@@ -137,6 +137,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Using Claude Code: session management and 1M context](https://claude.com/blog/using-claude-code-session-management-and-1m-context)**<br><small>Apr 15, 2026 · Claude Code</small>
+
+Learn how to manage context in Claude Code—when to continue, rewind, compact, or clear a session, and how subagents keep parent context clean.
+
+---
+
 **[Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code)**<br><small>Apr 14, 2026 · Product announcements</small>
 
 Define repeatable routines that work your backlog, review your PRs, and respond to events in the cloud.
@@ -153,13 +159,13 @@ Today, we're releasing a redesign of the Claude Code desktop app, built to help 
 
 Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
 
----
+:::details View past updates
 
 **[Seeing like an agent: how we design tools in Claude Code](https://claude.com/blog/seeing-like-an-agent)**<br><small>Apr 10, 2026 · Claude Code</small>
 
 Building Claude Code: How Anthropic designs and refines AI agent tools like AskUserQuestion and Task tool. The key is progressive disclosure and learning to "see like an agent" to maximize effectiveness.
 
-:::details View past updates
+---
 
 **[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026</small>
 
@@ -183,13 +189,7 @@ Pair Opus as an advisor with Sonnet or Haiku as an executor, and get Opus-level 
 
 How Carta Healthcare used Claude and context engineering to build Lighthouse, a clinical abstraction platform reaching 99% accuracy across 22,000 cases a year.
 
----
-
-**[Claude Managed Agents: get to production 10x faster](https://claude.com/blog/claude-managed-agents)**<br><small>Apr 8, 2026</small>
-
-Introducing Claude Managed Agents, a suite of composable APIs for building and deploying cloud-hosted agents at scale.
-
 :::
 
-*Updated April 15, 2026*
+*Updated April 16, 2026*
 <!-- CLAUDE_FEED_END -->
