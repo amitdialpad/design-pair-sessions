@@ -329,8 +329,17 @@ def format_release(release: dict) -> str | None:
     if not body:
         return None
 
+    # Bold the first sentence so VitePress renders a visible heading
+    m = re.search(r'\.\s', body)
+    if m:
+        first = body[:m.start() + 1].strip()
+        rest = body[m.start() + 1:].strip()
+        formatted = f"**{first}**\n\n{rest}" if rest else f"**{first}**"
+    else:
+        formatted = f"**{body}**"
+
     meta = f'<span class="release-meta">[{tag}]({link}) · {date}</span>'
-    return f"{body}\n\n{meta}"
+    return f"{formatted}\n\n{meta}"
 
 
 def build_section(releases: list) -> str:
