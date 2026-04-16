@@ -365,7 +365,7 @@ def update_whats_new(section_content: str) -> bool:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    releases = fetch_releases(per_page=10)
+    releases = fetch_releases(per_page=30)
     if releases is None:
         sys.exit(2)
 
