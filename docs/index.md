@@ -145,6 +145,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Best practices for using Claude Opus 4.7 with Claude Code](https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code)**<br><small>Apr 16, 2026 · Claude Code</small>
+
+Learn how to use recalibrated effort levels, adaptive thinking, and new defaults to optimize your Claude Code setup with Opus 4.7.
+
+---
+
 **[Using Claude Code: session management and 1M context](https://claude.com/blog/using-claude-code-session-management-and-1m-context)**<br><small>Apr 15, 2026 · Claude Code</small>
 
 Learn how to manage context in Claude Code—when to continue, rewind, compact, or clear a session, and how subagents keep parent context clean.
@@ -161,13 +167,13 @@ Define repeatable routines that work your backlog, review your PRs, and respond 
 
 Today, we're releasing a redesign of the Claude Code desktop app, built to help you run more Claude Code tasks at once.
 
----
+:::details View past updates
 
 **[Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)**<br><small>Apr 10, 2026 · Agents</small>
 
 Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
 
-:::details View past updates
+---
 
 **[Seeing like an agent: how we design tools in Claude Code](https://claude.com/blog/seeing-like-an-agent)**<br><small>Apr 10, 2026 · Claude Code</small>
 
@@ -191,13 +197,7 @@ Claude Cowork is now generally available on all paid plans. Within companies, Cl
 
 Pair Opus as an advisor with Sonnet or Haiku as an executor, and get Opus-level intelligence in your agents at a fraction of the cost.
 
----
-
-**[How Carta Healthcare gets AI to reason like a clinical abstractor](https://claude.com/blog/carta-healthcare-clinical-abstractor)**<br><small>Apr 8, 2026 · Enterprise AI</small>
-
-How Carta Healthcare used Claude and context engineering to build Lighthouse, a clinical abstraction platform reaching 99% accuracy across 22,000 cases a year.
-
 :::
 
-*Updated April 16, 2026*
+*Updated April 17, 2026*
 <!-- CLAUDE_FEED_END -->
