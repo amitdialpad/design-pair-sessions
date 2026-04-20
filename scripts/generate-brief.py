@@ -406,7 +406,7 @@ def send_email(subject: str, plain_text: str, issue: str, recipients: list[str])
     msg             = MIMEMultipart("alternative")
     msg["Subject"]  = subject
     msg["From"]     = f"Beacon Brief <{gmail_user}>"
-    msg["To"]       = ", ".join(recipients)
+    msg["To"]       = gmail_user
     msg.attach(MIMEText(plain_text, "plain"))
     msg.attach(MIMEText(html_full, "html"))
 
@@ -415,7 +415,7 @@ def send_email(subject: str, plain_text: str, issue: str, recipients: list[str])
             server.starttls()
             server.login(gmail_user, gmail_pass)
             server.sendmail(gmail_user, recipients, msg.as_string())
-        print(f"  Email sent to: {', '.join(recipients)}")
+        print(f"  Email sent to {len(recipients)} recipient(s) (BCC).")
         return True
     except Exception as e:
         print(f"[warn] Email send failed: {e}", file=sys.stderr)
