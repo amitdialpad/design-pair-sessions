@@ -196,6 +196,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Meet the winners of our Built with Opus 4.6 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-our-built-with-opus-4-6-claude-code-hackathon)**<br><small>Apr 20, 2026 · Claude Code</small>
+
+From a cardiologist to an electronic musician, get to the know the winners of our Built with Opus 4.6 hackathon.
+
+---
+
 **[Best practices for using Claude Opus 4.7 with Claude Code](https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code)**<br><small>Apr 16, 2026 · Claude Code</small>
 
 Learn how to use recalibrated effort levels, adaptive thinking, and new defaults to optimize your Claude Code setup with Opus 4.7.
@@ -212,13 +218,13 @@ Learn how to manage context in Claude Code—when to continue, rewind, compact, 
 
 Define repeatable routines that work your backlog, review your PRs, and respond to events in the cloud.
 
----
+:::details View past updates
 
 **[Redesigning Claude Code on desktop for parallel agents](https://claude.com/blog/claude-code-desktop-redesign)**<br><small>Apr 14, 2026</small>
 
 Today, we're releasing a redesign of the Claude Code desktop app, built to help you run more Claude Code tasks at once.
 
-:::details View past updates
+---
 
 **[Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)**<br><small>Apr 10, 2026 · Agents</small>
 
@@ -242,13 +248,7 @@ We share our initial set of recommendations to shore up your defenses based on o
 
 Claude Cowork is now generally available on all paid plans. Within companies, Claude Cowork has become a key part of how teams operate: handling tasks, drafting project deliverables, and keeping teams up to date.
 
----
-
-**[The advisor strategy: Give agents an intelligence boost](https://claude.com/blog/the-advisor-strategy)**<br><small>Apr 9, 2026 · Product announcements</small>
-
-Pair Opus as an advisor with Sonnet or Haiku as an executor, and get Opus-level intelligence in your agents at a fraction of the cost.
-
 :::
 
-*Updated April 20, 2026*
+*Updated April 21, 2026*
 <!-- CLAUDE_FEED_END -->
