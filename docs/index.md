@@ -250,5 +250,5 @@ Claude Cowork is now generally available on all paid plans. Within companies, Cl
 
 :::
 
-*Updated April 21, 2026*
+*Updated April 22, 2026*
 <!-- CLAUDE_FEED_END -->
