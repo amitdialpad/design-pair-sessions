@@ -196,6 +196,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Building agents that reach production systems with MCP](https://claude.com/blog/building-agents-that-reach-production-systems-with-mcp)**<br><small>Apr 22, 2026 · Agents</small>
+
+Patterns for building effective MCP integrations: server design, OAuth with CIMD and vaults, context-efficient clients, and skills. Plus where MCP fits alongside direct API calls and CLIs for connecting agents to your systems.
+
+---
+
 **[Meet the winners of our Built with Opus 4.6 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-our-built-with-opus-4-6-claude-code-hackathon)**<br><small>Apr 20, 2026 · Claude Code</small>
 
 From a cardiologist to an electronic musician, get to the know the winners of our Built with Opus 4.6 hackathon.
@@ -212,13 +218,13 @@ Learn how to use recalibrated effort levels, adaptive thinking, and new defaults
 
 Learn how to manage context in Claude Code—when to continue, rewind, compact, or clear a session, and how subagents keep parent context clean.
 
----
+:::details View past updates
 
 **[Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code)**<br><small>Apr 14, 2026 · Product announcements</small>
 
 Define repeatable routines that work your backlog, review your PRs, and respond to events in the cloud.
 
-:::details View past updates
+---
 
 **[Redesigning Claude Code on desktop for parallel agents](https://claude.com/blog/claude-code-desktop-redesign)**<br><small>Apr 14, 2026</small>
 
@@ -242,13 +248,7 @@ Building Claude Code: How Anthropic designs and refines AI agent tools like AskU
 
 We share our initial set of recommendations to shore up your defenses based on our own findings and security practices.
 
----
-
-**[Making Claude Cowork ready for enterprise](https://claude.com/blog/cowork-for-enterprise)**<br><small>Apr 9, 2026 · Product announcements</small>
-
-Claude Cowork is now generally available on all paid plans. Within companies, Claude Cowork has become a key part of how teams operate: handling tasks, drafting project deliverables, and keeping teams up to date.
-
 :::
 
-*Updated April 22, 2026*
+*Updated April 23, 2026*
 <!-- CLAUDE_FEED_END -->
