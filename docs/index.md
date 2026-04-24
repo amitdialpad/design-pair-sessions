@@ -10,9 +10,25 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**AI Assistant feature flags consolidated in devtools**
+**AI Receptionists navigation and views added**
 
-Feature flag controls for AI Assistant are now unified in a single devtools panel instead of scattered across multiple locations. This makes it easier to toggle AI preferences and feature flags while designing.
+The left sidebar and main navigation now include AI Receptionists as a destination, with new home and detail views in the composer toolbar. Designers can explore the new ReceptionistNavPanel, AiReceptionistView, and AiReceptionistsView components. Reach out to Josh if you need details on the feature flag integration or receptor hooks.
+
+<span class="release-meta">[v2026.4.46](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.46) · 23 April 2026</span>
+
+---
+
+**Preferences and controls migrate to Dialtone**
+
+The Preferences Modal and various control components now use Dialtone primitives instead of custom implementations. This includes updates to BillingControls, CallbarControls, VariantPicker, WindowGradientToggle, and related settings panels. If you notice any behavioral changes in how these controls feel or appear, reach out to Josh.
+
+<span class="release-meta">[v2026.4.45](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.45) · 23 April 2026</span>
+
+---
+
+**AI Assistant feature flags consolidated in devtools panel**
+
+Feature flag controls for AI Assistant have been reorganized into a single devtools panel location, making it easier to manage AI behavior settings while designing. Check the AIAssistantControls and FeatureFlags sections if you need to adjust AI preferences during your workflow.
 
 <span class="release-meta">[v2026.4.40](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.40) · 16 April 2026</span>
 
@@ -20,7 +36,7 @@ Feature flag controls for AI Assistant are now unified in a single devtools pane
 
 **Canvas AI conversation integration with Dialpad**
 
-Beacon now connects AI conversations directly to Dialpad's messaging layer. The canvas view, message composer, and inbox feed have been updated to support this integration. Reach out to Josh if you need details on how conversations persist or how the AI service connects to your workflows.
+The Canvas view now connects to Dialpad's AI service for managing conversations. You'll see new conversation handling across the left sidebar, message composer, and feed area. Reach out to Josh if you need details on how the new conversation persistence and mention features work.
 
 <span class="release-meta">[v2026.4.38](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.38) · 15 April 2026</span>
 
@@ -28,7 +44,7 @@ Beacon now connects AI conversations directly to Dialpad's messaging layer. The 
 
 **Inbox adopts conversation index pipeline**
 
-The Inbox section now uses the conversation index pipeline for improved data handling and performance. This refactor touches the inbox feed, list, message details, and supporting data hooks. Reach out to Josh if you notice any changes to how inbox messages load or display.
+The Inbox view now uses an updated data pipeline for loading and displaying conversations. This affects how messages load and render in InboxDetailFeed, InboxList, and InboxMessageDetails. If you notice any changes in message ordering, filtering, or pagination behavior, reach out to Josh.
 
 <span class="release-meta">[v2026.4.37](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.37) · 15 April 2026</span>
 
@@ -36,7 +52,7 @@ The Inbox section now uses the conversation index pipeline for improved data han
 
 **Power Dialer campaign context added to callbar**
 
-The callbar now displays Power Dialer campaign information, giving you immediate context about active campaigns during calls. Check the ActiveCallOverlay and CallbarOverlays components to see the new campaign details in action.
+The callbar now displays Power Dialer campaign information directly in ActiveCallOverlay and related callbar components, giving you better visibility into campaign context during calls. Check with Josh if you need details on how this integrates with existing callbar controls and overlays.
 
 <span class="release-meta">[v2026.4.35](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.35) · 14 April 2026</span>
 
@@ -44,7 +60,7 @@ The callbar now displays Power Dialer campaign information, giving you immediate
 
 **Feed area reclaims space when right panel collapses**
 
-The layout engine now properly redistributes available width when you close the right panel, so your feed content expands to fill the newly freed space instead of leaving dead area. This applies to any resizable group in Beacon where a sidebar collapse should reflow the main content.
+The feed now expands to use available horizontal space when you close the right panel. This gives you more room to work with your design content without manual adjustment.
 
 <span class="release-meta">[v2026.4.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.29) · 12 April 2026</span>
 
@@ -52,15 +68,17 @@ The layout engine now properly redistributes available width when you close the 
 
 **Star icon removed from system sidebar channel groups**
 
-The favorites star that was incorrectly appearing next to channels in system sidebar groups has been fixed. This keeps the UI cleaner and more accurate to your actual saved favorites.
+The favorite star that was incorrectly appearing next to channels in system sidebar groups has been fixed. This cleans up the visual hierarchy in your left navigation when browsing channel organization.
 
 <span class="release-meta">[v2026.4.28](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.28) · 12 April 2026</span>
 
 ---
 
-**AI summary pill gains animated states and share**
+:::details View older releases
 
-The SummarizePill component in the Feed now supports morphing animations between states and includes a share action. This gives designers a more polished interaction pattern for AI-generated content in message feeds.
+**AI summary pill gets animated states and share**
+
+The SummarizePill component in the feed now supports morphing animations between states and includes a share action. Check FeedMessageList and FeedView to see the pill in context, and reach out to Josh if you need details on the animation behavior.
 
 <span class="release-meta">[v2026.4.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.27) · 11 April 2026</span>
 
@@ -68,35 +86,25 @@ The SummarizePill component in the Feed now supports morphing animations between
 
 **Inbox thread replies now display correctly**
 
-The inbox detail feed now properly shows reply indicators and opens thread panels as expected. This fixes display issues when viewing conversations in the Inbox section.
+The inbox detail feed now shows accurate reply indicators and properly opens thread panels when you interact with messages. This fixes display and interaction issues in the InboxDetailFeed component and underlying data handling.
 
 <span class="release-meta">[v2026.4.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.24) · 9 April 2026</span>
 
 ---
 
-:::details View older releases
+**Contact Center views navigation scaffold added**
 
-**Contact Center views navigation scaffold**
-
-The left sidebar now supports Contact Center list views with new row components and improved data handling. Designers can navigate between Contact Centers and see updated favorites, groups, and item organization in the sidebar preview.
+The left sidebar now supports Contact Center list views with new CcList and CcListRow components, plus updated sidebar data hooks to handle CC-specific navigation. Designers can now preview and test CC navigation patterns in the left nav and sidebar preview areas. Reach out to Josh if you need details on the v1 and v2 scaffold implementations.
 
 <span class="release-meta">[v2026.4.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.22) · 9 April 2026</span>
 
 ---
 
-**Credits and usage billing page redesigned**
+**Credits & usage billing page redesigned**
 
-The billing section now includes a new credits interface with wallet management, transaction history, and usage tracking across multiple tables and detail panels. Check out the updated BillingLayout, WalletCard, and PlanUsageBalanceTable components to see the new structure and reach out to Josh if you have questions about the redesigned billing flows.
+The billing page in Beacon now reflects the v3 design with updated layouts and information hierarchy. Check the Credits & Usage section to see the refreshed interface.
 
 <span class="release-meta">[v2026.4.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.18) · 7 April 2026</span>
-
----
-
-**User hovercard phone numbers fixed**
-
-Phone number display and formatting in user hovercards is now working correctly. Changes were made across the hovercard component structure and phone number utilities to resolve display issues.
-
-<span class="release-meta">[v2026.4.17](https://github.com/dialpad/beacon-app/releases/tag/v2026.4.17) · 7 April 2026</span>
 
 :::
 
