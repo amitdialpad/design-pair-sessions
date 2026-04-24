@@ -204,6 +204,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Built-in memory for Claude Managed Agents](https://claude.com/blog/claude-managed-agents-memory)**<br><small>Apr 23, 2026</small>
+
+Memory on Claude Managed Agents lets you build agents that learn from every task, user, and session, with no memory infrastructure to maintain.
+
+---
+
+**[New connectors in Claude for everyday life](https://claude.com/blog/connectors-for-everyday-life)**<br><small>Apr 23, 2026</small>
+
+Claude now connects to the apps you use every week, including AllTrails, Instacart, Audible, Booking.com, and TripAdvisor. Ask, and Claude brings in the right app.
+
+---
+
 **[Building agents that reach production systems with MCP](https://claude.com/blog/building-agents-that-reach-production-systems-with-mcp)**<br><small>Apr 22, 2026 · Agents</small>
 
 Patterns for building effective MCP integrations: server design, OAuth with CIMD and vaults, context-efficient clients, and skills. Plus where MCP fits alongside direct API calls and CLIs for connecting agents to your systems.
@@ -214,7 +226,7 @@ Patterns for building effective MCP integrations: server design, OAuth with CIMD
 
 From a cardiologist to an electronic musician, get to the know the winners of our Built with Opus 4.6 hackathon.
 
----
+:::details View past updates
 
 **[Best practices for using Claude Opus 4.7 with Claude Code](https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code)**<br><small>Apr 16, 2026 · Claude Code</small>
 
@@ -226,7 +238,7 @@ Learn how to use recalibrated effort levels, adaptive thinking, and new defaults
 
 Learn how to manage context in Claude Code—when to continue, rewind, compact, or clear a session, and how subagents keep parent context clean.
 
-:::details View past updates
+---
 
 **[Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code)**<br><small>Apr 14, 2026 · Product announcements</small>
 
@@ -244,19 +256,7 @@ Today, we're releasing a redesign of the Claude Code desktop app, built to help 
 
 Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
 
----
-
-**[Seeing like an agent: how we design tools in Claude Code](https://claude.com/blog/seeing-like-an-agent)**<br><small>Apr 10, 2026 · Claude Code</small>
-
-Building Claude Code: How Anthropic designs and refines AI agent tools like AskUserQuestion and Task tool. The key is progressive disclosure and learning to "see like an agent" to maximize effectiveness.
-
----
-
-**[Preparing your security program for AI-accelerated offense](https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense)**<br><small>Apr 10, 2026</small>
-
-We share our initial set of recommendations to shore up your defenses based on our own findings and security practices.
-
 :::
 
-*Updated April 23, 2026*
+*Updated April 24, 2026*
 <!-- CLAUDE_FEED_END -->
