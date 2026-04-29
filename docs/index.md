@@ -246,6 +246,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Onboarding Claude Code like a new developer: Lessons from 17 years of development](https://claude.com/blog/onboarding-claude-code-like-a-new-developer-lessons-from-17-years-of-development)**<br><small>Apr 28, 2026 · Claude Code</small>
+
+The methodology that onboards new developers to MacCoss Lab's 700,000-line codebase works on Claude Code, too. Here's how Brendan MacLean, a Claude Developer Ambassador whose lab is part of our Claude for Open Source program, did it.
+
+---
+
 **[Built-in memory for Claude Managed Agents](https://claude.com/blog/claude-managed-agents-memory)**<br><small>Apr 23, 2026</small>
 
 Memory on Claude Managed Agents lets you build agents that learn from every task, user, and session, with no memory infrastructure to maintain.
@@ -262,13 +268,13 @@ Claude now connects to the apps you use every week, including AllTrails, Instaca
 
 Patterns for building effective MCP integrations: server design, OAuth with CIMD and vaults, context-efficient clients, and skills. Plus where MCP fits alongside direct API calls and CLIs for connecting agents to your systems.
 
----
+:::details View past updates
 
 **[Meet the winners of our Built with Opus 4.6 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-our-built-with-opus-4-6-claude-code-hackathon)**<br><small>Apr 20, 2026 · Claude Code</small>
 
 From a cardiologist to an electronic musician, get to the know the winners of our Built with Opus 4.6 hackathon.
 
-:::details View past updates
+---
 
 **[Best practices for using Claude Opus 4.7 with Claude Code](https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code)**<br><small>Apr 16, 2026 · Claude Code</small>
 
@@ -292,13 +298,7 @@ Define repeatable routines that work your backlog, review your PRs, and respond 
 
 Today, we're releasing a redesign of the Claude Code desktop app, built to help you run more Claude Code tasks at once.
 
----
-
-**[Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)**<br><small>Apr 10, 2026 · Agents</small>
-
-Five multi-agent coordination patterns, their trade-offs, and when to evolve from one to another.
-
 :::
 
-*Updated April 28, 2026*
+*Updated April 29, 2026*
 <!-- CLAUDE_FEED_END -->
