@@ -246,11 +246,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Product development in the agentic era](https://claude.com/blog/product-development-in-the-agentic-era)**<br><small>Apr 29, 2026 · Agents</small>
+
+Jess Yan, Claude Managed Agents product manager, shares how she uses the product to unblock herself and free up time to hone her craft.
+
+---
+
+**[Claude API skill now in CodeRabbit, JetBrains, Resolve AI, and Warp](https://claude.com/blog/claude-api-skill)**<br><small>Apr 29, 2026 · Agents</small>
+
+Today, CodeRabbit, JetBrains, Resolve AI, and Warp are bundling the claude-api skill, giving developers production-ready Claude API code wherever they build. First introduced in Claude Code in March, the skill is now in more of the tools developers already use.
+
+---
+
+**[Deploying Claude across the enterprise with Claude Cowork](https://claude.com/blog/new-guide-deploying-claude-across-the-enterprise-with-claude-cowork)**<br><small>Apr 29, 2026</small>
+
+Learn how organizations use Claude Cowork to transform their day-to-day work, including use cases and best practices from Anthropic’s own teams.
+
+---
+
 **[Onboarding Claude Code like a new developer: Lessons from 17 years of development](https://claude.com/blog/onboarding-claude-code-like-a-new-developer-lessons-from-17-years-of-development)**<br><small>Apr 28, 2026 · Claude Code</small>
 
 The methodology that onboards new developers to MacCoss Lab's 700,000-line codebase works on Claude Code, too. Here's how Brendan MacLean, a Claude Developer Ambassador whose lab is part of our Claude for Open Source program, did it.
 
----
+:::details View past updates
 
 **[Built-in memory for Claude Managed Agents](https://claude.com/blog/claude-managed-agents-memory)**<br><small>Apr 23, 2026</small>
 
@@ -268,7 +286,7 @@ Claude now connects to the apps you use every week, including AllTrails, Instaca
 
 Patterns for building effective MCP integrations: server design, OAuth with CIMD and vaults, context-efficient clients, and skills. Plus where MCP fits alongside direct API calls and CLIs for connecting agents to your systems.
 
-:::details View past updates
+---
 
 **[Meet the winners of our Built with Opus 4.6 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-our-built-with-opus-4-6-claude-code-hackathon)**<br><small>Apr 20, 2026 · Claude Code</small>
 
@@ -280,25 +298,7 @@ From a cardiologist to an electronic musician, get to the know the winners of ou
 
 Learn how to use recalibrated effort levels, adaptive thinking, and new defaults to optimize your Claude Code setup with Opus 4.7.
 
----
-
-**[Using Claude Code: session management and 1M context](https://claude.com/blog/using-claude-code-session-management-and-1m-context)**<br><small>Apr 15, 2026 · Claude Code</small>
-
-Learn how to manage context in Claude Code—when to continue, rewind, compact, or clear a session, and how subagents keep parent context clean.
-
----
-
-**[Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code)**<br><small>Apr 14, 2026 · Product announcements</small>
-
-Define repeatable routines that work your backlog, review your PRs, and respond to events in the cloud.
-
----
-
-**[Redesigning Claude Code on desktop for parallel agents](https://claude.com/blog/claude-code-desktop-redesign)**<br><small>Apr 14, 2026</small>
-
-Today, we're releasing a redesign of the Claude Code desktop app, built to help you run more Claude Code tasks at once.
-
 :::
 
-*Updated April 29, 2026*
+*Updated April 30, 2026*
 <!-- CLAUDE_FEED_END -->
