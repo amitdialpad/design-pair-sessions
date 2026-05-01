@@ -254,6 +254,30 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Kepler built verifiable AI for financial services with Claude](https://claude.com/blog/how-kepler-built-verifiable-ai-for-financial-services-with-claude)**<br><small>Apr 30, 2026 · Enterprise AI</small>
+
+Inside a platform that indexes 26M+ SEC filings, earnings call transcripts, IR presentations, consensus estimates, and private data across 14,000+ companies and 27 global markets, and how the team behind it built AI that validates every number to the exact filing, page, and line item.
+
+---
+
+**[Lessons from building Claude Code: Prompt caching is everything](https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything)**<br><small>Apr 30, 2026 · Claude Code</small>
+
+Best practices for optimizing prompt caching in Claude Code, including how to most effectively structure your prompt, use tools, and layer on compaction.
+
+---
+
+**[Claude Security is now in public beta](https://claude.com/blog/claude-security-public-beta)**<br><small>Apr 30, 2026 · Product announcements</small>
+
+Scan code for vulnerabilities and generate proposed fixes with Opus 4.7, on the Claude Platform, or through technology and services partners building with Claude.
+
+---
+
+**[Building AI agents for the enterprise](https://claude.com/blog/building-ai-agents-for-the-enterprise)**<br><small>Apr 30, 2026 · Agents</small>
+
+In this guide, we share how leading organizations are using agents to transform their work today, and how Claude Cowork brings these capabilities to every team.
+
+:::details View past updates
+
 **[Product development in the agentic era](https://claude.com/blog/product-development-in-the-agentic-era)**<br><small>Apr 29, 2026 · Agents</small>
 
 Jess Yan, Claude Managed Agents product manager, shares how she uses the product to unblock herself and free up time to hone her craft.
@@ -266,7 +290,7 @@ Today, CodeRabbit, JetBrains, Resolve AI, and Warp are bundling the claude-api s
 
 ---
 
-**[Deploying Claude across the enterprise with Claude Cowork](https://claude.com/blog/new-guide-deploying-claude-across-the-enterprise-with-claude-cowork)**<br><small>Apr 29, 2026</small>
+**[Deploying agentic AI across the enterprise with Claude Cowork](https://claude.com/blog/new-guide-deploying-claude-across-the-enterprise-with-claude-cowork)**<br><small>Apr 29, 2026</small>
 
 Learn how organizations use Claude Cowork to transform their day-to-day work, including use cases and best practices from Anthropic’s own teams.
 
@@ -276,37 +300,13 @@ Learn how organizations use Claude Cowork to transform their day-to-day work, in
 
 The methodology that onboards new developers to MacCoss Lab's 700,000-line codebase works on Claude Code, too. Here's how Brendan MacLean, a Claude Developer Ambassador whose lab is part of our Claude for Open Source program, did it.
 
-:::details View past updates
+---
 
 **[Built-in memory for Claude Managed Agents](https://claude.com/blog/claude-managed-agents-memory)**<br><small>Apr 23, 2026</small>
 
 Memory on Claude Managed Agents lets you build agents that learn from every task, user, and session, with no memory infrastructure to maintain.
 
----
-
-**[New connectors in Claude for everyday life](https://claude.com/blog/connectors-for-everyday-life)**<br><small>Apr 23, 2026</small>
-
-Claude now connects to the apps you use every week, including AllTrails, Instacart, Audible, Booking.com, and TripAdvisor. Ask, and Claude brings in the right app.
-
----
-
-**[Building agents that reach production systems with MCP](https://claude.com/blog/building-agents-that-reach-production-systems-with-mcp)**<br><small>Apr 22, 2026 · Agents</small>
-
-Patterns for building effective MCP integrations: server design, OAuth with CIMD and vaults, context-efficient clients, and skills. Plus where MCP fits alongside direct API calls and CLIs for connecting agents to your systems.
-
----
-
-**[Meet the winners of our Built with Opus 4.6 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-our-built-with-opus-4-6-claude-code-hackathon)**<br><small>Apr 20, 2026 · Claude Code</small>
-
-From a cardiologist to an electronic musician, get to the know the winners of our Built with Opus 4.6 hackathon.
-
----
-
-**[Best practices for using Claude Opus 4.7 with Claude Code](https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code)**<br><small>Apr 16, 2026 · Claude Code</small>
-
-Learn how to use recalibrated effort levels, adaptive thinking, and new defaults to optimize your Claude Code setup with Opus 4.7.
-
 :::
 
-*Updated April 30, 2026*
+*Updated May 1, 2026*
 <!-- CLAUDE_FEED_END -->
