@@ -262,6 +262,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How a non-technical project manager built and shipped a stress management app with Claude Code in six weeks](https://claude.com/blog/how-a-non-technical-project-manager-built-and-shipped-a-stress-management-app-with-claude-code-in-six-weeks)**<br><small>May 1, 2026 · Claude Code</small>
+
+Kostiantyn Vlasenko had never written a line of code when he set out to build Respiro. Just over a month later, his product was live on the App Store.
+
+---
+
 **[How Kepler built verifiable AI for financial services with Claude](https://claude.com/blog/how-kepler-built-verifiable-ai-for-financial-services-with-claude)**<br><small>Apr 30, 2026 · Enterprise AI</small>
 
 Inside a platform that indexes 26M+ SEC filings, earnings call transcripts, IR presentations, consensus estimates, and private data across 14,000+ companies and 27 global markets, and how the team behind it built AI that validates every number to the exact filing, page, and line item.
@@ -278,13 +284,13 @@ Best practices for optimizing prompt caching in Claude Code, including how to mo
 
 Scan code for vulnerabilities and generate proposed fixes with Opus 4.7, on the Claude Platform, or through technology and services partners building with Claude.
 
----
+:::details View past updates
 
 **[Building AI agents for the enterprise](https://claude.com/blog/building-ai-agents-for-the-enterprise)**<br><small>Apr 30, 2026 · Agents</small>
 
 In this guide, we share how leading organizations are using agents to transform their work today, and how Claude Cowork brings these capabilities to every team.
 
-:::details View past updates
+---
 
 **[Product development in the agentic era](https://claude.com/blog/product-development-in-the-agentic-era)**<br><small>Apr 29, 2026 · Agents</small>
 
@@ -308,13 +314,7 @@ Learn how organizations use Claude Cowork to transform their day-to-day work, in
 
 The methodology that onboards new developers to MacCoss Lab's 700,000-line codebase works on Claude Code, too. Here's how Brendan MacLean, a Claude Developer Ambassador whose lab is part of our Claude for Open Source program, did it.
 
----
-
-**[Built-in memory for Claude Managed Agents](https://claude.com/blog/claude-managed-agents-memory)**<br><small>Apr 23, 2026</small>
-
-Memory on Claude Managed Agents lets you build agents that learn from every task, user, and session, with no memory infrastructure to maintain.
-
 :::
 
-*Updated May 1, 2026*
+*Updated May 2, 2026*
 <!-- CLAUDE_FEED_END -->
