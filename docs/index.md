@@ -306,6 +306,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[New in Claude Managed Agents: dreaming, outcomes, and multiagent orchestration](https://claude.com/blog/new-in-claude-managed-agents)**<br><small>May 6, 2026</small>
+
+Dreaming, outcomes, and multiagent orchestration are now available in Claude Managed Agents. Build agents that learn, meet a quality bar, and work in parallel.
+
+---
+
 **[Deploying Claude across financial services](https://claude.com/blog/deploying-claude-across-financial-services)**<br><small>May 5, 2026 · Enterprise AI</small>
 
 In this guide, we share how financial services firms are using Claude to compress their most time-consuming work, including customer examples and a practical adoption roadmap.
@@ -322,13 +328,13 @@ Kostiantyn Vlasenko had never written a line of code when he set out to build Re
 
 Inside a platform that indexes 26M+ SEC filings, earnings call transcripts, IR presentations, consensus estimates, and private data across 14,000+ companies and 27 global markets, and how the team behind it built AI that validates every number to the exact filing, page, and line item.
 
----
+:::details View past updates
 
 **[Lessons from building Claude Code: Prompt caching is everything](https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything)**<br><small>Apr 30, 2026 · Claude Code</small>
 
 Best practices for optimizing prompt caching in Claude Code, including how to most effectively structure your prompt, use tools, and layer on compaction.
 
-:::details View past updates
+---
 
 **[Claude Security is now in public beta](https://claude.com/blog/claude-security-public-beta)**<br><small>Apr 30, 2026 · Product announcements</small>
 
@@ -352,13 +358,7 @@ Jess Yan, Claude Managed Agents product manager, shares how she uses the product
 
 Today, CodeRabbit, JetBrains, Resolve AI, and Warp are bundling the claude-api skill, giving developers production-ready Claude API code wherever they build. First introduced in Claude Code in March, the skill is now in more of the tools developers already use.
 
----
-
-**[Deploying agentic AI across the enterprise with Claude Cowork](https://claude.com/blog/new-guide-deploying-claude-across-the-enterprise-with-claude-cowork)**<br><small>Apr 29, 2026</small>
-
-Learn how organizations use Claude Cowork to transform their day-to-day work, including use cases and best practices from Anthropic’s own teams.
-
 :::
 
-*Updated May 6, 2026*
+*Updated May 7, 2026*
 <!-- CLAUDE_FEED_END -->
