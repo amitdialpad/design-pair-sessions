@@ -360,5 +360,5 @@ Jess Yan, Claude Managed Agents product manager, shares how she uses the product
 
 :::
 
-*Updated May 8, 2026*
+*Updated May 9, 2026*
 <!-- CLAUDE_FEED_END -->
