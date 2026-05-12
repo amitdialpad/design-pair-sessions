@@ -350,6 +350,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Introducing the Claude Platform on AWS](https://claude.com/blog/claude-platform-on-aws)**<br><small>May 11, 2026 · Product announcements</small>
+
+The Claude Platform on AWS is now generally available, offering a new way for AWS customers to access the full set of Claude platform features with AWS authentication, billing, and commitment retirement.
+
+---
+
+**[Agent view in Claude Code](https://claude.com/blog/agent-view-in-claude-code)**<br><small>May 11, 2026 · Product announcements</small>
+
+Today we're introducing agent view in Claude Code: one place to manage all your Claude Code sessions.
+
+---
+
 **[Collaborate with Claude across Excel, PowerPoint, Word and Outlook](https://claude.com/blog/collaborate-with-claude-across-excel-powerpoint-word-and-outlook)**<br><small>May 7, 2026 · Product announcements</small>
 
 Claude for Excel, PowerPoint, and Word are generally available, and Claude for Outlook is now in public beta for all paid plans.
@@ -360,7 +372,7 @@ Claude for Excel, PowerPoint, and Word are generally available, and Claude for O
 
 Dreaming, outcomes, and multiagent orchestration are now available in Claude Managed Agents. Build agents that learn, meet a quality bar, and work in parallel.
 
----
+:::details View past updates
 
 **[Deploying Claude across financial services](https://claude.com/blog/deploying-claude-across-financial-services)**<br><small>May 5, 2026 · Enterprise AI</small>
 
@@ -372,7 +384,7 @@ In this guide, we share how financial services firms are using Claude to compres
 
 Kostiantyn Vlasenko had never written a line of code when he set out to build Respiro. Just over a month later, his product was live on the App Store.
 
-:::details View past updates
+---
 
 **[How Kepler built verifiable AI for financial services with Claude](https://claude.com/blog/how-kepler-built-verifiable-ai-for-financial-services-with-claude)**<br><small>Apr 30, 2026 · Enterprise AI</small>
 
@@ -390,19 +402,7 @@ Best practices for optimizing prompt caching in Claude Code, including how to mo
 
 Scan code for vulnerabilities and generate proposed fixes with Opus 4.7, on the Claude Platform, or through technology and services partners building with Claude.
 
----
-
-**[Building AI agents for the enterprise](https://claude.com/blog/building-ai-agents-for-the-enterprise)**<br><small>Apr 30, 2026 · Agents</small>
-
-In this guide, we share how leading organizations are using agents to transform their work today, and how Claude Cowork brings these capabilities to every team.
-
----
-
-**[Product development in the agentic era](https://claude.com/blog/product-development-in-the-agentic-era)**<br><small>Apr 29, 2026 · Agents</small>
-
-Jess Yan, Claude Managed Agents product manager, shares how she uses the product to unblock herself and free up time to hone her craft.
-
 :::
 
-*Updated May 11, 2026*
+*Updated May 12, 2026*
 <!-- CLAUDE_FEED_END -->
