@@ -358,11 +358,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Anthropic's cybersecurity team built a threat detection platform with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-cybersecurity)**<br><small>May 12, 2026 · Claude Code</small>
+
+Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, shares how her team uses Claude Code to build tools that automate alert triage, accelerate investigations, and transform how security analysts work.
+
+---
+
+**[Claude for the legal industry](https://claude.com/blog/claude-for-the-legal-industry)**<br><small>May 12, 2026 · Product announcements</small>
+
+We're releasing 20+ new MCP connectors that link Claude to the software that the legal industry runs on and 12 new plugins tailored specific legal work and practice areas.
+
+---
+
+**[Code w/ Claude SF 2026: Building on the AI exponential](https://claude.com/blog/code-w-claude-sf-2026-sf)**<br><small>May 12, 2026</small>
+
+Check out our Code w/ Claude SF sessions on YouTube.
+
+---
+
 **[Introducing the Claude Platform on AWS](https://claude.com/blog/claude-platform-on-aws)**<br><small>May 11, 2026 · Product announcements</small>
 
 The Claude Platform on AWS is now generally available, offering a new way for AWS customers to access the full set of Claude platform features with AWS authentication, billing, and commitment retirement.
 
----
+:::details View past updates
 
 **[Agent view in Claude Code](https://claude.com/blog/agent-view-in-claude-code)**<br><small>May 11, 2026 · Product announcements</small>
 
@@ -380,7 +398,7 @@ Claude for Excel, PowerPoint, and Word are generally available, and Claude for O
 
 Dreaming, outcomes, and multiagent orchestration are now available in Claude Managed Agents. Build agents that learn, meet a quality bar, and work in parallel.
 
-:::details View past updates
+---
 
 **[Deploying Claude across financial services](https://claude.com/blog/deploying-claude-across-financial-services)**<br><small>May 5, 2026 · Enterprise AI</small>
 
@@ -392,25 +410,7 @@ In this guide, we share how financial services firms are using Claude to compres
 
 Kostiantyn Vlasenko had never written a line of code when he set out to build Respiro. Just over a month later, his product was live on the App Store.
 
----
-
-**[How Kepler built verifiable AI for financial services with Claude](https://claude.com/blog/how-kepler-built-verifiable-ai-for-financial-services-with-claude)**<br><small>Apr 30, 2026 · Enterprise AI</small>
-
-Inside a platform that indexes 26M+ SEC filings, earnings call transcripts, IR presentations, consensus estimates, and private data across 14,000+ companies and 27 global markets, and how the team behind it built AI that validates every number to the exact filing, page, and line item.
-
----
-
-**[Lessons from building Claude Code: Prompt caching is everything](https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything)**<br><small>Apr 30, 2026 · Claude Code</small>
-
-Best practices for optimizing prompt caching in Claude Code, including how to most effectively structure your prompt, use tools, and layer on compaction.
-
----
-
-**[Claude Security is now in public beta](https://claude.com/blog/claude-security-public-beta)**<br><small>Apr 30, 2026 · Product announcements</small>
-
-Scan code for vulnerabilities and generate proposed fixes with Opus 4.7, on the Claude Platform, or through technology and services partners building with Claude.
-
 :::
 
-*Updated May 12, 2026*
+*Updated May 13, 2026*
 <!-- CLAUDE_FEED_END -->
