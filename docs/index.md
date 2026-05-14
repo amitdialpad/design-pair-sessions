@@ -366,6 +366,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Best practices for computer and browser use with Claude](https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude)**<br><small>May 13, 2026 · Agents</small>
+
+Practical guidance for developers building computer and browser use integrations with the Claude model family.
+
+---
+
 **[How Anthropic's cybersecurity team built a threat detection platform with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-cybersecurity)**<br><small>May 12, 2026 · Claude Code</small>
 
 Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, shares how her team uses Claude Code to build tools that automate alert triage, accelerate investigations, and transform how security analysts work.
@@ -382,13 +388,13 @@ We're releasing 20+ new MCP connectors that link Claude to the software that the
 
 Check out our Code w/ Claude SF sessions on YouTube.
 
----
+:::details View past updates
 
 **[Introducing the Claude Platform on AWS](https://claude.com/blog/claude-platform-on-aws)**<br><small>May 11, 2026 · Product announcements</small>
 
 The Claude Platform on AWS is now generally available, offering a new way for AWS customers to access the full set of Claude platform features with AWS authentication, billing, and commitment retirement.
 
-:::details View past updates
+---
 
 **[Agent view in Claude Code](https://claude.com/blog/agent-view-in-claude-code)**<br><small>May 11, 2026 · Product announcements</small>
 
@@ -412,13 +418,7 @@ Dreaming, outcomes, and multiagent orchestration are now available in Claude Man
 
 In this guide, we share how financial services firms are using Claude to compress their most time-consuming work, including customer examples and a practical adoption roadmap.
 
----
-
-**[How a non-technical project manager built and shipped a stress management app with Claude Code in six weeks](https://claude.com/blog/how-a-non-technical-project-manager-built-and-shipped-a-stress-management-app-with-claude-code-in-six-weeks)**<br><small>May 1, 2026 · Claude Code</small>
-
-Kostiantyn Vlasenko had never written a line of code when he set out to build Respiro. Just over a month later, his product was live on the App Store.
-
 :::
 
-*Updated May 13, 2026*
+*Updated May 14, 2026*
 <!-- CLAUDE_FEED_END -->
