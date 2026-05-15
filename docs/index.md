@@ -366,6 +366,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Claude Code works in large codebases: Best practices and where to start](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)**<br><small>May 14, 2026 · Enterprise AI</small>
+
+The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
+
+---
+
+**[The founder's playbook: Building an AI-native startup](https://claude.com/blog/the-founders-playbook)**<br><small>May 14, 2026 · Claude Code</small>
+
+We share how AI-native founders are using Claude at every stage of the startup journey, with practical exercises, frameworks, and prompts.
+
+---
+
 **[Best practices for computer and browser use with Claude](https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude)**<br><small>May 13, 2026 · Agents</small>
 
 Practical guidance for developers building computer and browser use integrations with the Claude model family.
@@ -376,7 +388,7 @@ Practical guidance for developers building computer and browser use integrations
 
 Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, shares how her team uses Claude Code to build tools that automate alert triage, accelerate investigations, and transform how security analysts work.
 
----
+:::details View past updates
 
 **[Claude for the legal industry](https://claude.com/blog/claude-for-the-legal-industry)**<br><small>May 12, 2026 · Product announcements</small>
 
@@ -388,7 +400,7 @@ We're releasing 20+ new MCP connectors that link Claude to the software that the
 
 Check out our Code w/ Claude SF sessions on YouTube.
 
-:::details View past updates
+---
 
 **[Introducing the Claude Platform on AWS](https://claude.com/blog/claude-platform-on-aws)**<br><small>May 11, 2026 · Product announcements</small>
 
@@ -406,19 +418,7 @@ Today we're introducing agent view in Claude Code: one place to manage all your 
 
 Claude for Excel, PowerPoint, and Word are generally available, and Claude for Outlook is now in public beta for all paid plans.
 
----
-
-**[New in Claude Managed Agents: dreaming, outcomes, and multiagent orchestration](https://claude.com/blog/new-in-claude-managed-agents)**<br><small>May 6, 2026</small>
-
-Dreaming, outcomes, and multiagent orchestration are now available in Claude Managed Agents. Build agents that learn, meet a quality bar, and work in parallel.
-
----
-
-**[Deploying Claude across financial services](https://claude.com/blog/deploying-claude-across-financial-services)**<br><small>May 5, 2026 · Enterprise AI</small>
-
-In this guide, we share how financial services firms are using Claude to compress their most time-consuming work, including customer examples and a practical adoption roadmap.
-
 :::
 
-*Updated May 14, 2026*
+*Updated May 15, 2026*
 <!-- CLAUDE_FEED_END -->
