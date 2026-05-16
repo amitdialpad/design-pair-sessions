@@ -382,6 +382,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Deploying Claude across the legal industry](https://claude.com/blog/deploying-claude-across-the-legal-industry)**<br><small>May 15, 2026 · Enterprise AI</small>
+
+A practical guide to using Claude for legal professionals, covering Claude products, connectors, practice-area plugins, and a three-phase adoption roadmap.
+
+---
+
 **[How Claude Code works in large codebases: Best practices and where to start](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)**<br><small>May 14, 2026 · Enterprise AI</small>
 
 The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
@@ -398,13 +404,13 @@ We share how AI-native founders are using Claude at every stage of the startup j
 
 Practical guidance for developers building computer and browser use integrations with the Claude model family.
 
----
+:::details View past updates
 
 **[How Anthropic's cybersecurity team built a threat detection platform with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-cybersecurity)**<br><small>May 12, 2026 · Claude Code</small>
 
 Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, shares how her team uses Claude Code to build tools that automate alert triage, accelerate investigations, and transform how security analysts work.
 
-:::details View past updates
+---
 
 **[Claude for the legal industry](https://claude.com/blog/claude-for-the-legal-industry)**<br><small>May 12, 2026 · Product announcements</small>
 
@@ -428,13 +434,7 @@ The Claude Platform on AWS is now generally available, offering a new way for AW
 
 Today we're introducing agent view in Claude Code: one place to manage all your Claude Code sessions.
 
----
-
-**[Collaborate with Claude across Excel, PowerPoint, Word and Outlook](https://claude.com/blog/collaborate-with-claude-across-excel-powerpoint-word-and-outlook)**<br><small>May 7, 2026 · Product announcements</small>
-
-Claude for Excel, PowerPoint, and Word are generally available, and Claude for Outlook is now in public beta for all paid plans.
-
 :::
 
-*Updated May 15, 2026*
+*Updated May 16, 2026*
 <!-- CLAUDE_FEED_END -->
