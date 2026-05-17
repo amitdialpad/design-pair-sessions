@@ -418,9 +418,9 @@ We're releasing 20+ new MCP connectors that link Claude to the software that the
 
 ---
 
-**[Code w/ Claude SF 2026: Building on the AI exponential](https://claude.com/blog/code-w-claude-sf-2026-sf)**<br><small>May 12, 2026</small>
+**[Code w/ Claude SF 2026 recap: Building on the AI exponential](https://claude.com/blog/code-w-claude-sf-2026-sf)**<br><small>May 12, 2026 · Product announcements</small>
 
-Check out our Code w/ Claude SF sessions on YouTube.
+Check out our Code w/ Claude SF 2026 recap and product announcements, and watch the keynotes and sessions on YouTube.
 
 ---
 
@@ -436,5 +436,5 @@ Today we're introducing agent view in Claude Code: one place to manage all your 
 
 :::
 
-*Updated May 16, 2026*
+*Updated May 17, 2026*
 <!-- CLAUDE_FEED_END -->
