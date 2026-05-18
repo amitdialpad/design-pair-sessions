@@ -482,5 +482,5 @@ Today we're introducing agent view in Claude Code: one place to manage all your 
 
 :::
 
-*Updated May 17, 2026*
+*Updated May 18, 2026*
 <!-- CLAUDE_FEED_END -->
