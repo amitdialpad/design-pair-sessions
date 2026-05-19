@@ -436,6 +436,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels](https://claude.com/blog/claude-managed-agents-updates)**<br><small>May 19, 2026</small>
+
+Claude Managed Agents can now operate in a sandbox you control and connect to your private Model Context Protocol (MCP) servers
+
+---
+
 **[Deploying Claude across the legal industry](https://claude.com/blog/deploying-claude-across-the-legal-industry)**<br><small>May 15, 2026 · Enterprise AI</small>
 
 A practical guide to using Claude for legal professionals, covering Claude products, connectors, practice-area plugins, and a three-phase adoption roadmap.
@@ -452,13 +458,13 @@ The most successful Claude Code deployments share a set of recognizable patterns
 
 We share how AI-native founders are using Claude at every stage of the startup journey, with practical exercises, frameworks, and prompts.
 
----
+:::details View past updates
 
 **[Best practices for computer and browser use with Claude](https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude)**<br><small>May 13, 2026 · Agents</small>
 
 Practical guidance for developers building computer and browser use integrations with the Claude model family.
 
-:::details View past updates
+---
 
 **[How Anthropic's cybersecurity team built a threat detection platform with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-cybersecurity)**<br><small>May 12, 2026 · Claude Code</small>
 
@@ -482,13 +488,7 @@ Check out our Code w/ Claude SF 2026 recap and product announcements, and watch 
 
 The Claude Platform on AWS is now generally available, offering a new way for AWS customers to access the full set of Claude platform features with AWS authentication, billing, and commitment retirement.
 
----
-
-**[Agent view in Claude Code](https://claude.com/blog/agent-view-in-claude-code)**<br><small>May 11, 2026 · Product announcements</small>
-
-Today we're introducing agent view in Claude Code: one place to manage all your Claude Code sessions.
-
 :::
 
-*Updated May 18, 2026*
+*Updated May 19, 2026*
 <!-- CLAUDE_FEED_END -->
