@@ -428,6 +428,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Using Claude Code: The unreasonable effectiveness of HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)**<br><small>May 20, 2026 · Claude Code</small>
+
+How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
+
+---
+
 **[New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels](https://claude.com/blog/claude-managed-agents-updates)**<br><small>May 19, 2026</small>
 
 Claude Managed Agents can now operate in a sandbox you control and connect to your private Model Context Protocol (MCP) servers
@@ -444,13 +450,13 @@ A practical guide to using Claude for legal professionals, covering Claude produ
 
 The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
 
----
+:::details View past updates
 
 **[The founder's playbook: Building an AI-native startup](https://claude.com/blog/the-founders-playbook)**<br><small>May 14, 2026 · Claude Code</small>
 
 We share how AI-native founders are using Claude at every stage of the startup journey, with practical exercises, frameworks, and prompts.
 
-:::details View past updates
+---
 
 **[Best practices for computer and browser use with Claude](https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude)**<br><small>May 13, 2026 · Agents</small>
 
@@ -474,13 +480,7 @@ We're releasing 20+ new MCP connectors that link Claude to the software that the
 
 Check out our Code w/ Claude SF 2026 recap and product announcements, and watch the keynotes and sessions on YouTube.
 
----
-
-**[Introducing the Claude Platform on AWS](https://claude.com/blog/claude-platform-on-aws)**<br><small>May 11, 2026 · Product announcements</small>
-
-The Claude Platform on AWS is now generally available, offering a new way for AWS customers to access the full set of Claude platform features with AWS authentication, billing, and commitment retirement.
-
 :::
 
-*Updated May 19, 2026*
+*Updated May 20, 2026*
 <!-- CLAUDE_FEED_END -->
