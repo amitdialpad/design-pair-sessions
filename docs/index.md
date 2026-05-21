@@ -428,6 +428,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How an Anthropic sales leader uses Claude Cowork to run a 4,000-account book](https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book)**<br><small>May 20, 2026 · Enterprise AI</small>
+
+Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
+
+---
+
 **[Using Claude Code: The unreasonable effectiveness of HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)**<br><small>May 20, 2026 · Claude Code</small>
 
 How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
@@ -444,13 +450,13 @@ Claude Managed Agents can now operate in a sandbox you control and connect to yo
 
 A practical guide to using Claude for legal professionals, covering Claude products, connectors, practice-area plugins, and a three-phase adoption roadmap.
 
----
+:::details View past updates
 
 **[How Claude Code works in large codebases: Best practices and where to start](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)**<br><small>May 14, 2026 · Enterprise AI</small>
 
 The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
 
-:::details View past updates
+---
 
 **[The founder's playbook: Building an AI-native startup](https://claude.com/blog/the-founders-playbook)**<br><small>May 14, 2026 · Claude Code</small>
 
@@ -474,13 +480,7 @@ Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, 
 
 We're releasing 20+ new MCP connectors that link Claude to the software that the legal industry runs on and 12 new plugins tailored specific legal work and practice areas.
 
----
-
-**[Code w/ Claude SF 2026 recap: Building on the AI exponential](https://claude.com/blog/code-w-claude-sf-2026-sf)**<br><small>May 12, 2026 · Product announcements</small>
-
-Check out our Code w/ Claude SF 2026 recap and product announcements, and watch the keynotes and sessions on YouTube.
-
 :::
 
-*Updated May 20, 2026*
+*Updated May 21, 2026*
 <!-- CLAUDE_FEED_END -->
