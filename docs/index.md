@@ -428,6 +428,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How our partners are putting Opus to work for cybersecurity](https://claude.com/blog/how-our-partners-are-putting-opus-to-work-for-cybersecurity)**<br><small>May 21, 2026 · Enterprise AI</small>
+
+Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude Opus to find and fix vulnerabilities faster and deploy AI defense at scale.
+
+---
+
+**[Claude now works with more security and compliance tools](https://claude.com/blog/compliance-api-security-partners)**<br><small>May 21, 2026 · Enterprise AI</small>
+
+Today we're introducing integrations with notable security and compliance tools. Now IT and security teams can govern Claude across our platform and suite of products, the same way they govern other applications in their stack.
+
+---
+
 **[How an Anthropic sales leader uses Claude Cowork to run a 4,000-account book](https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book)**<br><small>May 20, 2026 · Enterprise AI</small>
 
 Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
@@ -438,7 +450,7 @@ Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude
 
 How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
 
----
+:::details View past updates
 
 **[New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels](https://claude.com/blog/claude-managed-agents-updates)**<br><small>May 19, 2026</small>
 
@@ -450,7 +462,7 @@ Claude Managed Agents can now operate in a sandbox you control and connect to yo
 
 A practical guide to using Claude for legal professionals, covering Claude products, connectors, practice-area plugins, and a three-phase adoption roadmap.
 
-:::details View past updates
+---
 
 **[How Claude Code works in large codebases: Best practices and where to start](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)**<br><small>May 14, 2026 · Enterprise AI</small>
 
@@ -468,19 +480,7 @@ We share how AI-native founders are using Claude at every stage of the startup j
 
 Practical guidance for developers building computer and browser use integrations with the Claude model family.
 
----
-
-**[How Anthropic's cybersecurity team built a threat detection platform with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-cybersecurity)**<br><small>May 12, 2026 · Claude Code</small>
-
-Jackie Bow, technical lead for Anthropic's Detection Platform Engineering team, shares how her team uses Claude Code to build tools that automate alert triage, accelerate investigations, and transform how security analysts work.
-
----
-
-**[Claude for the legal industry](https://claude.com/blog/claude-for-the-legal-industry)**<br><small>May 12, 2026 · Product announcements</small>
-
-We're releasing 20+ new MCP connectors that link Claude to the software that the legal industry runs on and 12 new plugins tailored specific legal work and practice areas.
-
 :::
 
-*Updated May 21, 2026*
+*Updated May 22, 2026*
 <!-- CLAUDE_FEED_END -->
