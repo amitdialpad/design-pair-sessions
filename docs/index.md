@@ -428,6 +428,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Anthropic's finance team uses Claude to shape the narrative behind the numbers](https://claude.com/blog/how-anthropics-finance-team-uses-claude-to-shape-the-narrative-behind-the-numbers)**<br><small>May 22, 2026 · Enterprise AI</small>
+
+Alice Fong, on the corporate finance and strategy team at Anthropic, shares how she uses Claude to maintain a single coherent financial narrative for the CFO and board, and free up 10 to 20 hours a week for higher-impact work.
+
+---
+
 **[How our partners are putting Opus to work for cybersecurity](https://claude.com/blog/how-our-partners-are-putting-opus-to-work-for-cybersecurity)**<br><small>May 21, 2026 · Enterprise AI</small>
 
 Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude Opus to find and fix vulnerabilities faster and deploy AI defense at scale.
@@ -444,13 +450,13 @@ Today we're introducing integrations with notable security and compliance tools.
 
 Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
 
----
+:::details View past updates
 
 **[Using Claude Code: The unreasonable effectiveness of HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)**<br><small>May 20, 2026 · Claude Code</small>
 
 How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
 
-:::details View past updates
+---
 
 **[New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels](https://claude.com/blog/claude-managed-agents-updates)**<br><small>May 19, 2026</small>
 
@@ -474,13 +480,7 @@ The most successful Claude Code deployments share a set of recognizable patterns
 
 We share how AI-native founders are using Claude at every stage of the startup journey, with practical exercises, frameworks, and prompts.
 
----
-
-**[Best practices for computer and browser use with Claude](https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude)**<br><small>May 13, 2026 · Agents</small>
-
-Practical guidance for developers building computer and browser use integrations with the Claude model family.
-
 :::
 
-*Updated May 22, 2026*
+*Updated May 23, 2026*
 <!-- CLAUDE_FEED_END -->
