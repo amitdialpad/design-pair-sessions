@@ -482,5 +482,5 @@ We share how AI-native founders are using Claude at every stage of the startup j
 
 :::
 
-*Updated May 23, 2026*
+*Updated May 24, 2026*
 <!-- CLAUDE_FEED_END -->
