@@ -164,6 +164,42 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 18–24 May 2026
+
+This week was all about the active call experience and how AI content streams into your designs. The transcript panel now lives alongside button states in the active call overlay, so you can see the full interaction picture at once. The canvas also started rendering AI responses directly as feed rows instead of floating panels, which means your designs can show what real-time AI content actually looks like in context. On top of that, Josh added new card components (ArtifactCard, ListCard, SummaryCard, TableCard) specifically for displaying structured AI outputs. If you're designing around calls or AI features, this week moved the needle on fidelity.
+
+#### What actually changed
+
+The active call overlay now shows the transcript panel and updated button states together. The canvas renders in-flight AI responses as feed rows instead of separate panels. New artifact card components are available for displaying AI-generated content. The message composer was refactored into smaller sub-components for better maintainability. The omnibox now classifies AI requests and routes them to the canvas. The omnibox also surfaces when multiple concurrent requests are competing for resources so you can see performance bottlenecks. The AI conversation side panel is now collapsible and accessible while you design.
+
+#### The bigger shift
+
+Beacon is tightening the feedback loop between what you design and what actually streams in from AI. Instead of designing in isolation, you're now seeing real response patterns, feed integration, and resource contention as you work. The shift from separate panels to embedded feed rows means designs need to account for how content flows in and reshapes the interface.
+
+#### Where things are still messy
+
+The message composer refactor is new enough that behavior changes may still surface. Josh flagged that if you notice anything off, he wants to know. The omnibox-to-canvas routing and AI classification are solid but worth double-checking if you're relying on specific request behaviors.
+
+#### What's coming next
+
+Expect more card types and ways to customize how artifact content displays. The AI conversation panel will probably get deeper integration with your design canvas. The active call overlay will likely expand to support more complex interaction patterns as the call experience gets richer.
+
+#### Try this
+
+Open the canvas with an AI feature toggled on, and watch a response stream in as a feed row. Then check the omnibox contention signals while it's happening. You'll see exactly where the performance hits if multiple requests fire at once. This is useful if you're designing around AI features that might have competing requests in the real product.
+
+#### Quick notes
+
+- The Account Hub has a new construction view, but it's still minimal.
+- AI Receptionist wizard redesign is live with dedicated setup steps and a live preview panel.
+- Salesforce account data integration is working, so designs can reference real CRM data now.
+
+#### One thing to remember
+
+When you design around AI content now, it streams in as feed rows, not panels, so layout and spacing need to account for live insertion and reshaping.
+
+---
+
 ### Week of 11–17 May 2026
 
 This was a big week for AI features in Beacon. The omnibox got smarter with AI-powered classification to route your searches correctly, and it now shows you when the system is under load from concurrent streams. The message composer was refactored into smaller pieces for easier maintenance. Four new card components landed (ArtifactCard, ListCard, SummaryCard, TableCard) to display AI-generated content in a feed. The AI conversation side panel is now live alongside your canvas, so you can talk to Claude without leaving your design workspace. The AI Receptionist wizard shipped with a full setup flow and real-time preview. And the pinned messages panel is now accessible from the right sidebar. This is the week Beacon started feeling less like a prototyping tool and more like an AI-first design canvas.
@@ -284,7 +320,7 @@ Open the message composer and look for the preset rewrite options. Try applying 
 #### One thing to remember
 Reach out to Josh before assuming behavior has changed in Preferences or Dialtone components—the migration is recent.
 
----
+:::details View April 2026
 
 ### Week of 20–26 Apr 2026
 
@@ -416,6 +452,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
