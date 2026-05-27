@@ -466,6 +466,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Code w/ Claude London 2026: Rethinking how we build](https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build)**<br><small>May 26, 2026 · Product announcements</small>
+
+Couldn't make it to London? Check out our Code w/ Claude London event recap and watch our session recordings.
+
+---
+
 **[How Anthropic's finance team uses Claude to shape the narrative behind the numbers](https://claude.com/blog/how-anthropics-finance-team-uses-claude-to-shape-the-narrative-behind-the-numbers)**<br><small>May 22, 2026 · Enterprise AI</small>
 
 Alice Fong, on the corporate finance and strategy team at Anthropic, shares how she uses Claude to maintain a single coherent financial narrative for the CFO and board, and free up 10 to 20 hours a week for higher-impact work.
@@ -482,13 +488,13 @@ Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude
 
 Today we're introducing integrations with notable security and compliance tools. Now IT and security teams can govern Claude across our platform and suite of products, the same way they govern other applications in their stack.
 
----
+:::details View past updates
 
 **[How an Anthropic sales leader uses Claude Cowork to run a 4,000-account book](https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book)**<br><small>May 20, 2026 · Enterprise AI</small>
 
 Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
 
-:::details View past updates
+---
 
 **[Using Claude Code: The unreasonable effectiveness of HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)**<br><small>May 20, 2026 · Claude Code</small>
 
@@ -512,13 +518,7 @@ A practical guide to using Claude for legal professionals, covering Claude produ
 
 The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
 
----
-
-**[The founder's playbook: Building an AI-native startup](https://claude.com/blog/the-founders-playbook)**<br><small>May 14, 2026 · Claude Code</small>
-
-We share how AI-native founders are using Claude at every stage of the startup journey, with practical exercises, frameworks, and prompts.
-
 :::
 
-*Updated May 26, 2026*
+*Updated May 27, 2026*
 <!-- CLAUDE_FEED_END -->
