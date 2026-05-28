@@ -466,11 +466,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Zero Trust for AI agents](https://claude.com/blog/zero-trust-for-ai-agents)**<br><small>May 27, 2026 · Enterprise AI</small>
+
+A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
+
+---
+
+**[How CodeRabbit used Claude to build an agent orchestration system](https://claude.com/blog/how-coderabbit-used-claude-to-build-an-agent-orchestration-system)**<br><small>May 27, 2026 · Claude Code</small>
+
+CodeRabbit built a layer on Claude that sits between a coding request and a coding agent, producing a structured coding plan the team can review before any code gets generated.
+
+---
+
+**[Using LLMs to secure source code](https://claude.com/blog/using-llms-to-secure-source-code)**<br><small>May 27, 2026 · Enterprise AI</small>
+
+We share best practices for how you can work with Claude Opus to build a threat model, discover vulnerabilities in your codebase, then verify, triage, and patch them.
+
+---
+
 **[Code w/ Claude London 2026: Rethinking how we build](https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build)**<br><small>May 26, 2026 · Product announcements</small>
 
 Couldn't make it to London? Check out our Code w/ Claude London event recap and watch our session recordings.
 
----
+:::details View past updates
 
 **[How Anthropic's finance team uses Claude to shape the narrative behind the numbers](https://claude.com/blog/how-anthropics-finance-team-uses-claude-to-shape-the-narrative-behind-the-numbers)**<br><small>May 22, 2026 · Enterprise AI</small>
 
@@ -488,7 +506,7 @@ Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude
 
 Today we're introducing integrations with notable security and compliance tools. Now IT and security teams can govern Claude across our platform and suite of products, the same way they govern other applications in their stack.
 
-:::details View past updates
+---
 
 **[How an Anthropic sales leader uses Claude Cowork to run a 4,000-account book](https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book)**<br><small>May 20, 2026 · Enterprise AI</small>
 
@@ -500,25 +518,7 @@ Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude
 
 How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
 
----
-
-**[New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels](https://claude.com/blog/claude-managed-agents-updates)**<br><small>May 19, 2026</small>
-
-Claude Managed Agents can now operate in a sandbox you control and connect to your private Model Context Protocol (MCP) servers
-
----
-
-**[Deploying Claude across the legal industry](https://claude.com/blog/deploying-claude-across-the-legal-industry)**<br><small>May 15, 2026 · Enterprise AI</small>
-
-A practical guide to using Claude for legal professionals, covering Claude products, connectors, practice-area plugins, and a three-phase adoption roadmap.
-
----
-
-**[How Claude Code works in large codebases: Best practices and where to start](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)**<br><small>May 14, 2026 · Enterprise AI</small>
-
-The most successful Claude Code deployments share a set of recognizable patterns across configurations, tooling, and org structure. This article is part of Claude Code at scale, a new series covering best practices for engineering organizations building with Claude Code at enterprise scale.
-
 :::
 
-*Updated May 27, 2026*
+*Updated May 28, 2026*
 <!-- CLAUDE_FEED_END -->
