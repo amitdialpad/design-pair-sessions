@@ -466,6 +466,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Introducing dynamic workflows in Claude Code](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code)**<br><small>May 28, 2026 · Product announcements</small>
+
+Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by executing across 10s to 100s of parallel subagents, and checking its work before anything reaches you.
+
+---
+
 **[Zero Trust for AI agents](https://claude.com/blog/zero-trust-for-ai-agents)**<br><small>May 27, 2026 · Enterprise AI</small>
 
 A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
@@ -482,13 +488,13 @@ CodeRabbit built a layer on Claude that sits between a coding request and a codi
 
 We share best practices for how you can work with Claude Opus to build a threat model, discover vulnerabilities in your codebase, then verify, triage, and patch them.
 
----
+:::details View past updates
 
 **[Code w/ Claude London 2026: Rethinking how we build](https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build)**<br><small>May 26, 2026 · Product announcements</small>
 
 Couldn't make it to London? Check out our Code w/ Claude London event recap and watch our session recordings.
 
-:::details View past updates
+---
 
 **[How Anthropic's finance team uses Claude to shape the narrative behind the numbers](https://claude.com/blog/how-anthropics-finance-team-uses-claude-to-shape-the-narrative-behind-the-numbers)**<br><small>May 22, 2026 · Enterprise AI</small>
 
@@ -512,13 +518,7 @@ Today we're introducing integrations with notable security and compliance tools.
 
 Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
 
----
-
-**[Using Claude Code: The unreasonable effectiveness of HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)**<br><small>May 20, 2026 · Claude Code</small>
-
-How and why members of the Claude Code team use HTML instead of Markdown to produce richer, more readable, and easily shareable outputs.
-
 :::
 
-*Updated May 28, 2026*
+*Updated May 29, 2026*
 <!-- CLAUDE_FEED_END -->
