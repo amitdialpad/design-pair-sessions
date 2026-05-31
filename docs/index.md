@@ -520,5 +520,5 @@ Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude
 
 :::
 
-*Updated May 30, 2026*
+*Updated May 31, 2026*
 <!-- CLAUDE_FEED_END -->
