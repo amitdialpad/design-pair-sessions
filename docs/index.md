@@ -164,6 +164,42 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 25–31 May 2026
+
+This week was quiet on the surface but adds real capability to how you work with AI outputs in Beacon. The transcript panel now shows up alongside call button states in the active call overlay, giving you the full picture when you're designing call experiences. The canvas started rendering AI responses directly as feed rows instead of in separate panels, which means less switching between views. A few infrastructure updates landed too: the omnibox got smarter about showing when concurrent AI requests are fighting for resources, the message composer got refactored into smaller pieces for better maintainability, and the AI conversation side panel is now fully available alongside your canvas so you can reference conversations without leaving your design work. None of this is flashy, but it all points in the same direction: Beacon is becoming more integrated, less fragmented.
+
+#### What actually changed
+
+The active call overlay now displays the transcript panel with updated button states for the 9-grid. The canvas renders AI responses directly in feed rows as they stream in, instead of in a separate panel. The omnibox now surfaces concurrent stream contention signals so you can see when multiple AI requests are competing. The message composer was refactored into focused sub-components that handle AI writing controls, content state, recipient selection, and share detection separately. The omnibox AI classifier now routes requests directly to the canvas. New card components landed: ArtifactCard, ListCard, SummaryCard, and TableCard for displaying structured AI outputs in feeds. The AI conversation side panel is now collapsible and accessible alongside your canvas.
+
+#### The bigger shift
+
+Beacon is moving away from modal-heavy, panel-based AI interactions toward integrated, stream-aware workflows. Instead of AI outputs appearing in isolation, they now live in the feeds and layouts where designers actually work. This makes prototyping AI-assisted experiences feel less like switching between tools and more like designing in context.
+
+#### Where things are still messy
+
+The message composer refactor is live, but Josh is the person to ask if you notice any behavioral changes. The omnibox-to-canvas routing is new, so edge cases with request classification may still surface. The concurrent stream contention signals are there, but understanding what to do about resource bottlenecks during design work is still being figured out.
+
+#### What's coming next
+
+Expect more refinement around how AI artifacts display in different contexts. The card components are in place, but designers will likely ask for more control over how they render. The conversation panel integration suggests Beacon will keep pulling more Dialpad features directly into the canvas rather than keeping them separate.
+
+#### Try this
+
+Open a design that uses AI features. Check the omnibox and notice the new contention signals when you have multiple requests running. This tells you whether your prototype is going to feel sluggish when AI features pile up. Then look at how AI responses now appear in the feed instead of a side panel—this is closer to how users will actually see them.
+
+#### Quick notes
+
+- The Account Hub now has a construction view, accessible via AccountHubView.vue.
+- The message composer refactor shouldn't break your designs, but let Josh know if composer behavior feels off.
+- Pinned messages panel is still available in the right sidebar if you use it.
+
+#### One thing to remember
+
+AI outputs belong in the feed now, not in separate panels—design accordingly.
+
+---
+
 ### Week of 18–24 May 2026
 
 This week was all about the active call experience and how AI content streams into your designs. The transcript panel now lives alongside button states in the active call overlay, so you can see the full interaction picture at once. The canvas also started rendering AI responses directly as feed rows instead of floating panels, which means your designs can show what real-time AI content actually looks like in context. On top of that, Josh added new card components (ArtifactCard, ListCard, SummaryCard, TableCard) specifically for displaying structured AI outputs. If you're designing around calls or AI features, this week moved the needle on fidelity.
@@ -284,7 +320,7 @@ Check out the pinned messages panel this week. Add a few pins to a conversation 
 
 The Salesforce data layer is live, so features that need CRM context don't have to fake it anymore.
 
----
+:::details View May 2026
 
 ### Week of 27–3 May 2026
 
@@ -452,6 +488,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
