@@ -504,6 +504,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Running an AI-native engineering org](https://claude.com/blog/running-an-ai-native-engineering-org)**<br><small>Jun 3, 2026 · Claude Code</small>
+
+How the Claude Code engineering team’s processes and structure changed once agentic coding became the default way of working.
+
+---
+
+**[A harness for every task: dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)**<br><small>Jun 2, 2026 · Claude Code</small>
+
+Claude Code can now write and orchestrate its own multi-agent harness on the fly. Here's how dynamic workflows work, and the patterns that get the most out of them.
+
+---
+
 **[Introducing dynamic workflows in Claude Code](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code)**<br><small>May 28, 2026 · Product announcements</small>
 
 Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by executing across 10s to 100s of parallel subagents, and checking its work before anything reaches you.
@@ -514,7 +526,7 @@ Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by
 
 A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
 
----
+:::details View past updates
 
 **[How CodeRabbit used Claude to build an agent orchestration system](https://claude.com/blog/how-coderabbit-used-claude-to-build-an-agent-orchestration-system)**<br><small>May 27, 2026 · Claude Code</small>
 
@@ -526,7 +538,7 @@ CodeRabbit built a layer on Claude that sits between a coding request and a codi
 
 We share best practices for how you can work with Claude Opus to build a threat model, discover vulnerabilities in your codebase, then verify, triage, and patch them.
 
-:::details View past updates
+---
 
 **[Code w/ Claude London 2026: Rethinking how we build](https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build)**<br><small>May 26, 2026 · Product announcements</small>
 
@@ -544,19 +556,7 @@ Alice Fong, on the corporate finance and strategy team at Anthropic, shares how 
 
 Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude Opus to find and fix vulnerabilities faster and deploy AI defense at scale.
 
----
-
-**[Claude now works with more security and compliance tools](https://claude.com/blog/compliance-api-security-partners)**<br><small>May 21, 2026 · Enterprise AI</small>
-
-Today we're introducing integrations with notable security and compliance tools. Now IT and security teams can govern Claude across our platform and suite of products, the same way they govern other applications in their stack.
-
----
-
-**[How an Anthropic sales leader uses Claude Cowork to run a 4,000-account book](https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book)**<br><small>May 20, 2026 · Enterprise AI</small>
-
-Travis Bryant, Head of US Mid-Market GTM at Anthropic, shares how he uses Claude Cowork to prepare customer briefs and weekly forecasts, and to run an overnight territory scoring that used to take cross-functional teams hundreds of hours.
-
 :::
 
-*Updated June 2, 2026*
+*Updated June 3, 2026*
 <!-- CLAUDE_FEED_END -->
