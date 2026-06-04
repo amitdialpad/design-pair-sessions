@@ -510,6 +510,24 @@ How the Claude Code engineering team’s processes and structure changed once ag
 
 ---
 
+**[Best practices for getting started with Claude Cowork](https://claude.com/blog/best-practices-for-getting-started-with-claude-cowork)**<br><small>Jun 3, 2026 · Enterprise AI</small>
+
+When to use Claude Cowork instead of Claude Code or chat, how to decide what workflows to delegate, and concrete steps to get started.
+
+---
+
+**[Lessons from building Claude Code: How we use skills](https://claude.com/blog/lessons-from-building-claude-code-how-we-use-skills)**<br><small>Jun 3, 2026 · Claude Code</small>
+
+What we learned building and scaling hundreds of skills internally at Anthropic.
+
+---
+
+**[How Anthropic enables self-service data analytics with Claude](https://claude.com/blog/how-anthropic-enables-self-service-data-analytics-with-claude)**<br><small>Jun 3, 2026 · Enterprise AI</small>
+
+Tips and approaches to maximizing Claude’s ability to drive self-serve data insights
+
+:::details View past updates
+
 **[A harness for every task: dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)**<br><small>Jun 2, 2026 · Claude Code</small>
 
 Claude Code can now write and orchestrate its own multi-agent harness on the fly. Here's how dynamic workflows work, and the patterns that get the most out of them.
@@ -526,7 +544,7 @@ Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by
 
 A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
 
-:::details View past updates
+---
 
 **[How CodeRabbit used Claude to build an agent orchestration system](https://claude.com/blog/how-coderabbit-used-claude-to-build-an-agent-orchestration-system)**<br><small>May 27, 2026 · Claude Code</small>
 
@@ -538,25 +556,7 @@ CodeRabbit built a layer on Claude that sits between a coding request and a codi
 
 We share best practices for how you can work with Claude Opus to build a threat model, discover vulnerabilities in your codebase, then verify, triage, and patch them.
 
----
-
-**[Code w/ Claude London 2026: Rethinking how we build](https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build)**<br><small>May 26, 2026 · Product announcements</small>
-
-Couldn't make it to London? Check out our Code w/ Claude London event recap and watch our session recordings.
-
----
-
-**[How Anthropic's finance team uses Claude to shape the narrative behind the numbers](https://claude.com/blog/how-anthropics-finance-team-uses-claude-to-shape-the-narrative-behind-the-numbers)**<br><small>May 22, 2026 · Enterprise AI</small>
-
-Alice Fong, on the corporate finance and strategy team at Anthropic, shares how she uses Claude to maintain a single coherent financial narrative for the CFO and board, and free up 10 to 20 hours a week for higher-impact work.
-
----
-
-**[How our partners are putting Opus to work for cybersecurity](https://claude.com/blog/how-our-partners-are-putting-opus-to-work-for-cybersecurity)**<br><small>May 21, 2026 · Enterprise AI</small>
-
-Learn how companies like Wiz, Palo Alto Networks, and Accenture are using Claude Opus to find and fix vulnerabilities faster and deploy AI defense at scale.
-
 :::
 
-*Updated June 3, 2026*
+*Updated June 4, 2026*
 <!-- CLAUDE_FEED_END -->
