@@ -558,5 +558,5 @@ We share best practices for how you can work with Claude Opus to build a threat 
 
 :::
 
-*Updated June 4, 2026*
+*Updated June 5, 2026*
 <!-- CLAUDE_FEED_END -->
