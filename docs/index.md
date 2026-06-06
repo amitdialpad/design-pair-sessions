@@ -504,6 +504,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How one Anthropic seller rebuilt his team's workflows with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-gtm-engineering)**<br><small>Jun 5, 2026 · Claude Code</small>
+
+How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
+
+---
+
+**[The Claude Cowork product guide](https://claude.com/blog/the-claude-cowork-product-guide)**<br><small>Jun 5, 2026 · Enterprise AI</small>
+
+We share how to get started with Claude Cowork, from setting up the tool to kicking off your first task.
+
+---
+
 **[Running an AI-native engineering org](https://claude.com/blog/running-an-ai-native-engineering-org)**<br><small>Jun 3, 2026 · Claude Code</small>
 
 How the Claude Code engineering team’s processes and structure changed once agentic coding became the default way of working.
@@ -514,7 +526,7 @@ How the Claude Code engineering team’s processes and structure changed once ag
 
 When to use Claude Cowork instead of Claude Code or chat, how to decide what workflows to delegate, and concrete steps to get started.
 
----
+:::details View past updates
 
 **[Lessons from building Claude Code: How we use skills](https://claude.com/blog/lessons-from-building-claude-code-how-we-use-skills)**<br><small>Jun 3, 2026 · Claude Code</small>
 
@@ -526,7 +538,7 @@ What we learned building and scaling hundreds of skills internally at Anthropic.
 
 Tips and approaches to maximizing Claude’s ability to drive self-serve data insights
 
-:::details View past updates
+---
 
 **[A harness for every task: dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)**<br><small>Jun 2, 2026 · Claude Code</small>
 
@@ -544,19 +556,7 @@ Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by
 
 A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
 
----
-
-**[How CodeRabbit used Claude to build an agent orchestration system](https://claude.com/blog/how-coderabbit-used-claude-to-build-an-agent-orchestration-system)**<br><small>May 27, 2026 · Claude Code</small>
-
-CodeRabbit built a layer on Claude that sits between a coding request and a coding agent, producing a structured coding plan the team can review before any code gets generated.
-
----
-
-**[Using LLMs to secure source code](https://claude.com/blog/using-llms-to-secure-source-code)**<br><small>May 27, 2026 · Enterprise AI</small>
-
-We share best practices for how you can work with Claude Opus to build a threat model, discover vulnerabilities in your codebase, then verify, triage, and patch them.
-
 :::
 
-*Updated June 5, 2026*
+*Updated June 6, 2026*
 <!-- CLAUDE_FEED_END -->
