@@ -164,6 +164,50 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 1–7 Jun 2026
+
+This week was quiet on the surface. No major new features shipped to Beacon itself. But the underlying work tells a story: Josh has been reinforcing the foundation that lets designers work with AI-generated content at scale. The transcript panel and button states in the active call overlay give you a more complete picture of call UIs. The canvas now renders AI responses directly in feeds instead of separate panels, which means less switching between views when you're designing around AI features. The omnibox got smarter about showing when concurrent AI requests are competing for resources, so you can spot performance issues during design testing. These are incremental improvements, but they all push in the same direction: making Beacon feel less like a separate tool and more like a natural extension of your design workflow.
+
+#### What actually changed
+
+**Transcript panel and button states added to active call overlay** — You now see the transcript panel and 9-grid button state variations right in the active call overlay, so you get a fuller picture of what the UI looks like during an actual call.
+
+**Canvas renders AI responses as feed rows** — Instead of floating panels, AI-generated content now appears directly in the content feed as it streams in. Check with Josh if this changes how you're structuring your AI-heavy designs.
+
+**Omnibox shows concurrent request contention** — When multiple AI requests are fighting for resources in the global search modal, Beacon now displays signals that help you spot bottlenecks.
+
+**Message composer refactored into sub-components** — The composer got split into smaller, focused pieces. Behavior should be the same, but reach out to Josh if you notice anything off with AI writing controls or recipient selection.
+
+**Omnibox AI classifier routes to canvas** — Search now intelligently figures out which AI requests should flow to the canvas for design work. The plumbing is new, the experience should feel natural.
+
+#### The bigger shift
+
+Every change this week reduces friction between thinking and testing. Beacon is becoming less of a prototype viewer and more of an environment where you can reason about AI behavior in context. The transcript alongside call buttons. The AI responses in feeds instead of modal panels. The contention signals in search. These aren't flashy features. They're about letting you design without constantly hunting for the right view.
+
+#### Where things are still messy
+
+The message composer refactor is fresh. If you're doing heavy work with AI writing controls or share detection, test early and flag anything that feels wrong. The omnibox-to-canvas handoff is new too, so the request routing logic may need adjustment as real workflows shake out.
+
+#### What's coming next
+
+Josh is building toward a tighter loop between conversation context and canvas design. The AI conversation side panel already exists. Expect it to get smarter about surfacing relevant context when you're mid-design. The artifact card system (ArtifactCard, ListCard, SummaryCard, TableCard) is in place but underused. Expect more templates and examples showing how to wire them up.
+
+#### Try this
+
+Load an active call design and look at the transcript panel alongside the 9-grid button states in the new overlay. Then run it through a few button state variations. Notice how much faster it is to see the transcript and buttons in one place instead of toggling between panels. That's the direction Beacon is moving.
+
+#### Quick notes
+
+- The omnibox classifier is working, but Josh recommends checking the request routing if you're using AI search heavily in your designs.
+- Message composer behavior should be unchanged, but the internal structure is different now for maintainability.
+- The conversation side panel is live but still being tuned for integration. Reach out to Josh if you need custom layouts.
+
+#### One thing to remember
+
+Beacon is shifting from a prototype viewer to a design environment. Every change this week moves you toward fewer clicks and more context.
+
+---
+
 ### Week of 25–31 May 2026
 
 This week was quiet on the surface but adds real capability to how you work with AI outputs in Beacon. The transcript panel now shows up alongside call button states in the active call overlay, giving you the full picture when you're designing call experiences. The canvas started rendering AI responses directly as feed rows instead of in separate panels, which means less switching between views. A few infrastructure updates landed too: the omnibox got smarter about showing when concurrent AI requests are fighting for resources, the message composer got refactored into smaller pieces for better maintainability, and the AI conversation side panel is now fully available alongside your canvas so you can reference conversations without leaving your design work. None of this is flashy, but it all points in the same direction: Beacon is becoming more integrated, less fragmented.
@@ -278,7 +322,7 @@ Open the AI conversation side panel while you're building a design, and use it t
 - Feature flags got consolidated in the devtools panel a few weeks back, so toggling AI features during design is faster now.
 - The conversation index
 
----
+:::details View May 2026
 
 ### Week of 4–10 May 2026
 
@@ -488,6 +532,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
