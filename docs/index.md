@@ -550,6 +550,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Observability for developers building connectors](https://claude.com/blog/observability-for-developers-building-connectors)**<br><small>Jun 8, 2026</small>
+
+Monitor connector performance across Claude, diagnose errors and latency, and submit your MCP server to the directory in-app. Public beta now live.
+
+---
+
+**[Building intelligent apps for Apple platforms with Claude in the Foundation Models framework](https://claude.com/blog/claude-for-foundation-models)**<br><small>Jun 8, 2026</small>
+
+A new Swift package connects Apple's Foundation Models framework to Claude. Hand off complex reasoning from on-device models with typed Swift outputs.
+
+---
+
 **[How one Anthropic seller rebuilt his team's workflows with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-gtm-engineering)**<br><small>Jun 5, 2026 · Claude Code</small>
 
 How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
@@ -560,7 +572,7 @@ How one Anthropic account executive turned GTM product manager used Claude Code
 
 We share how to get started with Claude Cowork, from setting up the tool to kicking off your first task.
 
----
+:::details View past updates
 
 **[Running an AI-native engineering org](https://claude.com/blog/running-an-ai-native-engineering-org)**<br><small>Jun 3, 2026 · Claude Code</small>
 
@@ -572,7 +584,7 @@ How the Claude Code engineering team’s processes and structure changed once ag
 
 When to use Claude Cowork instead of Claude Code or chat, how to decide what workflows to delegate, and concrete steps to get started.
 
-:::details View past updates
+---
 
 **[Lessons from building Claude Code: How we use skills](https://claude.com/blog/lessons-from-building-claude-code-how-we-use-skills)**<br><small>Jun 3, 2026 · Claude Code</small>
 
@@ -590,19 +602,7 @@ Tips and approaches to maximizing Claude’s ability to drive self-serve data in
 
 Claude Code can now write and orchestrate its own multi-agent harness on the fly. Here's how dynamic workflows work, and the patterns that get the most out of them.
 
----
-
-**[Introducing dynamic workflows in Claude Code](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code)**<br><small>May 28, 2026 · Product announcements</small>
-
-Dynamic workflows in Claude Code let Claude tackle the most challenging tasks by executing across 10s to 100s of parallel subagents, and checking its work before anything reaches you.
-
----
-
-**[Zero Trust for AI agents](https://claude.com/blog/zero-trust-for-ai-agents)**<br><small>May 27, 2026 · Enterprise AI</small>
-
-A Zero Trust framework for deploying autonomous AI agents in the enterprise, covering current threats, a tiered architecture, an eight-phase implementation workflow, and agentic SOAR.
-
 :::
 
-*Updated June 8, 2026*
+*Updated June 9, 2026*
 <!-- CLAUDE_FEED_END -->
