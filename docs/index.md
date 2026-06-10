@@ -558,7 +558,13 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[Observability for developers building connectors](https://claude.com/blog/observability-for-developers-building-connectors)**<br><small>Jun 8, 2026</small>
+**[New in Claude Managed Agents: run agents on a schedule and store environment variables in vaults](https://claude.com/blog/whats-new-in-claude-managed-agents)**<br><small>Jun 9, 2026 · Product announcements</small>
+
+Claude Managed Agents can now run on a schedule and securely access CLI tools and other authenticated services.
+
+---
+
+**[Observability for developers building connectors](https://claude.com/blog/observability-for-developers-building-connectors)**<br><small>Jun 8, 2026 · Product announcements</small>
 
 Monitor connector performance across Claude, diagnose errors and latency, and submit your MCP server to the directory in-app. Public beta now live.
 
@@ -574,13 +580,13 @@ A new Swift package connects Apple's Foundation Models framework to Claude. Hand
 
 How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
 
----
+:::details View past updates
 
 **[The Claude Cowork product guide](https://claude.com/blog/the-claude-cowork-product-guide)**<br><small>Jun 5, 2026 · Enterprise AI</small>
 
 We share how to get started with Claude Cowork, from setting up the tool to kicking off your first task.
 
-:::details View past updates
+---
 
 **[Running an AI-native engineering org](https://claude.com/blog/running-an-ai-native-engineering-org)**<br><small>Jun 3, 2026 · Claude Code</small>
 
@@ -604,13 +610,7 @@ What we learned building and scaling hundreds of skills internally at Anthropic.
 
 Tips and approaches to maximizing Claude’s ability to drive self-serve data insights
 
----
-
-**[A harness for every task: dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)**<br><small>Jun 2, 2026 · Claude Code</small>
-
-Claude Code can now write and orchestrate its own multi-agent harness on the fly. Here's how dynamic workflows work, and the patterns that get the most out of them.
-
 :::
 
-*Updated June 9, 2026*
+*Updated June 10, 2026*
 <!-- CLAUDE_FEED_END -->
