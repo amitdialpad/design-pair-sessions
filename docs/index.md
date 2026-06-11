@@ -558,6 +558,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The evolution of agentic surfaces: building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents)**<br><small>Jun 10, 2026 · Agents</small>
+
+Claude Managed Agents allows teams to build and deploy agents in production environments reliably at scale. Here’s why and how teams are using it.
+
+---
+
 **[New in Claude Managed Agents: run agents on a schedule and store environment variables in vaults](https://claude.com/blog/whats-new-in-claude-managed-agents)**<br><small>Jun 9, 2026 · Product announcements</small>
 
 Claude Managed Agents can now run on a schedule and securely access CLI tools and other authenticated services.
@@ -574,13 +580,13 @@ Monitor connector performance across Claude, diagnose errors and latency, and su
 
 A new Swift package connects Apple's Foundation Models framework to Claude. Hand off complex reasoning from on-device models with typed Swift outputs.
 
----
+:::details View past updates
 
 **[How one Anthropic seller rebuilt his team's workflows with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-gtm-engineering)**<br><small>Jun 5, 2026 · Claude Code</small>
 
 How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
 
-:::details View past updates
+---
 
 **[The Claude Cowork product guide](https://claude.com/blog/the-claude-cowork-product-guide)**<br><small>Jun 5, 2026 · Enterprise AI</small>
 
@@ -604,13 +610,7 @@ When to use Claude Cowork instead of Claude Code or chat, how to decide what wor
 
 What we learned building and scaling hundreds of skills internally at Anthropic.
 
----
-
-**[How Anthropic enables self-service data analytics with Claude](https://claude.com/blog/how-anthropic-enables-self-service-data-analytics-with-claude)**<br><small>Jun 3, 2026 · Enterprise AI</small>
-
-Tips and approaches to maximizing Claude’s ability to drive self-serve data insights
-
 :::
 
-*Updated June 10, 2026*
+*Updated June 11, 2026*
 <!-- CLAUDE_FEED_END -->
