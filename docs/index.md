@@ -180,6 +180,40 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 8–14 Jun 2026
+
+This was a focused week on call surfaces, quick interactions, and design tokens. Contact Center calls now show up in Beacon's call surfacing system using conversation index data, which matters if you're designing call-related experiences since you'll see more complete activity. Message hover interactions got faster with an emoji quick-react strip on MessageActionMenu. The theming system picked up material dimension token support, giving you another option in Theme settings alongside existing themes. There's also a cleaner What's New modal in the top bar, an inbox persistence fix that stops your panel from disappearing when you navigate away, and updated transcript and button handling in the active call overlay. Nothing revolutionary, but several small improvements that make the tool feel more polished and complete.
+
+#### What actually changed
+- Contact Center calls surface via conversation index and membership data in Beacon's call surfacing system
+- MessageActionMenu now shows emoji quick-react strip on hover for faster feedback
+- Theme settings support material dimension tokens for design token management
+- What's New modal redesigned with improved appearance and UX
+- Inbox panel state now persists when you navigate away and return
+- Active call overlay displays transcript panel with redesigned 9-grid button layout and proper state handling
+
+#### The bigger shift
+Beacon is consolidating how it displays real-time information. Calls, messages, and AI responses are all moving toward more integrated views where secondary information (transcripts, reactions, metadata) appears inline rather than in separate panels. This makes the canvas feel less fragmented.
+
+#### Where things are still messy
+The transcript panel positioning in the active call overlay is new, so if you notice anything odd with how it aligns or overlaps with controls, Josh wants to know. Material dimension tokens are in but may have edge cases in how they interact with existing theme selections.
+
+#### What's coming next
+Expect more work on call interaction surfaces and possibly more refinement of the message composer and AI writing features. The inbox persistence fix suggests stability work is ongoing.
+
+#### Try this
+Hover over a message in any thread and use the new emoji strip instead of right-clicking to add reactions. It's faster, especially for repeated reactions.
+
+#### Quick notes
+- Reach out to Josh if Contact Center call surfacing affects your current designs
+- The What's New modal is in the top bar user menu now, not buried elsewhere
+- Material dimension tokens are live in Theme settings if you want to experiment with them
+
+#### One thing to remember
+Call and message interactions are getting more streamlined, so test your designs in Beacon before assuming something needs a separate modal or panel.
+
+---
+
 ### Week of 1–7 Jun 2026
 
 This week was quiet on the surface. No major new features shipped to Beacon itself. But the underlying work tells a story: Josh has been reinforcing the foundation that lets designers work with AI-generated content at scale. The transcript panel and button states in the active call overlay give you a more complete picture of call UIs. The canvas now renders AI responses directly in feeds instead of separate panels, which means less switching between views when you're designing around AI features. The omnibox got smarter about showing when concurrent AI requests are competing for resources, so you can spot performance issues during design testing. These are incremental improvements, but they all push in the same direction: making Beacon feel less like a separate tool and more like a natural extension of your design workflow.
@@ -294,7 +328,7 @@ Open the canvas with an AI feature toggled on, and watch a response stream in as
 
 When you design around AI content now, it streams in as feed rows, not panels, so layout and spacing need to account for live insertion and reshaping.
 
----
+:::details View May 2026
 
 ### Week of 11–17 May 2026
 
@@ -548,6 +582,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
