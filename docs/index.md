@@ -602,6 +602,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Meet the winners of the Built with Opus 4.7 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-built-with-opus-4-7-claude-code-hackathon)**<br><small>Jun 15, 2026 · Claude Code</small>
+
+We chatted with the winners of our Built with Opus 4.7 hackathon about their projects, tackling medical training, electronics repair, computer science education, interactive play, home repair, and factory maintenance.
+
+---
+
 **[The evolution of agentic surfaces: building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents)**<br><small>Jun 10, 2026 · Agents</small>
 
 Claude Managed Agents allows teams to build and deploy agents in production environments reliably at scale. Here’s why and how teams are using it.
@@ -618,13 +624,13 @@ Claude Managed Agents can now run on a schedule and securely access CLI tools an
 
 Monitor connector performance across Claude, diagnose errors and latency, and submit your MCP server to the directory in-app. Public beta now live.
 
----
+:::details View past updates
 
 **[Building intelligent apps for Apple platforms with Claude in the Foundation Models framework](https://claude.com/blog/claude-for-foundation-models)**<br><small>Jun 8, 2026</small>
 
 A new Swift package connects Apple's Foundation Models framework to Claude. Hand off complex reasoning from on-device models with typed Swift outputs.
 
-:::details View past updates
+---
 
 **[How one Anthropic seller rebuilt his team's workflows with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-gtm-engineering)**<br><small>Jun 5, 2026 · Claude Code</small>
 
@@ -648,13 +654,7 @@ How the Claude Code engineering team’s processes and structure changed once ag
 
 When to use Claude Cowork instead of Claude Code or chat, how to decide what workflows to delegate, and concrete steps to get started.
 
----
-
-**[Lessons from building Claude Code: How we use skills](https://claude.com/blog/lessons-from-building-claude-code-how-we-use-skills)**<br><small>Jun 3, 2026 · Claude Code</small>
-
-What we learned building and scaling hundreds of skills internally at Anthropic.
-
 :::
 
-*Updated June 15, 2026*
+*Updated June 16, 2026*
 <!-- CLAUDE_FEED_END -->
