@@ -656,5 +656,5 @@ When to use Claude Cowork instead of Claude Code or chat, how to decide what wor
 
 :::
 
-*Updated June 16, 2026*
+*Updated June 17, 2026*
 <!-- CLAUDE_FEED_END -->
