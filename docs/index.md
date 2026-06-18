@@ -602,11 +602,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Secure access to the Claude Platform with Workload Identity Federation](https://claude.com/blog/workload-identity-federation)**<br><small>Jun 17, 2026 · Product announcements</small>
+
+WIF replaces static API keys with short-lived, scoped credentials issued at request time. WIF is compatible with any OIDC-compliant identity provider and covers all Claude API endpoints
+
+---
+
+**[Claude Design now stays on brand for daily work](https://claude.com/blog/claude-design-stays-on-brand-for-daily-work)**<br><small>Jun 17, 2026 · Product announcements</small>
+
+Claude Design now sticks to your design system across projects, works fluidly with Claude Code, lets you edit directly on the canvas, and connects to more tools you already use. It has a new home in the sidebar on the Claude desktop app; you can also find it at claude.ai/design.
+
+---
+
+**[Meet the winners of our Claude Opus 4.8 Build Day hackathon](https://claude.com/blog/meet-the-winners-of-our-claude-opus-4-8-build-day-hackathon)**<br><small>Jun 17, 2026 · Claude Code</small>
+
+From reconstructing Tang Dynasty architecture to polling a synthetic San Francisco, see what the winners of our latest hackathon built with Claude Opus 4.8 in a day.
+
+---
+
 **[Meet the winners of the Built with Opus 4.7 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-built-with-opus-4-7-claude-code-hackathon)**<br><small>Jun 15, 2026 · Claude Code</small>
 
 We chatted with the winners of our Built with Opus 4.7 hackathon about their projects, tackling medical training, electronics repair, computer science education, interactive play, home repair, and factory maintenance.
 
----
+:::details View past updates
 
 **[The evolution of agentic surfaces: building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents)**<br><small>Jun 10, 2026 · Agents</small>
 
@@ -624,7 +642,7 @@ Claude Managed Agents can now run on a schedule and securely access CLI tools an
 
 Monitor connector performance across Claude, diagnose errors and latency, and submit your MCP server to the directory in-app. Public beta now live.
 
-:::details View past updates
+---
 
 **[Building intelligent apps for Apple platforms with Claude in the Foundation Models framework](https://claude.com/blog/claude-for-foundation-models)**<br><small>Jun 8, 2026</small>
 
@@ -636,25 +654,7 @@ A new Swift package connects Apple's Foundation Models framework to Claude. Hand
 
 How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
 
----
-
-**[The Claude Cowork product guide](https://claude.com/blog/the-claude-cowork-product-guide)**<br><small>Jun 5, 2026 · Enterprise AI</small>
-
-We share how to get started with Claude Cowork, from setting up the tool to kicking off your first task.
-
----
-
-**[Running an AI-native engineering org](https://claude.com/blog/running-an-ai-native-engineering-org)**<br><small>Jun 3, 2026 · Claude Code</small>
-
-How the Claude Code engineering team’s processes and structure changed once agentic coding became the default way of working.
-
----
-
-**[Best practices for getting started with Claude Cowork](https://claude.com/blog/best-practices-for-getting-started-with-claude-cowork)**<br><small>Jun 3, 2026 · Enterprise AI</small>
-
-When to use Claude Cowork instead of Claude Code or chat, how to decide what workflows to delegate, and concrete steps to get started.
-
 :::
 
-*Updated June 17, 2026*
+*Updated June 18, 2026*
 <!-- CLAUDE_FEED_END -->
