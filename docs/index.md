@@ -602,11 +602,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Centrally manage authorization for MCP connectors](https://claude.com/blog/enterprise-managed-auth)**<br><small>Jun 18, 2026 · Enterprise AI</small>
+
+Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
+
+---
+
+**[Steering Claude Code: CLAUDE.md files, skills, hooks, rules, subagents and more](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more)**<br><small>Jun 18, 2026 · Claude Code</small>
+
+Learn about the seven methods for instructing Claude's behavior to understand the context cost and authority of each.
+
+---
+
+**[Claude Code now supports artifacts](https://claude.com/blog/artifacts-in-claude-code)**<br><small>Jun 18, 2026</small>
+
+Preview your in-progress work in Claude Code as a live, interactive artifact—built from your full session context and shareable with your team.
+
+---
+
 **[Secure access to the Claude Platform with Workload Identity Federation](https://claude.com/blog/workload-identity-federation)**<br><small>Jun 17, 2026 · Product announcements</small>
 
 WIF replaces static API keys with short-lived, scoped credentials issued at request time. WIF is compatible with any OIDC-compliant identity provider and covers all Claude API endpoints
 
----
+:::details View past updates
 
 **[Claude Design now stays on brand for daily work](https://claude.com/blog/claude-design-stays-on-brand-for-daily-work)**<br><small>Jun 17, 2026 · Product announcements</small>
 
@@ -624,7 +642,7 @@ From reconstructing Tang Dynasty architecture to polling a synthetic San Francis
 
 We chatted with the winners of our Built with Opus 4.7 hackathon about their projects, tackling medical training, electronics repair, computer science education, interactive play, home repair, and factory maintenance.
 
-:::details View past updates
+---
 
 **[The evolution of agentic surfaces: building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents)**<br><small>Jun 10, 2026 · Agents</small>
 
@@ -636,25 +654,7 @@ Claude Managed Agents allows teams to build and deploy agents in production envi
 
 Claude Managed Agents can now run on a schedule and securely access CLI tools and other authenticated services.
 
----
-
-**[Observability for developers building connectors](https://claude.com/blog/observability-for-developers-building-connectors)**<br><small>Jun 8, 2026 · Product announcements</small>
-
-Monitor connector performance across Claude, diagnose errors and latency, and submit your MCP server to the directory in-app. Public beta now live.
-
----
-
-**[Building intelligent apps for Apple platforms with Claude in the Foundation Models framework](https://claude.com/blog/claude-for-foundation-models)**<br><small>Jun 8, 2026</small>
-
-A new Swift package connects Apple's Foundation Models framework to Claude. Hand off complex reasoning from on-device models with typed Swift outputs.
-
----
-
-**[How one Anthropic seller rebuilt his team's workflows with Claude Code](https://claude.com/blog/how-anthropic-uses-claude-gtm-engineering)**<br><small>Jun 5, 2026 · Claude Code</small>
-
-How one Anthropic account executive turned GTM product manager used Claude Code to save 10-15 hours per week on email and pre-call research.
-
 :::
 
-*Updated June 18, 2026*
+*Updated June 19, 2026*
 <!-- CLAUDE_FEED_END -->
