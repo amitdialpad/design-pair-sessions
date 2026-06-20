@@ -656,5 +656,5 @@ Claude Managed Agents can now run on a schedule and securely access CLI tools an
 
 :::
 
-*Updated June 19, 2026*
+*Updated June 20, 2026*
 <!-- CLAUDE_FEED_END -->
