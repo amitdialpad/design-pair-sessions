@@ -180,6 +180,47 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 15–21 Jun 2026
+
+This week was mostly incremental. Josh shipped draft state management for appearance preferences so you can tweak themes without committing changes immediately, migrated all the resizable panels over to Dialtone components for consistency with the design system, and added a quick emoji reaction strip to the message hover menu. There's also a new What's New modal in the top bar that surfaces release notes directly in Beacon instead of making you hunt for them elsewhere. Contact Center calls now surface properly through conversation membership data, and the theming system gained support for material dimension themes. Nothing here breaks your current work, but if you're designing around call context or working with appearance customization, these changes make things cleaner.
+
+#### What actually changed
+
+- **Appearance preferences now save as drafts.** The Preferences modal stages your changes before you commit them, so you can experiment with theme materials and appearance options without immediately saving.
+- **Resizable panels migrated to Dialtone.** The feed, side panel, sidebar menu, navigation panel, and billing layout now use DtResizable instead of custom code. This brings them in line with how Dialpad's design system handles resizable UI.
+- **Contact Center calls surface via conversation index.** The bootloader now uses conversation membership data to display call context properly in Beacon's call surfacing components.
+- **Message hover bar gained quick emoji reactions.** When you hover over a message, the action menu now includes an emoji reaction strip so you can react faster without opening additional menus.
+- **Material dimension theme option added.** The theming system now supports material dimension themes, giving you more flexibility in BrandThemeSettings and ThemeMaterialSelector.
+- **What's New modal and release notes interface.** The top bar user menu now shows a new What's New modal that displays release information directly in Beacon instead of requiring you to check external sources.
+
+#### The bigger shift
+
+Beacon is moving toward self-contained workflows. The What's New modal keeps release information inside the tool. Draft state management lets you explore settings without friction. The Dialtone migration aligns Beacon's internals with Dialpad's design system so changes upstream affect both consistently. This is less about new capabilities and more about tightening how things work together.
+
+#### Where things are still messy
+
+The transcript panel and 9-grid button refinements in the active call overlay shipped last month but feel like they're still being iterated on based on how they appeared in the release notes. Reach out to Josh if you're designing around active calls and notice anything off.
+
+#### What's coming next
+
+More of the Account Hub is coming. It already has a construction page. The AI Receptionist wizard got a major redesign last month, so expect that to stabilize or evolve further. The pinned messages panel and AI conversation side panel are both in place, so expect those to get refinement passes as designers use them.
+
+#### Try this
+
+If you're designing appearance customization or theming flows, spin up the Preferences modal and make some changes to your theme materials without saving them. See how the draft state feels. Then save them and verify the material dimension theme option actually applies to your design tokens. This will help you understand what's possible for theme customization work going forward.
+
+#### Quick notes
+
+- Josh is the go-to person for any of these changes if you hit issues or need implementation details.
+- The Dialtone migration means panel resizing behavior should feel more consistent across Beacon, but flag anything that feels different from what you expect.
+- The What's New modal pulls from ReleaseItem and WhatsNewModal components, so customizing how releases appear is possible if you need it.
+
+#### One thing to remember
+
+Draft state management in preferences and Dialtone component consistency are small changes that make design work smoother.
+
+---
+
 ### Week of 8–14 Jun 2026
 
 This was a focused week on call surfaces, quick interactions, and design tokens. Contact Center calls now show up in Beacon's call surfacing system using conversation index data, which matters if you're designing call-related experiences since you'll see more complete activity. Message hover interactions got faster with an emoji quick-react strip on MessageActionMenu. The theming system picked up material dimension token support, giving you another option in Theme settings alongside existing themes. There's also a cleaner What's New modal in the top bar, an inbox persistence fix that stops your panel from disappearing when you navigate away, and updated transcript and button handling in the active call overlay. Nothing revolutionary, but several small improvements that make the tool feel more polished and complete.
@@ -292,7 +333,7 @@ Open a design that uses AI features. Check the omnibox and notice the new conten
 
 AI outputs belong in the feed now, not in separate panels—design accordingly.
 
----
+:::details View May 2026
 
 ### Week of 18–24 May 2026
 
@@ -582,6 +623,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
