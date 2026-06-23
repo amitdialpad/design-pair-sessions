@@ -637,6 +637,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
+
+Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code - using inference on AWS, Google Cloud and Microsoft Foundry. Available today in beta.
+
+---
+
 **[Centrally manage authorization for MCP connectors](https://claude.com/blog/enterprise-managed-auth)**<br><small>Jun 18, 2026 · Enterprise AI</small>
 
 Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
@@ -653,13 +659,13 @@ Learn about the seven methods for instructing Claude's behavior to understand th
 
 Preview your in-progress work in Claude Code as a live, interactive artifact—built from your full session context and shareable with your team.
 
----
+:::details View past updates
 
 **[Secure access to the Claude Platform with Workload Identity Federation](https://claude.com/blog/workload-identity-federation)**<br><small>Jun 17, 2026 · Product announcements</small>
 
 WIF replaces static API keys with short-lived, scoped credentials issued at request time. WIF is compatible with any OIDC-compliant identity provider and covers all Claude API endpoints
 
-:::details View past updates
+---
 
 **[Claude Design now stays on brand for daily work](https://claude.com/blog/claude-design-stays-on-brand-for-daily-work)**<br><small>Jun 17, 2026 · Product announcements</small>
 
@@ -683,13 +689,7 @@ We chatted with the winners of our Built with Opus 4.7 hackathon about their pro
 
 Claude Managed Agents allows teams to build and deploy agents in production environments reliably at scale. Here’s why and how teams are using it.
 
----
-
-**[New in Claude Managed Agents: run agents on a schedule and store environment variables in vaults](https://claude.com/blog/whats-new-in-claude-managed-agents)**<br><small>Jun 9, 2026 · Product announcements</small>
-
-Claude Managed Agents can now run on a schedule and securely access CLI tools and other authenticated services.
-
 :::
 
-*Updated June 22, 2026*
+*Updated June 23, 2026*
 <!-- CLAUDE_FEED_END -->
