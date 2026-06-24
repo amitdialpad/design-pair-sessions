@@ -621,6 +621,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Agent identity in Claude Tag: a new access model for autonomous, team-wide AI](https://claude.com/blog/agent-identity-access-model)**<br><small>Jun 24, 2026 · Claude Code</small>
+
+How Claude Tag’s agent identity access model works, and best practices for configuring it in your team’s workspace.
+
+---
+
 **[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
 
 Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code - using inference on AWS, Google Cloud and Microsoft Foundry. Available today in beta.
@@ -637,13 +643,13 @@ Admins can now provision MCP connectors for their whole organization through the
 
 Learn about the seven methods for instructing Claude's behavior to understand the context cost and authority of each.
 
----
+:::details View past updates
 
 **[Claude Code now supports artifacts](https://claude.com/blog/artifacts-in-claude-code)**<br><small>Jun 18, 2026</small>
 
 Preview your in-progress work in Claude Code as a live, interactive artifact—built from your full session context and shareable with your team.
 
-:::details View past updates
+---
 
 **[Secure access to the Claude Platform with Workload Identity Federation](https://claude.com/blog/workload-identity-federation)**<br><small>Jun 17, 2026 · Product announcements</small>
 
@@ -667,13 +673,7 @@ From reconstructing Tang Dynasty architecture to polling a synthetic San Francis
 
 We chatted with the winners of our Built with Opus 4.7 hackathon about their projects, tackling medical training, electronics repair, computer science education, interactive play, home repair, and factory maintenance.
 
----
-
-**[The evolution of agentic surfaces: building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents)**<br><small>Jun 10, 2026 · Agents</small>
-
-Claude Managed Agents allows teams to build and deploy agents in production environments reliably at scale. Here’s why and how teams are using it.
-
 :::
 
-*Updated June 23, 2026*
+*Updated June 24, 2026*
 <!-- CLAUDE_FEED_END -->
