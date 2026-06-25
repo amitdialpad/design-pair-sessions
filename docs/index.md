@@ -619,6 +619,12 @@ How Claude Tag’s agent identity access model works, and best practices for con
 
 ---
 
+**[Building effective human-agent teams](https://claude.com/blog/building-effective-human-agent-teams)**<br><small>Jun 24, 2026 · Enterprise AI</small>
+
+The way we work with AI is evolving from a single-player to a multiplayer experience, where humans and agents work together as a team to achieve shared goals. We share examples of this new way of working in action.
+
+---
+
 **[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
 
 Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code - using inference on AWS, Google Cloud and Microsoft Foundry. Available today in beta.
@@ -629,13 +635,13 @@ Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code
 
 Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
 
----
+:::details View past updates
 
 **[Steering Claude Code: CLAUDE.md files, skills, hooks, rules, subagents and more](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more)**<br><small>Jun 18, 2026 · Claude Code</small>
 
 Learn about the seven methods for instructing Claude's behavior to understand the context cost and authority of each.
 
-:::details View past updates
+---
 
 **[Claude Code now supports artifacts](https://claude.com/blog/artifacts-in-claude-code)**<br><small>Jun 18, 2026</small>
 
@@ -659,13 +665,7 @@ Claude Design now sticks to your design system across projects, works fluidly wi
 
 From reconstructing Tang Dynasty architecture to polling a synthetic San Francisco, see what the winners of our latest hackathon built with Claude Opus 4.8 in a day.
 
----
-
-**[Meet the winners of the Built with Opus 4.7 Claude Code hackathon](https://claude.com/blog/meet-the-winners-of-built-with-opus-4-7-claude-code-hackathon)**<br><small>Jun 15, 2026 · Claude Code</small>
-
-We chatted with the winners of our Built with Opus 4.7 hackathon about their projects, tackling medical training, electronics repair, computer science education, interactive play, home repair, and factory maintenance.
-
 :::
 
-*Updated June 24, 2026*
+*Updated June 25, 2026*
 <!-- CLAUDE_FEED_END -->
