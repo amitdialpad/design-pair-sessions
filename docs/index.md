@@ -132,6 +132,42 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 22–28 Jun 2026
+
+This was a solid week of polish and refinement across Beacon. Josh shipped fixes for contact history data isolation, ringtone replay bugs, and appearance preferences that now save as drafts instead of committing immediately. The bigger moves were unifying filter controls across Inbox and Threads with a new pill component and new filter bridge pattern, adding sound preferences and ringtone management to the call experience, and rolling out artifact publishing directly from the composer with a paste-to-send workflow. Resizable panels got migrated to Dialtone's component library for consistency. If you're designing around messaging, filtering, or audio feedback, there's something here that affects how you prototype. The contact history fix also means your test data won't bleed across selections anymore, which matters if you've been seeing weird overlaps in the panel.
+
+#### What actually changed
+- Contact history panel now isolates data to the selected contact across panel, feed, and inbox views
+- Filter pill component unified Inbox detail, Inbox filters panel, and Threads header under one design and shared `useFilterPillBridge` hook
+- Sound preferences and ringtone controls added to Preferences Modal and Callbar with new composables for incoming call timeouts
+- Artifacts can now publish directly and send via paste in the message composer with updated attachment chip component
+- Ringtone replay bug fixed so stopped ringtones won't restart when media keys are pressed
+- Resizable panels migrated from custom implementation to Dialtone's DtResizable component across feed, side panel, sidebar menu, and billing detail
+- Appearance preferences now stage changes before saving instead of committing immediately
+- AI CSAT scores display one decimal place for more granular feedback metrics
+
+#### The bigger shift
+Sound and preferences are getting more integrated into the core call and messaging experience. Josh is also systematically replacing custom components with Dialtone equivalents to reduce maintenance debt.
+
+#### Where things are still messy
+The new filter pill bridge is working but Josh flagged it as worth clarifying if you're implementing custom filters. Audio controls are new enough that edge cases around media key interactions are still being ironed out.
+
+#### What's coming next
+Expect more Dialtone consolidation across panels and controls. The messaging and artifact publishing flow is becoming more central, so expect refinement there.
+
+#### Try this
+Open Preferences and tweak your appearance theme without worrying about breaking your current setup. Change your theme material, preview it, then close without saving. The draft behavior means you can experiment risk-free now.
+
+#### Quick notes
+- Check MessageActionMenu.vue if you're designing message interactions—quick emoji reactions are now built in
+- Contact Center call surfacing now uses conversation index and membership data instead of the old approach
+- Material dimension tokens are available in the theming system if you need spatial relationships in your designs
+
+#### One thing to remember
+Contact history data is now properly isolated, so stop second-guessing those panel views.
+
+---
+
 ### Week of 15–21 Jun 2026
 
 This week was mostly incremental. Josh shipped draft state management for appearance preferences so you can tweak themes without committing changes immediately, migrated all the resizable panels over to Dialtone components for consistency with the design system, and added a quick emoji reaction strip to the message hover menu. There's also a new What's New modal in the top bar that surfaces release notes directly in Beacon instead of making you hunt for them elsewhere. Contact Center calls now surface properly through conversation membership data, and the theming system gained support for material dimension themes. Nothing here breaks your current work, but if you're designing around call context or working with appearance customization, these changes make things cleaner.
@@ -249,7 +285,7 @@ Load an active call design and look at the transcript panel alongside the 9-grid
 
 Beacon is shifting from a prototype viewer to a design environment. Every change this week moves you toward fewer clicks and more context.
 
----
+:::details View May 2026
 
 ### Week of 25–31 May 2026
 
@@ -575,6 +611,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
