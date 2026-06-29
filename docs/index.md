@@ -10,17 +10,17 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Contact history panel scope bug fixed**
+**Contact history panel scoping refined**
 
-The panel area now properly isolates contact history to the selected contact instead of showing mixed data across selections. This fix applies to the panel, feed, and inbox views where contact history displays.
+The panel area now properly isolates contact history to prevent data bleeding between different contact views. This affects how contact information displays in the Inbox and Feed sections when you're reviewing historical interactions.
 
 <span class="release-meta">[v2026.6.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.24) · 25 June 2026</span>
 
 ---
 
-**Inbox and threads filters unified with new pill component**
+**Inbox and Threads filters unified with new pill component**
 
-Filter controls in the Inbox detail view, Inbox filters panel, and Threads header now use a consistent new filter pill design. The underlying filter logic for both sections has been refactored to use a shared bridge pattern. Reach out to Josh if you need clarification on how the new useFilterPillBridge hook works with your existing filter implementations.
+The Inbox and Threads sections now share a consistent filter experience powered by a new filter pill bridge component. This consolidation simplifies filter behavior across messaging contexts. Reach out to Josh if you need details on how the new pill bridge works with your existing filter implementations.
 
 <span class="release-meta">[v2026.6.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.22) · 25 June 2026</span>
 
@@ -28,7 +28,7 @@ Filter controls in the Inbox detail view, Inbox filters panel, and Threads heade
 
 **Ringtone media key replay bug fixed**
 
-Fixed an issue where stopped ringtones could replay when media keys were pressed. This affects the hardware sound settings and ringtone behavior in Beacon's audio controls.
+The hardware sound settings and ringtone playback logic have been corrected to prevent stopped ringtones from restarting when media keys are pressed. This ensures more predictable audio behavior when testing sound settings in Beacon.
 
 <span class="release-meta">[v2026.6.21](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.21) · 24 June 2026</span>
 
@@ -36,39 +36,39 @@ Fixed an issue where stopped ringtones could replay when media keys were pressed
 
 **Sound preferences and ringtone controls added**
 
-The Preferences Modal and Callbar now support hardware sound settings and ringtone management. New composables handle incoming call timeouts and sound playback across the call experience. Reach out to Josh if you're designing around audio feedback or call notifications.
+The callbar and preferences modal now include hardware sound settings and ringtone management. New hooks handle incoming call timeouts and sound playback, giving designers components to control audio behavior across the calling experience.
 
 <span class="release-meta">[v2026.6.19](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.19) · 24 June 2026</span>
 
 ---
 
-**Artifact publishing and paste-to-send workflow**
+**Artifact publish and paste-to-send workflow**
 
-Artifacts can now be published directly and sent via paste in the message composer. The panel header, artifact cards, attachment chips, and composer logic have been updated to support this flow. Check with Josh if you have questions about the new attachment chip component or how it integrates with the feed.
+Artifacts can now be published directly and pasted into messages for immediate sending. Changes across the message composer, artifact cards, and feed view streamline how you share design work in conversations. Reach out to Josh if you hit any snags with the new flow.
 
 <span class="release-meta">[v2026.6.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.18) · 23 June 2026</span>
 
 ---
 
-**AI CSAT scores now display one decimal place**
+**AI CSAT scores display one decimal place**
 
-The feedback scoring component now shows CSAT values with single decimal precision instead of whole numbers. This gives you more granular insight into satisfaction metrics across your design reviews.
+The CSAT score component now shows ratings with one decimal point for better precision. If you're working with quality assurance or feedback components, you'll see more granular score values in your designs.
 
 <span class="release-meta">[v2026.6.14](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.14) · 22 June 2026</span>
 
 ---
 
-**Appearance preferences now save as drafts**
+**Appearance preferences now draft and save automatically**
 
-The Preferences modal now stages your appearance changes before saving them. This means you can adjust theme materials and other settings in AppearanceSettings without immediately committing changes, giving you a chance to preview your choices first.
+The Preferences modal now stages your appearance settings as you adjust them in the Appearance Settings panel, with new draft state management ensuring your changes persist correctly. Theme and material selections are captured in real time, so your work won't be lost if you need to step away.
 
 <span class="release-meta">[v2026.6.11](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.11) · 16 June 2026</span>
 
 ---
 
-**Resizable panels migrated to Dialtone component**
+**Resizable panels migrated to Dialtone component library**
 
-The feed, side panel, sidebar menu, and billing detail layouts now use Dialtone's DtResizable component instead of a custom implementation. This consolidation improves consistency across Beacon's UI. Reach out to Josh if you notice any changes to how panels resize or behave.
+The resizable panel system across Beacon's layouts (feed, side panel, sidebar menu, and billing detail) now uses Dialtone's DtResizable component. This is a backend consolidation that maintains all existing resize and layout behavior while reducing duplicate code. Reach out to Josh if you notice any changes in how panels resize or persist their widths.
 
 <span class="release-meta">[v2026.6.10](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.10) · 15 June 2026</span>
 
@@ -76,51 +76,43 @@ The feed, side panel, sidebar menu, and billing detail layouts now use Dialtone'
 
 :::details View older releases
 
-**Contact Center calls surface via conversation index**
+**Contact center calls surface via conversation index**
 
-Call surfacing in Contact Center now uses conversation index and membership data to display calls more accurately. Check the ccCallSurfacing fixtures to see how calls are structured in this context, or reach out to Josh if you need clarification on the new membership-based approach.
+Call surfacing in the contact center now uses conversation index and membership data to display calls more accurately. The fixture updates in ccCallSurfacing.fixtures.ts and improvements to the boot loader seeding logic support this new call routing behavior.
 
 <span class="release-meta">[v2026.6.9](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.9) · 12 June 2026</span>
 
 ---
 
-**Message hover bar gets quick emoji reactions**
+**Message hover bar gains emoji reaction strip**
 
-The action menu that appears when you hover over messages now includes a quick-react emoji strip for faster feedback. This lives in MessageActionMenu.vue and gives you instant access to common reactions without opening a full menu.
+The MessageActionMenu now displays a quick-react emoji strip when you hover over messages, letting you add reactions faster. Reach out to Josh if you need help integrating this into your designs.
 
 <span class="release-meta">[v2026.6.7](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.7) · 10 June 2026</span>
 
 ---
 
-**Material dimension theme added to Beacon**
+**Material dimension theme support added to Beacon**
 
-The theming system now supports material dimension tokens, giving you access to a new dimensional layer for designing with spatial relationships. You'll find this reflected across the appearance settings, theme selector, and related preference controls. Reach out to Josh if you need guidance on applying material dimensions to your designs.
+The theming system now includes material dimension options, giving you more control over design tokens in your theme configurations. You'll find this reflected across the appearance and theme selection interfaces, including the new ThemeMaterialSelector component. Reach out to Josh if you need guidance on applying material dimensions to your design system.
 
 <span class="release-meta">[v2026.6.4](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.4) · 9 June 2026</span>
 
 ---
 
-**What's New modal and release notes panel added**
+**What's New modal redesigned and integrated**
 
-The top bar user menu now surfaces a What's New modal and release item components to highlight recent Beacon updates directly in the interface. Check out the new WhatsNewModal.vue and ReleaseItem.vue components in the top bar area, or reach out to Josh if you want to customize how releases are presented.
+The top bar user menu now surfaces product updates through a cleaner What's New experience. ReleaseItem and WhatsNewModal components power this new interface, while supporting hooks manage the release data and panel state. Reach out to Josh if you'd like to customize how updates appear in your Beacon workflow.
 
 <span class="release-meta">[v2026.6.3](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.3) · 9 June 2026</span>
 
 ---
 
-**Inbox data persistence improved**
+**Inbox panel localStorage handling improved**
 
-The inbox panel now reliably maintains its state when you navigate away and return. This fix prevents the empty inbox display issue you may have encountered before.
+The inbox data hook now better manages local storage to prevent the inbox panel from appearing empty. This ensures your inbox state persists correctly between sessions. Reach out to Josh if you notice any unexpected behavior with saved inbox data.
 
 <span class="release-meta">[v2026.6.2](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.2) · 9 June 2026</span>
-
----
-
-**Active call overlay gains 9-grid buttons and transcript panel**
-
-The overlay that appears during calls now displays a full 3x3 button grid and integrated transcript panel. This gives you a more complete preview of the call interface controls and real-time transcription display.
-
-<span class="release-meta">[v2026.5.16](https://github.com/dialpad/beacon-app/releases/tag/v2026.5.16) · 20 May 2026</span>
 
 :::
 
