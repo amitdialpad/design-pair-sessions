@@ -681,5 +681,5 @@ From reconstructing Tang Dynasty architecture to polling a synthetic San Francis
 
 :::
 
-*Updated June 28, 2026*
+*Updated June 29, 2026*
 <!-- CLAUDE_FEED_END -->
