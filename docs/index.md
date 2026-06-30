@@ -619,6 +619,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude in Microsoft Foundry is now generally available](https://claude.com/blog/claude-in-microsoft-foundry)**<br><small>Jun 29, 2026 · Product announcements</small>
+
+Starting today, Claude models are generally available in Microsoft Foundry, hosted on Azure.
+
+---
+
+**[Introducing the Claude apps gateway for Amazon Bedrock and Google Cloud](https://claude.com/blog/introducing-the-claude-apps-gateway)**<br><small>Jun 29, 2026 · Product announcements</small>
+
+Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps gateway: corporate SSO login, centrally enforced policy, role-based access, per-user cost attribution, and spend caps—all from one stateless container on your infrastructure.
+
+---
+
 **[Agent identity in Claude Tag: a new access model for autonomous, team-wide AI](https://claude.com/blog/agent-identity-access-model)**<br><small>Jun 24, 2026 · Claude Code</small>
 
 How Claude Tag’s agent identity access model works, and best practices for configuring it in your team’s workspace.
@@ -629,7 +641,7 @@ How Claude Tag’s agent identity access model works, and best practices for con
 
 The way we work with AI is evolving from a single-player to a multiplayer experience, where humans and agents work together as a team to achieve shared goals. We share examples of this new way of working in action.
 
----
+:::details View past updates
 
 **[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
 
@@ -641,7 +653,7 @@ Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code
 
 Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
 
-:::details View past updates
+---
 
 **[Steering Claude Code: CLAUDE.md files, skills, hooks, rules, subagents and more](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more)**<br><small>Jun 18, 2026 · Claude Code</small>
 
@@ -659,19 +671,7 @@ Preview your in-progress work in Claude Code as a live, interactive artifact—b
 
 WIF replaces static API keys with short-lived, scoped credentials issued at request time. WIF is compatible with any OIDC-compliant identity provider and covers all Claude API endpoints
 
----
-
-**[Claude Design now stays on brand for daily work](https://claude.com/blog/claude-design-stays-on-brand-for-daily-work)**<br><small>Jun 17, 2026 · Product announcements</small>
-
-Claude Design now sticks to your design system across projects, works fluidly with Claude Code, lets you edit directly on the canvas, and connects to more tools you already use. It has a new home in the sidebar on the Claude desktop app; you can also find it at claude.ai/design.
-
----
-
-**[Meet the winners of our Claude Opus 4.8 Build Day hackathon](https://claude.com/blog/meet-the-winners-of-our-claude-opus-4-8-build-day-hackathon)**<br><small>Jun 17, 2026 · Claude Code</small>
-
-From reconstructing Tang Dynasty architecture to polling a synthetic San Francisco, see what the winners of our latest hackathon built with Claude Opus 4.8 in a day.
-
 :::
 
-*Updated June 29, 2026*
+*Updated June 30, 2026*
 <!-- CLAUDE_FEED_END -->
