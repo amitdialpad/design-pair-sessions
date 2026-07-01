@@ -619,6 +619,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Getting started with loops](https://claude.com/blog/getting-started-with-loops)**<br><small>Jun 30, 2026 · Claude Code</small>
+
+Practical guidance on progressing from turn-based to goal-based, time-based, and proactive loops.
+
+---
+
 **[Claude in Microsoft Foundry is now generally available](https://claude.com/blog/claude-in-microsoft-foundry)**<br><small>Jun 29, 2026 · Product announcements</small>
 
 Starting today, Claude models are generally available in Microsoft Foundry, hosted on Azure.
@@ -635,13 +641,13 @@ Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps 
 
 How Claude Tag’s agent identity access model works, and best practices for configuring it in your team’s workspace.
 
----
+:::details View past updates
 
 **[Building effective human-agent teams](https://claude.com/blog/building-effective-human-agent-teams)**<br><small>Jun 24, 2026 · Enterprise AI</small>
 
 The way we work with AI is evolving from a single-player to a multiplayer experience, where humans and agents work together as a team to achieve shared goals. We share examples of this new way of working in action.
 
-:::details View past updates
+---
 
 **[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
 
@@ -665,13 +671,7 @@ Learn about the seven methods for instructing Claude's behavior to understand th
 
 Preview your in-progress work in Claude Code as a live, interactive artifact—built from your full session context and shareable with your team.
 
----
-
-**[Secure access to the Claude Platform with Workload Identity Federation](https://claude.com/blog/workload-identity-federation)**<br><small>Jun 17, 2026 · Product announcements</small>
-
-WIF replaces static API keys with short-lived, scoped credentials issued at request time. WIF is compatible with any OIDC-compliant identity provider and covers all Claude API endpoints
-
 :::
 
-*Updated June 30, 2026*
+*Updated July 1, 2026*
 <!-- CLAUDE_FEED_END -->
