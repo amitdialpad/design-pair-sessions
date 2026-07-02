@@ -681,5 +681,5 @@ Preview your in-progress work in Claude Code as a live, interactive artifact—b
 
 :::
 
-*Updated July 1, 2026*
+*Updated July 2, 2026*
 <!-- CLAUDE_FEED_END -->
