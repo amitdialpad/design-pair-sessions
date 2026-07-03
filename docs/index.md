@@ -627,6 +627,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Giving admins more visibility and control over Claude spend](https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend)**<br><small>Jul 2, 2026 · Product announcements</small>
+
+Richer admin analytics, model-level entitlements, and spend alerts for Claude Enterprise so admins can track adoption, manage cost, and set guardrails that fit their org.
+
+---
+
 **[Getting started with loops](https://claude.com/blog/getting-started-with-loops)**<br><small>Jun 30, 2026 · Claude Code</small>
 
 Practical guidance on progressing from turn-based to goal-based, time-based, and proactive loops.
@@ -643,13 +649,13 @@ Starting today, Claude models are generally available in Microsoft Foundry, host
 
 Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps gateway: corporate SSO login, centrally enforced policy, role-based access, per-user cost attribution, and spend caps—all from one stateless container on your infrastructure.
 
----
+:::details View past updates
 
 **[Agent identity in Claude Tag: a new access model for autonomous, team-wide AI](https://claude.com/blog/agent-identity-access-model)**<br><small>Jun 24, 2026 · Claude Code</small>
 
 How Claude Tag’s agent identity access model works, and best practices for configuring it in your team’s workspace.
 
-:::details View past updates
+---
 
 **[Building effective human-agent teams](https://claude.com/blog/building-effective-human-agent-teams)**<br><small>Jun 24, 2026 · Enterprise AI</small>
 
@@ -673,13 +679,7 @@ Admins can now provision MCP connectors for their whole organization through the
 
 Learn about the seven methods for instructing Claude's behavior to understand the context cost and authority of each.
 
----
-
-**[Claude Code now supports artifacts](https://claude.com/blog/artifacts-in-claude-code)**<br><small>Jun 18, 2026</small>
-
-Preview your in-progress work in Claude Code as a live, interactive artifact—built from your full session context and shareable with your team.
-
 :::
 
-*Updated July 2, 2026*
+*Updated July 3, 2026*
 <!-- CLAUDE_FEED_END -->
