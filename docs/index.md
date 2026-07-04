@@ -681,5 +681,5 @@ Learn about the seven methods for instructing Claude's behavior to understand th
 
 :::
 
-*Updated July 3, 2026*
+*Updated July 4, 2026*
 <!-- CLAUDE_FEED_END -->
