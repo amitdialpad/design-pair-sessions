@@ -124,6 +124,41 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 29–5 Jul 2026
+
+This week was mostly refinement work on existing features rather than big new launches. Josh shipped call journey event tracking through the new useCallJourneyEvents hook, which means you can now instrument user interactions across call workflows more precisely. He also added the IVR workflow data model (useWorkflows.ts and useWorkflowRuns.ts hooks) so you can prototype IVR features properly. The "What's New" modal got polished based on design feedback, and there's a new relationship affinity modeling system for visualizing communication patterns and contact interactions. On the bug side, the contact history panel was showing unrelated records instead of filtering to the selected contact, and ringtones were replaying unexpectedly when media keys were pressed—both fixed. The filters across inbox and threads now use a unified pill component, which is cleaner visually and makes the filtering behavior consistent.
+
+#### What actually changed
+- **useCallJourneyEvents hook**: Captures call journey event data for better instrumentation of user interactions in call workflows.
+- **IVR workflow data model**: useWorkflows.ts and useWorkflowRuns.ts hooks now expose IVR workflow data structures with updated seeding and agent hooks.
+- **Relationship affinity modeling**: New topology graphs and communication volume models for visualizing contact and interaction patterns.
+- **Unified filter pills**: Inbox detail header, inbox filters, and threads header now use a standardized filter pill component.
+- **Contact history panel scope fix**: Now correctly filters to the selected contact instead of showing unrelated records.
+- **Ringtone replay fix**: Stopped ringtones no longer replay when media keys are pressed.
+- **Whats New modal refinement**: Updated based on recent design review feedback.
+
+#### The bigger shift
+The momentum has shifted toward hooking up real data models for complex features (calls, IVR workflows, contact relationships) rather than building foundational UI. This suggests Beacon is moving from generic prototyping toward domain-specific instrumentation. You're getting better scaffolding to mock and test realistic workflows.
+
+#### Where things are still messy
+No major blockers this week, but the new data models (IVR workflows, relationship affinity) are still fresh—Josh probably expects design feedback on how useful they actually are for your work.
+
+#### What's coming next
+Expect more data model work around contact center and IVR features. The ringtone and audio preferences foundation from last week is probably leading to more sophisticated call audio handling in the design system.
+
+#### Try this
+If you're designing an IVR-related feature, pull up the new useWorkflows and useWorkflowRuns hooks and mock out a workflow run. You'll get realistic data shapes instead of guessing at the structure.
+
+#### Quick notes
+- The contact history bug was silently wrong for a while—double-check any inbox or contact designs you've been testing.
+- Filter pill consistency is now across inbox, threads, and detail headers. If you're building filtering into a new surface, use the same component.
+- Sound preferences are now in the Preferences Modal. Test ringtone behavior if you're working on call notifications.
+
+#### One thing to remember
+New data models (IVR, relationship affinity, call journey events) shipped this week—reach out to Josh if you need guidance on integrating them into your designs.
+
+---
+
 ### Week of 22–28 Jun 2026
 
 This was a solid week of polish and refinement across Beacon. Josh shipped fixes for contact history data isolation, ringtone replay bugs, and appearance preferences that now save as drafts instead of committing immediately. The bigger moves were unifying filter controls across Inbox and Threads with a new pill component and new filter bridge pattern, adding sound preferences and ringtone management to the call experience, and rolling out artifact publishing directly from the composer with a paste-to-send workflow. Resizable panels got migrated to Dialtone's component library for consistency. If you're designing around messaging, filtering, or audio feedback, there's something here that affects how you prototype. The contact history fix also means your test data won't bleed across selections anymore, which matters if you've been seeing weird overlaps in the panel.
@@ -233,7 +268,7 @@ Hover over a message in any thread and use the new emoji strip instead of right-
 #### One thing to remember
 Call and message interactions are getting more streamlined, so test your designs in Beacon before assuming something needs a separate modal or panel.
 
----
+:::details View June 2026
 
 ### Week of 1–7 Jun 2026
 
@@ -603,6 +638,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
