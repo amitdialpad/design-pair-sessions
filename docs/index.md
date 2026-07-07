@@ -664,6 +664,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[A field guide to Claude Fable 5: Finding your unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns)**<br><small>Jul 6, 2026 · Claude Code</small>
+
+Practical patterns for agentic coding with Claude Fable: how to find your unknowns before, during, and after implementation, from the team at Anthropic.
+
+---
+
 **[Giving admins more visibility and control over Claude spend](https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend)**<br><small>Jul 2, 2026 · Product announcements</small>
 
 Richer admin analytics, model-level entitlements, and spend alerts for Claude Enterprise so admins can track adoption, manage cost, and set guardrails that fit their org.
@@ -680,13 +686,13 @@ Practical guidance on progressing from turn-based to goal-based, time-based, and
 
 Starting today, Claude models are generally available in Microsoft Foundry, hosted on Azure.
 
----
+:::details View past updates
 
 **[Introducing the Claude apps gateway for Amazon Bedrock and Google Cloud](https://claude.com/blog/introducing-the-claude-apps-gateway)**<br><small>Jun 29, 2026 · Product announcements</small>
 
 Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps gateway: corporate SSO login, centrally enforced policy, role-based access, per-user cost attribution, and spend caps—all from one stateless container on your infrastructure.
 
-:::details View past updates
+---
 
 **[Agent identity in Claude Tag: a new access model for autonomous, team-wide AI](https://claude.com/blog/agent-identity-access-model)**<br><small>Jun 24, 2026 · Claude Code</small>
 
@@ -710,13 +716,7 @@ Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code
 
 Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
 
----
-
-**[Steering Claude Code: CLAUDE.md files, skills, hooks, rules, subagents and more](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more)**<br><small>Jun 18, 2026 · Claude Code</small>
-
-Learn about the seven methods for instructing Claude's behavior to understand the context cost and authority of each.
-
 :::
 
-*Updated July 6, 2026*
+*Updated July 7, 2026*
 <!-- CLAUDE_FEED_END -->
