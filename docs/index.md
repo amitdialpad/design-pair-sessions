@@ -664,6 +664,30 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How people are using Claude Cowork](https://claude.com/blog/how-people-are-using-claude-cowork)**<br><small>Jul 7, 2026 · Enterprise AI</small>
+
+How are knowledge workers using AI? Anthropic's analysis of Claude Cowork sessions reveals the everyday tasks people delegate most—and what it means.
+
+---
+
+**[Claude Cowork is coming to mobile and web](https://claude.com/blog/cowork-web-mobile)**<br><small>Jul 7, 2026 · Product announcements</small>
+
+Claude Cowork is rolling out to web and mobile. Hand Claude a task, close the laptop, and the work keeps going, while every decision still comes to you.
+
+---
+
+**[Choosing a Claude model and effort level in Claude Code](https://claude.com/blog/claude-model-and-effort-level-in-claude-code)**<br><small>Jul 7, 2026 · Claude Code</small>
+
+Claude Code has two settings that shape results: which Claude model you use and the effort level. Learn what each one actually controls and how to choose.
+
+---
+
+**[Bringing Claude Code and Claude Cowork to government](https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government)**<br><small>Jul 7, 2026 · Product announcements</small>
+
+Claude Code and Claude Cowork are now available in public beta in Claude for Government Desktop
+
+:::details View past updates
+
 **[A field guide to Claude Fable 5: Finding your unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns)**<br><small>Jul 6, 2026 · Claude Code</small>
 
 Practical patterns for agentic coding with Claude Fable: how to find your unknowns before, during, and after implementation, from the team at Anthropic.
@@ -686,37 +710,13 @@ Practical guidance on progressing from turn-based to goal-based, time-based, and
 
 Starting today, Claude models are generally available in Microsoft Foundry, hosted on Azure.
 
-:::details View past updates
+---
 
 **[Introducing the Claude apps gateway for Amazon Bedrock and Google Cloud](https://claude.com/blog/introducing-the-claude-apps-gateway)**<br><small>Jun 29, 2026 · Product announcements</small>
 
 Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps gateway: corporate SSO login, centrally enforced policy, role-based access, per-user cost attribution, and spend caps—all from one stateless container on your infrastructure.
 
----
-
-**[Agent identity in Claude Tag: a new access model for autonomous, team-wide AI](https://claude.com/blog/agent-identity-access-model)**<br><small>Jun 24, 2026 · Claude Code</small>
-
-How Claude Tag’s agent identity access model works, and best practices for configuring it in your team’s workspace.
-
----
-
-**[Building effective human-agent teams](https://claude.com/blog/building-effective-human-agent-teams)**<br><small>Jun 24, 2026 · Enterprise AI</small>
-
-The way we work with AI is evolving from a single-player to a multiplayer experience, where humans and agents work together as a team to achieve shared goals. We share examples of this new way of working in action.
-
----
-
-**[The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry](https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry)**<br><small>Jun 22, 2026 · Enterprise AI</small>
-
-Deploy the full Claude desktop experience - chat, Claude Cowork, and Claude Code - using inference on AWS, Google Cloud and Microsoft Foundry. Available today in beta.
-
----
-
-**[Centrally manage authorization for MCP connectors](https://claude.com/blog/enterprise-managed-auth)**<br><small>Jun 18, 2026 · Enterprise AI</small>
-
-Admins can now provision MCP connectors for their whole organization through their identity provider, starting with Okta. Users get connector access automatically on first login, with authorization configured centrally by their organization.
-
 :::
 
-*Updated July 7, 2026*
+*Updated July 8, 2026*
 <!-- CLAUDE_FEED_END -->
