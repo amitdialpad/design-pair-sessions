@@ -10,17 +10,33 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Cold-start performance improvements and seeding refactor**
+**Inbox boot performance and caching improved**
 
-App loader and cache initialization have been restructured for faster boot times. Multiple data fetching hooks across Agents, Contacts, Calls, and other domains now use a tiered seeding strategy to prioritize critical data first. If you notice any changes in how quickly Beacon loads or populates your workspace data, let Josh know.
+The inbox now loads faster with optimized warm cache initialization and seeding logic. This affects the InboxView and InboxDetailHeader, where you'll notice snappier load times and smoother pagination when navigating between messages.
+
+<span class="release-meta">[v2026.7.9](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.9) · 9 July 2026</span>
+
+---
+
+**Voicemail mock journeys now auto-generate**
+
+The voicemail experience now includes automatically generated mock journeys, making it faster to prototype and test different voicemail scenarios in Beacon. Reach out to Josh if you need help setting these up in your design flows.
+
+<span class="release-meta">[v2026.7.8](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.8) · 9 July 2026</span>
+
+---
+
+**Faster cold-start performance and improved cache loading**
+
+Beacon now seeds data in tiers during startup and loads cached content more efficiently, reducing initial load time across the app. This refactor touches the boot loader and all major data hooks (agents, contacts, calls, conversations, and more) to streamline how information gets populated when you first open the tool.
 
 <span class="release-meta">[v2026.7.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.5) · 7 July 2026</span>
 
 ---
 
-**Voicemail content and conversation messaging foundations**
+**Voicemail content and conversation messaging foundations added**
 
-Voicemail display now has a dedicated content component (VoicemailContent.vue) laying groundwork for richer voicemail previews. Message conversation filtering and deep linking across InboxFilters, SharedMessagePreview, and conversation utilities have been hardened to work more reliably.
+Voicemail display now has foundational infrastructure with the new VoicemailContent component and supporting operations. Conversation messaging gains gating controls and episode planning capabilities through updated hooks and type definitions. Deep linking for conversations and shared messages has been corrected to use proper identifiers.
 
 <span class="release-meta">[v2026.7.4](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.4) · 6 July 2026</span>
 
@@ -28,15 +44,15 @@ Voicemail display now has a dedicated content component (VoicemailContent.vue) l
 
 **Call journey events tracking added to Beacon**
 
-The boot loader seeding logic has been refactored to support call journey event capture. This enables better instrumentation of user interactions throughout the design system. If you notice new event data appearing in your analytics, reach out to Josh for details on what's being tracked.
+The boot loader seeding logic has been refined to support call journey event capture. This enables better instrumentation of user interactions throughout the design system. Reach out to Josh if you need details on how to leverage these events in your designs.
 
 <span class="release-meta">[v2026.7.2](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.2) · 1 July 2026</span>
 
 ---
 
-**Release notes modal refined with designer feedback**
+**What's New modal refined based on design feedback**
 
-The "What's New" modal now reflects recent review updates, improving how designers discover new Beacon features. If you notice any rough edges in the modal experience, let Josh know.
+The WhatsNewModal component has been updated to address review feedback and improve the release notes experience. A new shared event timeline feature has also been added to help designers collaborate on component changes.
 
 <span class="release-meta">[v2026.7.1](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.1) · 1 July 2026</span>
 
@@ -44,65 +60,65 @@ The "What's New" modal now reflects recent review updates, improving how designe
 
 **IVR workflow data model added to Beacon**
 
-The IVR Sessions, Workflows, and Workflow Runs hooks are now available for designing around call routing and automation logic. This enables you to build interfaces that surface workflow data and execution states. Reach out to Josh if you need guidance on integrating these into your designs.
+The IVR Sessions, Workflows, and Workflow Runs hooks now support the complete data structure needed for designing IVR experiences. Boot loader seeding has been updated to initialize workflow data. If you're working on IVR-related designs and need clarification on the data shape, reach out to Josh.
 
 <span class="release-meta">[v2026.6.33](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.33) · 30 June 2026</span>
 
 ---
 
-**Relationship affinity graph and communication volume model added**
+**Relationship affinity graph and communication volume models added**
 
-Beacon now includes relationship affinity topology graphing and communication volume modeling in the boot loader seeding pipeline. This enables more sophisticated contact relationship analysis and visualization capabilities within the design system.
+Boot loader seeding now includes relationship affinity topology and communication volume calculations to power downstream features in Beacon. These foundational graph structures enable more intelligent design recommendations based on how contacts and communications relate to each other.
 
 <span class="release-meta">[v2026.6.32](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.32) · 30 June 2026</span>
 
 ---
 
-**Contact history panel scope refined**
+:::details View older releases
 
-The panel area now properly isolates contact history to the selected contact, preventing data from bleeding across different selections in the Feed and Inbox views. This fixes an issue where history context could become mixed or unclear when switching between contacts.
+**Contact history panel scope bug fixed**
+
+The panel area now correctly filters contact history to show only relevant records. This prevents unrelated contact data from appearing in the panel view.
 
 <span class="release-meta">[v2026.6.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.24) · 25 June 2026</span>
 
 ---
 
-**Inbox and threads filters unified with new pill component**
+**Filter pills redesigned across inbox and threads**
 
-Filter controls in the Inbox section (InboxDetailHeader.vue, InboxFilters.vue) and Threads header (ThreadsHeader.vue) now use a consolidated filter pill design. This change simplifies the filtering experience across both areas and introduces a new shared filter bridge utility. If you notice any inconsistencies in how filters behave, reach out to Josh.
+The inbox detail header, inbox filters, and threads header now use a new unified filter pill component that simplifies how you interact with filtering across messaging contexts. The underlying filter logic in both areas has been refactored to support this change. If you notice any differences in how filters behave or appear, reach out to Josh.
 
 <span class="release-meta">[v2026.6.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.22) · 25 June 2026</span>
 
 ---
 
-:::details View older releases
-
 **Ringtone media key replay bug fixed**
 
-The hardware sound settings in Beacon now properly prevent ringtones from restarting when media keys are pressed after they've already stopped. This fix affects the ringtone and sound behavior across the design system.
+Fixed an issue where ringtone playback could restart unexpectedly when using media keys. This affects the hardware sound settings and ringtone behavior in Beacon.
 
 <span class="release-meta">[v2026.6.21](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.21) · 24 June 2026</span>
 
 ---
 
-**Sound preferences and ringtone controls foundation**
+**Sound preferences and ringtone controls added**
 
-New audio settings infrastructure is now available in the Hardware Sound Settings and Preferences Modal. This supports ringtone customization and sound preference management for incoming calls and notifications.
+New hardware sound settings and ringtone management are now available in the Preferences Modal and throughout the callbar. Designers can reference the new useRingtone, useSound, and useSoundPreferences hooks when working with incoming call experiences. Reach out to Josh if you need details on integrating these sound controls into your designs.
 
 <span class="release-meta">[v2026.6.19](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.19) · 24 June 2026</span>
 
 ---
 
-**Artifact publishing and paste-to-send workflow**
+**Artifact publishing and pasting now sends directly**
 
-Artifacts can now be published directly and sent via paste in the message composer. The panel header, artifact cards, attachment chips, and composer logic have been updated to support this streamlined flow across the feed and navigation. Reach out to Josh if you have questions about how this affects your design workflows.
+Artifacts in the message composer can now be published and pasted in a single action, streamlining the workflow in FeedView and MessageComposer. The panel header, attachment chips, and related composer logic have been updated to support this faster flow. Reach out to Josh if you have questions about the new behavior.
 
 <span class="release-meta">[v2026.6.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.18) · 23 June 2026</span>
 
 ---
 
-**AI CSAT scores now display one decimal place**
+**AI CSAT scores display one decimal place**
 
-The CSAT metric in AI summary components now shows scores with one decimal for better precision. The mock-data review rubric has been updated to reflect this change across all related components.
+The customer satisfaction score component now shows ratings with one decimal precision instead of whole numbers. This gives you more granular feedback data when reviewing AI performance metrics in Beacon.
 
 <span class="release-meta">[v2026.6.14](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.14) · 22 June 2026</span>
 
