@@ -672,6 +672,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Anthropic's marketing operations team uses Claude Cowork to automate reporting and campaign builds](https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds)**<br><small>Jul 8, 2026 · Enterprise AI</small>
+
+How the marketing operations team at Anthropic uses Claude Cowork to automate marketing reporting and marketing campaign builds.
+
+---
+
+**[Working at the frontier: How Thomson Reuters builds AI for high-stakes professional work](https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work)**<br><small>Jul 8, 2026 · Enterprise AI</small>
+
+Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in what’s possible with AI for knowledge work.‍
+
+---
+
 **[How people are using Claude Cowork](https://claude.com/blog/how-people-are-using-claude-cowork)**<br><small>Jul 7, 2026 · Enterprise AI</small>
 
 How are knowledge workers using AI? Anthropic's analysis of Claude Cowork sessions reveals the everyday tasks people delegate most—and what it means.
@@ -682,7 +694,7 @@ How are knowledge workers using AI? Anthropic's analysis of Claude Cowork sessio
 
 Claude Cowork is rolling out to web and mobile. Hand Claude a task, close the laptop, and the work keeps going, while every decision still comes to you.
 
----
+:::details View past updates
 
 **[Choosing a Claude model and effort level in Claude Code](https://claude.com/blog/claude-model-and-effort-level-in-claude-code)**<br><small>Jul 7, 2026 · Claude Code</small>
 
@@ -694,7 +706,7 @@ Claude Code has two settings that shape results: which Claude model you use and 
 
 Claude Code and Claude Cowork are now available in public beta in Claude for Government Desktop
 
-:::details View past updates
+---
 
 **[A field guide to Claude Fable 5: Finding your unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns)**<br><small>Jul 6, 2026 · Claude Code</small>
 
@@ -712,19 +724,7 @@ Richer admin analytics, model-level entitlements, and spend alerts for Claude En
 
 Practical guidance on progressing from turn-based to goal-based, time-based, and proactive loops.
 
----
-
-**[Claude in Microsoft Foundry is now generally available](https://claude.com/blog/claude-in-microsoft-foundry)**<br><small>Jun 29, 2026 · Product announcements</small>
-
-Starting today, Claude models are generally available in Microsoft Foundry, hosted on Azure.
-
----
-
-**[Introducing the Claude apps gateway for Amazon Bedrock and Google Cloud](https://claude.com/blog/introducing-the-claude-apps-gateway)**<br><small>Jun 29, 2026 · Product announcements</small>
-
-Connect Claude Code to Amazon Bedrock and Google Cloud with the new Claude apps gateway: corporate SSO login, centrally enforced policy, role-based access, per-user cost attribution, and spend caps—all from one stateless container on your infrastructure.
-
 :::
 
-*Updated July 8, 2026*
+*Updated July 10, 2026*
 <!-- CLAUDE_FEED_END -->
