@@ -672,6 +672,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Working at the frontier: How Cognition trusts Claude Fable 5 to work through the night](https://claude.com/blog/working-at-the-frontier-how-cognition-trusts-claude-fable-5-to-work-through-the-night)**<br><small>Jul 10, 2026 · Enterprise AI</small>
+
+Cognition tested Claude Fable 5 in Devin, its AI software engineer. It's the first model its team trusts to run unattended for eight hours and deliver production-ready code.
+
+---
+
 **[How Anthropic's marketing operations team uses Claude Cowork to automate reporting and campaign builds](https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds)**<br><small>Jul 8, 2026 · Enterprise AI</small>
 
 How the marketing operations team at Anthropic uses Claude Cowork to automate marketing reporting and marketing campaign builds.
@@ -688,17 +694,17 @@ Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in
 
 How are knowledge workers using AI? Anthropic's analysis of Claude Cowork sessions reveals the everyday tasks people delegate most—and what it means.
 
----
+:::details View past updates
 
 **[Claude Cowork is coming to mobile and web](https://claude.com/blog/cowork-web-mobile)**<br><small>Jul 7, 2026 · Product announcements</small>
 
 Claude Cowork is rolling out to web and mobile. Hand Claude a task, close the laptop, and the work keeps going, while every decision still comes to you.
 
-:::details View past updates
+---
 
 **[Choosing a Claude model and effort level in Claude Code](https://claude.com/blog/claude-model-and-effort-level-in-claude-code)**<br><small>Jul 7, 2026 · Claude Code</small>
 
-Claude Code has two settings that shape results: which Claude model you use and the effort level. Learn what each one actually controls and how to choose.
+How to choose between Claude Fable, Opus, and Sonnet in Claude Code, and when to raise or lower the effort level—low, medium, high, and max explained.
 
 ---
 
@@ -718,13 +724,7 @@ Practical patterns for agentic coding with Claude Fable: how to find your unknow
 
 Richer admin analytics, model-level entitlements, and spend alerts for Claude Enterprise so admins can track adoption, manage cost, and set guardrails that fit their org.
 
----
-
-**[Getting started with loops](https://claude.com/blog/getting-started-with-loops)**<br><small>Jun 30, 2026 · Claude Code</small>
-
-Practical guidance on progressing from turn-based to goal-based, time-based, and proactive loops.
-
 :::
 
-*Updated July 10, 2026*
+*Updated July 11, 2026*
 <!-- CLAUDE_FEED_END -->
