@@ -726,5 +726,5 @@ Richer admin analytics, model-level entitlements, and spend alerts for Claude En
 
 :::
 
-*Updated July 11, 2026*
+*Updated July 12, 2026*
 <!-- CLAUDE_FEED_END -->
