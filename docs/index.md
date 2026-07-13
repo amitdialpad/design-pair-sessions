@@ -132,6 +132,48 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 6–12 Jul 2026
+
+Josh shipped the AI Receptionist setup experience this week, which is the most complete feature we've seen in a while. Designers can now build out the entire deployment flow with step-based configuration for routing, knowledge, lead capture, and business details. The wizard includes preview capabilities and management settings in the detail banner, so you can actually see how the receptionist will behave before you ship it. On top of that, direct message conversations now seed with starter data by default, so threads look realistic in your prototypes without waiting for real messages to arrive. He also tackled performance across the board: inbox loads faster on return visits thanks to warm cache utilities, and the app's cold start is snappier thanks to tiered seeding and cache optimization. If you've been frustrated with slow load times, that should feel different now.
+
+#### What actually changed
+
+- **AI Receptionist deployment wizard** — Full setup experience with modals, navigation panels, and step-based configuration for routing, knowledge, lead capture, and business details. You can preview receptionist behavior from the detail banner and action menu.
+- **Direct message starter conversations** — Inbox and conversation views now auto-generate initial DM threads so you can see how threads look before real messages arrive.
+- **Warm cache for inbox** — Subsequent visits to Inbox load faster through optimized boot sequencing and cached data handling. The preview loaders and pagination logic changed to make this work.
+- **Cold-start performance** — Initial app load is faster via tiered seeding and cache optimization across conversations, contacts, calls, and other data domains.
+- **Transfer call rendering fixed** — Child calls from transfers now render with correct timing.
+- **Voicemail Content component** — Foundation layer added for voicemail display and messaging features across inbox and conversation areas.
+- **Call journey event tracking** — Beacon can now capture events throughout the call lifecycle, enabling better visibility into user interactions and design flows.
+- **IVR workflow data model** — Agents, IVR Sessions, Workflows, and Workflow Runs hooks now support the new IVR workflow model for design previews.
+- **What's New modal refinement** — WhatsNewModal.vue and ReleaseItem.vue updated based on design feedback.
+
+#### The bigger shift
+
+The work this week is moving from foundational infrastructure toward complete user flows. The Receptionist wizard is the first feature that lets designers build an entire product experience from setup through deployment. Performance improvements suggest Josh is optimizing for real usage patterns — people revisiting the inbox, not just fresh loads. The seed data changes (warm cache, starter conversations, call journey events) all point toward making prototypes feel more like the real product faster.
+
+#### Where things are still messy
+
+Transfer call timing was broken and just got fixed, so watch for any lingering edge cases in the sidebar or feed during startup. If something looks wrong there, flag it to Josh. The voicemail and IVR components are foundation-only right now, so they need integration work before they show up in actual designs.
+
+#### What's coming next
+
+The pattern suggests Josh is building toward a complete preview experience. Expect more starter data for other features (calls, voicemails), more wizard flows like the Receptionist setup, and continued performance tuning as the app gets used more heavily. The IVR and voicemail foundations probably unlock bigger feature work in the next few weeks.
+
+#### Try this
+
+Spin up a new Receptionist in Beacon and walk through the entire deployment wizard. Pay attention to how the preview updates as you configure each step. This is how the tool should feel for all major features — step by step, with live feedback.
+
+#### Quick notes
+
+- If you're designing voicemail or IVR features, reach out to Josh about integrating the new components. They're ready but not wired up yet.
+- Inbox should feel noticeably snappier now on repeat visits. This matters if you're doing interaction design around conversations.
+- The call journey event tracking is live but still needs integration into your component designs if you want to use it.
+
+#### One
+
+---
+
 ### Week of 29–5 Jul 2026
 
 This week was mostly refinement work on existing features rather than big new launches. Josh shipped call journey event tracking through the new useCallJourneyEvents hook, which means you can now instrument user interactions across call workflows more precisely. He also added the IVR workflow data model (useWorkflows.ts and useWorkflowRuns.ts hooks) so you can prototype IVR features properly. The "What's New" modal got polished based on design feedback, and there's a new relationship affinity modeling system for visualizing communication patterns and contact interactions. On the bug side, the contact history panel was showing unrelated records instead of filtering to the selected contact, and ringtones were replaying unexpectedly when media keys were pressed—both fixed. The filters across inbox and threads now use a unified pill component, which is cleaner visually and makes the filtering behavior consistent.
@@ -242,7 +284,7 @@ If you're designing appearance customization or theming flows, spin up the Prefe
 
 Draft state management in preferences and Dialtone component consistency are small changes that make design work smoother.
 
----
+:::details View June 2026
 
 ### Week of 8–14 Jun 2026
 
@@ -646,6 +688,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
