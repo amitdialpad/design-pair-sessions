@@ -716,6 +716,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Working at the frontier: How Hebbia builds AI for financial diligence that can't miss a detail](https://claude.com/blog/working-at-the-frontier-how-hebbia-builds-ai-for-financial-diligence-that-cant-miss-a-detail)**<br><small>Jul 13, 2026 · Enterprise AI</small>
+
+How Anthropic's Claude Fable 5 beat Hebbia's finance-specific model evaluations, achieving their biggest accuracy gain yet.
+
+---
+
 **[Working at the frontier: How Cognition trusts Claude Fable 5 to work through the night](https://claude.com/blog/working-at-the-frontier-how-cognition-trusts-claude-fable-5-to-work-through-the-night)**<br><small>Jul 10, 2026 · Enterprise AI</small>
 
 Cognition tested Claude Fable 5 in Devin, its AI software engineer. It's the first model its team trusts to run unattended for eight hours and deliver production-ready code.
@@ -732,17 +738,17 @@ How the marketing operations team at Anthropic uses Claude Cowork to automate ma
 
 Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in what’s possible with AI for knowledge work.‍
 
----
+:::details View past updates
 
 **[How people are using Claude Cowork](https://claude.com/blog/how-people-are-using-claude-cowork)**<br><small>Jul 7, 2026 · Enterprise AI</small>
 
 How are knowledge workers using AI? Anthropic's analysis of Claude Cowork sessions reveals the everyday tasks people delegate most—and what it means.
 
-:::details View past updates
+---
 
 **[Claude Cowork is coming to mobile and web](https://claude.com/blog/cowork-web-mobile)**<br><small>Jul 7, 2026 · Product announcements</small>
 
-Claude Cowork is rolling out to web and mobile. Hand Claude a task, close the laptop, and the work keeps going, while every decision still comes to you.
+Claude Cowork from Anthropic is rolling out to web and mobile. Hand Claude a task, close the laptop, and the work keeps going, while every decision still comes to you.
 
 ---
 
@@ -754,7 +760,7 @@ How to choose between Claude Fable, Opus, and Sonnet in Claude Code, and when to
 
 **[Bringing Claude Code and Claude Cowork to government](https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government)**<br><small>Jul 7, 2026 · Product announcements</small>
 
-Claude Code and Claude Cowork are now available in public beta in Claude for Government Desktop
+Claude Code and Claude Cowork from Anthropic are now available in public beta in Claude for Government Desktop
 
 ---
 
@@ -762,13 +768,7 @@ Claude Code and Claude Cowork are now available in public beta in Claude for Gov
 
 Practical patterns for agentic coding with Claude Fable: how to find your unknowns before, during, and after implementation, from the team at Anthropic.
 
----
-
-**[Giving admins more visibility and control over Claude spend](https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend)**<br><small>Jul 2, 2026 · Product announcements</small>
-
-Richer admin analytics, model-level entitlements, and spend alerts for Claude Enterprise so admins can track adoption, manage cost, and set guardrails that fit their org.
-
 :::
 
-*Updated July 13, 2026*
+*Updated July 14, 2026*
 <!-- CLAUDE_FEED_END -->
