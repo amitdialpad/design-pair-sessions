@@ -754,5 +754,5 @@ Practical patterns for agentic coding with Claude Fable: how to find your unknow
 
 :::
 
-*Updated July 14, 2026*
+*Updated July 15, 2026*
 <!-- CLAUDE_FEED_END -->
