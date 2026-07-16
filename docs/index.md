@@ -700,6 +700,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Working at the frontier: Why Base44 trusts Claude Fable 5 with their most challenging engineering work](https://claude.com/blog/working-at-the-frontier-why-base44-trusts-claude-fable-5-with-their-most-challenging-engineering-work)**<br><small>Jul 15, 2026 · Enterprise AI</small>
+
+Why Base44 trusts Anthropic's Claude Fable 5 with its most complex product and engineering tasks.
+
+---
+
 **[Working at the frontier: How Hebbia builds AI for financial diligence that can't miss a detail](https://claude.com/blog/working-at-the-frontier-how-hebbia-builds-ai-for-financial-diligence-that-cant-miss-a-detail)**<br><small>Jul 13, 2026 · Enterprise AI</small>
 
 How Anthropic's Claude Fable 5 beat Hebbia's finance-specific model evaluations, achieving their biggest accuracy gain yet.
@@ -716,13 +722,13 @@ Cognition tested Claude Fable 5 in Devin, its AI software engineer. It's the fir
 
 How the marketing operations team at Anthropic uses Claude Cowork to automate marketing reporting and marketing campaign builds.
 
----
+:::details View past updates
 
 **[Working at the frontier: How Thomson Reuters builds AI for high-stakes professional work](https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work)**<br><small>Jul 8, 2026 · Enterprise AI</small>
 
 Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in what’s possible with AI for knowledge work.‍
 
-:::details View past updates
+---
 
 **[How people are using Claude Cowork](https://claude.com/blog/how-people-are-using-claude-cowork)**<br><small>Jul 7, 2026 · Enterprise AI</small>
 
@@ -738,7 +744,7 @@ Claude Cowork from Anthropic is rolling out to web and mobile. Hand Claude a tas
 
 **[Choosing a Claude model and effort level in Claude Code](https://claude.com/blog/claude-model-and-effort-level-in-claude-code)**<br><small>Jul 7, 2026 · Claude Code</small>
 
-How to choose between Claude Fable, Opus, and Sonnet in Claude Code, and when to raise or lower the effort level—low, medium, high, and max explained.
+Anthropic's guide to the Claude Code effort level and model selection: when to raise or lower effort—low, medium, high, and max—and how to choose between Claude Fable, Opus, and Sonnet.
 
 ---
 
@@ -746,13 +752,7 @@ How to choose between Claude Fable, Opus, and Sonnet in Claude Code, and when to
 
 Claude Code and Claude Cowork from Anthropic are now available in public beta in Claude for Government Desktop
 
----
-
-**[A field guide to Claude Fable 5: Finding your unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns)**<br><small>Jul 6, 2026 · Claude Code</small>
-
-Practical patterns for agentic coding with Claude Fable: how to find your unknowns before, during, and after implementation, from the team at Anthropic.
-
 :::
 
-*Updated July 15, 2026*
+*Updated July 16, 2026*
 <!-- CLAUDE_FEED_END -->
