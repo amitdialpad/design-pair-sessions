@@ -10,17 +10,25 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
+**Group message generation sample added**
+
+The component library now includes a sample showing how group messages are generated within Beacon. This gives you a reference pattern to use when designing messaging features. Ask Josh if you need clarification on how to apply this to your own designs.
+
+<span class="release-meta">[v2026.7.16](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.16) · 17 July 2026</span>
+
+---
+
 **AI Receptionist detail views and routing restructured**
 
-The AI Receptionist section now includes dedicated detail panels for calls, appointments, and activity history, with updated navigation routing to support the expanded feature set. Several internal modals and utility hooks were added to manage tool status, incomplete workflows, and unsaved changes. If you're working on the receptionist experience and need guidance on the new structure, reach out to Josh.
+The AI Receptionist section now includes dedicated detail panels for calls, appointments, and activity history, with improved navigation structure across the feature. Component organization has been refactored to support these new views. If you notice any routing or layout issues in the AI Receptionist area, reach out to Josh.
 
 <span class="release-meta">[v2026.7.14](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.14) · 14 July 2026</span>
 
 ---
 
-**AIR receptionist deployment wizard and navigation redesigned**
+**AI Receptionist deployment flow and wizard redesigned**
 
-The receptionist setup flow now includes new deployment modals, detail banners, and a restructured left navigation panel. Data tables have been refined with new row components, and routing configuration gained dedicated editors and destination pickers for more granular control. If you're building receptionist experiences, reach out to Josh for guidance on the new wizard step patterns.
+The receptionist setup experience now includes a new multi-step wizard with appointment, business, lead capture, routing, and review steps. Navigation, deployment modals, and preview panels have been rebuilt to support the updated AIR v3 shell. If you're setting up receptionists, you'll see new routing rules and destination picker components throughout the flow.
 
 <span class="release-meta">[v2026.7.13](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.13) · 10 July 2026</span>
 
@@ -28,7 +36,7 @@ The receptionist setup flow now includes new deployment modals, detail banners, 
 
 **Direct message conversations now auto-generate**
 
-The inbox conversation list and feed now intelligently seed direct message threads with contact information. This means cleaner conversation starts and better contact context when opening DMs in the FeedView and InboxListItem areas. Reach out to Josh if you want to see how this impacts your conversation flows.
+The inbox now creates seed conversations for direct messages, improving how contact threads initialize in FeedView and conversation headers. This affects the conversation intro, inbox list items, and how contact data flows through the system. If you notice any changes to how direct message threads appear or start, let Josh know.
 
 <span class="release-meta">[v2026.7.10](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.10) · 10 July 2026</span>
 
@@ -36,23 +44,23 @@ The inbox conversation list and feed now intelligently seed direct message threa
 
 **Inbox loading performance improved with warm cache**
 
-The inbox now loads faster on repeat visits through optimized boot sequencing and caching logic. Changes to the inbox view, preview loaders, and boot helpers mean you'll see content appear more quickly when returning to conversations you've already viewed.
+The inbox now boots faster by leveraging cached data on subsequent loads. Changes to the boot loader, seeding logic, and new caching utilities in InboxView mean designers will see quicker inbox initialization when returning to the inbox section.
 
 <span class="release-meta">[v2026.7.9](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.9) · 9 July 2026</span>
 
 ---
 
-**Cold-start performance optimization and seeding refactor**
+**Boot performance improvements and seeding refactor**
 
-Beacon's initial load is now faster through tiered seeding and improved cache handling across conversations, agents, contacts, and other core data domains. This affects how quickly the app becomes interactive when you first open it.
+Beacon's initial load is now faster through optimized cold-start seeding and cache loading. The app loader, sidebar, and all data hooks have been tuned for better performance across conversations, contacts, calls, and other core features.
 
 <span class="release-meta">[v2026.7.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.5) · 7 July 2026</span>
 
 ---
 
-**Voicemail content and conversation messaging foundations added**
+**Voicemail content and conversation messaging foundations**
 
-Voicemail now has dedicated content handling through the new VoicemailContent component. Message conversation gating and episode planning infrastructure is live across inbox filters, conversation items, and shared message previews. If you're working with voicemail or message-based workflows in Beacon, reach out to Josh with any questions on the new foundations.
+The Inbox now supports voicemail content display through a new VoicemailContent component, while conversation messaging gains foundational infrastructure for message gates and episode planning via updates to conversation read/write operations. Deep linking for conversations and shared messages has also been corrected to use the proper identifiers.
 
 <span class="release-meta">[v2026.7.4](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.4) · 6 July 2026</span>
 
@@ -60,41 +68,41 @@ Voicemail now has dedicated content handling through the new VoicemailContent co
 
 **Call journey events tracking added to Beacon**
 
-New event logging capabilities are now available through the useCallJourneyEvents hook, enabling better instrumentation of user interactions across call-related workflows. If you're building features that need to track design system usage or user behavior patterns, you can now leverage these events. Reach out to Josh if you need guidance on implementation.
+The useBootLoaderDomainSeeders, useBootLoaderSeeding, and core index utilities have been updated to support a new call journey events system. This enables better tracking and insights into how users interact with call-related workflows in your designs. Reach out to Josh if you need details on integrating these events into your components.
 
 <span class="release-meta">[v2026.7.2](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.2) · 1 July 2026</span>
 
 ---
 
-**Whats New modal refined, event timeline added**
+:::details View older releases
 
-The "What's New" modal in Beacon now reflects design feedback for better clarity and presentation. A new shared event timeline feature has been added to help you track and collaborate on design system updates more effectively. Reach out to Josh if you'd like a walkthrough of the timeline.
+**Release notes modal refined, event timeline added**
+
+The "What's New" modal now reflects design review feedback for improved clarity. A new shared event timeline feature is available for collaborative design workflows. Reach out to Josh if you have questions about using the timeline in your design reviews.
 
 <span class="release-meta">[v2026.7.1](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.1) · 1 July 2026</span>
 
 ---
 
-:::details View older releases
-
 **IVR workflow data model added to Beacon**
 
-The agents, IVR sessions, and workflow management hooks have been updated to support a new IVR workflow data structure. This enables designers to work with workflow runs and their associated data in the design system. Reach out to Josh if you need details on how to integrate this into your designs.
+The IVR Sessions, Workflows, and Workflow Runs hooks are now available for designing IVR-related interfaces. Boot loader seeding has been updated to support this new data structure. Reach out to Josh if you need help integrating these hooks into your designs.
 
 <span class="release-meta">[v2026.6.33](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.33) · 30 June 2026</span>
 
 ---
 
-**Relationship affinity graphing and volume modeling added**
+**Relationship affinity graph and communication volume model added**
 
-Beacon now includes new data models for communication volume and relationship affinity topology, enabling more sophisticated analysis of contact and interaction patterns. These foundational changes power enhanced relationship insights across the design system. Reach out to Josh if you're exploring how to surface affinity data in your designs.
+Beacon's boot loader seeding now includes relationship affinity topology and communication volume modeling. This enables more sophisticated contact relationship visualizations and interaction tracking in your designs. Reach out to Josh if you want to explore these new data capabilities in your work.
 
 <span class="release-meta">[v2026.6.32](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.32) · 30 June 2026</span>
 
 ---
 
-**Contact history panel scoping bug fixed**
+**Contact history panel scope refined**
 
-The panel area now properly isolates contact history to prevent data leakage between different contact views. This ensures the Feed and Inbox sections display only relevant history for the selected contact.
+The panel area now properly isolates contact history to prevent data leakage across different contact views. This ensures the feed and inbox display only relevant history for the selected contact.
 
 <span class="release-meta">[v2026.6.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.24) · 25 June 2026</span>
 
@@ -102,7 +110,7 @@ The panel area now properly isolates contact history to prevent data leakage bet
 
 **Inbox and threads filters unified with new pill component**
 
-Filter controls in the Inbox section (InboxDetailHeader.vue, InboxFilters.vue) and Threads area (ThreadsHeader.vue) now use a standardized filter pill component. This creates consistent filtering behavior across both surfaces. A new useFilterPillBridge.ts hook powers the integration. Reach out to Josh if you need details on using the new filter pill in other parts of Beacon.
+The filter controls in your Inbox and Threads sections now use a shared filter pill component for consistency. This change affects the filter UI across InboxDetailHeader, InboxFilters, ThreadsHeader, and related filter logic throughout those views. If you notice any filter behavior that feels off, let Josh know.
 
 <span class="release-meta">[v2026.6.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.6.22) · 25 June 2026</span>
 
