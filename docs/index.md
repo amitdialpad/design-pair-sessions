@@ -762,5 +762,5 @@ Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in
 
 :::
 
-*Updated July 18, 2026*
+*Updated July 19, 2026*
 <!-- CLAUDE_FEED_END -->
