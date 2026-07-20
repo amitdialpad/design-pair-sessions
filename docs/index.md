@@ -124,6 +124,47 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 13–19 Jul 2026
+
+Josh shipped a lot of messaging and AI Receptionist work this week. On the messaging side, Beacon now has sample components for both channel and group message generation, so you can see the expected structure when you're building message-based designs. On the bigger end, the AI Receptionist feature got a complete overhaul. There's now a multi-step setup wizard that walks you through identity, knowledge, routing, appointments, lead capture, and review. The detail views got restructured too, with dedicated panels for calls, appointments, and history alongside a new dashboard. Separately, direct messages now auto-generate conversations in the inbox when you start chatting with a contact, and the inbox itself loads noticeably faster on both cold start and when you come back to it. If you're designing around messaging flows or the receptionist experience, there's fresh scaffolding to work with.
+
+#### What actually changed
+
+- **Channel and group message generation samples** are now available in the component library. Use these to understand message structure and behavior.
+- **Relationship affinity scoring** in the sidebar and composer shows interaction strength metrics. Better context for contact and conversation design.
+- **AI Receptionist deployment wizard** covers identity, knowledge, routing, appointments, lead capture, and review in a multi-step flow. New RoutingRulesEditor and RoutingDestinationPicker components support this.
+- **AI Receptionist detail views** split calls, appointments, and history into dedicated panels with a dashboard view. Related modals and hooks handle tool status, provider connections, and unsaved changes.
+- **Direct message auto-generation** means conversations now seed automatically when you chat with a contact. ConversationIntro, FeedView, and contact handling all updated.
+- **Inbox loading** got faster through improved warm cache and cold-start paths. AppLoader and all data hooks affected.
+
+#### The bigger shift
+
+Messaging and receptionist flows are moving from isolated components into full end-to-end experiences. Josh is building out the scaffolding so you can design against realistic workflows, not just pieces.
+
+#### Where things are still messy
+
+The relationship affinity data is live but still being explored. Josh is figuring out how best to surface it in designs. If you want to experiment with it, reach out to him directly.
+
+#### What's coming next
+
+More receptionist tooling is likely next. The wizard and detail views are in place, so expect refinement on routing configuration and how provider connections display.
+
+#### Try this
+
+Open a direct message conversation in the inbox. It should seed automatically now instead of requiring manual setup. Check whether the ConversationIntro and FeedView feel right for your designs.
+
+#### Quick notes
+
+- Affinity scoring is in the sidebar and composer now. Check if it helps context during message review.
+- RoutingRulesEditor is new. Use it if you're designing receptionist routing flows.
+- Inbox boots faster on return. Noticeable if you're prototyping rapid inbox switching.
+
+#### One thing to remember
+
+The receptionist feature now has a complete setup experience, so design against the full wizard flow, not just the individual screens.
+
+---
+
 ### Week of 6–12 Jul 2026
 
 Josh shipped the AI Receptionist setup experience this week, which is the most complete feature we've seen in a while. Designers can now build out the entire deployment flow with step-based configuration for routing, knowledge, lead capture, and business details. The wizard includes preview capabilities and management settings in the detail banner, so you can actually see how the receptionist will behave before you ship it. On top of that, direct message conversations now seed with starter data by default, so threads look realistic in your prototypes without waiting for real messages to arrive. He also tackled performance across the board: inbox loads faster on return visits thanks to warm cache utilities, and the app's cold start is snappier thanks to tiered seeding and cache optimization. If you've been frustrated with slow load times, that should feel different now.
@@ -235,7 +276,7 @@ Open Preferences and tweak your appearance theme without worrying about breaking
 #### One thing to remember
 Contact history data is now properly isolated, so stop second-guessing those panel views.
 
----
+:::details View June 2026
 
 ### Week of 15–21 Jun 2026
 
@@ -680,6 +721,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
