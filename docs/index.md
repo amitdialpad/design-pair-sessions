@@ -735,6 +735,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Working at the frontier: How Rakuten builds agents overnight with Claude Fable 5](https://claude.com/blog/working-at-the-frontier-rakuten)**<br><small>Jul 20, 2026 · Enterprise AI</small>
+
+Why Rakuten thinks Claude Fable 5 is a step change in model intelligence, transforming how long-running work is done.
+
+---
+
 **[Zero risk isn't the job: a CISO's guide to agentic AI](https://claude.com/blog/ciso-guide-to-agentic-ai)**<br><small>Jul 17, 2026 · Enterprise AI</small>
 
 Anthropic's Deputy CISO shares a four-question framework for assessing agentic AI risk, and walks through controls that keep agent deployments bounded and auditable.
@@ -751,13 +757,13 @@ How Anthropic's Claude Fable 5 beat CursorBench and expanded what's possible for
 
 Anthropic's Claude Fable 5 can carry long, complex work on its own. Here's how to get the most out of it in Claude Cowork.
 
----
+:::details View past updates
 
 **[How Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration)**<br><small>Jul 16, 2026 · Claude Code</small>
 
 A step-by-step guide to running large code migrations with AI agents — including Bun's million-line Zig-to-Rust port.
 
-:::details View past updates
+---
 
 **[Working at the frontier: Why Base44 trusts Claude Fable 5 with their most challenging engineering work](https://claude.com/blog/working-at-the-frontier-why-base44-trusts-claude-fable-5-with-their-most-challenging-engineering-work)**<br><small>Jul 15, 2026 · Enterprise AI</small>
 
@@ -781,13 +787,7 @@ Cognition tested Claude Fable 5 in Devin, its AI software engineer. It's the fir
 
 How the marketing operations team at Anthropic uses Claude Cowork to automate marketing reporting and marketing campaign builds.
 
----
-
-**[Working at the frontier: How Thomson Reuters builds AI for high-stakes professional work](https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work)**<br><small>Jul 8, 2026 · Enterprise AI</small>
-
-Why the team at Thomson Reuters considers Claude Fable 5 a critical evolution in what’s possible with AI for knowledge work.‍
-
 :::
 
-*Updated July 20, 2026*
+*Updated July 21, 2026*
 <!-- CLAUDE_FEED_END -->
