@@ -719,6 +719,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Datadog built a “universal machine tool” for Claude Code](https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code)**<br><small>Jul 21, 2026 · Claude Code</small>
+
+Datadog has an agent write specifications for a deterministic kernel to write application code
+
+---
+
+**[How Anthropic secures its AI-native software development lifecycle](https://claude.com/blog/how-anthropic-secures-its-ai-native-software-development-lifecycle)**<br><small>Jul 21, 2026 · Claude Code</small>
+
+Anthropic Deputy CISO, Jason Clinton, details how the Security Engineering team secures a SDLC that has AI authoring 80% of merged code.
+
+---
+
 **[Working at the frontier: How Rakuten builds agents overnight with Claude Fable 5](https://claude.com/blog/working-at-the-frontier-rakuten)**<br><small>Jul 20, 2026 · Enterprise AI</small>
 
 Why Rakuten thinks Claude Fable 5 is a step change in model intelligence, transforming how long-running work is done.
@@ -729,7 +741,7 @@ Why Rakuten thinks Claude Fable 5 is a step change in model intelligence, transf
 
 Anthropic's Deputy CISO shares a four-question framework for assessing agentic AI risk, and walks through controls that keep agent deployments bounded and auditable.
 
----
+:::details View past updates
 
 **[Working at the frontier: How Cursor knew Claude Fable 5 was ready for the hardest 1% of problems](https://claude.com/blog/working-at-the-frontier-cursor)**<br><small>Jul 17, 2026 · Enterprise AI</small>
 
@@ -741,7 +753,7 @@ How Anthropic's Claude Fable 5 beat CursorBench and expanded what's possible for
 
 Anthropic's Claude Fable 5 can carry long, complex work on its own. Here's how to get the most out of it in Claude Cowork.
 
-:::details View past updates
+---
 
 **[How Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration)**<br><small>Jul 16, 2026 · Claude Code</small>
 
@@ -759,19 +771,7 @@ Why Base44 trusts Anthropic's Claude Fable 5 with its most complex product and e
 
 How Anthropic's Claude Fable 5 beat Hebbia's finance-specific model evaluations, achieving their biggest accuracy gain yet.
 
----
-
-**[Working at the frontier: How Cognition trusts Claude Fable 5 to work through the night](https://claude.com/blog/working-at-the-frontier-how-cognition-trusts-claude-fable-5-to-work-through-the-night)**<br><small>Jul 10, 2026 · Enterprise AI</small>
-
-Cognition tested Claude Fable 5 in Devin, its AI software engineer. It's the first model its team trusts to run unattended for eight hours and deliver production-ready code.
-
----
-
-**[How Anthropic's marketing operations team uses Claude Cowork to automate reporting and campaign builds](https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds)**<br><small>Jul 8, 2026 · Enterprise AI</small>
-
-How the marketing operations team at Anthropic uses Claude Cowork to automate marketing reporting and marketing campaign builds.
-
 :::
 
-*Updated July 21, 2026*
+*Updated July 22, 2026*
 <!-- CLAUDE_FEED_END -->
