@@ -707,6 +707,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Outtake built a cyber investigator on Claude](https://claude.com/blog/how-outtake-built-a-cyber-investigator-on-claude)**<br><small>Jul 22, 2026 · Agents</small>
+
+How Outtake ensures multi-hour agent sessions stay on track to uncover attack network operations
+
+---
+
+**[Building verification loops in Claude Code with skills](https://claude.com/blog/building-verification-loops-in-claude-code-with-skills)**<br><small>Jul 22, 2026 · Claude Code</small>
+
+How to turn your manual checks into skills, so Claude closes its own feedback loop.
+
+---
+
 **[How Datadog built a “universal machine tool” for Claude Code](https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code)**<br><small>Jul 21, 2026 · Claude Code</small>
 
 Datadog has an agent write specifications for a deterministic kernel to write application code
@@ -717,7 +729,7 @@ Datadog has an agent write specifications for a deterministic kernel to write ap
 
 Anthropic Deputy CISO, Jason Clinton, details how the Security Engineering team secures a SDLC that has AI authoring 80% of merged code.
 
----
+:::details View past updates
 
 **[Working at the frontier: How Rakuten builds agents overnight with Claude Fable 5](https://claude.com/blog/working-at-the-frontier-rakuten)**<br><small>Jul 20, 2026 · Enterprise AI</small>
 
@@ -729,7 +741,7 @@ Why Rakuten thinks Claude Fable 5 is a step change in model intelligence, transf
 
 Anthropic's Deputy CISO shares a four-question framework for assessing agentic AI risk, and walks through controls that keep agent deployments bounded and auditable.
 
-:::details View past updates
+---
 
 **[Working at the frontier: How Cursor knew Claude Fable 5 was ready for the hardest 1% of problems](https://claude.com/blog/working-at-the-frontier-cursor)**<br><small>Jul 17, 2026 · Enterprise AI</small>
 
@@ -747,19 +759,7 @@ Anthropic's Claude Fable 5 can carry long, complex work on its own. Here's how t
 
 A step-by-step guide to running large code migrations with AI agents — including Bun's million-line Zig-to-Rust port.
 
----
-
-**[Working at the frontier: Why Base44 trusts Claude Fable 5 with their most challenging engineering work](https://claude.com/blog/working-at-the-frontier-why-base44-trusts-claude-fable-5-with-their-most-challenging-engineering-work)**<br><small>Jul 15, 2026 · Enterprise AI</small>
-
-Why Base44 trusts Anthropic's Claude Fable 5 with its most complex product and engineering tasks.
-
----
-
-**[Working at the frontier: How Hebbia builds AI for financial diligence that can't miss a detail](https://claude.com/blog/working-at-the-frontier-how-hebbia-builds-ai-for-financial-diligence-that-cant-miss-a-detail)**<br><small>Jul 13, 2026 · Enterprise AI</small>
-
-How Anthropic's Claude Fable 5 beat Hebbia's finance-specific model evaluations, achieving their biggest accuracy gain yet.
-
 :::
 
-*Updated July 22, 2026*
+*Updated July 23, 2026*
 <!-- CLAUDE_FEED_END -->
