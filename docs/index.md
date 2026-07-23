@@ -10,17 +10,17 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Top bar avatar height alignment fixed**
+**Topbar avatar height alignment fixed**
 
-The user avatar in the top bar now displays at the correct height. This was a subtle visual bug in TopBarUserBox.vue that affected the overall balance of the top navigation area.
+The user profile box in the top right corner now displays with proper vertical alignment. This fixes a visual inconsistency that was throwing off the header layout.
 
 <span class="release-meta">[v2026.7.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.31) · 20 July 2026</span>
 
 ---
 
-**Reaction examples now contextual to components**
+**Reaction examples now generate from context**
 
-When you're exploring reaction states in Beacon, the example reactions now match the specific component you're viewing instead of showing generic defaults. This makes it faster to see how your components actually respond to user interactions.
+When you're working with reaction components, Beacon now generates example reactions based on your specific design context instead of showing generic defaults. This makes it faster to see how reactions will actually look in your particular use case.
 
 <span class="release-meta">[v2026.7.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.27) · 20 July 2026</span>
 
@@ -28,15 +28,15 @@ When you're exploring reaction states in Beacon, the example reactions now match
 
 **Channel message generation sample added**
 
-A new sample showing how to generate channel messages is now available in Beacon. This gives you a reference implementation to understand the pattern if you're building similar messaging features.
+Beacon now includes a sample showing how to generate channel messages. This gives you a reference implementation for message creation workflows. Reach out to Josh if you need clarification on how to use this in your designs.
 
 <span class="release-meta">[v2026.7.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.18) · 17 July 2026</span>
 
 ---
 
-**Relationship affinity scoring now available in Beacon**
+**Relationship affinity scoring now calculates at runtime**
 
-The sidebar and composer now calculate and display relationship affinity metrics in real time. This affects how contact suggestions and draft organization work across the app. Reach out to Josh if you'd like to explore how affinity data surfaces in your workflows.
+The sidebar and composer now evaluate contact affinity dynamically, giving you real-time relationship strength indicators. A new AffinityInspector component and supporting hooks power this feature. Reach out to Josh if you'd like to explore how this affects your design workflows.
 
 <span class="release-meta">[v2026.7.17](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.17) · 17 July 2026</span>
 
@@ -44,15 +44,23 @@ The sidebar and composer now calculate and display relationship affinity metrics
 
 **Group message generation sample added**
 
-The component library now includes a sample for group message generation, giving you a reference pattern to use when designing messaging features. Check with Josh if you need guidance on implementation details.
+The component library now includes a sample showing how to implement group message generation in your designs. This gives you a reference pattern to follow when building similar messaging features into your work.
 
 <span class="release-meta">[v2026.7.16](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.16) · 17 July 2026</span>
 
 ---
 
-**AI Receptionist detail views and navigation restructured**
+**Thread reply queries now load faster**
 
-The AI Receptionist section now has dedicated detail panels for calls, appointments, and history, with updated modal guards and knowledge source management. Navigation has been reorganized to support these new views. If you notice anything unexpected in the Receptionist flows, reach out to Josh.
+Performance improvements to the threads section mean conversation replies will display more quickly in Beacon. The changes touch globalThreads.ts, threadQueries.ts, and useThreads.ts to optimize how thread data is fetched and managed.
+
+<span class="release-meta">[v2026.7.15](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.15) · 17 July 2026</span>
+
+---
+
+**AI Receptionist detail views and routing restructured**
+
+The AI Receptionist section now has dedicated detail panels for calls, appointments, and history, with improved navigation between views. Several internal components were reorganized to support this new structure. Check with Josh if you need clarity on how the updated routing affects your designs.
 
 <span class="release-meta">[v2026.7.14](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.14) · 14 July 2026</span>
 
@@ -60,29 +68,9 @@ The AI Receptionist section now has dedicated detail panels for calls, appointme
 
 **AI Receptionist deployment flow and wizard added**
 
-The Receptionist section now includes a complete deployment experience with new routing configuration tools, step-by-step setup wizard, and deployment controls. You'll find new components throughout the receptionist nav panel, preview panel, and a new modal for finalizing deployments. Reach out to Josh if you need guidance on the routing rules editor or other new wizard steps.
+The Receptionist feature now includes a complete setup experience with new deployment modals, routing configuration, and multi-step wizard screens for business details, knowledge, lead capture, and appointment scheduling. Navigation and preview panels have been updated to support the new receptionist management interface.
 
 <span class="release-meta">[v2026.7.13](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.13) · 10 July 2026</span>
-
----
-
-**Direct message conversations now auto-generate**
-
-The inbox and conversation views now support seeded direct message conversations, making it easier to preview and design DM interactions. You'll see these reflected in the Inbox list and conversation headers when working with contact-based messaging flows.
-
-<span class="release-meta">[v2026.7.10](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.10) · 10 July 2026</span>
-
----
-
-:::details View older releases
-
-**Inbox loading performance improved with warm cache**
-
-The Inbox view now loads faster by optimizing how content and pagination data are bootstrapped. Changes to the boot loader, seeding helpers, and a new warm cache layer mean designers will see reduced load times when opening the Inbox, especially on subsequent visits.
-
-<span class="release-meta">[v2026.7.9](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.9) · 9 July 2026</span>
-
-:::
 
 <!-- BEACON_RELEASES_END -->
 
