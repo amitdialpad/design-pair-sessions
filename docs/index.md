@@ -699,6 +699,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Think through hard problems in voice mode](https://claude.com/blog/think-through-hard-problems-in-voice-mode)**<br><small>Jul 23, 2026 · Product announcements</small>
+
+Starting today, voice mode runs on Anthropic's Claude Opus, Claude Sonnet, and Claude Haiku, reaches the tools you’ve connected, and speaks many more languages.
+
+---
+
+**[Four role-based certifications for the people who put Claude to work for customers](https://claude.com/blog/four-role-based-claude-certifications)**<br><small>Jul 23, 2026 · Enterprise AI</small>
+
+We're expanding the Claude Certification Program with three new role-based certifications that span the full team a customer needs to deploy AI.
+
+---
+
 **[How Outtake built a cyber investigator on Claude](https://claude.com/blog/how-outtake-built-a-cyber-investigator-on-claude)**<br><small>Jul 22, 2026 · Agents</small>
 
 How Outtake ensures multi-hour agent sessions stay on track to uncover attack network operations
@@ -707,9 +719,9 @@ How Outtake ensures multi-hour agent sessions stay on track to uncover attack ne
 
 **[Building verification loops in Claude Code with skills](https://claude.com/blog/building-verification-loops-in-claude-code-with-skills)**<br><small>Jul 22, 2026 · Claude Code</small>
 
-How to turn your manual checks into skills, so Claude closes its own feedback loop.
+How Anthropic builds verification loops in Claude Code: turn your manual checks into skills so Claude tests, fixes, and verifies its own work.
 
----
+:::details View past updates
 
 **[How Datadog built a “universal machine tool” for Claude Code](https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code)**<br><small>Jul 21, 2026 · Claude Code</small>
 
@@ -719,9 +731,9 @@ Datadog has an agent write specifications for a deterministic kernel to write ap
 
 **[How Anthropic secures its AI-native software development lifecycle](https://claude.com/blog/how-anthropic-secures-its-ai-native-software-development-lifecycle)**<br><small>Jul 21, 2026 · Claude Code</small>
 
-Anthropic Deputy CISO, Jason Clinton, details how the Security Engineering team secures a SDLC that has AI authoring 80% of merged code.
+Anthropic Deputy CISO Jason Clinton details how the Security Engineering team secures an AI-native SDLC where AI authors 80% of merged code.
 
-:::details View past updates
+---
 
 **[Working at the frontier: How Rakuten builds agents overnight with Claude Fable 5](https://claude.com/blog/working-at-the-frontier-rakuten)**<br><small>Jul 20, 2026 · Enterprise AI</small>
 
@@ -739,19 +751,7 @@ Anthropic's Deputy CISO shares a four-question framework for assessing agentic A
 
 How Anthropic's Claude Fable 5 beat CursorBench and expanded what's possible for Cursor and agentic coding.
 
----
-
-**[Working with Claude Fable 5 in Claude Cowork](https://claude.com/blog/working-with-claude-fable-5-in-claude-cowork)**<br><small>Jul 16, 2026 · Enterprise AI</small>
-
-Anthropic's Claude Fable 5 can carry long, complex work on its own. Here's how to get the most out of it in Claude Cowork.
-
----
-
-**[How Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration)**<br><small>Jul 16, 2026 · Claude Code</small>
-
-A step-by-step guide to running large code migrations with AI agents — including Bun's million-line Zig-to-Rust port.
-
 :::
 
-*Updated July 23, 2026*
+*Updated July 24, 2026*
 <!-- CLAUDE_FEED_END -->
