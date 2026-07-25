@@ -10,59 +10,59 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
+**Company contact planning sources and legal services content added**
+
+The Contacts section now includes company contact planning sources for better organizational context. A new legal-services content pack is also available for teams in that vertical. Reach out to Josh if you need guidance on applying these to your designs.
+
+<span class="release-meta">[v2026.7.51](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.51) · 25 July 2026</span>
+
+---
+
+**AI receptionist configuration and deployment simplified**
+
+The receptionist setup flow across appointment scheduling, knowledge base, lead capture, and routing has been streamlined for a cleaner configuration experience. Preview panels and deployment modals have been refined to better support the updated workflow. If you notice anything unexpected in the receptionist builder, reach out to Josh.
+
+<span class="release-meta">[v2026.7.50](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.50) · 24 July 2026</span>
+
+---
+
+**App loader cold-start behavior restored**
+
+The initial load sequence for Beacon has been fixed to properly handle startup conditions. This ensures the app boots reliably when you first launch it.
+
+<span class="release-meta">[v2026.7.48](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.48) · 24 July 2026</span>
+
+---
+
+**Conversation inbox and callbar UI simplified**
+
+The inbox feed, message composer, and call controls have been reorganized for clearer interaction patterns. Active call details, bookmarks, and message actions now have dedicated components in both the callbar and conversation threads.
+
+<span class="release-meta">[v2026.7.47](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.47) · 24 July 2026</span>
+
+---
+
 **Create Channel modal submission lifecycle restored**
 
-The channel creation flow in CreateChannelModal is now working as intended again. If you've experienced issues submitting a new channel, this fix brings back the proper form submission behavior.
+The channel creation flow in CreateChannelModal is now working as expected again. If you've had trouble submitting new channels, this release fixes that issue.
 
 <span class="release-meta">[v2026.7.42](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.42) · 23 July 2026</span>
 
 ---
 
-**Conversation lookup and notification hooks refined**
-
-Internal improvements to how Beacon handles conversation data retrieval and notification behavior. These changes stabilize the foundation for designers building features that depend on conversation context and user alerts.
-
-<span class="release-meta">[v2026.7.38](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.38) · 22 July 2026</span>
-
----
-
 **Top bar avatar height alignment fixed**
 
-The user avatar in the top bar now displays at the correct height. This resolves a visual misalignment in TopBarUserBox.vue that was affecting the header layout.
+The user avatar in the top bar now displays at the correct height. This resolves a visual misalignment issue in TopBarUserBox.vue.
 
 <span class="release-meta">[v2026.7.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.31) · 20 July 2026</span>
 
 ---
 
-**Reaction examples now generate from component context**
+**Reaction examples now generate contextually**
 
-When you're designing interaction states, Beacon now pulls reaction examples that match your specific component. This saves you from manually hunting for relevant examples across the system.
+When you're working with reaction components in Beacon, the tool now generates example states that match your specific design context instead of showing generic placeholder reactions. This makes it faster to see how reactions will actually look in your callbar and other communication interfaces.
 
 <span class="release-meta">[v2026.7.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.27) · 20 July 2026</span>
-
----
-
-**Channel message generation sample added**
-
-A new sample is now available in Beacon showing how to generate channel messages. Check the samples section to see the pattern in action, or reach out to Josh if you have questions about implementing it in your designs.
-
-<span class="release-meta">[v2026.7.18](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.18) · 17 July 2026</span>
-
----
-
-**Relationship affinity scoring now available in Beacon**
-
-The sidebar and inspector now surface relationship affinity data to help you understand design system component connections. This builds on the emotional-state model and gives you better context when working with AffinityInspector and related sidebar features. Reach out to Josh if you'd like to explore how affinity scoring can inform your design decisions.
-
-<span class="release-meta">[v2026.7.17](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.17) · 17 July 2026</span>
-
----
-
-**Group message generation sample added**
-
-A new sample component is now available in Beacon showing how to generate group messages. Use this as a reference when designing similar messaging flows in your projects.
-
-<span class="release-meta">[v2026.7.16](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.16) · 17 July 2026</span>
 
 <!-- BEACON_RELEASES_END -->
 
