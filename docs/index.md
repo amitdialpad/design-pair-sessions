@@ -699,11 +699,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude models explained: choosing the best model for your use case](https://claude.com/blog/claude-models-explained-choosing-the-best-model-for-your-use-case)**<br><small>Jul 24, 2026 · Enterprise AI</small>
+
+How to choose the right Claude model for your workload: compare model classes, weigh cost per task vs. cost per token, and build evals that settle it.
+
+---
+
+**[The new rules of context engineering for Claude 5 generation models](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)**<br><small>Jul 24, 2026 · Claude Code</small>
+
+We removed over 80% of Claude Code's system prompt for more advanced models. How to apply the lessons we learned to your own context engineering in Claude Code and with your own agents.
+
+---
+
+**[How the product designer who built Claude Design uses it to explore ideas before building them](https://claude.com/blog/how-the-product-designer-who-built-claude-design-uses-it-to-explore-ideas-before-building-them)**<br><small>Jul 24, 2026 · Enterprise AI</small>
+
+Nate Parrott, a product designer at Anthropic, shares how he uses Claude Design (in beta) to explore, iterate on, and share visual ideas early, from product prototypes to slide decks and animations.
+
+---
+
 **[Think through hard problems in voice mode](https://claude.com/blog/think-through-hard-problems-in-voice-mode)**<br><small>Jul 23, 2026 · Product announcements</small>
 
 Starting today, voice mode runs on Anthropic's Claude Opus, Claude Sonnet, and Claude Haiku, reaches the tools you’ve connected, and speaks many more languages.
 
----
+:::details View past updates
 
 **[Four role-based certifications for the people who put Claude to work for customers](https://claude.com/blog/four-role-based-claude-certifications)**<br><small>Jul 23, 2026 · Enterprise AI</small>
 
@@ -721,7 +739,7 @@ How Outtake ensures multi-hour agent sessions stay on track to uncover attack ne
 
 How Anthropic builds verification loops in Claude Code: turn your manual checks into skills so Claude tests, fixes, and verifies its own work.
 
-:::details View past updates
+---
 
 **[How Datadog built a “universal machine tool” for Claude Code](https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code)**<br><small>Jul 21, 2026 · Claude Code</small>
 
@@ -733,25 +751,7 @@ Datadog has an agent write specifications for a deterministic kernel to write ap
 
 Anthropic Deputy CISO Jason Clinton details how the Security Engineering team secures an AI-native SDLC where AI authors 80% of merged code.
 
----
-
-**[Working at the frontier: How Rakuten builds agents overnight with Claude Fable 5](https://claude.com/blog/working-at-the-frontier-rakuten)**<br><small>Jul 20, 2026 · Enterprise AI</small>
-
-Why Rakuten thinks Claude Fable 5 is a step change in model intelligence, transforming how long-running work is done.
-
----
-
-**[Zero risk isn't the job: a CISO's guide to agentic AI](https://claude.com/blog/ciso-guide-to-agentic-ai)**<br><small>Jul 17, 2026 · Enterprise AI</small>
-
-Anthropic's Deputy CISO shares a four-question framework for assessing agentic AI risk, and walks through controls that keep agent deployments bounded and auditable.
-
----
-
-**[Working at the frontier: How Cursor knew Claude Fable 5 was ready for the hardest 1% of problems](https://claude.com/blog/working-at-the-frontier-cursor)**<br><small>Jul 17, 2026 · Enterprise AI</small>
-
-How Anthropic's Claude Fable 5 beat CursorBench and expanded what's possible for Cursor and agentic coding.
-
 :::
 
-*Updated July 24, 2026*
+*Updated July 25, 2026*
 <!-- CLAUDE_FEED_END -->
