@@ -753,5 +753,5 @@ Anthropic Deputy CISO Jason Clinton details how the Security Engineering team se
 
 :::
 
-*Updated July 25, 2026*
+*Updated July 26, 2026*
 <!-- CLAUDE_FEED_END -->
