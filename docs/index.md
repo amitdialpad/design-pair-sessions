@@ -72,6 +72,49 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 20–26 Jul 2026
+
+A solid week of fixes and refinements. Josh landed several quality-of-life improvements across the receptionist setup flow, conversation UI, and component previews. The big win is the receptionist deployment wizard getting streamlined—if you've been building voice or chat experiences, the configuration steps should feel noticeably faster now. We also got back some features that temporarily broke: the create channel modal works again, app cold starts are normal again, and reaction examples in Beacon now show you actual output instead of generic samples. Nothing groundbreaking, but the kind of week where the tool just works a little better.
+
+#### What actually changed
+
+**Receptionist setup flow simplified.** The wizard that guides you through appointment booking, knowledge base, lead capture, and routing configuration is now cleaner. Preview and deployment interactions got refined, so moving from config to live should feel less clunky.
+
+**Company contacts and legal services content pack.** The Contacts section now supports company contact planning sources. There's also a new legal-services content pack available if you're designing for that vertical. Ask Josh if you need specifics on how to use these in your prototypes.
+
+**Conversation UI refactored.** The callbar, active call controls, message composer, and conversation feed got cleaner interactions. Bookmark indicators are new, and message action menus are better organized across inbox and messaging surfaces.
+
+**Reaction examples now match your component.** When you inspect how a component reacts to states, Beacon shows you output specific to that component instead of generic examples. Faster feedback loop.
+
+**Three regression fixes.** App loader cold-start delays are gone. The create channel modal submission works again. Avatar alignment in the topbar got fixed.
+
+#### The bigger shift
+
+Josh is tightening the edges. Less fighting with the tool, more time designing. The receptionist setup flow in particular suggests a focus on making common workflows less friction-filled.
+
+#### Where things are still messy
+
+The receptionist deployment patterns have new details worth learning if you're building voice or chat experiences. Josh is available if you get stuck, but reading the release notes helps.
+
+#### What's coming next
+
+Expect more refinement of the receptionist and contact surfaces. Messaging and conversation UI is getting attention, so that'll probably keep improving.
+
+#### Try this
+
+Open a receptionist prototype if you have one. Run through the deployment wizard. It should feel snappier than last week.
+
+#### Quick notes
+- v2026.7.51 is the latest
+- Legal services content pack is live and ready to use
+- Message action menus in the inbox are reorganized; explore them if you're doing messaging designs
+
+#### One thing to remember
+
+Beacon got more reliable and less annoying this week. Use that time to design better.
+
+---
+
 ### Week of 13–19 Jul 2026
 
 Josh shipped a lot of messaging and AI Receptionist work this week. On the messaging side, Beacon now has sample components for both channel and group message generation, so you can see the expected structure when you're building message-based designs. On the bigger end, the AI Receptionist feature got a complete overhaul. There's now a multi-step setup wizard that walks you through identity, knowledge, routing, appointments, lead capture, and review. The detail views got restructured too, with dedicated panels for calls, appointments, and history alongside a new dashboard. Separately, direct messages now auto-generate conversations in the inbox when you start chatting with a contact, and the inbox itself loads noticeably faster on both cold start and when you come back to it. If you're designing around messaging flows or the receptionist experience, there's fresh scaffolding to work with.
@@ -188,7 +231,7 @@ If you're designing an IVR-related feature, pull up the new useWorkflows and use
 #### One thing to remember
 New data models (IVR, relationship affinity, call journey events) shipped this week—reach out to Josh if you need guidance on integrating them into your designs.
 
----
+:::details View June 2026
 
 ### Week of 22–28 Jun 2026
 
@@ -669,6 +712,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
