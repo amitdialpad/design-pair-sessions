@@ -10,17 +10,17 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Company contact planning sources and legal services content added**
+**Company contact planning sources and legal services pack added**
 
-The Contacts section now supports company contact planning sources for better organization. A new legal-services content pack is also available. Reach out to Josh if you need help using these new additions in your designs.
+You can now reference company contact planning sources when building designs, and a new legal-services content pack is available in Beacon for industry-specific patterns. Check with Josh if you need guidance on applying these new resources to your projects.
 
 <span class="release-meta">[v2026.7.51](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.51) · 25 July 2026</span>
 
 ---
 
-**AI receptionist deployment configuration simplified**
+**AI receptionist configuration and deployment simplified**
 
-The receptionist setup flow across appointment booking, knowledge base, lead capture, and routing has been streamlined for easier configuration. Preview and deployment interactions have been refined throughout the wizard. Reach out to Josh if you need details on the new deployment patterns.
+The receptionist setup flow across appointment scheduling, knowledge base, lead capture, and routing has been streamlined for better usability. Preview panels and deployment modals now work more cohesively. If you notice anything unexpected in the receptionist builder, let Josh know.
 
 <span class="release-meta">[v2026.7.50](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.50) · 24 July 2026</span>
 
@@ -28,7 +28,7 @@ The receptionist setup flow across appointment booking, knowledge base, lead cap
 
 **App loader cold-start behavior restored**
 
-The initial app loading experience is back to normal after a recent regression. If you noticed any unusual delays or behavior when first opening Beacon, this release fixes that.
+The initial load sequence for Beacon has been corrected to properly handle cold-start scenarios. This affects how the app initializes when you first launch it, ensuring the loader behaves as expected during boot-up.
 
 <span class="release-meta">[v2026.7.48](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.48) · 24 July 2026</span>
 
@@ -36,31 +36,31 @@ The initial app loading experience is back to normal after a recent regression. 
 
 **Conversation inbox and callbar UI simplified**
 
-The callbar, active call controls, message composer, and conversation feed components have been refactored for cleaner interactions. New bookmark indicators and improved message action menus are now available across the inbox and messaging surfaces.
+The callbar, active call controls, message composer, and conversation feed components have been refactored for cleaner interactions. Bookmark indicators, message action menus, and contact chip selection now have improved organization across the inbox and messaging surfaces.
 
 <span class="release-meta">[v2026.7.47](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.47) · 24 July 2026</span>
 
 ---
 
-**Create channel modal submission restored**
+**Create channel modal submission flow restored**
 
-The create channel flow in CreateChannelModal.vue is working again after a recent lifecycle issue. If you've had trouble submitting new channels, try it now.
+The channel creation dialog in CreateChannelModal now properly completes the submission lifecycle. If you've had trouble finishing channel creation, this fixes that — reach out to Josh if you hit any other issues.
 
 <span class="release-meta">[v2026.7.42](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.42) · 23 July 2026</span>
 
 ---
 
-**Topbar avatar height alignment corrected**
+**TopBar avatar height alignment fixed**
 
-The user avatar in the top bar now displays with proper vertical alignment. This fixes a visual inconsistency in TopBarUserBox.vue that affected how the avatar appeared relative to other topbar elements.
+The user profile box in the top bar now displays with proper vertical alignment. This resolves a visual inconsistency in how the avatar appeared relative to other topbar elements.
 
 <span class="release-meta">[v2026.7.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.31) · 20 July 2026</span>
 
 ---
 
-**Reaction examples now contextual to component**
+**Reaction examples now generate from component context**
 
-When you're exploring reaction states in Beacon, the example outputs will now match the specific component you're working with instead of showing generic samples. This makes it faster to see how your design will actually respond.
+When you're designing interactive components in Beacon, the reaction examples panel now pulls examples specific to what you're working on instead of showing generic defaults. This saves time finding relevant patterns for your current design task.
 
 <span class="release-meta">[v2026.7.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.27) · 20 July 2026</span>
 
