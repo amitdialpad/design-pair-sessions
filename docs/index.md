@@ -752,6 +752,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Bringing MCP 2026-07-28 to Claude](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)**<br><small>Jul 28, 2026 · Product announcements</small>
+
+The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateless core with standardized extensions and hardened auth. Support is rolling out across Claude products soon. See what's new and how MCP is advancing in Claude.
+
+---
+
 **[Claude models explained: choosing the best model for your use case](https://claude.com/blog/claude-models-explained-choosing-the-best-model-for-your-use-case)**<br><small>Jul 24, 2026 · Enterprise AI</small>
 
 How to choose the right Claude model for your workload: compare model classes, weigh cost per task vs. cost per token, and build evals that settle it.
@@ -768,13 +774,13 @@ We removed over 80% of Claude Code's system prompt for more advanced models. How
 
 Nate Parrott, a product designer at Anthropic, shares how he uses Claude Design (in beta) to explore, iterate on, and share visual ideas early, from product prototypes to slide decks and animations.
 
----
+:::details View past updates
 
 **[Think through hard problems in voice mode](https://claude.com/blog/think-through-hard-problems-in-voice-mode)**<br><small>Jul 23, 2026 · Product announcements</small>
 
 Starting today, voice mode runs on Anthropic's Claude Opus, Claude Sonnet, and Claude Haiku, reaches the tools you’ve connected, and speaks many more languages.
 
-:::details View past updates
+---
 
 **[Four role-based certifications for the people who put Claude to work for customers](https://claude.com/blog/four-role-based-claude-certifications)**<br><small>Jul 23, 2026 · Enterprise AI</small>
 
@@ -798,13 +804,7 @@ How Anthropic builds verification loops in Claude Code: turn your manual checks 
 
 Datadog has an agent write specifications for a deterministic kernel to write application code
 
----
-
-**[How Anthropic secures its AI-native software development lifecycle](https://claude.com/blog/how-anthropic-secures-its-ai-native-software-development-lifecycle)**<br><small>Jul 21, 2026 · Claude Code</small>
-
-Anthropic Deputy CISO Jason Clinton details how the Security Engineering team secures an AI-native SDLC where AI authors 80% of merged code.
-
 :::
 
-*Updated July 28, 2026*
+*Updated July 29, 2026*
 <!-- CLAUDE_FEED_END -->
