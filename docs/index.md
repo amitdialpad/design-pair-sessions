@@ -10,9 +10,9 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**AI receptionist conversation and history flows simplified**
+**AI receptionist conversation handling simplified**
 
-The conversation creation panel, air chat interface, and receptionist dashboard now use streamlined logic for handling AI operations and managing recent calls. If you're building receptionist workflows or testing conversation discard behavior, check with Josh to understand the refactored write and contact operations under the hood.
+The conversation creation flow and receptionist dashboard now use cleaner backend logic for managing AI interactions. This affects how conversations are created, discarded, and displayed in the receptionist history view. Reach out to Josh if you notice any changes in how conversations appear or behave in the dashboard.
 
 <span class="release-meta">[v2026.7.54](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.54) · 28 July 2026</span>
 
@@ -20,7 +20,7 @@ The conversation creation panel, air chat interface, and receptionist dashboard 
 
 **Company contact planning sources and legal services content added**
 
-The Contacts section now includes company contact planning sources for better organizational context. A new legal-services content pack is also available in Beacon's library for designing industry-specific experiences.
+The Contacts section now includes planning sources for company contacts, helping you better organize business relationships. A new legal services content pack is also available, giving you pre-built templates and guidance for legal industry workflows.
 
 <span class="release-meta">[v2026.7.51](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.51) · 25 July 2026</span>
 
@@ -28,7 +28,7 @@ The Contacts section now includes company contact planning sources for better or
 
 **AI receptionist configuration and deployment simplified**
 
-The receptionist setup flow across appointment scheduling, knowledge bases, lead capture, routing rules, and the preview panel has been refactored for cleaner interactions. If you notice anything unexpected in the receptionist deployment experience, let Josh know.
+The receptionist setup flow across appointment scheduling, knowledge management, lead capture, and routing has been streamlined for clearer UX. The preview panel and deployment modal now work together more intuitively. Reach out to Josh if you'd like a walkthrough of the improved configuration experience.
 
 <span class="release-meta">[v2026.7.50](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.50) · 24 July 2026</span>
 
@@ -36,7 +36,7 @@ The receptionist setup flow across appointment scheduling, knowledge bases, lead
 
 **App loader cold-start behavior restored**
 
-The initial app load sequence now works as expected again. If you notice any unusual loading patterns or timing issues when opening Beacon, let Josh know.
+The initial app loading sequence has been fixed to work properly on fresh starts. If you notice the loader behaving differently than expected during startup, this should now be resolved.
 
 <span class="release-meta">[v2026.7.48](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.48) · 24 July 2026</span>
 
@@ -44,15 +44,15 @@ The initial app load sequence now works as expected again. If you notice any unu
 
 **Conversation inbox and callbar UI simplified**
 
-The callbar, active call controls, message composer, and conversation feed components have been refactored for clearer organization and easier maintenance. Bookmark indicators and conversation item styling have been refined throughout the inbox and messaging interfaces.
+The callbar, active call controls, and messaging components have been restructured for cleaner interactions. Updates span call overlays, message composition, feed displays, and conversation threading. Check with Josh if you need details on how these changes affect your design workflows.
 
 <span class="release-meta">[v2026.7.47](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.47) · 24 July 2026</span>
 
 ---
 
-**Create channel modal submission lifecycle restored**
+**Create channel modal submission flow restored**
 
-The channel creation flow in CreateChannelModal now reliably completes submission again. If you were experiencing issues when creating new channels, this fix restores the expected behavior.
+The channel creation dialog in Beacon now reliably processes submissions again after a recent regression. If you've had trouble finishing channel creation, this fix should resolve it.
 
 <span class="release-meta">[v2026.7.42](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.42) · 23 July 2026</span>
 
@@ -60,17 +60,9 @@ The channel creation flow in CreateChannelModal now reliably completes submissio
 
 **TopBar avatar height alignment fixed**
 
-The user avatar in the top bar now displays at the correct height. If you've noticed the avatar appearing slightly off-center or misaligned vertically, this resolves that issue.
+The user box in the top bar now displays with correct vertical alignment. This ensures the avatar sits properly in the header without unwanted spacing.
 
 <span class="release-meta">[v2026.7.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.31) · 20 July 2026</span>
-
----
-
-**Reaction examples now generate from component context**
-
-When you're browsing reactions in Beacon, the example list now pulls from your current component's actual usage patterns instead of showing generic samples. This gives you faster, more relevant guidance on how reactions work in your specific design context.
-
-<span class="release-meta">[v2026.7.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.27) · 20 July 2026</span>
 
 <!-- BEACON_RELEASES_END -->
 
