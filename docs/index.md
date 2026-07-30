@@ -798,5 +798,5 @@ Datadog has an agent write specifications for a deterministic kernel to write ap
 
 :::
 
-*Updated July 29, 2026*
+*Updated July 30, 2026*
 <!-- CLAUDE_FEED_END -->
