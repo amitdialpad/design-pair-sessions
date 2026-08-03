@@ -80,6 +80,48 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 27–2 Aug 2026
+
+Josh shipped eight updates this week, mostly fixing reliability issues and streamlining flows that were getting in the way. Direct conversations in the Inbox now create without getting stuck in partial states. The AI receptionist setup got simpler across appointment, knowledge, lead capture, and routing steps. The app's cold start is fixed. Channel creation works again. If you've been testing any of these areas in the last few weeks and hit friction, try again now — most of it should feel smoother. The bigger theme is stability and simplification rather than new capabilities, which means fewer surprises when you're building.
+
+#### What actually changed
+
+- **Direct conversation atomicity** in directConversationPersistence.ts ensures conversations save completely or not at all, no partial states.
+- **Isolated company worlds switching** lets you move between separate company environments in Beacon, with a new CompanyWorldBootFailure.vue handling edge cases.
+- **AI receptionist configuration** across appointment, knowledge, lead capture, and routing steps got streamlined logic and refactored preview and deployment modals.
+- **Company contact planning sources** now show in the Contacts section so you can see context. Legal services content pack added with templates for that industry.
+- **Callbar and inbox components** refactored for cleaner message composition, active call controls, and conversation threading.
+- **App cold start** behavior restored to expected performance.
+- **Channel creation modal** form submission fixed after a recent lifecycle break.
+
+#### The bigger shift
+
+The pattern across these changes is reducing friction in flows that should be fast or invisible. Direct conversations, channel creation, app startup, and receptionist setup all had something blocking them or making them feel sluggish. This week was about clearing those obstacles.
+
+#### Where things are still messy
+
+AI receptionist conversation handling had refinements to compose handlers and contact operations, but Josh flagged to reach out if you see anything unexpected. Company world switching is new, so edge cases might still surface. Nothing is broken, but these areas are fresh.
+
+#### What's coming next
+
+The receptionist tooling seems to be getting the most attention. After this week's simplifications to setup, appointment booking, and deployment flows, expect more work there. The Contacts section is expanding too, with planning sources and industry content packs just landing.
+
+#### Try this
+
+Switch between isolated company worlds if you're testing multi-tenant scenarios. Create a direct conversation in the Inbox and watch it complete without hesitation. If you've been avoiding channel creation because it felt broken, try it again — it works now.
+
+#### Quick notes
+
+- Reach out to Josh if company world switching needs explanation for your design work.
+- The legal services content pack is ready to use in designs targeting that vertical.
+- If cold start felt slow before, clear your cache and reload to feel the difference.
+
+#### One thing to remember
+
+Beacon is more reliable this week, which means less time debugging tool behavior and more time on actual design work.
+
+---
+
 ### Week of 20–26 Jul 2026
 
 A solid week of fixes and refinements. Josh landed several quality-of-life improvements across the receptionist setup flow, conversation UI, and component previews. The big win is the receptionist deployment wizard getting streamlined—if you've been building voice or chat experiences, the configuration steps should feel noticeably faster now. We also got back some features that temporarily broke: the create channel modal works again, app cold starts are normal again, and reaction examples in Beacon now show you actual output instead of generic samples. Nothing groundbreaking, but the kind of week where the tool just works a little better.
@@ -204,7 +246,7 @@ Spin up a new Receptionist in Beacon and walk through the entire deployment wiza
 
 #### One
 
----
+:::details View July 2026
 
 ### Week of 29–5 Jul 2026
 
@@ -720,6 +762,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
