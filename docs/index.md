@@ -804,7 +804,7 @@ The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateles
 
 **[Claude models explained: choosing the best model for your use case](https://claude.com/blog/claude-models-explained-choosing-the-best-model-for-your-use-case)**<br><small>Jul 24, 2026 · Enterprise AI</small>
 
-How to choose the right Claude model for your workload: compare model classes, weigh cost per task vs. cost per token, and build evals that settle it.
+Anthropic's guide to choosing the best Claude model for your use case — how Fable, Opus, Sonnet, and Haiku differ in intelligence, speed, and cost, and when to use each.
 
 ---
 
@@ -850,5 +850,5 @@ Datadog has an agent write specifications for a deterministic kernel to write ap
 
 :::
 
-*Updated August 3, 2026*
+*Updated August 4, 2026*
 <!-- CLAUDE_FEED_END -->
