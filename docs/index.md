@@ -808,6 +808,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[A guide to cost visibility and control in Claude](https://claude.com/blog/a-guide-to-cost-visibility-and-control-in-claude)**<br><small>Aug 4, 2026 · Enterprise AI</small>
+
+How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
+
+---
+
 **[Bringing MCP 2026-07-28 to Claude](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)**<br><small>Jul 28, 2026 · Product announcements</small>
 
 The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateless core with standardized extensions and hardened auth. Support is rolling out across Claude products soon. See what's new and how MCP is advancing in Claude.
@@ -824,13 +830,13 @@ Anthropic's guide to choosing the best Claude model for your use case — how Fa
 
 We removed over 80% of Claude Code's system prompt for more advanced models. How to apply the lessons we learned to your own context engineering in Claude Code and with your own agents.
 
----
+:::details View past updates
 
 **[How the product designer who built Claude Design uses it to explore ideas before building them](https://claude.com/blog/how-the-product-designer-who-built-claude-design-uses-it-to-explore-ideas-before-building-them)**<br><small>Jul 24, 2026 · Enterprise AI</small>
 
 Nate Parrott, a product designer at Anthropic, shares how he uses Claude Design (in beta) to explore, iterate on, and share visual ideas early, from product prototypes to slide decks and animations.
 
-:::details View past updates
+---
 
 **[Think through hard problems in voice mode](https://claude.com/blog/think-through-hard-problems-in-voice-mode)**<br><small>Jul 23, 2026 · Product announcements</small>
 
@@ -854,13 +860,7 @@ How Outtake ensures multi-hour agent sessions stay on track to uncover attack ne
 
 How Anthropic builds verification loops in Claude Code: turn your manual checks into skills so Claude tests, fixes, and verifies its own work.
 
----
-
-**[How Datadog built a “universal machine tool” for Claude Code](https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code)**<br><small>Jul 21, 2026 · Claude Code</small>
-
-Datadog has an agent write specifications for a deterministic kernel to write application code
-
 :::
 
-*Updated August 4, 2026*
+*Updated August 5, 2026*
 <!-- CLAUDE_FEED_END -->
