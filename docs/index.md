@@ -808,6 +808,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Inference hooks: inline data loss prevention for Claude Enterprise](https://claude.com/blog/claude-enterprise-inference-hooks)**<br><small>Aug 5, 2026 · Enterprise AI</small>
+
+Inference hooks lets your compliance team inspect and enforce policy on every prompt and tool call response before they reach Claude — across Claude Enterprise surfaces including chat, Claude Code, Claude Cowork, and more.
+
+---
+
 **[A guide to cost visibility and control in Claude](https://claude.com/blog/a-guide-to-cost-visibility-and-control-in-claude)**<br><small>Aug 4, 2026 · Enterprise AI</small>
 
 How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
@@ -824,13 +830,13 @@ The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateles
 
 Anthropic's guide to choosing the best Claude model for your use case — how Fable, Opus, Sonnet, and Haiku differ in intelligence, speed, and cost, and when to use each.
 
----
+:::details View past updates
 
 **[The new rules of context engineering for Claude 5 generation models](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)**<br><small>Jul 24, 2026 · Claude Code</small>
 
 We removed over 80% of Claude Code's system prompt for more advanced models. How to apply the lessons we learned to your own context engineering in Claude Code and with your own agents.
 
-:::details View past updates
+---
 
 **[How the product designer who built Claude Design uses it to explore ideas before building them](https://claude.com/blog/how-the-product-designer-who-built-claude-design-uses-it-to-explore-ideas-before-building-them)**<br><small>Jul 24, 2026 · Enterprise AI</small>
 
@@ -854,13 +860,7 @@ We're expanding the Claude Certification Program with three new role-based certi
 
 How Outtake ensures multi-hour agent sessions stay on track to uncover attack network operations
 
----
-
-**[Building verification loops in Claude Code with skills](https://claude.com/blog/building-verification-loops-in-claude-code-with-skills)**<br><small>Jul 22, 2026 · Claude Code</small>
-
-How Anthropic builds verification loops in Claude Code: turn your manual checks into skills so Claude tests, fixes, and verifies its own work.
-
 :::
 
-*Updated August 5, 2026*
+*Updated August 6, 2026*
 <!-- CLAUDE_FEED_END -->
