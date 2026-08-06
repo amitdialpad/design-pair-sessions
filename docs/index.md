@@ -10,49 +10,57 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Company selection restored to previous behavior**
+**Cache layer improvements for AI prose generation**
 
-The useCompanySelection hook now restores legacy company access functionality. If you were experiencing issues switching between companies in Beacon, this fix should resolve that. Reach out to Josh if you see any edge cases.
+The caching system now uses more efficient memory management across Contacts, Conversations, Contact Center, Power Dialer, and other data-heavy sections. This means AI-generated text features should feel snappier when you're working with repeated queries or large datasets. Reach out to Josh if you notice any performance changes in your workflow.
+
+<span class="release-meta">[v2026.8.6](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.6) · 4 August 2026</span>
+
+---
+
+**Company selection logic restored to previous behavior**
+
+The useCompanySelection.ts hook now correctly handles legacy company access patterns. If you've experienced issues switching between company contexts in Beacon, this release restores that functionality.
 
 <span class="release-meta">[v2026.8.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.5) · 3 August 2026</span>
 
 ---
 
-**Direct conversation creation now atomic**
+**Direct conversation creation now atomic and reliable**
 
-Direct conversations in the Inbox now persist correctly without race conditions. This fixes an issue in directConversationPersistence.ts where simultaneous requests could create duplicates or incomplete records.
+The Inbox messaging flow now creates conversations more reliably by handling the operation atomically. This fixes edge cases where conversation state could become inconsistent, improving stability when users start new direct messages.
 
 <span class="release-meta">[v2026.7.64](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.64) · 31 July 2026</span>
 
 ---
 
-**Isolated company worlds switcher added**
+**Isolated company worlds switching support added**
 
-You can now switch between separate company environments in Beacon without data bleed. This involves a new company selection hook and failure state handling across the boot loader and Salesforce panel components. Reach out to Josh if you need details on how the world isolation affects your design workflows.
+Designers can now switch between isolated company environments in Beacon, with a new failure state (CompanyWorldBootFailure) handling edge cases when the world doesn't load properly. The Salesforce panel and activity views have been updated to support this multi-world context. Reach out to Josh if you need details on how this affects your design workflows.
 
 <span class="release-meta">[v2026.7.61](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.61) · 30 July 2026</span>
 
 ---
 
-**AI receptionist conversation handling streamlined**
+**AI receptionist conversation handling simplified**
 
-The conversation creation flow and receptionist dashboard history now use simplified runtime logic for better performance. If you notice any changes in how conversations are created or displayed in the receptionist views, let Josh know.
+The conversation creation flow and receptionist dashboard have been refactored for better performance. Changes affect how conversations are created, discarded, and displayed in the receptionist history and dashboard views. Reach out to Josh if you notice any shifts in how conversations behave.
 
 <span class="release-meta">[v2026.7.54](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.54) · 28 July 2026</span>
 
 ---
 
-**Company contact planning sources and legal services pack added**
+**Company contact planning sources and legal services content pack added**
 
-The Contacts section now includes company planning sources to help organize contact strategies. A new legal-services content pack is also available in Beacon's library. Reach out to Josh if you need guidance on integrating these into your design workflows.
+The Contacts section now includes company planning sources for better organizational context. A new legal services content pack is available in Beacon's design system. Reach out to Josh if you need guidance on using these new resources.
 
 <span class="release-meta">[v2026.7.51](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.51) · 25 July 2026</span>
 
 ---
 
-**AI receptionist configuration and deployment simplified**
+**AI receptionist configuration and deployment streamlined**
 
-The receptionist setup flow across appointment scheduling, knowledge base, lead capture, routing, and review steps is now more streamlined. Changes to the preview panel and deployment modal should make testing receptionist configurations faster. Reach out to Josh if you notice any differences in how the steps render or deploy.
+The receptionist setup flow across appointment scheduling, knowledge base, lead capture, and routing has been simplified for a more cohesive configuration experience. Preview and deployment modals now work together more seamlessly. If you notice anything unexpected in the receptionist builder, let Josh know.
 
 <span class="release-meta">[v2026.7.50](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.50) · 24 July 2026</span>
 
@@ -60,27 +68,19 @@ The receptionist setup flow across appointment scheduling, knowledge base, lead 
 
 **App loader cold-start behavior restored**
 
-The initial boot sequence for Beacon now performs as expected when you start the app fresh. This fixes loading states and metadata initialization that were affected in the previous release.
+The initial load sequence for Beacon has been corrected to restore proper startup behavior. This affects how the app initializes when you first open it. If you notice any unusual loading patterns, let Josh know.
 
 <span class="release-meta">[v2026.7.48](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.48) · 24 July 2026</span>
 
 ---
 
-**Conversation inbox and callbar UI simplified**
-
-The inbox feed, call controls, and messaging components have been reorganized for a cleaner layout. Active call details, message actions, and conversation rows now have dedicated components to make the interface easier to navigate and maintain.
-
-<span class="release-meta">[v2026.7.47](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.47) · 24 July 2026</span>
-
----
-
 :::details View older releases
 
-**Operations and billing plans generation added**
+**Conversation inbox and callbar UI simplified**
 
-Beacon can now generate operations and billing plans automatically. This streamlines the setup process when creating new workspace configurations.
+The inbox feed, message composer, conversation details, and active call controls have been streamlined for clearer interactions. Bookmark indicators, message action menus, and contact pickers were refined throughout. Reach out to Josh if you notice any behavioral changes in these areas.
 
-<span class="release-meta">[v2026.7.43](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.43) · 23 July 2026</span>
+<span class="release-meta">[v2026.7.47](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.47) · 24 July 2026</span>
 
 :::
 
