@@ -788,6 +788,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Run Claude Code sessions on your own compute](https://claude.com/blog/run-claude-code-sessions-on-your-own-compute)**<br><small>Aug 6, 2026 · Product announcements</small>
+
+Self-hosted environments are in public beta. Run Claude Code sessions on your own infrastructure, inside your network and next to your internal services.
+
+---
+
+**[Millennium and Anthropic are building a digital risk analyst with Claude](https://claude.com/blog/millennium-and-anthropic-are-building-a-digital-risk-analyst-with-claude)**<br><small>Aug 6, 2026 · Enterprise AI</small>
+
+Anthropic is working with Millennium to co-develop a digital risk analyst to surface new risk insights and form opinions on risk exposure across asset classes.
+
+---
+
 **[Inference hooks: inline data loss prevention for Claude Enterprise](https://claude.com/blog/claude-enterprise-inference-hooks)**<br><small>Aug 5, 2026 · Enterprise AI</small>
 
 Inference hooks lets your compliance team inspect and enforce policy on every prompt and tool call response before they reach Claude — across Claude Enterprise surfaces including chat, Claude Code, Claude Cowork, and more.
@@ -798,7 +810,7 @@ Inference hooks lets your compliance team inspect and enforce policy on every pr
 
 How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
 
----
+:::details View past updates
 
 **[Bringing MCP 2026-07-28 to Claude](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)**<br><small>Jul 28, 2026 · Product announcements</small>
 
@@ -810,7 +822,7 @@ The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateles
 
 Anthropic's guide to choosing the best Claude model for your use case — how Fable, Opus, Sonnet, and Haiku differ in intelligence, speed, and cost, and when to use each.
 
-:::details View past updates
+---
 
 **[The new rules of context engineering for Claude 5 generation models](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)**<br><small>Jul 24, 2026 · Claude Code</small>
 
@@ -828,19 +840,7 @@ Nate Parrott, a product designer at Anthropic, shares how he uses Claude Design 
 
 Starting today, voice mode runs on Anthropic's Claude Opus, Claude Sonnet, and Claude Haiku, reaches the tools you’ve connected, and speaks many more languages.
 
----
-
-**[Four role-based certifications for the people who put Claude to work for customers](https://claude.com/blog/four-role-based-claude-certifications)**<br><small>Jul 23, 2026 · Enterprise AI</small>
-
-We're expanding the Claude Certification Program with three new role-based certifications that span the full team a customer needs to deploy AI.
-
----
-
-**[How Outtake built a cyber investigator on Claude](https://claude.com/blog/how-outtake-built-a-cyber-investigator-on-claude)**<br><small>Jul 22, 2026 · Agents</small>
-
-How Outtake ensures multi-hour agent sessions stay on track to uncover attack network operations
-
 :::
 
-*Updated August 6, 2026*
+*Updated August 7, 2026*
 <!-- CLAUDE_FEED_END -->
