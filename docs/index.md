@@ -780,6 +780,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Running auto mode in production](https://claude.com/blog/auto-mode-in-production)**<br><small>Aug 7, 2026 · Claude Code</small>
+
+How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, longer running coding workflows.
+
+---
+
+**[Auto mode is now the default in Claude Code for Pro, Max, and Team plans](https://claude.com/blog/auto-mode-default-in-claude-code)**<br><small>Aug 7, 2026 · Claude Code</small>
+
+Claude Code will soon run auto mode by default for Pro, Max, and Team plans, enabling longer-running autonomous work, and catching more dangerous commands.
+
+---
+
 **[Run Claude Code sessions on your own compute](https://claude.com/blog/run-claude-code-sessions-on-your-own-compute)**<br><small>Aug 6, 2026 · Product announcements</small>
 
 Self-hosted environments are in public beta. Run Claude Code sessions on your own infrastructure, inside your network and next to your internal services.
@@ -790,7 +802,7 @@ Self-hosted environments are in public beta. Run Claude Code sessions on your ow
 
 Anthropic is working with Millennium to co-develop a digital risk analyst to surface new risk insights and form opinions on risk exposure across asset classes.
 
----
+:::details View past updates
 
 **[Inference hooks: inline data loss prevention for Claude Enterprise](https://claude.com/blog/claude-enterprise-inference-hooks)**<br><small>Aug 5, 2026 · Enterprise AI</small>
 
@@ -802,7 +814,7 @@ Inference hooks lets your compliance team inspect and enforce policy on every pr
 
 How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
 
-:::details View past updates
+---
 
 **[Bringing MCP 2026-07-28 to Claude](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)**<br><small>Jul 28, 2026 · Product announcements</small>
 
@@ -820,19 +832,7 @@ Anthropic's guide to choosing the best Claude model for your use case — how Fa
 
 We removed over 80% of Claude Code's system prompt for more advanced models. How to apply the lessons we learned to your own context engineering in Claude Code and with your own agents.
 
----
-
-**[How the product designer who built Claude Design uses it to explore ideas before building them](https://claude.com/blog/how-the-product-designer-who-built-claude-design-uses-it-to-explore-ideas-before-building-them)**<br><small>Jul 24, 2026 · Enterprise AI</small>
-
-Nate Parrott, a product designer at Anthropic, shares how he uses Claude Design (in beta) to explore, iterate on, and share visual ideas early, from product prototypes to slide decks and animations.
-
----
-
-**[Think through hard problems in voice mode](https://claude.com/blog/think-through-hard-problems-in-voice-mode)**<br><small>Jul 23, 2026 · Product announcements</small>
-
-Starting today, voice mode runs on Anthropic's Claude Opus, Claude Sonnet, and Claude Haiku, reaches the tools you’ve connected, and speaks many more languages.
-
 :::
 
-*Updated August 7, 2026*
+*Updated August 8, 2026*
 <!-- CLAUDE_FEED_END -->
