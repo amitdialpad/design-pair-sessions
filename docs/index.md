@@ -834,5 +834,5 @@ We removed over 80% of Claude Code's system prompt for more advanced models. How
 
 :::
 
-*Updated August 8, 2026*
+*Updated August 9, 2026*
 <!-- CLAUDE_FEED_END -->
