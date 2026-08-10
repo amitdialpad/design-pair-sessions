@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome to the machine</title>
+    <link rel="stylesheet" href="./styles.css?v=brand-scrub-1" />
+  </head>
+  <body>
+    <main class="page" aria-labelledby="page-title">
+      <header class="hero">
+        <div>
+          <h1 id="page-title">Welcome to the machine</h1>
+        </div>
+        <div class="diagram-controls hero-controls">
+          <button class="play-button" id="play-machine" type="button" aria-pressed="false">
+            Play
+          </button>
+          <button class="secondary-button" id="restart-machine" type="button">
+            Restart
+          </button>
+        </div>
+      </header>
+
+      <section class="machine-workspace" aria-label="Narrated agentic machine walkthrough">
+        <aside class="step-feed" aria-label="Walkthrough steps">
+          <div class="feed-header">
+            <p class="eyebrow">Walkthrough</p>
+            <h2>How the machine works</h2>
+          </div>
+          <ol class="feed-list" id="step-feed"></ol>
+        </aside>
+
+        <section class="visual-card diagram-panel" id="diagram-panel" aria-label="Interactive vertical cutaway machine visualization">
+          <div class="sr-only" aria-live="polite">
+            <p id="diagram-eyebrow">Overview</p>
+            <h2 id="diagram-title">The machine in one read</h2>
+            <p id="diagram-summary">
+              Studio is the control room. Skill Mining suggests what to
+              automate. Knowledge Studio grounds what the agent should know.
+              Connectors bring in the tools it can use. AgentGraph runs the
+              plan, Proving Ground tests it, and Analytics feeds the next
+              version.
+            </p>
+          </div>
+
+          <div class="diagram-viewport" id="diagram-viewport">
+            <svg
+              class="machine-svg"
+              id="machine-visual"
+              viewBox="0 0 980 2320"
+              role="img"
+              aria-label="Welcome to the machine"
+              aria-describedby="svg-desc"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+          <desc id="svg-desc">
+            A vertical cutaway smart building where customer systems enter
+            Agentic Connectors, the connector pipe delivers tools into Agent
+            Studio, Knowledge Studio provides grounding, templates and Composer
+            help create the design, Compass checks it, Versioning locks it,
+            AgentGraph executes workflows, transfers, and context, Guardian
+            protects runtime behavior, Proving Ground and Voice Test validate
+            it, Deploy publishes it, products are powered by the building, and
+            History, Traces, Analytics, annotations, and issue clusters send
+            feedback upward.
+          </desc>
+
+          <defs>
+            <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="150%">
+              <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.08" />
+            </filter>
+            <filter id="active-glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#0f9f8f" flood-opacity="0.24" />
+            </filter>
+            <marker id="arrow-slate" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+            </marker>
+            <marker id="arrow-teal" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f9f8f" />
+            </marker>
+            <marker id="arrow-telemetry" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+            </marker>
+            <linearGradient id="canvas-wash" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" />
+              <stop offset="0.55" stop-color="#f9fbfd" />
+              <stop offset="1" stop-color="#f3f7fb" />
+            </linearGradient>
+            <pattern id="machine-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="1.15" fill="#c5d1df" opacity="0.64" />
+            </pattern>
+          </defs>
+
+          <rect class="canvas-bg" x="0" y="0" width="980" height="2320" />
+          <rect class="canvas-pattern" x="0" y="0" width="980" height="2320" />
+
+          <g class="source-stack" data-play="sources">
+            <rect class="source-chip" x="70" y="118" width="120" height="48" rx="16" />
+            <text class="source-text" x="130" y="149" text-anchor="middle">CRM</text>
+            <rect class="source-chip" x="210" y="118" width="120" height="48" rx="16" />
+            <text class="source-text" x="270" y="149" text-anchor="middle">EHR</text>
+            <rect class="source-chip" x="350" y="118" width="120" height="48" rx="16" />
+            <text class="source-text" x="410" y="149" text-anchor="middle">Tickets</text>
+            <rect class="source-chip" x="490" y="118" width="120" height="48" rx="16" />
+            <text class="source-text" x="550" y="149" text-anchor="middle">Calendar</text>
+          </g>
+
+          <g
+            class="component compact-card"
+            data-component="skill-mining"
+            data-play="skill"
+            tabindex="0"
+            role="button"
+            aria-label="Skill Mining"
+          >
+            <rect x="120" y="590" width="250" height="92" rx="18" />
+            <text class="card-title" x="152" y="634">Skill Mining</text>
+            <path class="idea-bulb" d="M 336 630 c 0 -14 -11 -24 -24 -24 s -24 10 -24 24 c 0 9 6 17 14 22 v 10 h 20 v -10 c 8 -5 14 -13 14 -22 z" />
+            <path class="idea-line" d="M 304 672 H 322" />
+            <path class="thin-path" d="M 246 682 C 246 730, 284 770, 332 800" marker-end="url(#arrow-slate)" />
+            <text class="flow-label" x="284" y="750">automation candidates</text>
+          </g>
+
+          <g
+            class="component knowledge-card"
+            data-component="knowledge-studio"
+            data-play="knowledge"
+            tabindex="0"
+            role="button"
+            aria-label="Knowledge Studio"
+          >
+            <rect x="410" y="590" width="250" height="92" rx="18" />
+            <text class="card-title knowledge-title" x="442" y="624">Knowledge</text>
+            <text class="card-title knowledge-title" x="442" y="650">Studio</text>
+            <g class="knowledge-pictogram" transform="translate(580 622)">
+              <path class="knowledge-shelf" d="M 0 42 H 58" />
+              <rect class="knowledge-book" x="4" y="0" width="14" height="38" rx="3" />
+              <rect class="knowledge-book" x="24" y="8" width="14" height="30" rx="3" />
+              <rect class="knowledge-book" x="44" y="4" width="14" height="34" rx="3" />
+            </g>
+            <path class="knowledge-path" d="M 536 682 C 536 730, 510 770, 506 800" marker-end="url(#arrow-telemetry)" />
+            <path class="pulse pulse-knowledge" data-pulse="knowledge" d="M 536 682 C 536 730, 510 770, 506 800" />
+            <text class="flow-label" x="542" y="748">grounding</text>
+          </g>
+
+          <g class="connector-system">
+            <path
+              class="pipe-line component"
+              data-component="connectors"
+              data-play="sources"
+              tabindex="0"
+              role="button"
+              aria-label="Customer systems enter connector intake"
+              d="M 340 166 V 258"
+              marker-end="url(#arrow-teal)"
+            />
+            <path class="pulse" data-pulse="sources" d="M 340 166 V 258" />
+            <path
+              class="pipe-line route-line component"
+              data-component="connectors"
+              data-play="marketplace"
+              tabindex="0"
+              role="button"
+              aria-label="Connector intake reaches Marketplace App Hub"
+              d="M 340 258 C 340 282, 324 300, 298 300"
+              marker-end="url(#arrow-teal)"
+            />
+            <path
+              class="pipe-line route-line component"
+              data-component="connectors"
+              data-play="byo"
+              tabindex="0"
+              role="button"
+              aria-label="Connector intake reaches BYO MCP"
+              d="M 340 258 C 340 344, 318 440, 298 440"
+              marker-end="url(#arrow-teal)"
+            />
+            <path class="pulse" data-pulse="sources" d="M 340 258 C 340 282, 324 300, 298 300" />
+            <path class="pulse" data-pulse="sources" d="M 340 258 C 340 344, 318 440, 298 440" />
+
+            <g
+              class="component intake-card"
+              data-component="marketplace"
+              data-play="marketplace"
+              tabindex="0"
+              role="button"
+              aria-label="Marketplace App Hub"
+            >
+              <rect x="250" y="300" width="300" height="96" rx="20" />
+              <text class="card-title" x="282" y="342">Marketplace / App Hub</text>
+              <g class="connector-icon" transform="translate(282 358)">
+                <rect x="0" y="0" width="28" height="20" rx="5" />
+                <rect x="38" y="0" width="28" height="20" rx="5" />
+                <rect x="76" y="0" width="28" height="20" rx="5" />
+              </g>
+            </g>
+
+            <g
+              class="component intake-card"
+              data-component="byo"
+              data-play="byo"
+              tabindex="0"
+              role="button"
+              aria-label="BYO MCP"
+            >
+              <rect x="250" y="440" width="300" height="96" rx="20" />
+              <text class="card-title" x="282" y="482">BYO MCP</text>
+              <g class="plug-icon" transform="translate(286 496)">
+                <path d="M 0 10 H 44" />
+                <path d="M 44 0 V 20" />
+                <path d="M 58 0 V 20" />
+                <path d="M 44 10 H 74" />
+              </g>
+            </g>
+
+            <path
+              class="pipe-line component"
+              data-component="connectors"
+              data-play="merge"
+              tabindex="0"
+              role="button"
+              aria-label="Connector routes merge into MCP Registry"
+              d="M 550 348 C 590 348, 590 398, 620 420"
+            />
+            <path
+              class="pipe-line component"
+              data-component="connectors"
+              data-play="merge"
+              tabindex="0"
+              role="button"
+              aria-label="Connector routes merge into MCP Registry"
+              d="M 550 488 C 590 488, 590 442, 620 420"
+            />
+            <path class="pulse" data-pulse="merge" d="M 550 348 C 590 348, 590 398, 620 420" />
+            <path class="pulse" data-pulse="merge" d="M 550 488 C 590 488, 590 442, 620 420" />
+
+            <g
+              class="component registry-card"
+              data-component="registry"
+              data-play="registry"
+              tabindex="0"
+              role="button"
+            aria-label="MCP Registry"
+          >
+            <rect x="620" y="372" width="160" height="96" rx="20" />
+              <text class="card-title registry-title" x="700" y="404" text-anchor="middle">MCP</text>
+              <text class="card-title registry-title" x="700" y="428" text-anchor="middle">Registry</text>
+              <circle class="valve" cx="656" cy="450" r="9" />
+              <circle class="valve" cx="690" cy="450" r="9" />
+              <circle class="valve" cx="724" cy="450" r="9" />
+              <circle class="valve" cx="758" cy="450" r="9" />
+            </g>
+
+            <path
+              class="pipe-line component"
+              data-component="connectors"
+              data-play="catalog"
+              tabindex="0"
+              role="button"
+              aria-label="Connector pipe to Tool Catalog"
+              d="M 780 420 H 812"
+              marker-end="url(#arrow-teal)"
+            />
+            <path class="pulse" data-pulse="catalog" d="M 780 420 H 812" />
+
+            <g
+              class="component catalog-card"
+              data-component="catalog"
+              data-play="catalog"
+              tabindex="0"
+              role="button"
+              aria-label="Tool Catalog"
+            >
+              <rect x="812" y="382" width="104" height="76" rx="18" />
+              <text class="card-title small-card-title" x="842" y="414">Tool</text>
+              <text class="card-title small-card-title" x="828" y="440">Catalog</text>
+            </g>
+
+            <path
+              class="pipe-line pipe-rise component"
+              data-component="connectors"
+              data-play="tools"
+              tabindex="0"
+              role="button"
+              aria-label="Connector pipe delivers tools into Agent Studio"
+              d="M 864 458 V 650 C 864 742, 802 826, 684 856"
+              marker-end="url(#arrow-teal)"
+            />
+            <path class="pulse" data-pulse="tools" d="M 864 458 V 650 C 864 742, 802 826, 684 856" />
+            <text class="flow-label flow-label-teal" x="790" y="738">agent tools</text>
+          </g>
+
+          <g
+            class="component connector-label"
+            data-component="connectors"
+            tabindex="0"
+            role="button"
+            aria-label="Agentic Connectors"
+          >
+            <rect class="label-back" x="58" y="184" width="320" height="54" rx="16" />
+            <text class="pipe-title" x="78" y="220">Agentic Connectors</text>
+          </g>
+
+          <g class="building-shell" filter="url(#soft-shadow)">
+            <polygon class="roof-plane" points="100,762 712,762 768,800 156,800" />
+            <polygon class="side-wall" points="712,762 768,800 768,1926 712,1888" />
+            <rect class="building-back" x="100" y="762" width="612" height="1126" rx="28" />
+          </g>
+
+          <g
+            class="component floor studio-floor"
+            data-component="studio"
+            data-play="studio"
+            tabindex="0"
+            role="button"
+            aria-label="Agent Studio"
+          >
+            <rect x="124" y="800" width="560" height="188" rx="24" />
+            <text class="floor-label" x="160" y="860">Agent Studio</text>
+            <text class="floor-desc" x="160" y="894">Design agents and choose their tools</text>
+            <text class="subsystem-label" x="160" y="904">Build controls</text>
+            <g class="studio-pictogram" transform="translate(470 826)">
+              <rect class="pic-panel" x="0" y="0" width="190" height="122" rx="18" />
+              <rect class="pic-tool" x="22" y="22" width="54" height="28" rx="8" />
+              <rect class="pic-tool" x="22" y="70" width="54" height="28" rx="8" />
+              <path class="pic-line" d="M 76 36 H 108 V 84 H 138" />
+              <circle class="pic-dot" cx="76" cy="36" r="7" />
+              <circle class="pic-dot" cx="108" cy="36" r="7" />
+              <circle class="pic-dot" cx="138" cy="84" r="7" />
+              <path class="pic-plug" d="M 156 26 h 18 M 156 50 h 18 M 156 74 h 18" />
+            </g>
+          </g>
+
+          <g
+            class="component versioning-rail"
+            data-component="versioning"
+            data-play="versioning"
+            tabindex="0"
+            role="button"
+            aria-label="Versioning"
+          >
+            <rect x="500" y="824" width="142" height="44" rx="12" />
+            <text class="rail-title" x="571" y="852" text-anchor="middle">Versioning</text>
+          </g>
+
+          <g
+            class="component studio-asset templates-asset"
+            data-component="templates"
+            data-play="templates"
+            tabindex="0"
+            role="button"
+            aria-label="Templates"
+          >
+            <rect x="160" y="930" width="112" height="36" rx="10" />
+            <text class="micro-label" x="216" y="953" text-anchor="middle">Templates</text>
+          </g>
+          <g
+            class="component studio-asset composer-asset"
+            data-component="composer"
+            data-play="composer"
+            tabindex="0"
+            role="button"
+            aria-label="Composer"
+          >
+            <rect x="288" y="930" width="112" height="36" rx="10" />
+            <text class="micro-label" x="344" y="953" text-anchor="middle">Composer</text>
+          </g>
+          <g
+            class="component studio-asset skills-asset"
+            data-component="skills"
+            data-play="skills"
+            tabindex="0"
+            role="button"
+            aria-label="Skills"
+          >
+            <rect x="416" y="930" width="82" height="36" rx="10" />
+            <text class="micro-label" x="457" y="953" text-anchor="middle">Skills</text>
+          </g>
+          <g
+            class="component studio-asset transfer-setup-asset"
+            data-component="transfer-setup"
+            data-play="transfer-setup"
+            tabindex="0"
+            role="button"
+            aria-label="Transfer setup"
+          >
+            <rect x="514" y="930" width="150" height="36" rx="10" />
+            <text class="micro-label" x="589" y="953" text-anchor="middle">Transfer setup</text>
+          </g>
+
+          <path class="thin-path" data-play="compass" d="M 404 988 V 1034" />
+          <text class="flow-label" x="424" y="1018">agent design</text>
+          <g
+            class="component compass-gate"
+            data-component="compass"
+            data-play="compass"
+            tabindex="0"
+            role="button"
+            aria-label="Compass"
+          >
+            <rect x="322" y="1034" width="164" height="40" rx="12" />
+            <path class="check-mark" d="M 344 1024 l 10 10 l 20 -22" />
+            <text class="gate-label" x="404" y="1059" text-anchor="middle">Compass</text>
+          </g>
+          <path class="thin-path" data-play="plan" d="M 404 1074 V 1128" marker-end="url(#arrow-slate)" />
+          <path class="pulse pulse-slate" data-pulse="plan" d="M 404 988 V 1128" />
+
+          <g
+            class="component floor graph-floor"
+            data-component="graph"
+            data-play="graph"
+            tabindex="0"
+            role="button"
+            aria-label="AgentGraph"
+          >
+            <rect x="124" y="1128" width="560" height="170" rx="24" />
+            <text class="floor-label" x="160" y="1188">AgentGraph</text>
+            <text class="floor-desc" x="160" y="1222">Execute branches and tool calls</text>
+            <text class="subsystem-label" x="160" y="1214">Runtime controls</text>
+            <g class="graph-pictogram" transform="translate(478 1086)">
+              <path class="runtime-path" d="M 0 44 H 58 L 104 12 H 174" />
+              <path class="runtime-path" d="M 58 44 L 104 78 H 174" />
+              <circle class="runtime-node" cx="0" cy="44" r="12" />
+              <circle class="runtime-node" cx="58" cy="44" r="12" />
+              <circle class="runtime-node" cx="174" cy="12" r="12" />
+              <circle class="runtime-node" cx="174" cy="78" r="12" />
+              <path class="tool-call-mark" d="M 106 44 h 24 m -12 -12 v 24" />
+            </g>
+          </g>
+
+          <g
+            class="component runtime-chip"
+            data-component="workflows"
+            data-play="workflows"
+            tabindex="0"
+            role="button"
+            aria-label="Workflows"
+          >
+            <rect x="160" y="1238" width="110" height="32" rx="9" />
+            <text class="micro-label micro-label-small" x="215" y="1259" text-anchor="middle">Workflows</text>
+          </g>
+          <g
+            class="component runtime-chip"
+            data-component="transfers"
+            data-play="transfers"
+            tabindex="0"
+            role="button"
+            aria-label="Transfers"
+          >
+            <rect x="296" y="1238" width="98" height="32" rx="9" />
+            <text class="micro-label micro-label-small" x="345" y="1259" text-anchor="middle">Transfers</text>
+          </g>
+          <g
+            class="component runtime-chip"
+            data-component="context"
+            data-play="context"
+            tabindex="0"
+            role="button"
+            aria-label="Context variables"
+          >
+            <rect x="420" y="1238" width="92" height="32" rx="9" />
+            <text class="micro-label micro-label-small" x="466" y="1259" text-anchor="middle">Context</text>
+          </g>
+          <g
+            class="component guardian-chip"
+            data-component="guardian"
+            data-play="guardian"
+            tabindex="0"
+            role="button"
+            aria-label="Guardian"
+          >
+            <rect x="538" y="1238" width="104" height="32" rx="9" />
+            <path class="shield-icon" d="M 628 1068 l 34 14 v 30 c 0 26 -16 44 -34 54 c -18 -10 -34 -28 -34 -54 v -30 z" />
+            <text class="micro-label micro-label-small" x="590" y="1259" text-anchor="middle">Guardian</text>
+          </g>
+
+          <path class="thin-path" data-play="test" d="M 404 1298 V 1382" marker-end="url(#arrow-slate)" />
+          <path class="pulse pulse-slate" data-pulse="proving" d="M 404 1298 V 1382" />
+          <text class="flow-label" x="424" y="1344">runtime plan</text>
+
+          <g
+            class="component floor proving-floor"
+            data-component="proving"
+            data-play="proving"
+            tabindex="0"
+            role="button"
+            aria-label="Proving Ground"
+          >
+            <rect x="124" y="1382" width="560" height="190" rx="24" />
+            <text class="floor-label" x="160" y="1446">Proving Ground</text>
+            <text class="floor-desc" x="160" y="1490">Test behavior and tool use safely</text>
+            <text class="subsystem-label" x="160" y="1470">Validation controls</text>
+            <g class="test-pictogram" transform="translate(478 1304)">
+              <rect class="test-chamber" x="0" y="0" width="178" height="104" rx="24" />
+              <path class="test-beam" d="M 28 52 H 150" />
+              <rect class="scenario-block" x="36" y="34" width="34" height="34" rx="8" />
+              <rect class="scenario-block" x="78" y="34" width="34" height="34" rx="8" />
+              <rect class="scenario-block pass" x="120" y="34" width="34" height="34" rx="8" />
+              <path class="shield-mark" d="M 88 82 l 15 14 l 30 -32" />
+            </g>
+          </g>
+
+          <g
+            class="component testing-chip"
+            data-component="voice-test"
+            data-play="voice-test"
+            tabindex="0"
+            role="button"
+            aria-label="Voice Test"
+          >
+            <rect x="160" y="1504" width="126" height="40" rx="10" />
+            <path class="mic-icon" d="M 182 1400 v 10 a 10 10 0 0 0 20 0 v -10 M 192 1420 v 8 M 182 1428 h 20" />
+            <text class="micro-label micro-label-small" x="223" y="1528" text-anchor="middle">Voice Test</text>
+          </g>
+          <g
+            class="component testing-chip"
+            data-component="mock-tools"
+            data-play="mock-tools"
+            tabindex="0"
+            role="button"
+            aria-label="Mock tools"
+          >
+            <rect x="310" y="1504" width="126" height="40" rx="10" />
+            <path class="mock-icon" d="M 296 1406 h 16 m 16 0 h 16 m -34 -10 v 20 m 26 -20 v 20" />
+            <text class="micro-label micro-label-small" x="373" y="1528" text-anchor="middle">Mock Tools</text>
+          </g>
+
+          <path class="thin-path" data-play="deploy" d="M 404 1572 V 1628" />
+          <text class="flow-label" x="424" y="1606">tested version</text>
+          <g
+            class="component deploy-gate"
+            data-component="deploy"
+            data-play="deploy"
+            tabindex="0"
+            role="button"
+            aria-label="Deploy and Publish"
+          >
+            <rect x="286" y="1628" width="236" height="42" rx="12" />
+            <path class="rocket-icon" d="M 316 1473 l 22 -12 l -8 24 z M 329 1485 l -8 10" />
+            <text class="gate-label" x="404" y="1655" text-anchor="middle">Deploy / Publish</text>
+          </g>
+          <path class="thin-path" data-play="observe" d="M 404 1670 V 1718" marker-end="url(#arrow-slate)" />
+          <path class="pulse pulse-slate" data-pulse="telemetry" d="M 404 1572 V 1718" />
+          <path class="release-path" data-play="products" d="M 522 1649 C 724 1690, 788 1828, 742 1946" marker-end="url(#arrow-slate)" />
+          <path class="pulse pulse-slate" data-pulse="release" d="M 522 1649 C 724 1690, 788 1828, 742 1946" />
+          <text class="flow-label" x="624" y="1714">publish</text>
+
+          <g
+            class="component floor analytics-floor"
+            data-component="analytics"
+            data-play="analytics"
+            tabindex="0"
+            role="button"
+            aria-label="Traces and Analytics"
+          >
+            <rect x="124" y="1718" width="560" height="170" rx="24" />
+            <text class="floor-label" x="160" y="1780">Traces + Analytics</text>
+            <text class="floor-desc" x="160" y="1776">Outcomes, failures, and improvements</text>
+            <text class="subsystem-label" x="160" y="1808">Observe controls</text>
+            <g class="analytics-pictogram" transform="translate(500 1524)">
+              <rect class="monitor" x="0" y="0" width="76" height="50" rx="10" />
+              <rect class="monitor" x="92" y="0" width="76" height="50" rx="10" />
+              <polyline class="monitor-line" points="12,36 28,22 42,29 58,14 70,20" />
+              <polyline class="monitor-line" points="104,36 122,32 138,16 154,24 164,12" />
+              <circle class="alert-dot" cx="168" cy="62" r="10" />
+              <path class="magnify" d="M 28 76 a 18 18 0 1 0 1 0 M 42 90 l 20 20" />
+            </g>
+          </g>
+
+          <g
+            class="component observe-chip"
+            data-component="history"
+            data-play="history"
+            tabindex="0"
+            role="button"
+            aria-label="History"
+          >
+            <rect x="160" y="1846" width="78" height="30" rx="9" />
+            <text class="micro-label micro-label-small" x="199" y="1866" text-anchor="middle">History</text>
+          </g>
+          <g
+            class="component observe-chip"
+            data-component="traces"
+            data-play="traces"
+            tabindex="0"
+            role="button"
+            aria-label="Traces"
+          >
+            <rect x="250" y="1846" width="72" height="30" rx="9" />
+            <text class="micro-label micro-label-small" x="286" y="1866" text-anchor="middle">Traces</text>
+          </g>
+          <g
+            class="component observe-chip"
+            data-component="ai-events"
+            data-play="ai-events"
+            tabindex="0"
+            role="button"
+            aria-label="AI events"
+          >
+            <rect x="334" y="1846" width="88" height="30" rx="9" />
+            <text class="micro-label micro-label-small" x="378" y="1866" text-anchor="middle">AI events</text>
+          </g>
+          <g
+            class="component observe-chip"
+            data-component="annotations"
+            data-play="annotations"
+            tabindex="0"
+            role="button"
+            aria-label="Annotations and issue clusters"
+          >
+            <rect x="434" y="1846" width="142" height="30" rx="9" />
+            <text class="micro-label micro-label-small" x="505" y="1866" text-anchor="middle">Issue clusters</text>
+          </g>
+
+          <g
+            class="component products"
+            data-component="products"
+            data-play="products"
+            tabindex="0"
+            role="button"
+            aria-label="Voice and digital customer experiences powered by the machine"
+          >
+            <text class="zone-label" x="146" y="1982">Customer experiences powered by the machine</text>
+            <path class="attachment" d="M 404 1888 V 1946 H 742" />
+            <text class="product-domain-label" x="120" y="2028">Voice</text>
+            <path class="product-domain-rule" d="M 120 2044 H 570" />
+            <rect class="product-room" x="120" y="2064" width="220" height="84" rx="22" />
+            <text class="product-text" x="148" y="2116">AI Receptionist</text>
+            <rect class="product-room" x="380" y="2064" width="190" height="84" rx="22" />
+            <text class="product-text" x="424" y="2116">AI Routing</text>
+            <text class="product-domain-label" x="632" y="2028">Digital</text>
+            <path class="product-domain-rule" d="M 632 2044 H 850" />
+            <rect class="product-room" x="632" y="2064" width="218" height="84" rx="22" />
+            <text class="product-text" x="672" y="2116">Digital Agent</text>
+          </g>
+
+          <path
+            class="telemetry-path"
+            data-play="analytics"
+            d="M 742 2064 C 888 1948, 860 1782, 684 1782"
+            marker-end="url(#arrow-telemetry)"
+          />
+          <path class="pulse pulse-telemetry" data-pulse="telemetry" d="M 742 2064 C 888 1948, 860 1782, 684 1782" />
+          <text class="flow-label" x="820" y="1932">telemetry</text>
+
+          <path
+            class="feedback-path"
+            data-play="feedback"
+            d="M 684 1782 C 842 1590, 832 1010, 684 892"
+            marker-end="url(#arrow-telemetry)"
+          />
+          <path class="pulse pulse-feedback" data-pulse="feedback" d="M 684 1782 C 842 1590, 832 1010, 684 892" />
+          <text class="flow-label" x="796" y="1390">improvements</text>
+            </svg>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js?v=brand-scrub-1"></script>
+  </body>
+</html>
