@@ -64,6 +64,41 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 3–9 Aug 2026
+
+The big move this week was under the hood. Josh refactored the cache layer to handle memory more efficiently across eight major sections of Beacon (Artifacts, Bookmarks, Contact Center, Contacts, Conversations, IVR Sessions, Power Dialer Campaigns, and Workflow Runs). In plain terms: data loads faster and switching between sections should feel snappier. There were also a few fixes to company selection workflows for users hitting legacy access patterns, and the Inbox now creates direct conversations more reliably so you don't end up with partial data hanging around. The legal services content pack is now available if you're designing around that domain. Nothing here should break your current work, but if you notice anything loading weirdly or company switching acting odd, flag it to Josh.
+
+#### What actually changed
+- **Cache layer modernized.** Eight sections now use better memory management. Faster loads and switches.
+- **useCompanySelection hook fixed.** Legacy company access workflows now work properly.
+- **Direct conversation creation is atomic.** Either the conversation saves completely or not at all. No partial sync problems.
+- **Company world switching improved.** Better failure handling and boot seeding when you change isolated company environments.
+- **Receptionist flows simplified.** Conversation creation and chat panel logic in the AI receptionist interface is leaner.
+- **Legal services content pack available.** New library resources for legal domain designs.
+- **Company contact planning sources added.** Better organization in Contacts.
+
+#### The bigger shift
+The pattern across this week is stability work. Josh is tightening up the places where data could get stuck or partial. The cache refactor, atomic conversation creation, and improved company switching all point to the same direction: fewer edge cases where the app gets into a weird state. This is the kind of work that doesn't feel like much until something that was broken suddenly isn't.
+
+#### Where things are still messy
+None of this week's changes are flagged as incomplete, but Josh wants you to report if you see unexpected behavior in the eight sections touched by the cache refactor or in company switching. Those are the areas most likely to surprise you.
+
+#### What's coming next
+More work on conversation and data handling patterns. The push toward atomic operations and better state management suggests Josh is building the foundation for more complex conversation flows, probably around the AI receptionist and multi-company workflows.
+
+#### Try this
+Load up a company context in Beacon, switch to a different isolated company world, and switch back. It should be seamless now. If you hit any lag or see data not refresh properly, you've found something worth reporting.
+
+#### Quick notes
+- v2026.8.6 is the latest stable release as of August 4.
+- The Salesforce panel and activity views got new boot seeding logic with the company switching update.
+- Reach out to Josh directly if the legal services pack needs context for your designs.
+
+#### One thing to remember
+The cache refactor touches eight major sections, so if something feels off in any of them, it's worth checking in with Josh.
+
+---
+
 ### Week of 27–2 Aug 2026
 
 Josh shipped eight updates this week, mostly fixing reliability issues and streamlining flows that were getting in the way. Direct conversations in the Inbox now create without getting stuck in partial states. The AI receptionist setup got simpler across appointment, knowledge, lead capture, and routing steps. The app's cold start is fixed. Channel creation works again. If you've been testing any of these areas in the last few weeks and hit friction, try again now — most of it should feel smoother. The bigger theme is stability and simplification rather than new capabilities, which means fewer surprises when you're building.
@@ -188,7 +223,7 @@ Open a direct message conversation in the inbox. It should seed automatically no
 
 The receptionist feature now has a complete setup experience, so design against the full wizard flow, not just the individual screens.
 
----
+:::details View July 2026
 
 ### Week of 6–12 Jul 2026
 
@@ -746,6 +781,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
