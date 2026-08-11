@@ -12,15 +12,15 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 **Cache layer refactored for performance**
 
-The underlying cache system has been modernized to use more efficient memory management across Artifacts, Bookmarks, Contact Center, Contacts, Conversations, IVR Sessions, Power Dialer Campaigns, and Workflow Runs. This means these sections should feel snappier when loading and switching between data. If you notice any unexpected behavior in these areas, let Josh know.
+The backend caching system has been upgraded to use more efficient memory management across Contacts, Conversations, Power Dialer, and other data-heavy sections. This should improve how quickly Beacon loads and refreshes information when you're working with large datasets.
 
 <span class="release-meta">[v2026.8.6](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.6) · 4 August 2026</span>
 
 ---
 
-**Company selection restores legacy access patterns**
+**Company selection restores legacy access paths**
 
-The useCompanySelection hook now properly handles legacy company access workflows. This fixes an issue where certain users couldn't access previously available company contexts in Beacon.
+The company selection hook now properly re-enables access to organizations that use legacy authentication methods. This fixes a regression that was blocking designers from switching between certain company accounts in Beacon.
 
 <span class="release-meta">[v2026.8.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.5) · 3 August 2026</span>
 
@@ -28,7 +28,7 @@ The useCompanySelection hook now properly handles legacy company access workflow
 
 **Direct conversation creation now atomic and reliable**
 
-The Inbox now handles direct conversation persistence more robustly, ensuring conversations are created completely or not at all. This fixes a potential issue where partial conversation data could cause sync problems across your workspace.
+Direct conversations in the Inbox now persist correctly without race conditions. This fix in directConversationPersistence.ts ensures conversations are created atomically, preventing duplicate or incomplete entries when multiple requests happen simultaneously.
 
 <span class="release-meta">[v2026.7.64](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.64) · 31 July 2026</span>
 
@@ -36,25 +36,17 @@ The Inbox now handles direct conversation persistence more robustly, ensuring co
 
 **Isolated company worlds switching now available**
 
-You can now switch between isolated company environments in Beacon, with new failure handling and improved boot seeding logic across the Salesforce panel and activity views. This affects how the app initializes company data and handles world selection, so reach out to Josh if you notice any changes in how your test environments load.
+You can now switch between isolated company worlds in Beacon, with a new failure state (CompanyWorldBootFailure.vue) handling edge cases. The Salesforce panel, activity page, and cases page have been updated to support this workflow. If you hit issues during company world transitions, reach out to Josh.
 
 <span class="release-meta">[v2026.7.61](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.61) · 30 July 2026</span>
 
 ---
 
-**AI receptionist conversation and history flows simplified**
+**AI receptionist conversation flow simplified**
 
-The conversation creation, chat panel, and receptionist dashboard now have streamlined logic for handling AI interactions and conversation discarding. This affects how conversations are initiated and managed in the receptionist interface. If you notice any changes to conversation flow or state handling, reach out to Josh.
+The conversation creation and discard logic in the receptionist dashboard and history views has been refactored for better performance. If you notice any changes to how conversations are created or cleared in the receptionist interface, let Josh know.
 
 <span class="release-meta">[v2026.7.54](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.54) · 28 July 2026</span>
-
----
-
-**Company contact planning sources and legal services pack added**
-
-The Contacts section now includes company contact planning sources for better organization and context. A new legal services content pack is also available in Beacon's library. Reach out to Josh if you need guidance on using these new resources in your designs.
-
-<span class="release-meta">[v2026.7.51](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.51) · 25 July 2026</span>
 
 <!-- BEACON_RELEASES_END -->
 
