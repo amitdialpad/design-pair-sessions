@@ -809,6 +809,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Compliance API coverage extends to Claude Cowork and Claude Code](https://claude.com/blog/compliance-api-cowork-and-claude-code)**<br><small>Aug 11, 2026 · Enterprise AI</small>
+
+Claude's Compliance API now covers Cowork across the desktop app, web, and mobile, as well as Claude Code in the CLI and desktop app. Coverage is in beta for Claude Enterprise customers.
+
+---
+
 **[Running auto mode in production](https://claude.com/blog/auto-mode-in-production)**<br><small>Aug 7, 2026 · Claude Code</small>
 
 How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, longer running coding workflows.
@@ -825,13 +831,13 @@ Claude Code will soon run auto mode by default for Pro, Max, and Team plans, ena
 
 A business development rep shares how his team uses Claude to research account books, draft customer replies, and handle ad-hoc data analysis requests.
 
----
+:::details View past updates
 
 **[Run Claude Code sessions on your own compute](https://claude.com/blog/run-claude-code-sessions-on-your-own-compute)**<br><small>Aug 6, 2026 · Product announcements</small>
 
 Self-hosted environments are in public beta. Run Claude Code sessions on your own infrastructure, inside your network and next to your internal services.
 
-:::details View past updates
+---
 
 **[Millennium and Anthropic are building a digital risk analyst with Claude](https://claude.com/blog/millennium-and-anthropic-are-building-a-digital-risk-analyst-with-claude)**<br><small>Aug 6, 2026 · Enterprise AI</small>
 
@@ -855,13 +861,7 @@ How IT admins can see and manage Claude costs, including spend caps, model contr
 
 The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateless core with standardized extensions and hardened auth. Support is rolling out across Claude products soon. See what's new and how MCP is advancing in Claude.
 
----
-
-**[Claude models explained: choosing the best model for your use case](https://claude.com/blog/claude-models-explained-choosing-the-best-model-for-your-use-case)**<br><small>Jul 24, 2026 · Enterprise AI</small>
-
-Anthropic's guide to choosing the best Claude model for your use case — how Fable, Opus, Sonnet, and Haiku differ in intelligence, speed, and cost, and when to use each.
-
 :::
 
-*Updated August 11, 2026*
+*Updated August 12, 2026*
 <!-- CLAUDE_FEED_END -->
