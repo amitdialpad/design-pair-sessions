@@ -809,6 +809,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The Claude in Chrome side panel is now Claude Cowork](https://claude.com/blog/cowork-chrome-side-panel)**<br><small>Aug 12, 2026 · Product announcements</small>
+
+The Claude in Chrome side panel is now a Claude Cowork session. Your conversations, skills, and connectors carry between the browser and the Claude apps.
+
+---
+
 **[Compliance API coverage extends to Claude Cowork and Claude Code](https://claude.com/blog/compliance-api-cowork-and-claude-code)**<br><small>Aug 11, 2026 · Enterprise AI</small>
 
 Claude's Compliance API now covers Cowork across the desktop app, web, and mobile, as well as Claude Code in the CLI and desktop app. Coverage is in beta for Claude Enterprise customers.
@@ -825,13 +831,13 @@ How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, 
 
 Claude Code will soon run auto mode by default for Pro, Max, and Team plans, enabling longer-running autonomous work, and catching more dangerous commands.
 
----
+:::details View past updates
 
 **[How Anthropic's business development team uses Claude to run inbound and outbound at scale](https://claude.com/blog/how-anthropics-business-development-team-uses-claude-to-run-inbound-and-outbound-at-scale)**<br><small>Aug 7, 2026 · Enterprise AI</small>
 
 A business development rep shares how his team uses Claude to research account books, draft customer replies, and handle ad-hoc data analysis requests.
 
-:::details View past updates
+---
 
 **[Run Claude Code sessions on your own compute](https://claude.com/blog/run-claude-code-sessions-on-your-own-compute)**<br><small>Aug 6, 2026 · Product announcements</small>
 
@@ -855,13 +861,7 @@ Inference hooks lets your compliance team inspect and enforce policy on every pr
 
 How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
 
----
-
-**[Bringing MCP 2026-07-28 to Claude](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)**<br><small>Jul 28, 2026 · Product announcements</small>
-
-The MCP 2026-07-28 spec is live, moving the Model Context Protocol to a stateless core with standardized extensions and hardened auth. Support is rolling out across Claude products soon. See what's new and how MCP is advancing in Claude.
-
 :::
 
-*Updated August 12, 2026*
+*Updated August 13, 2026*
 <!-- CLAUDE_FEED_END -->
