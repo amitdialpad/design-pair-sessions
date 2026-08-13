@@ -10,17 +10,25 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Cache layer refactored for performance**
+**Shared communication content foundation added**
 
-The backend caching system has been upgraded to use more efficient memory management across Contacts, Conversations, Power Dialer, and other data-heavy sections. This should improve how quickly Beacon loads and refreshes information when you're working with large datasets.
+A new content structure is now available in Beacon for designing shared communication experiences. This lays groundwork for future features — reach out to Josh if you're planning work that touches messaging or multi-channel content patterns.
+
+<span class="release-meta">[v2026.8.19](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.19) · 12 August 2026</span>
+
+---
+
+**Cache layer optimization for AI prose generation**
+
+The underlying data caching system for Beacon has been refactored to improve performance across Contacts, Conversations, Contact Center, Power Dialer, and other core sections. This means AI-assisted features throughout the app should respond faster when you're working with repeated data queries.
 
 <span class="release-meta">[v2026.8.6](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.6) · 4 August 2026</span>
 
 ---
 
-**Company selection restores legacy access paths**
+**Company selection legacy access restored**
 
-The company selection hook now properly re-enables access to organizations that use legacy authentication methods. This fixes a regression that was blocking designers from switching between certain company accounts in Beacon.
+The useCompanySelection hook now properly restores access to previously available companies. This fixes an issue where designers may have lost visibility into certain company workspaces when switching between projects.
 
 <span class="release-meta">[v2026.8.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.5) · 3 August 2026</span>
 
@@ -28,25 +36,17 @@ The company selection hook now properly re-enables access to organizations that 
 
 **Direct conversation creation now atomic and reliable**
 
-Direct conversations in the Inbox now persist correctly without race conditions. This fix in directConversationPersistence.ts ensures conversations are created atomically, preventing duplicate or incomplete entries when multiple requests happen simultaneously.
+The inbox now creates direct conversations more reliably without race conditions that could cause incomplete setup. This fixes a backend issue in directConversationPersistence.ts that affected how conversations were initialized when users started messaging.
 
 <span class="release-meta">[v2026.7.64](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.64) · 31 July 2026</span>
 
 ---
 
-**Isolated company worlds switching now available**
+**Isolated company worlds switching added**
 
-You can now switch between isolated company worlds in Beacon, with a new failure state (CompanyWorldBootFailure.vue) handling edge cases. The Salesforce panel, activity page, and cases page have been updated to support this workflow. If you hit issues during company world transitions, reach out to Josh.
+You can now switch between isolated company worlds in Beacon, with a new failure state (CompanyWorldBootFailure.vue) handling edge cases. The Salesforce panel, activity and cases pages, and related data loading hooks have been updated to support this workflow. Reach out to Josh if you need guidance on testing the world-switching experience.
 
 <span class="release-meta">[v2026.7.61](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.61) · 30 July 2026</span>
-
----
-
-**AI receptionist conversation flow simplified**
-
-The conversation creation and discard logic in the receptionist dashboard and history views has been refactored for better performance. If you notice any changes to how conversations are created or cleared in the receptionist interface, let Josh know.
-
-<span class="release-meta">[v2026.7.54](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.54) · 28 July 2026</span>
 
 <!-- BEACON_RELEASES_END -->
 
