@@ -817,11 +817,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Securing the frontier: How JetBrains evaluates and deploys Claude Fable 5](https://claude.com/blog/how-jetbrains-evaluates-and-deploys-claude-fable-5)**<br><small>Aug 13, 2026 · Enterprise AI</small>
+
+How JetBrains uses Claude Fable 5 and why they view safeguards and data retention as central to working with frontier models.
+
+---
+
+**[Claude Tag now reads even more of the room](https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room)**<br><small>Aug 13, 2026 · Product announcements</small>
+
+Claude has more context to decide when to proactively collaborate in Slack (and when not to)
+
+---
+
+**[Self-service data analytics in Slack: how Anthropic deploys Claude Tag for ad-hoc questions](https://claude.com/blog/self-service-data-analytics-in-slack-how-anthropic-deploys-claude-tag-for-ad-hoc-questions)**<br><small>Aug 13, 2026</small>
+
+How Anthropic's data team uses Claude Tag for self-service data analytics with the same governed definitions analysts use.
+
+---
+
 **[The Claude in Chrome side panel is now Claude Cowork](https://claude.com/blog/cowork-chrome-side-panel)**<br><small>Aug 12, 2026 · Product announcements</small>
 
 The Claude in Chrome side panel is now a Claude Cowork session. Your conversations, skills, and connectors carry between the browser and the Claude apps.
 
----
+:::details View past updates
 
 **[Compliance API coverage extends to Claude Cowork and Claude Code](https://claude.com/blog/compliance-api-cowork-and-claude-code)**<br><small>Aug 11, 2026 · Enterprise AI</small>
 
@@ -839,7 +857,7 @@ How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, 
 
 Claude Code will soon run auto mode by default for Pro, Max, and Team plans, enabling longer-running autonomous work, and catching more dangerous commands.
 
-:::details View past updates
+---
 
 **[How Anthropic's business development team uses Claude to run inbound and outbound at scale](https://claude.com/blog/how-anthropics-business-development-team-uses-claude-to-run-inbound-and-outbound-at-scale)**<br><small>Aug 7, 2026 · Enterprise AI</small>
 
@@ -851,25 +869,7 @@ A business development rep shares how his team uses Claude to research account b
 
 Self-hosted environments are in public beta. Run Claude Code sessions on your own infrastructure, inside your network and next to your internal services.
 
----
-
-**[Millennium and Anthropic are building a digital risk analyst with Claude](https://claude.com/blog/millennium-and-anthropic-are-building-a-digital-risk-analyst-with-claude)**<br><small>Aug 6, 2026 · Enterprise AI</small>
-
-Anthropic is working with Millennium to co-develop a digital risk analyst to surface new risk insights and form opinions on risk exposure across asset classes.
-
----
-
-**[Inference hooks: inline data loss prevention for Claude Enterprise](https://claude.com/blog/claude-enterprise-inference-hooks)**<br><small>Aug 5, 2026 · Enterprise AI</small>
-
-Inference hooks lets your compliance team inspect and enforce policy on every prompt and tool call response before they reach Claude — across Claude Enterprise surfaces including chat, Claude Code, Claude Cowork, and more.
-
----
-
-**[A guide to cost visibility and control in Claude](https://claude.com/blog/a-guide-to-cost-visibility-and-control-in-claude)**<br><small>Aug 4, 2026 · Enterprise AI</small>
-
-How IT admins can see and manage Claude costs, including spend caps, model controls, usage analytics, and API features like prompt caching and batch processing.
-
 :::
 
-*Updated August 13, 2026*
+*Updated August 14, 2026*
 <!-- CLAUDE_FEED_END -->
