@@ -10,25 +10,33 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
+**Read attention cursor tracking added to conversations**
+
+Conversation threads now track which messages you've read with a visual cursor indicator. The read state logic has been refactored across conversation tracking, user memberships, and read state hooks to support this feature. Reach out to Josh if you need details on how this integrates with your designs.
+
+<span class="release-meta">[v2026.8.21](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.21) · 13 August 2026</span>
+
+---
+
 **Shared communication content foundation added**
 
-A new content structure is now available in Beacon for designing shared communication experiences. This lays groundwork for future features — reach out to Josh if you're planning work that touches messaging or multi-channel content patterns.
+A new foundation for shared communication content is now available in Beacon. This supports group message histories and Content C conformance. Reach out to Josh if you need guidance on how to use this in your designs.
 
 <span class="release-meta">[v2026.8.19](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.19) · 12 August 2026</span>
 
 ---
 
-**Cache layer optimization for AI prose generation**
+**Cache layer optimized for AI prose generation**
 
-The underlying data caching system for Beacon has been refactored to improve performance across Contacts, Conversations, Contact Center, Power Dialer, and other core sections. This means AI-assisted features throughout the app should respond faster when you're working with repeated data queries.
+The underlying data caching system now uses a more efficient LRU cache structure across Contacts, Conversations, Contact Center, Power Dialer, and other core modules. This improves performance when Beacon generates AI-assisted content, particularly when working with cached LLM prose generation.
 
 <span class="release-meta">[v2026.8.6](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.6) · 4 August 2026</span>
 
 ---
 
-**Company selection legacy access restored**
+**Company selection restores legacy access patterns**
 
-The useCompanySelection hook now properly restores access to previously available companies. This fixes an issue where designers may have lost visibility into certain company workspaces when switching between projects.
+The company selection hook now properly handles legacy access scenarios that were previously broken. If you're testing multi-company workflows and encounter issues, reach out to Josh.
 
 <span class="release-meta">[v2026.8.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.5) · 3 August 2026</span>
 
@@ -36,15 +44,15 @@ The useCompanySelection hook now properly restores access to previously availabl
 
 **Direct conversation creation now atomic and reliable**
 
-The inbox now creates direct conversations more reliably without race conditions that could cause incomplete setup. This fixes a backend issue in directConversationPersistence.ts that affected how conversations were initialized when users started messaging.
+The Inbox now handles direct conversation persistence more robustly. User membership data loads correctly alongside conversation creation. If you notice any quirks with opening or creating direct messages, reach out to Josh.
 
 <span class="release-meta">[v2026.7.64](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.64) · 31 July 2026</span>
 
 ---
 
-**Isolated company worlds switching added**
+**Isolated company worlds switching now available**
 
-You can now switch between isolated company worlds in Beacon, with a new failure state (CompanyWorldBootFailure.vue) handling edge cases. The Salesforce panel, activity and cases pages, and related data loading hooks have been updated to support this workflow. Reach out to Josh if you need guidance on testing the world-switching experience.
+Designers can now switch between separate company environments in Beacon, with a new failure state component (CompanyWorldBootFailure.vue) handling edge cases. The Salesforce panel, activity pages, and boot loader logic have been updated to support this multi-world context. If you hit any issues with company switching, reach out to Josh.
 
 <span class="release-meta">[v2026.7.61](https://github.com/dialpad/beacon-app/releases/tag/v2026.7.61) · 30 July 2026</span>
 
