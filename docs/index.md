@@ -833,6 +833,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)**<br><small>Aug 14, 2026 · Claude Code</small>
+
+Practical tips for how to run efficient sessions that get the most value from every token.
+
+---
+
 **[Securing the frontier: How JetBrains evaluates and deploys Claude Fable 5](https://claude.com/blog/how-jetbrains-evaluates-and-deploys-claude-fable-5)**<br><small>Aug 13, 2026 · Enterprise AI</small>
 
 How JetBrains uses Claude Fable 5 and why they view safeguards and data retention as central to working with frontier models.
@@ -849,13 +855,13 @@ Claude has more context to decide when to proactively collaborate in Slack (and 
 
 How Anthropic's data team uses Claude Tag for self-service data analytics with the same governed definitions analysts use.
 
----
+:::details View past updates
 
 **[The Claude in Chrome side panel is now Claude Cowork](https://claude.com/blog/cowork-chrome-side-panel)**<br><small>Aug 12, 2026 · Product announcements</small>
 
 The Claude in Chrome side panel is now a Claude Cowork session. Your conversations, skills, and connectors carry between the browser and the Claude apps.
 
-:::details View past updates
+---
 
 **[Compliance API coverage extends to Claude Cowork and Claude Code](https://claude.com/blog/compliance-api-cowork-and-claude-code)**<br><small>Aug 11, 2026 · Enterprise AI</small>
 
@@ -879,13 +885,7 @@ Claude Code will soon run auto mode by default for Pro, Max, and Team plans, ena
 
 A business development rep shares how his team uses Claude to research account books, draft customer replies, and handle ad-hoc data analysis requests.
 
----
-
-**[Run Claude Code sessions on your own compute](https://claude.com/blog/run-claude-code-sessions-on-your-own-compute)**<br><small>Aug 6, 2026 · Product announcements</small>
-
-Self-hosted environments are in public beta. Run Claude Code sessions on your own infrastructure, inside your network and next to your internal services.
-
 :::
 
-*Updated August 14, 2026*
+*Updated August 15, 2026*
 <!-- CLAUDE_FEED_END -->
