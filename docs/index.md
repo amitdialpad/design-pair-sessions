@@ -80,6 +80,40 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 10–16 Aug 2026
+
+This week was focused on AI features and conversation infrastructure. Two big pieces landed: the AI Assistant panel now lives in the right sidebar of contact conversations, giving you call summaries and a compose interface without leaving the chat. Meanwhile, the AI Receptionist got a major usability upgrade with a capabilities preview and voice testing built into the setup flow. Behind the scenes, we fixed how conversations track who's read what (cursor tracking per person), improved how group message histories render in test environments, and optimized the cache layer that powers all the AI-generated content across Contacts and Conversations. If you're designing around AI-assisted workflows or testing multi-person conversation states, this week unlocked better tools for both.
+
+#### What actually changed
+- **AI Assistant panel (AiAssistantPanelV2.vue)** now appears in the right sidebar during contact conversations. It includes chat, insights, a composer for drafting messages, call summaries, and a mention menu.
+- **AI Receptionist setup** now shows a capabilities preview before you deploy, includes voice testing controls inline, and uses horizontal navigation across all the setup steps instead of the previous layout.
+- **Read attention cursor tracking** — conversations now track read state per person with a cursor system. The read attention projection and cursor controller manage this across the UI.
+- **Group message histories** now fully render in generated-world test environments, and the Content section handles conformance selection correctly.
+- **Cache layer optimization** for AI prose generation across Contacts, Conversations, Contact Center, and other data-heavy sections. Faster retrieval, same visual experience.
+- **Company world switching** — designers can now toggle between isolated company environments, with a new failure state (CompanyWorldBootFailure.vue) for incomplete transitions. The Salesforce panel, activity pages, and boot sequences all support this.
+
+#### The bigger shift
+The pattern this week is AI-first interfaces. Beacon is moving toward embedding AI assistance directly into the conversations and workflows designers are already using, rather than treating it as a separate tool. The receptionist preview and voice testing also signal that before you ship something, you should be able to see and hear how it behaves.
+
+#### Where things are still messy
+Company world switching works, but edge cases during transitions can still fail. If you hit CompanyWorldBootFailure, reach out to Josh. Group message histories are working in generated-world environments, but real-world behavior may still have gaps.
+
+#### What's coming next
+Expect more refinement around multi-person conversation states and read indicators. The cursor tracking system is the foundation for showing who's looking at what in real time. The AI Assistant panel will likely grow more integrations as people use it.
+
+#### Try this
+Open a contact conversation in Beacon and look for the AI Assistant panel on the right. Try mentioning someone in the composer using the mention menu. It's faster than typing their full name, and the citations will help track who said what.
+
+#### Quick notes
+- If you need guidance on the new AI Receptionist layout, Josh has context on the reasoning.
+- useCompanySelection hook now works with legacy access paths if you need that fallback.
+- Direct conversation creation in the Inbox is now more stable — user membership data stays in sync.
+
+#### One thing to remember
+You can now test how your AI-assisted features actually behave before deployment, whether that's through the receptionist preview or the new conversation read tracking.
+
+---
+
 ### Week of 3–9 Aug 2026
 
 The big move this week was under the hood. Josh refactored the cache layer to handle memory more efficiently across eight major sections of Beacon (Artifacts, Bookmarks, Contact Center, Contacts, Conversations, IVR Sessions, Power Dialer Campaigns, and Workflow Runs). In plain terms: data loads faster and switching between sections should feel snappier. There were also a few fixes to company selection workflows for users hitting legacy access patterns, and the Inbox now creates direct conversations more reliably so you don't end up with partial data hanging around. The legal services content pack is now available if you're designing around that domain. Nothing here should break your current work, but if you notice anything loading weirdly or company switching acting odd, flag it to Josh.
@@ -198,7 +232,7 @@ Open a receptionist prototype if you have one. Run through the deployment wizard
 
 Beacon got more reliable and less annoying this week. Use that time to design better.
 
----
+:::details View July 2026
 
 ### Week of 13–19 Jul 2026
 
@@ -797,6 +831,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
