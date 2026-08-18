@@ -897,6 +897,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How ABC Legal turned every employee into a builder with Claude Managed Agents](https://claude.com/blog/how-abc-legal-turned-every-employee-into-a-builder-with-claude-managed-agents)**<br><small>Aug 17, 2026 · Enterprise AI</small>
+
+ABC Legal transformed their organization’s AI adoption from scattered experiments to a governed fleet of specialized agents with Claude from Anthropic.
+
+---
+
 **[Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)**<br><small>Aug 14, 2026 · Claude Code</small>
 
 Practical tips for how to run efficient sessions that get the most value from every token.
@@ -913,13 +919,13 @@ How JetBrains uses Claude Fable 5 and why they view safeguards and data retentio
 
 Claude has more context to decide when to proactively collaborate in Slack (and when not to)
 
----
+:::details View past updates
 
 **[Self-service data analytics in Slack: how Anthropic deploys Claude Tag for ad-hoc questions](https://claude.com/blog/self-service-data-analytics-in-slack-how-anthropic-deploys-claude-tag-for-ad-hoc-questions)**<br><small>Aug 13, 2026</small>
 
 How Anthropic's data team uses Claude Tag for self-service data analytics with the same governed definitions analysts use.
 
-:::details View past updates
+---
 
 **[The Claude in Chrome side panel is now Claude Cowork](https://claude.com/blog/cowork-chrome-side-panel)**<br><small>Aug 12, 2026 · Product announcements</small>
 
@@ -943,13 +949,7 @@ How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, 
 
 Claude Code will soon run auto mode by default for Pro, Max, and Team plans, enabling longer-running autonomous work, and catching more dangerous commands.
 
----
-
-**[How Anthropic's business development team uses Claude to run inbound and outbound at scale](https://claude.com/blog/how-anthropics-business-development-team-uses-claude-to-run-inbound-and-outbound-at-scale)**<br><small>Aug 7, 2026 · Enterprise AI</small>
-
-A business development rep shares how his team uses Claude to research account books, draft customer replies, and handle ad-hoc data analysis requests.
-
 :::
 
-*Updated August 17, 2026*
+*Updated August 18, 2026*
 <!-- CLAUDE_FEED_END -->
