@@ -897,6 +897,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The Claude Science product guide](https://claude.com/blog/the-claude-science-product-guide)**<br><small>Aug 18, 2026 · Enterprise AI</small>
+
+We share how to use Claude Science, including setting up common workflows, new life sciences skills, and popular database connectors.
+
+---
+
 **[How ABC Legal turned every employee into a builder with Claude Managed Agents](https://claude.com/blog/how-abc-legal-turned-every-employee-into-a-builder-with-claude-managed-agents)**<br><small>Aug 17, 2026 · Enterprise AI</small>
 
 ABC Legal transformed their organization’s AI adoption from scattered experiments to a governed fleet of specialized agents with Claude from Anthropic.
@@ -913,13 +919,13 @@ Practical tips for how to run efficient sessions that get the most value from ev
 
 How JetBrains uses Claude Fable 5 and why they view safeguards and data retention as central to working with frontier models.
 
----
+:::details View past updates
 
 **[Claude Tag now reads even more of the room](https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room)**<br><small>Aug 13, 2026 · Product announcements</small>
 
 Claude has more context to decide when to proactively collaborate in Slack (and when not to)
 
-:::details View past updates
+---
 
 **[Self-service data analytics in Slack: how Anthropic deploys Claude Tag for ad-hoc questions](https://claude.com/blog/self-service-data-analytics-in-slack-how-anthropic-deploys-claude-tag-for-ad-hoc-questions)**<br><small>Aug 13, 2026</small>
 
@@ -943,13 +949,7 @@ Claude's Compliance API now covers Cowork across the desktop app, web, and mobil
 
 How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, longer running coding workflows.
 
----
-
-**[Auto mode is now the default in Claude Code for Pro, Max, and Team plans](https://claude.com/blog/auto-mode-default-in-claude-code)**<br><small>Aug 7, 2026 · Claude Code</small>
-
-Claude Code will soon run auto mode by default for Pro, Max, and Team plans, enabling longer-running autonomous work, and catching more dangerous commands.
-
 :::
 
-*Updated August 18, 2026*
+*Updated August 19, 2026*
 <!-- CLAUDE_FEED_END -->
