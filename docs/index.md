@@ -891,8 +891,6 @@ Latest announcements from Anthropic.
 <!-- CLAUDE_FEED_START -->
 **[The Claude Science product guide](https://claude.com/blog/the-claude-science-product-guide)**<br><small>Aug 18, 2026 · Enterprise AI</small>
 
-We share how to use Claude Science, including setting up common workflows, new life sciences skills, and popular database connectors.
-
 ---
 
 **[How ABC Legal turned every employee into a builder with Claude Managed Agents](https://claude.com/blog/how-abc-legal-turned-every-employee-into-a-builder-with-claude-managed-agents)**<br><small>Aug 17, 2026 · Enterprise AI</small>
@@ -943,5 +941,5 @@ How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, 
 
 :::
 
-*Updated August 19, 2026*
+*Updated August 20, 2026*
 <!-- CLAUDE_FEED_END -->
