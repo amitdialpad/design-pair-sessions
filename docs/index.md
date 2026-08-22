@@ -941,5 +941,5 @@ How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, 
 
 :::
 
-*Updated August 21, 2026*
+*Updated August 22, 2026*
 <!-- CLAUDE_FEED_END -->
