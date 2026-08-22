@@ -10,33 +10,41 @@ Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/rel
 
 <!-- BEACON_RELEASES_START -->
 
-**Call surfaces unified with adaptive layout system**
+**Generated call content now end-to-end functional**
 
-The incoming and active call interfaces now share a consolidated architecture with improved state management. New adaptive styling in CallSurfaceOverlays.vue and AdaptiveCallSurface.vue enables more flexible call surface behavior across different contexts.
+Call content that Beacon generates is now fully operational across the system. This means you can create and use AI-generated call materials without hitting dead ends in the workflow.
+
+<span class="release-meta">[v2026.8.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.31) · 21 August 2026</span>
+
+---
+
+**Call surface architecture unified and modernized**
+
+The incoming and active call interfaces now share a consolidated architecture through new adaptive call surface components. This refactor touches CallbarOverlays.vue, IncomingCallView.vue, and ActiveCallView.vue, streamlining how call states are managed across the product. Reach out to Josh if you have questions about how these changes affect your design workflows.
 
 <span class="release-meta">[v2026.8.29](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.29) · 20 August 2026</span>
 
 ---
 
-**Contact Center detail navigation scaffolding added**
+**Contact Center detail navigation structure added**
 
-The Contact Center section now has expanded navigation views for agents, queues, history, and individual contact center details. You'll find new dedicated views replacing the previous structure, with updated feature flags and navigation state management supporting the new layout.
+The Contact Center section now has a new navigation scaffold with dedicated views for agents, queues, history, and individual contact center details. You'll see these reflected in the left sidebar navigation and main content area when working with contact center components.
 
 <span class="release-meta">[v2026.8.27](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.27) · 19 August 2026</span>
 
 ---
 
-**Air appointment bookable hours editor added**
+**Air appointment bookable hours configuration added**
 
-The Receptionist Appointment and Lead Capture views now support configurable booking hours through a new hours editor component and provider picker. This gives you more control over when appointments can be scheduled in Air.
+Designers can now configure bookable hours for air appointments through a new provider picker and hours editor. The Receptionist appointment and lead capture views have been updated to support this workflow. Reach out to Josh if you need help integrating these components into your designs.
 
 <span class="release-meta">[v2026.8.25](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.25) · 17 August 2026</span>
 
 ---
 
-**Meeting room participant cards and video grid redesigned**
+**Meeting room participant cards redesigned**
 
-The meeting room video layout now uses dedicated participant cards with individual controls and a new video grid component. Camera, microphone, and background blur controls have been refactored alongside updates to the participant display and meeting views. Check with Josh if you need details on the new MicStateIndicator or how the updated device tools integrate with the redesigned layout.
+The meeting room layout now features new participant card components with dedicated action controls, alongside updates to video controls (mic, video, background blur) and the video preview panel. The participant video grid, mic state indicator, and related utilities have been added to support this redesign. If you're designing meeting experiences, check with Josh on how these components integrate with your existing flows.
 
 <span class="release-meta">[v2026.8.24](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.24) · 16 August 2026</span>
 
@@ -44,7 +52,7 @@ The meeting room video layout now uses dedicated participant cards with individu
 
 **AI Assistant panel added to contact conversations**
 
-The right sidebar now includes a new AI Assistant panel (AiAssistantPanelV2.vue) with chat, insights, and composition features for contact interactions. This brings AI-powered assistance directly into conversation contexts with components for message threading, call summaries, citations, and conversation prep.
+The right sidebar now includes a new AI Assistant panel (AiAssistantPanelV2.vue) that appears in contact conversation contexts. This panel features a chat interface, message history management, call summaries, and citation support to help designers reference AI-generated insights during conversations. Reach out to Josh if you need guidance on integrating this panel into other workflow areas.
 
 <span class="release-meta">[v2026.8.23](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.23) · 14 August 2026</span>
 
@@ -52,7 +60,7 @@ The right sidebar now includes a new AI Assistant panel (AiAssistantPanelV2.vue)
 
 **AI Receptionist gets preview, voice testing, and horizontal nav**
 
-The AI Receptionist configuration flow now includes a capabilities preview panel, voice testing controls, and a redesigned horizontal navigation for setup steps. This affects the receptionist deployment experience across AiReceptionistControls, the step editors (GreetingStep, KnowledgeStep, LeadCaptureStep, and others), and the ReceptionistNavPanel.
+The AI Receptionist configuration flow now includes a capabilities preview panel, voice testing controls, and a reorganized horizontal navigation structure across the setup steps. This gives designers better visibility into receptionist behavior before deployment and easier access to configuration sections.
 
 <span class="release-meta">[v2026.8.22](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.22) · 14 August 2026</span>
 
@@ -60,25 +68,25 @@ The AI Receptionist configuration flow now includes a capabilities preview panel
 
 **Read attention cursor tracking added to conversations**
 
-Conversations now track read state with a new cursor system that shows where each participant's attention is in the thread. The implementation spans read state management and user membership tracking, so reach out to Josh if you're integrating this into conversation views.
+Conversations now track read state with a visual cursor that follows user attention. The read tracking system has been refactored across conversation state management and user membership hooks to support this new capability. Reach out to Josh if you need details on how this integrates with existing conversation components.
 
 <span class="release-meta">[v2026.8.21](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.21) · 13 August 2026</span>
 
 ---
 
-**Cache performance improvements for AI prose generation**
+:::details View older releases
 
-Backend caching logic has been optimized to improve performance when generating AI-assisted content across Contacts, Conversations, Contact Center, and other data-heavy sections. This should result in faster load times and smoother interactions when working with AI features in Beacon. Reach out to Josh if you notice any changes in how cached content appears.
+**Cache layer optimized for AI prose generation**
+
+The backend caching system has been refactored to improve performance when generating AI-assisted content. If you notice faster load times when working with AI features across Contacts, Conversations, Contact Center, and other sections, this is why. Reach out to Josh if you encounter any unexpected behavior.
 
 <span class="release-meta">[v2026.8.6](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.6) · 4 August 2026</span>
 
 ---
 
-:::details View older releases
+**Company selection tool restored for legacy access**
 
-**Company selection restored to previous behavior**
-
-The useCompanySelection.ts hook now correctly restores legacy company access that was inadvertently removed. If you're testing multi-company workflows in Beacon, company switching should work as expected again.
+The useCompanySelection hook now properly handles legacy company access patterns again. If you're testing multi-company workflows in Beacon, this fixes selection behavior that was previously broken.
 
 <span class="release-meta">[v2026.8.5](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.5) · 3 August 2026</span>
 
