@@ -897,7 +897,51 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[The Claude Science product guide](https://claude.com/blog/the-claude-science-product-guide)**<br><small>Aug 18, 2026 · Enterprise AI</small>
+**[The AI-Native SDLC playbook](https://claude.com/blog/the-ai-native-sdlc-playbook)**<br><small>Aug 21, 2026 · Enterprise AI</small>
+
+How to transform your software development lifecycle with AI—stage by stage.
+
+---
+
+**[Bringing the cybersecurity capabilities of Claude Mythos 5 to more defenders](https://claude.com/blog/bringing-claude-mythos-5-to-more-defenders)**<br><small>Aug 21, 2026 · Product announcements</small>
+
+We’re sharing an update on our efforts to help more teams leverage frontier capabilities for cyber defense.
+
+---
+
+**[Build production agents with computer use, the Skills API, and the Files API](https://claude.com/blog/computer-use-skills-api-files-api)**<br><small>Aug 20, 2026 · Product announcements</small>
+
+Computer use, the Skills API, and the Files API are generally available on the Claude Platform today. Computer use also adds a new browser use tool for agents that work in web applications. Together they let you build agents that operate software, apply your team's expertise, and return finished files.
+
+---
+
+**[The Claude Code guide for startups](https://claude.com/blog/claude-code-guide-for-startups)**<br><small>Aug 20, 2026 · Claude Code</small>
+
+The five rules startups use with Claude Code to ship like teams 10x their size—Anthropic's guide to AI-native building, from everyone-ships culture to AI-native SDLCs.
+
+:::details View past updates
+
+**[How monday.com transformed its platform into an agent-first product where humans and agents collaborate](https://claude.com/blog/how-monday-com-transformed-its-platform-into-an-agent-first-product-where-humans-and-agents-collaborate)**<br><small>Aug 20, 2026 · Agents</small>
+
+The monday team shares lessons from the transition to an agent-first product after they rebuilt the platform around Anthropic's Claude.
+
+---
+
+**[Anthropic’s approach to teaching and learning AI](https://claude.com/blog/anthropics-approach-to-teaching-and-learning-ai)**<br><small>Aug 20, 2026 · Product announcements</small>
+
+Claude Academy gives users the educational tools they need to learn how to use AI effectively. In this post, we highlight why we’re launching it and how our own approach to teaching and learning influenced its development.
+
+---
+
+**[Turning conversation into knowledge: how Slack builds human-agent teams](https://claude.com/blog/turning-conversation-into-knowledge-how-slack-builds-human-agent-teams)**<br><small>Aug 19, 2026 · Enterprise AI</small>
+
+A conversation with Jaime DeLanghe, Chief Product Officer at Slack.
+
+---
+
+**[Claude on call: How Claude Tag serves as Anthropic’s first responder for CI/CD failures](https://claude.com/blog/ai-ci-cd-on-call)**<br><small>Aug 18, 2026 · Enterprise AI</small>
+
+How Anthropic runs AI incident response for CI/CD: an engineer on our Continuous Integration team walks through the Claude Tag agent that detects, triages, and resolves CI failures.
 
 ---
 
@@ -905,49 +949,7 @@ Latest announcements from Anthropic.
 
 ABC Legal transformed their organization’s AI adoption from scattered experiments to a governed fleet of specialized agents with Claude from Anthropic.
 
----
-
-**[Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)**<br><small>Aug 14, 2026 · Claude Code</small>
-
-Practical tips for how to run efficient sessions that get the most value from every token.
-
----
-
-**[Securing the frontier: How JetBrains evaluates and deploys Claude Fable 5](https://claude.com/blog/how-jetbrains-evaluates-and-deploys-claude-fable-5)**<br><small>Aug 13, 2026 · Enterprise AI</small>
-
-How JetBrains uses Claude Fable 5 and why they view safeguards and data retention as central to working with frontier models.
-
-:::details View past updates
-
-**[Claude Tag now reads even more of the room](https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room)**<br><small>Aug 13, 2026 · Product announcements</small>
-
-Claude has more context to decide when to proactively collaborate in Slack (and when not to)
-
----
-
-**[Self-service data analytics in Slack: how Anthropic deploys Claude Tag for ad-hoc questions](https://claude.com/blog/self-service-data-analytics-in-slack-how-anthropic-deploys-claude-tag-for-ad-hoc-questions)**<br><small>Aug 13, 2026</small>
-
-How Anthropic's data team uses Claude Tag for self-service data analytics with the same governed definitions analysts use.
-
----
-
-**[The Claude in Chrome side panel is now Claude Cowork](https://claude.com/blog/cowork-chrome-side-panel)**<br><small>Aug 12, 2026 · Product announcements</small>
-
-The Claude in Chrome side panel is now a Claude Cowork session. Your conversations, skills, and connectors carry between the browser and the Claude apps.
-
----
-
-**[Compliance API coverage extends to Claude Cowork and Claude Code](https://claude.com/blog/compliance-api-cowork-and-claude-code)**<br><small>Aug 11, 2026 · Enterprise AI</small>
-
-Claude's Compliance API now covers Cowork across the desktop app, web, and mobile, as well as Claude Code in the CLI and desktop app. Coverage is in beta for Claude Enterprise customers.
-
----
-
-**[Running auto mode in production](https://claude.com/blog/auto-mode-in-production)**<br><small>Aug 7, 2026 · Claude Code</small>
-
-How customers like Nuro, Gusto, and Garner Health use auto mode to drive safer, longer running coding workflows.
-
 :::
 
-*Updated August 22, 2026*
+*Updated August 23, 2026*
 <!-- CLAUDE_FEED_END -->
