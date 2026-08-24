@@ -108,6 +108,42 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 17–23 Aug 2026
+
+This was a solid week for Contact Center and AI features. The queue filtering update makes it faster to work with multiple configurations. Call content generation is now working end to end, so if you're designing around summaries and insights, you can test the full flow. There's also a new AI Assistant panel in the right sidebar when you view contact conversations, which gives you a dedicated space to preview AI-assisted features in context. The meeting room redesign reorganized how participant cards and video controls work. And the AI Receptionist got voice testing built in, so you can now test how different greetings and voices sound during setup. Nothing here is a breaking change, but if you're working on call-related components, Contact Center flows, or receptionist features, check with Josh about the structural changes before you start.
+
+#### What actually changed
+
+Contact Center queue filtering now supports scoped parameters, letting you isolate queue data without digging through everything. The incoming and active call views share a common foundation now, with adaptive styling for flexible layouts. Contact Center detail navigation has dedicated views for agents, queues, history, and individual details. The Air appointment hours editor component is live, so you can configure and edit bookable hours through the receptionist appointment and lead capture views. Meeting room participant cards are redesigned with improved layout and actions, plus video controls for mic, camera, and background blur are reorganized. AI Assistant panel (AiAssistantPanelV2.vue) is now in the right sidebar for contact conversations with chat, insights, and composer capabilities. AI Receptionist setup now includes voice testing, GreetingStep, ReceptionistIdentityHeader, and ReceptionistNameEditor components.
+
+#### The bigger shift
+
+The architecture is moving toward consolidation. Call surfaces are unifying under a common foundation. Contact Center is moving from department-based views to a navigation structure. AI features are getting their own dedicated panels and spaces rather than being scattered through the interface. It feels like Beacon is making room for these systems to grow without cluttering the existing layouts.
+
+#### Where things are still messy
+
+Call surface consolidation is fresh, so the component hierarchy might shift as it settles. If you're building on call components, verify the new structure with Josh before you commit to a pattern.
+
+#### What's coming next
+
+Expect more Contact Center detail views to mature. The hours configuration work suggests appointment booking features are expanding. The AI Assistant panel probably signals more AI-powered sidebars coming to other areas of the product.
+
+#### Try this
+
+If you're designing a receptionist flow, open up the new voice testing feature in the AI Receptionist section and test a few different greeting variations. It's a good way to see how the new setup components work together before you start building your own flows around them.
+
+#### Quick notes
+
+- Read state tracking in conversations now uses a cursor system. Check useReadState and useReadTracking if you're building read indicators.
+- Group message histories are fully working in the generated world.
+- Cache layer got refactored across multiple sections. If loading feels different, flag it with Josh.
+
+#### One thing to remember
+
+The Contact Center navigation structure changed from department-based to detail-based, so audit any designs you built around the old Voice and Digital CC views.
+
+---
+
 ### Week of 10–16 Aug 2026
 
 This week was focused on AI features and conversation infrastructure. Two big pieces landed: the AI Assistant panel now lives in the right sidebar of contact conversations, giving you call summaries and a compose interface without leaving the chat. Meanwhile, the AI Receptionist got a major usability upgrade with a capabilities preview and voice testing built into the setup flow. Behind the scenes, we fixed how conversations track who's read what (cursor tracking per person), improved how group message histories render in test environments, and optimized the cache layer that powers all the AI-generated content across Contacts and Conversations. If you're designing around AI-assisted workflows or testing multi-person conversation states, this week unlocked better tools for both.
@@ -217,7 +253,7 @@ Switch between isolated company worlds if you're testing multi-tenant scenarios.
 
 Beacon is more reliable this week, which means less time debugging tool behavior and more time on actual design work.
 
----
+:::details View July 2026
 
 ### Week of 20–26 Jul 2026
 
@@ -859,6 +895,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
