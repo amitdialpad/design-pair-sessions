@@ -989,5 +989,5 @@ ABC Legal transformed their organization’s AI adoption from scattered experime
 
 :::
 
-*Updated August 23, 2026*
+*Updated August 24, 2026*
 <!-- CLAUDE_FEED_END -->
