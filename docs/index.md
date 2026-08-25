@@ -935,6 +935,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How an Anthropic field marketer uses Claude Code to send weekly personalized updates to every sales rep](https://claude.com/blog/how-an-anthropic-field-marketer-uses-claude-code-to-send-weekly-personalized-updates-to-every-sales-rep)**<br><small>Aug 24, 2026 · Claude Code</small>
+
+Adam Ward, on Anthropic’s marketing team, shares how he uses Claude to turn one weekly sales report into a personalized Monday briefing for every account executive he supports.
+
+---
+
 **[The AI-Native SDLC playbook](https://claude.com/blog/the-ai-native-sdlc-playbook)**<br><small>Aug 21, 2026 · Enterprise AI</small>
 
 How to transform your software development lifecycle with AI—stage by stage.
@@ -951,13 +957,13 @@ We’re sharing an update on our efforts to help more teams leverage frontier ca
 
 Computer use, the Skills API, and the Files API are generally available on the Claude Platform today. Computer use also adds a new browser use tool for agents that work in web applications. Together they let you build agents that operate software, apply your team's expertise, and return finished files.
 
----
+:::details View past updates
 
 **[The Claude Code guide for startups](https://claude.com/blog/claude-code-guide-for-startups)**<br><small>Aug 20, 2026 · Claude Code</small>
 
 The five rules startups use with Claude Code to ship like teams 10x their size—Anthropic's guide to AI-native building, from everyone-ships culture to AI-native SDLCs.
 
-:::details View past updates
+---
 
 **[How monday.com transformed its platform into an agent-first product where humans and agents collaborate](https://claude.com/blog/how-monday-com-transformed-its-platform-into-an-agent-first-product-where-humans-and-agents-collaborate)**<br><small>Aug 20, 2026 · Agents</small>
 
@@ -981,13 +987,7 @@ A conversation with Jaime DeLanghe, Chief Product Officer at Slack.
 
 How Anthropic runs AI incident response for CI/CD: an engineer on our Continuous Integration team walks through the Claude Tag agent that detects, triages, and resolves CI failures.
 
----
-
-**[How ABC Legal turned every employee into a builder with Claude Managed Agents](https://claude.com/blog/how-abc-legal-turned-every-employee-into-a-builder-with-claude-managed-agents)**<br><small>Aug 17, 2026 · Enterprise AI</small>
-
-ABC Legal transformed their organization’s AI adoption from scattered experiments to a governed fleet of specialized agents with Claude from Anthropic.
-
 :::
 
-*Updated August 24, 2026*
+*Updated August 25, 2026*
 <!-- CLAUDE_FEED_END -->
