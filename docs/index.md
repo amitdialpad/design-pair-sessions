@@ -935,6 +935,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude's memory works everywhere, and you decide what's in it](https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it)**<br><small>Aug 25, 2026 · Product announcements</small>
+
+Wherever you work with Claude from Anthropic, it starts from what it already knows about you.
+
+---
+
+**[Bain & Company joins the Claude Partner Network as a Global Premier partner](https://claude.com/blog/bain-company-joins-the-claude-partner-network-as-a-global-premier-partner)**<br><small>Aug 25, 2026 · Enterprise AI</small>
+
+Anthropic and Bain & Company are partnering to help enterprises deploy AI, building on Bain's rollout of Claude to its 19,000 employees.
+
+---
+
 **[How an Anthropic field marketer uses Claude Code to send weekly personalized updates to every sales rep](https://claude.com/blog/how-an-anthropic-field-marketer-uses-claude-code-to-send-weekly-personalized-updates-to-every-sales-rep)**<br><small>Aug 24, 2026 · Claude Code</small>
 
 Adam Ward, on Anthropic’s marketing team, shares how he uses Claude to turn one weekly sales report into a personalized Monday briefing for every account executive he supports.
@@ -945,7 +957,7 @@ Adam Ward, on Anthropic’s marketing team, shares how he uses Claude to turn on
 
 How to transform your software development lifecycle with AI—stage by stage.
 
----
+:::details View past updates
 
 **[Bringing the cybersecurity capabilities of Claude Mythos 5 to more defenders](https://claude.com/blog/bringing-claude-mythos-5-to-more-defenders)**<br><small>Aug 21, 2026 · Product announcements</small>
 
@@ -957,7 +969,7 @@ We’re sharing an update on our efforts to help more teams leverage frontier ca
 
 Computer use, the Skills API, and the Files API are generally available on the Claude Platform today. Computer use also adds a new browser use tool for agents that work in web applications. Together they let you build agents that operate software, apply your team's expertise, and return finished files.
 
-:::details View past updates
+---
 
 **[The Claude Code guide for startups](https://claude.com/blog/claude-code-guide-for-startups)**<br><small>Aug 20, 2026 · Claude Code</small>
 
@@ -975,19 +987,7 @@ The monday team shares lessons from the transition to an agent-first product aft
 
 Claude Academy gives users the educational tools they need to learn how to use AI effectively. In this post, we highlight why we’re launching it and how our own approach to teaching and learning influenced its development.
 
----
-
-**[Turning conversation into knowledge: how Slack builds human-agent teams](https://claude.com/blog/turning-conversation-into-knowledge-how-slack-builds-human-agent-teams)**<br><small>Aug 19, 2026 · Enterprise AI</small>
-
-A conversation with Jaime DeLanghe, Chief Product Officer at Slack.
-
----
-
-**[Claude on call: How Claude Tag serves as Anthropic’s first responder for CI/CD failures](https://claude.com/blog/ai-ci-cd-on-call)**<br><small>Aug 18, 2026 · Enterprise AI</small>
-
-How Anthropic runs AI incident response for CI/CD: an engineer on our Continuous Integration team walks through the Claude Tag agent that detects, triages, and resolves CI failures.
-
 :::
 
-*Updated August 25, 2026*
+*Updated August 26, 2026*
 <!-- CLAUDE_FEED_END -->
