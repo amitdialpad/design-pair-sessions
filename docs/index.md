@@ -935,6 +935,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude for Teachers, now available for schools and districts](https://claude.com/blog/claude-for-teachers-now-available-for-schools-and-districts)**<br><small>Aug 28, 2026 · Product announcements</small>
+
+Claude for Teachers is now available to schools and districts as a free Enterprise offering.
+
+---
+
 **[How Warp builds self-improving agents on Claude](https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude)**<br><small>Aug 26, 2026 · Agents</small>
 
 How Warp devised a simple development pattern that anyone can use to create self-improving agents.
@@ -951,13 +957,13 @@ Claude now has its own browser inside the Cowork desktop app. It opens sites, re
 
 Claude in Chrome is now available on every paid plan and can work through browser tasks without approving each step, with a safety check on every action. Here's how we tested it against prompt injection.
 
----
+:::details View past updates
 
 **[Claude's memory works everywhere, and you decide what's in it](https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it)**<br><small>Aug 25, 2026 · Product announcements</small>
 
 Wherever you work with Claude from Anthropic, it starts from what it already knows about you.
 
-:::details View past updates
+---
 
 **[Bain & Company joins the Claude Partner Network as a Global Premier partner](https://claude.com/blog/bain-company-joins-the-claude-partner-network-as-a-global-premier-partner)**<br><small>Aug 25, 2026 · Enterprise AI</small>
 
@@ -981,13 +987,7 @@ Anthropic's stage-by-stage playbook for the AI-native SDLC: how teams plan, desi
 
 We’re sharing an update on our efforts to help more teams leverage frontier capabilities for cyber defense.
 
----
-
-**[Build production agents with computer use, the Skills API, and the Files API](https://claude.com/blog/computer-use-skills-api-files-api)**<br><small>Aug 20, 2026 · Product announcements</small>
-
-Computer use, the Skills API, and the Files API are generally available on the Claude Platform today. Computer use also adds a new browser use tool for agents that work in web applications. Together they let you build agents that operate software, apply your team's expertise, and return finished files.
-
 :::
 
-*Updated August 27, 2026*
+*Updated August 28, 2026*
 <!-- CLAUDE_FEED_END -->
