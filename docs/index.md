@@ -935,9 +935,15 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[Claude for Teachers, now available for schools and districts](https://claude.com/blog/claude-for-teachers-now-available-for-schools-and-districts)**<br><small>Aug 28, 2026 · Product announcements</small>
+**[Claude for Teachers, now available for U.S. K-12 schools and districts](https://claude.com/blog/claude-for-teachers-now-available-for-schools-and-districts)**<br><small>Aug 28, 2026 · Product announcements</small>
 
-Claude for Teachers is now available to schools and districts as a free Enterprise offering.
+Starting today, Claude for Teachers is available to U.S. K-12 schools and districts as a free Enterprise offering.
+
+---
+
+**[How Anthropic employees use Claude Tag](https://claude.com/blog/how-anthropic-employees-use-claude-tag)**<br><small>Aug 28, 2026 · Enterprise AI</small>
+
+Producing customer-ready collateral, compiling weekly issue reports, and running legal review, all where the work already happens.
 
 ---
 
@@ -951,13 +957,13 @@ How Warp devised a simple development pattern that anyone can use to create self
 
 Claude now has its own browser inside the Cowork desktop app. It opens sites, reads pages, and works in them while you keep working. No extension, and your own tabs and logins stay out of it.
 
----
+:::details View past updates
 
 **[Claude in Chrome is generally available](https://claude.com/blog/claude-in-chrome-generally-available)**<br><small>Aug 26, 2026</small>
 
 Claude in Chrome is now available on every paid plan and can work through browser tasks without approving each step, with a safety check on every action. Here's how we tested it against prompt injection.
 
-:::details View past updates
+---
 
 **[Claude's memory works everywhere, and you decide what's in it](https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it)**<br><small>Aug 25, 2026 · Product announcements</small>
 
@@ -981,13 +987,7 @@ Adam Ward, on Anthropic’s marketing team, shares how he uses Claude to turn on
 
 Anthropic's stage-by-stage playbook for the AI-native SDLC: how teams plan, design, build, test, deploy, and maintain software with Claude.
 
----
-
-**[Bringing the cybersecurity capabilities of Claude Mythos 5 to more defenders](https://claude.com/blog/bringing-claude-mythos-5-to-more-defenders)**<br><small>Aug 21, 2026 · Product announcements</small>
-
-We’re sharing an update on our efforts to help more teams leverage frontier capabilities for cyber defense.
-
 :::
 
-*Updated August 28, 2026*
+*Updated August 29, 2026*
 <!-- CLAUDE_FEED_END -->
