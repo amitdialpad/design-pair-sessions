@@ -108,6 +108,56 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 24–30 Aug 2026
+
+This week was big for receptionist and contact center workflows. The voice picker now supports 12 options with a dedicated modal to preview and switch voices across the entire setup flow. Contact Center queues got scoped filtering so you can organize by specific parameters. The call interface got a structural cleanup with unified components (ActiveCallControls, CallbarOverlays, AdaptiveCallSurface) that replace scattered implementations. Meeting rooms now display participants in organized card components with individual controls instead of the old panel structure. The AI Assistant panel landed in conversation sidebars with chat, insights, and composer features. And the generated call content pipeline is now fully testable end to end in Beacon. If you're designing receptionist flows, contact center views, or meeting interfaces, there's meaningful ground to cover this week.
+
+#### What actually changed
+
+**Voice Picker Widget and Voice Step** now support 12 voices instead of fewer. A new Change Voice Modal lets you preview voices and switch between them. This works across receptionist setup, preview panel, settings, tools, routing, appointment, knowledge, and lead capture views.
+
+**Contact Center queue filtering** uses scope parameters to organize and filter queues. You get more granular control when working with multiple queue configurations.
+
+**Generated call content** is now fully end to end. You can test the complete pipeline in Beacon and see how generated content displays across different contexts.
+
+**Call interface components** were consolidated. ActiveCallControls, CallbarOverlays, and AdaptiveCallSurface replace the previous scattered implementations for incoming and active call views.
+
+**Contact Center detail navigation** added dedicated views for agents, queues, history, and individual contact center details. Navigation and feature flag infrastructure were updated.
+
+**Air appointment bookable hours editor** lets you configure booking windows through a new hours editor component and provider picker in Receptionist Appointment and Lead Capture views.
+
+**Meeting room participant cards and video grid** redesigned. Participants now display in organized card components with individual action controls. Mic and video button states were refined.
+
+**AI Assistant panel** (AiAssistantPanelV2.vue) added to the right sidebar when viewing contact conversations. Includes chat, insights, composer, call summaries, citations, and conversation history management.
+
+#### The bigger shift
+
+Contact Center and receptionist tools are becoming more configurable and granular. Instead of single global behaviors, you're getting scoped filtering, detailed navigation views, and customizable time windows. The calling and meeting interfaces simplified their underlying structure while expanding what you can do with them. The pattern is consolidation underneath, flexibility on top.
+
+#### Where things are still messy
+
+The call interface restructuring is clean in theory but Josh should clarify how existing design patterns map to ActiveCallControls and AdaptiveCallSurface. The hours editor for appointments is new and integration guidance would help. AI Assistant panel is live but conversation history management and citation behavior might need refinement as you test it.
+
+#### What's coming next
+
+Expect more granular filtering and scoping across Contact Center (team views, skill-based routing). The meeting room changes suggest participant management features are coming next. The AI Assistant panel will likely expand into other conversation contexts.
+
+#### Try this
+
+Build a receptionist flow and test all 12 voices back to back using the Change Voice Modal. You'll immediately feel which ones work for different business types. Do this before committing to any voice in a design handoff.
+
+#### Quick notes
+
+- Reach out to Josh if you need guidance on call component changes or hours editor integration
+- The read attention cursor contract for conversations tracks read position — check with Josh if you're designing conversation UI
+- Meeting room participant cards have individual action controls now, not grouped controls
+
+#### One thing to remember
+
+The structure underneath Beacon is getting simpler, but the things you can configure are getting more specific.
+
+---
+
 ### Week of 17–23 Aug 2026
 
 This was a solid week for Contact Center and AI features. The queue filtering update makes it faster to work with multiple configurations. Call content generation is now working end to end, so if you're designing around summaries and insights, you can test the full flow. There's also a new AI Assistant panel in the right sidebar when you view contact conversations, which gives you a dedicated space to preview AI-assisted features in context. The meeting room redesign reorganized how participant cards and video controls work. And the AI Receptionist got voice testing built in, so you can now test how different greetings and voices sound during setup. Nothing here is a breaking change, but if you're working on call-related components, Contact Center flows, or receptionist features, check with Josh about the structural changes before you start.
@@ -211,7 +261,7 @@ Load up a company context in Beacon, switch to a different isolated company worl
 #### One thing to remember
 The cache refactor touches eight major sections, so if something feels off in any of them, it's worth checking in with Josh.
 
----
+:::details View August 2026
 
 ### Week of 27–2 Aug 2026
 
@@ -895,6 +945,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
