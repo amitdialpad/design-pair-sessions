@@ -1041,5 +1041,5 @@ Anthropic's stage-by-stage playbook for the AI-native SDLC: how teams plan, desi
 
 :::
 
-*Updated August 31, 2026*
+*Updated September 1, 2026*
 <!-- CLAUDE_FEED_END -->
