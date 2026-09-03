@@ -987,6 +987,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Building commerce agents with Claude](https://claude.com/blog/claude-for-commerce-agents)**<br><small>Sep 2, 2026 · Product announcements</small>
+
+We're launching a blueprint to help build commerce agents on Claude. It contains the harnesses, patterns, and guardrails an engineering team needs to get a commerce agent running in days.
+
+---
+
+**[A guide to the anatomy of effective commerce agents](https://claude.com/blog/the-anatomy-of-effective-commerce-agents)**<br><small>Sep 2, 2026 · Agents</small>
+
+The architecture, latency & cost techniques, and eval practices for agents that make it easier to buy and sell online.
+
+---
+
 **[Claude for Teachers, now available for U.S. K-12 schools and districts](https://claude.com/blog/claude-for-teachers-now-available-for-schools-and-districts)**<br><small>Aug 28, 2026 · Product announcements</small>
 
 Starting today, Claude for Teachers is available to U.S. K-12 schools and districts as a free Enterprise offering.
@@ -997,7 +1009,7 @@ Starting today, Claude for Teachers is available to U.S. K-12 schools and distri
 
 Producing customer-ready collateral, compiling weekly issue reports, and running legal review, all where the work already happens.
 
----
+:::details View past updates
 
 **[How Warp builds self-improving agents on Claude](https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude)**<br><small>Aug 26, 2026 · Agents</small>
 
@@ -1009,7 +1021,7 @@ How Warp devised a simple development pattern that anyone can use to create self
 
 Claude now has its own browser inside the Cowork desktop app. It opens sites, reads pages, and works in them while you keep working. No extension, and your own tabs and logins stay out of it.
 
-:::details View past updates
+---
 
 **[Claude in Chrome is generally available](https://claude.com/blog/claude-in-chrome-generally-available)**<br><small>Aug 26, 2026</small>
 
@@ -1027,19 +1039,7 @@ Wherever you work with Claude from Anthropic, it starts from what it already kno
 
 Anthropic and Bain & Company are partnering to help enterprises deploy AI, building on Bain's rollout of Claude to its 19,000 employees.
 
----
-
-**[How an Anthropic field marketer uses Claude Code to send weekly personalized updates to every sales rep](https://claude.com/blog/how-an-anthropic-field-marketer-uses-claude-code-to-send-weekly-personalized-updates-to-every-sales-rep)**<br><small>Aug 24, 2026 · Claude Code</small>
-
-Adam Ward, on Anthropic’s marketing team, shares how he uses Claude to turn one weekly sales report into a personalized Monday briefing for every account executive he supports.
-
----
-
-**[The AI-Native SDLC playbook](https://claude.com/blog/the-ai-native-sdlc-playbook)**<br><small>Aug 21, 2026 · Enterprise AI</small>
-
-Anthropic's stage-by-stage playbook for the AI-native SDLC: how teams plan, design, build, test, deploy, and maintain software with Claude.
-
 :::
 
-*Updated September 2, 2026*
+*Updated September 3, 2026*
 <!-- CLAUDE_FEED_END -->
