@@ -1041,5 +1041,5 @@ Anthropic and Bain & Company are partnering to help enterprises deploy AI, build
 
 :::
 
-*Updated September 4, 2026*
+*Updated September 5, 2026*
 <!-- CLAUDE_FEED_END -->
