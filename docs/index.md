@@ -108,6 +108,48 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 31–6 Sep 2026
+
+This was a quiet week. The main thing happening is that Josh is continuing to fill out the Contact Center and Receptionist features with more granular controls. If you're working on either of those flows, there are new pieces available to you now. The call interface got restructured under the hood, which shouldn't break anything but worth knowing if you're deep in calling UI. Everything else is incremental improvements to existing features.
+
+#### What actually changed
+
+**Contact Center queue filtering by scope** lets you filter queues by specific parameters now. That gives you more control when you're designing multiple queue configurations.
+
+**Contact Center detail navigation** added dedicated views for agents, queues, history, and individual contact center details. The navigation structure got updated to support these.
+
+**Air appointment bookable hours editor** is new. You can now configure booking windows directly in the Receptionist Appointment and Lead Capture views through an hours editor component and provider picker.
+
+**Call interface components got consolidated**. ActiveCallControls, CallbarOverlays, and AdaptiveCallSurface replace the old scattered implementations. If you're working with call surfaces, reach out to Josh on how this affects your patterns.
+
+#### The bigger shift
+
+Josh is systematically making Contact Center and Receptionist features more configurable. Instead of building fixed flows, he's adding editors and pickers that let you customize queues, hours, voices, and routing. This means designers get more control but also more responsibility to test different configurations.
+
+#### Where things are still messy
+
+The call interface restructuring is done, but if you're using older call component patterns, check with Josh about migration. The AI Assistant panel in conversations is live but still getting refined.
+
+#### What's coming next
+
+More Contact Center detail views are probably coming. The pattern suggests Josh will keep adding granular controls for things like individual queue settings and agent configurations.
+
+#### Try this
+
+If you're building a receptionist flow, test the new hours editor in an Appointment view. Set different availability windows and see how it feels. The provider picker should make it easier to scope which staff members are available when.
+
+#### Quick notes
+
+- The meeting room video grid got redesigned with individual participant cards. Check the new interaction patterns if you're working on video conferencing UI.
+- The AI Assistant panel now lives in the right sidebar during contact conversations. It has chat, insights, and composer features.
+- Generated call content is now end-to-end functional in Beacon. You can test the full pipeline and give Josh feedback.
+
+#### One thing to remember
+
+More configurable doesn't always mean clearer—test your receptionist and contact center designs with real availability windows and queue settings to catch friction early.
+
+---
+
 ### Week of 24–30 Aug 2026
 
 This week was big for receptionist and contact center workflows. The voice picker now supports 12 options with a dedicated modal to preview and switch voices across the entire setup flow. Contact Center queues got scoped filtering so you can organize by specific parameters. The call interface got a structural cleanup with unified components (ActiveCallControls, CallbarOverlays, AdaptiveCallSurface) that replace scattered implementations. Meeting rooms now display participants in organized card components with individual controls instead of the old panel structure. The AI Assistant panel landed in conversation sidebars with chat, insights, and composer features. And the generated call content pipeline is now fully testable end to end in Beacon. If you're designing receptionist flows, contact center views, or meeting interfaces, there's meaningful ground to cover this week.
@@ -226,7 +268,7 @@ Open a contact conversation in Beacon and look for the AI Assistant panel on the
 #### One thing to remember
 You can now test how your AI-assisted features actually behave before deployment, whether that's through the receptionist preview or the new conversation read tracking.
 
----
+:::details View August 2026
 
 ### Week of 3–9 Aug 2026
 
@@ -945,6 +987,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
