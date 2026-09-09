@@ -1031,6 +1031,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Reducing cost and improving performance with Claude Platform](https://claude.com/blog/reducing-cost-and-improving-performance-with-claude-platform)**<br><small>Sep 8, 2026 · Agents</small>
+
+Tuning prompt caching, instructions, and effort can reduce Claude's cost without sacrificing application performance.
+
+---
+
 **[Building commerce agents with Claude](https://claude.com/blog/claude-for-commerce-agents)**<br><small>Sep 2, 2026 · Product announcements</small>
 
 We're launching a blueprint to help build commerce agents on Claude. It contains the harnesses, patterns, and guardrails an engineering team needs to get a commerce agent running in days.
@@ -1047,13 +1053,13 @@ The architecture, latency & cost techniques, and eval practices for agents that 
 
 Starting today, Claude for Teachers is available to U.S. K-12 schools and districts as a free Enterprise offering.
 
----
+:::details View past updates
 
 **[How Anthropic employees use Claude Tag](https://claude.com/blog/how-anthropic-employees-use-claude-tag)**<br><small>Aug 28, 2026 · Enterprise AI</small>
 
 Producing customer-ready collateral, compiling weekly issue reports, and running legal review, all where the work already happens.
 
-:::details View past updates
+---
 
 **[How Warp builds self-improving agents on Claude](https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude)**<br><small>Aug 26, 2026 · Agents</small>
 
@@ -1077,13 +1083,7 @@ Claude in Chrome is now available on every paid plan and can work through browse
 
 Wherever you work with Claude from Anthropic, it starts from what it already knows about you.
 
----
-
-**[Bain & Company joins the Claude Partner Network as a Global Premier partner](https://claude.com/blog/bain-company-joins-the-claude-partner-network-as-a-global-premier-partner)**<br><small>Aug 25, 2026 · Enterprise AI</small>
-
-Anthropic and Bain & Company are partnering to help enterprises deploy AI, building on Bain's rollout of Claude to its 19,000 employees.
-
 :::
 
-*Updated September 8, 2026*
+*Updated September 9, 2026*
 <!-- CLAUDE_FEED_END -->
