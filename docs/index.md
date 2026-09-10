@@ -1085,5 +1085,5 @@ Wherever you work with Claude from Anthropic, it starts from what it already kno
 
 :::
 
-*Updated September 9, 2026*
+*Updated September 10, 2026*
 <!-- CLAUDE_FEED_END -->
