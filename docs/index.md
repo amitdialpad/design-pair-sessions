@@ -1031,6 +1031,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[What 1,000 small business owners taught us about AI](https://claude.com/blog/what-1-000-small-business-owners-taught-us-about-ai)**<br><small>Sep 10, 2026 · Enterprise AI</small>
+
+Lina Ochman, Head of U.S. SMB at Anthropic, shares what she learned during our Claude Small Business Tour, and what’s next for the program.
+
+---
+
+**[T. Rowe Price brings more of Claude to its investment process](https://claude.com/blog/t-rowe-price-brings-more-of-claude-to-its-investment-process)**<br><small>Sep 10, 2026</small>
+
+How T. Rowe Price is using Claude across the business, from driving fundamental research to building investment tools.
+
+---
+
 **[Reducing cost and improving performance with Claude Platform](https://claude.com/blog/reducing-cost-and-improving-performance-with-claude-platform)**<br><small>Sep 8, 2026 · Agents</small>
 
 Tuning prompt caching, instructions, and effort can reduce Claude's cost without sacrificing application performance.
@@ -1041,7 +1053,7 @@ Tuning prompt caching, instructions, and effort can reduce Claude's cost without
 
 We're launching a blueprint to help build commerce agents on Claude. It contains the harnesses, patterns, and guardrails an engineering team needs to get a commerce agent running in days.
 
----
+:::details View past updates
 
 **[A guide to the anatomy of effective commerce agents](https://claude.com/blog/the-anatomy-of-effective-commerce-agents)**<br><small>Sep 2, 2026 · Agents</small>
 
@@ -1053,7 +1065,7 @@ The architecture, latency & cost techniques, and eval practices for agents that 
 
 Starting today, Claude for Teachers is available to U.S. K-12 schools and districts as a free Enterprise offering.
 
-:::details View past updates
+---
 
 **[How Anthropic employees use Claude Tag](https://claude.com/blog/how-anthropic-employees-use-claude-tag)**<br><small>Aug 28, 2026 · Enterprise AI</small>
 
@@ -1071,19 +1083,7 @@ How Warp devised a simple development pattern that anyone can use to create self
 
 Claude now has its own browser inside the Cowork desktop app. It opens sites, reads pages, and works in them while you keep working. No extension, and your own tabs and logins stay out of it.
 
----
-
-**[Claude in Chrome is generally available](https://claude.com/blog/claude-in-chrome-generally-available)**<br><small>Aug 26, 2026</small>
-
-Claude in Chrome is now available on every paid plan and can work through browser tasks without approving each step, with a safety check on every action. Here's how we tested it against prompt injection.
-
----
-
-**[Claude's memory works everywhere, and you decide what's in it](https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it)**<br><small>Aug 25, 2026 · Product announcements</small>
-
-Wherever you work with Claude from Anthropic, it starts from what it already knows about you.
-
 :::
 
-*Updated September 10, 2026*
+*Updated September 11, 2026*
 <!-- CLAUDE_FEED_END -->
