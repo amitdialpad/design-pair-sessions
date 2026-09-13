@@ -1085,5 +1085,5 @@ Claude now has its own browser inside the Cowork desktop app. It opens sites, re
 
 :::
 
-*Updated September 12, 2026*
+*Updated September 13, 2026*
 <!-- CLAUDE_FEED_END -->
