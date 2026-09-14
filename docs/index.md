@@ -108,6 +108,42 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 7–13 Sep 2026
+
+This week was quiet on new features — no major shipping. The last real update was the AI Assistant panel added to contact conversations back on August 14th, which lets you see call summaries and insights right in the conversation sidebar. Since then, mostly bug fixes and documentation syncs have rolled through. If you're waiting for something specific, it's worth checking in with Josh about the timeline.
+
+#### What actually changed
+
+Nothing shipped to Beacon itself this week. The repo had a documentation sync on September 13th, but no new components, features, or interactions landed.
+
+#### The bigger shift
+
+There's a noticeable gap between mid-August and now. The pace of shipping has slowed. This either means Josh is working on something bigger that isn't ready yet, or the team is consolidating what already shipped and letting designers catch up.
+
+#### Where things are still messy
+
+The call interface restructuring from August 20th (ActiveCallControls, CallbarOverlays, AdaptiveCallSurface) is still relatively fresh. If you're designing call flows, you may still need clarification on how these components map to your patterns. Same with the new Contact Center detail views and the meeting room video grid redesign — both are recent enough that edge cases might still surface.
+
+#### What's coming next
+
+Based on the pattern, Josh is probably working on either deeper customization options for what shipped in August or foundational work that'll enable bigger features in the receptionist and contact center areas. The appointment booking and voice selection expansions suggest more configurability is coming.
+
+#### Try this
+
+Load up a Receptionist design and test the new 12-voice library with the Change Voice Modal. Switch between a couple voices in the preview panel and see which ones feel right for your use case. The show-more pattern should make it easy to browse without cluttering the interface.
+
+#### Quick notes
+
+- No breaking changes this week, so your existing designs stay intact
+- If you're deep in call interface customization, loop in Josh on any blockers
+- The AI Assistant panel is solid if you're designing conversation contexts
+
+#### One thing to remember
+
+Slower shipping weeks are usually a sign that larger pieces are being built underneath — stay patient and keep blocking issues documented.
+
+---
+
 ### Week of 31–6 Sep 2026
 
 This was a quiet week. The main thing happening is that Josh is continuing to fill out the Contact Center and Receptionist features with more granular controls. If you're working on either of those flows, there are new pieces available to you now. The call interface got restructured under the hood, which shouldn't break anything but worth knowing if you're deep in calling UI. Everything else is incremental improvements to existing features.
@@ -234,7 +270,7 @@ If you're designing a receptionist flow, open up the new voice testing feature i
 
 The Contact Center navigation structure changed from department-based to detail-based, so audit any designs you built around the old Voice and Digital CC views.
 
----
+:::details View August 2026
 
 ### Week of 10–16 Aug 2026
 
@@ -987,6 +1023,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
