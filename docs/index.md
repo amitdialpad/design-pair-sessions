@@ -1069,6 +1069,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude for Financial Advisors](https://claude.com/blog/claude-for-financial-advisors)**<br><small>Sep 14, 2026 · Product announcements</small>
+
+Financial advisors can now connect Claude to the custodians, portfolio platforms, CRMs, and planning tools they depend on, along with new skills tailored to the daily work of a financial advisor.
+
+---
+
 **[What 1,000 small business owners taught us about AI](https://claude.com/blog/what-1-000-small-business-owners-taught-us-about-ai)**<br><small>Sep 10, 2026 · Enterprise AI</small>
 
 Lina Ochman, Head of U.S. SMB at Anthropic, shares what she learned during our Claude Small Business Tour, and what’s next for the program.
@@ -1085,13 +1091,13 @@ How T. Rowe Price is using Claude across the business, from driving fundamental 
 
 Tuning prompt caching, instructions, and effort can reduce Claude's cost without sacrificing application performance.
 
----
+:::details View past updates
 
 **[Building commerce agents with Claude](https://claude.com/blog/claude-for-commerce-agents)**<br><small>Sep 2, 2026 · Product announcements</small>
 
 We're launching a blueprint to help build commerce agents on Claude. It contains the harnesses, patterns, and guardrails an engineering team needs to get a commerce agent running in days.
 
-:::details View past updates
+---
 
 **[A guide to the anatomy of effective commerce agents](https://claude.com/blog/the-anatomy-of-effective-commerce-agents)**<br><small>Sep 2, 2026 · Agents</small>
 
@@ -1115,13 +1121,7 @@ Producing customer-ready collateral, compiling weekly issue reports, and running
 
 How Warp devised a simple development pattern that anyone can use to create self-improving agents.
 
----
-
-**[Claude gets its own browser in Cowork](https://claude.com/blog/cowork-built-in-browser)**<br><small>Aug 26, 2026</small>
-
-Claude now has its own browser inside the Cowork desktop app. It opens sites, reads pages, and works in them while you keep working. No extension, and your own tabs and logins stay out of it.
-
 :::
 
-*Updated September 13, 2026*
+*Updated September 14, 2026*
 <!-- CLAUDE_FEED_END -->
