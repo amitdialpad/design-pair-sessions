@@ -470,7 +470,8 @@ class PulseDeliveryTests(unittest.TestCase):
             workflow_url=WORKFLOW_URL,
         )
         rendered = markdown_to_email_html(report)
-        self.assertIn("border-left:4px solid #7c5ce7", rendered)
+        self.assertNotIn("border-left", rendered)
+        self.assertNotIn("background:#f2effb", rendered)
         self.assertIn("background:#faf9fd", rendered)
         self.assertIn("<h3", rendered)
         self.assertIn("<ol", rendered)
