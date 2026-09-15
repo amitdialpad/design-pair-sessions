@@ -50,9 +50,9 @@ Reports are written during execution to:
 - `reports/agentic_business_pulse/YYYY-MM-DD.md`
 - `reports/agentic_business_pulse/YYYY-MM-DD.json`
 
-That directory is gitignored. Before a live send, the exact email with both files attached is persisted as a Gmail draft. After Gmail SMTP accepts the message, the prepared draft is removed and the Sent copy becomes the durable private report/snapshot archive.
+That directory is gitignored. Before a live send, the exact body-only email is persisted as a Gmail draft. After Gmail SMTP accepts the message, the prepared draft is removed. The Markdown report, structured snapshot, and run result are retained as a private GitHub Actions artifact for 90 days; they are never attached to the email.
 
-Dry runs validate the Glean source draft, retain it, create a private prepared Gmail draft with the Markdown and JSON attachments, and do not call SMTP. The prepared draft subject starts with `[DRY RUN]`.
+Dry runs validate the Glean source draft, retain it, replace any earlier same-day preview, create a body-only private Gmail draft, and do not call SMTP. The prepared draft subject starts with `[DRY RUN]`.
 
 The live message uses a deterministic RFC Message-ID derived from the IST report date. Before generation, the workflow searches Gmail Sent for that ID. A retry therefore exits successfully without calling the agent or sending another report. If a matching prepared draft exists but no Sent copy can be confirmed, the workflow fails closed and asks for inspection instead of risking a duplicate. GitHub Actions concurrency also prevents overlapping pulse jobs.
 
@@ -77,9 +77,9 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 2. Run the Glean Agent once manually and confirm it creates exactly one draft with the report and machine JSON block.
 3. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
 4. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
-5. Inspect the `[DRY RUN]` Gmail draft and both attachments.
+5. Inspect the `[DRY RUN]` Gmail draft and confirm the full report is readable with no attachments.
 6. Run manually with `dry_run=false`.
-7. Confirm exactly one report email, the matching attachments, an accepted Gmail result, and source freshness in the Actions summary.
+7. Confirm exactly one body-only report email, an accepted Gmail result, the private run artifact, and source freshness in the Actions summary.
 8. Re-run live for the same IST date and confirm `duplicate_skipped` / `already_sent`.
 
 Fixtures are unit-test inputs only. They are never wired into the GitHub workflow and cannot pass validation as deployed or customer-exposed evidence.

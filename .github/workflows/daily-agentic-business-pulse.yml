@@ -28,9 +28,9 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -46,9 +46,9 @@ jobs:
       group: daily-agentic-business-pulse
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -67,6 +67,14 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python3 scripts/run-agentic-business-pulse.py
 
+      - name: Persist private pulse outputs
+        uses: actions/upload-artifact@v7
+        with:
+          name: agentic-business-pulse-${{ github.run_id }}
+          path: reports/agentic_business_pulse/
+          if-no-files-found: error
+          retention-days: 90
+
   notify-failure:
     if: ${{ always() && github.event_name != 'pull_request' && (needs.validate.result == 'failure' || needs.pulse.result == 'failure') }}
     needs:
@@ -74,7 +82,7 @@ jobs:
       - pulse
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Notify Amit on failure
         env:

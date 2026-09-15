@@ -153,12 +153,17 @@ class FakeArchive:
         self.ambiguous_draft = ambiguous_draft
         self.drafts: list[EmailMessage] = []
         self.deleted: list[str | None] = []
+        self.replaced_message_ids: list[str] = []
 
     def sent_message_exists(self, message_id: str) -> bool:
         return self.duplicate
 
     def draft_message_exists(self, message_id: str) -> bool:
         return self.ambiguous_draft
+
+    def delete_drafts_by_message_id(self, message_id: str) -> int:
+        self.replaced_message_ids.append(message_id)
+        return 1 if self.ambiguous_draft else 0
 
     def load_previous_snapshot(self, current_report_date: str):
         return {"report_date": "2026-09-14"}
@@ -373,6 +378,7 @@ class PulseDeliveryTests(unittest.TestCase):
         )
         self.assertEqual(result["run_status"], "success")
         self.assertEqual(len(archive.drafts), 1)
+        self.assertEqual(list(archive.drafts[0].iter_attachments()), [])
         self.assertEqual(archive.deleted, ["42"])
         self.assertTrue((self.reports_dir / f"{REPORT_DATE}.md").is_file())
         self.assertTrue((self.reports_dir / f"{REPORT_DATE}.json").is_file())
@@ -402,6 +408,11 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertEqual(result["email_status"], "not_sent_draft_persisted")
         self.assertFalse(calls)
         self.assertEqual(len(archive.drafts), 1)
+        self.assertEqual(list(archive.drafts[0].iter_attachments()), [])
+        self.assertEqual(
+            archive.replaced_message_ids,
+            [deterministic_message_id(REPORT_DATE, dry_run=True)],
+        )
 
     def test_retry_skips_duplicate_before_agent_or_sender(self):
         archive = FakeArchive(duplicate=True)
@@ -440,7 +451,7 @@ class PulseDeliveryTests(unittest.TestCase):
             )
         self.assertFalse(calls)
 
-    def test_email_contract_has_exact_recipient_subject_and_attachments(self):
+    def test_email_contract_has_exact_recipient_subject_and_no_attachments(self):
         result = valid_result()
         report, snapshot = validate_agent_result(
             result,
@@ -451,7 +462,6 @@ class PulseDeliveryTests(unittest.TestCase):
         message = build_email_message(
             report_date=REPORT_DATE,
             report=report,
-            snapshot=snapshot,
             sender="amit.ayre@dialpad.com",
             recipient="amit.ayre@dialpad.com",
             message_id=deterministic_message_id(REPORT_DATE),
@@ -459,8 +469,9 @@ class PulseDeliveryTests(unittest.TestCase):
         )
         self.assertEqual(message["To"], "amit.ayre@dialpad.com")
         self.assertEqual(message["Subject"], f"Daily Agentic Business Pulse — {REPORT_DATE}")
-        filenames = {part.get_filename() for part in message.iter_attachments()}
-        self.assertEqual(filenames, {f"{REPORT_DATE}.md", f"{REPORT_DATE}.json"})
+        self.assertEqual(list(message.iter_attachments()), [])
+        self.assertIn("Booked Agentic revenue", message.get_body(preferencelist=("plain",)).get_content())
+        self.assertIn("<!doctype html>", message.get_body(preferencelist=("html",)).get_content())
 
     def test_email_html_prioritizes_bottom_line_metrics_and_insights(self):
         report, _ = validate_agent_result(
@@ -489,7 +500,6 @@ class PulseDeliveryTests(unittest.TestCase):
             build_email_message(
                 report_date=REPORT_DATE,
                 report=report,
-                snapshot=snapshot,
                 sender="amit.ayre@dialpad.com",
                 recipient="someone-else@dialpad.com",
                 message_id=deterministic_message_id(REPORT_DATE),
@@ -678,6 +688,11 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertFalse(calls)
         self.assertEqual(archive.deleted, [])
         self.assertEqual(len(archive.drafts), 1)
+        self.assertEqual(list(archive.drafts[0].iter_attachments()), [])
+        self.assertEqual(
+            archive.replaced_message_ids,
+            [deterministic_message_id(REPORT_DATE, dry_run=True)],
+        )
 
     def test_missing_or_malformed_machine_block_fails_closed(self):
         message = glean_source_draft()
@@ -696,6 +711,10 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertIn("PULSE_INPUT_MODE: glean_gmail_draft", workflow)
+        self.assertIn("actions/checkout@v7", workflow)
+        self.assertIn("actions/setup-python@v7", workflow)
+        self.assertIn("actions/upload-artifact@v7", workflow)
+        self.assertIn("retention-days: 90", workflow)
         self.assertNotIn("PULSE_AGENT_TOKEN", workflow)
         self.assertNotIn("/api/agents/", workflow)
         self.assertNotIn("fixture", workflow.lower())
