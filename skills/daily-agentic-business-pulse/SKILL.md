@@ -96,37 +96,50 @@ Prioritize conclusions that affect revenue conversion, customer time to value, E
 
 ### 6. Create the daily report
 
-Use this structure:
+Write for a design and product leader, not for an operations analyst. The email is a decision brief, not an evidence dump. Keep the full evidence taxonomy, issue inventory, calculations, and implementation-status detail in the structured snapshot. In the human report, synthesize those records into a few hard conclusions and link the supporting sources inline.
+
+Use exactly this structure and keep the complete report at 650 words or fewer:
 
 # Daily Agentic Business Pulse — YYYY-MM-DD
 
-## Executive readout
+_Reporting window: DATE–DATE · Confidence: High, medium, or low_
 
-Give a direct green/yellow/red assessment of commercial progress, with one sentence on why.
+## Bottom line
 
-## Revenue scoreboard
+In two or three sentences, state the commercial health, the most important reason, and the decision implication. Lead with the conclusion. Do not open with data availability, methodology, or an evidence label.
 
-Include current target, booked revenue, attainment, remaining gap, pace required, pipeline by quarter/category, coverage, and the biggest changes since the previous report. Label every number with its date and source.
+## Numbers that matter
 
-## Customer and EAP reality
+Show only three or four rounded metrics that change the reader's understanding. Normally include booked Agentic ACV against target, qualified Agentic pipeline and coverage of the remaining gap, and the strongest customer rollout or value measure. Keep booked revenue and open pipeline visually and verbally separate. Keep Agentic-specific ACV separate from total bundled opportunity amount. Put secondary calculations and exact precision in the snapshot.
 
-List the strongest customer signals, current onboarding movement, EAP performance, and the top friction themes. Use exact customer language only when the source is verbatim; otherwise paraphrase.
+## What matters
 
-## Jira and delivery risk
+Use exactly three `###` insight headlines. Each insight gets one short paragraph that combines:
 
-List the highest-impact new, aging, resolved, and blocked issues. Include owner and customer/revenue impact.
+- The hard fact or repeated signal.
+- What it means commercially or for the customer.
+- The product, design, or execution implication.
 
-## Working / not working
+Cluster related Jira tickets, customer reports, and code findings into a pattern; do not list tickets one by one. Cite one or two decisive sources inline with descriptive link text. Mention a specific ticket, customer, feature flag, or code path only when it materially changes a conclusion.
 
-Use two short lists. Tie each item to evidence.
+## Your focus
 
-## Decisions and actions
+Give Amit no more than three designer-manager moves. Each must be something he can clarify, frame, review, or force as a product/design leader, with the expected business effect. Do not give him a generic project-management task list or assign work to other people without evidence of ownership.
 
-Give up to five actions with owner, urgency, and expected business impact. Do not create Jira/Salesforce tasks unless explicitly requested.
+## Confidence
 
-## Sources and confidence
+Use one short paragraph. Say which source families were refreshed and name only the missing evidence that could change a conclusion. If data is incomplete, say so here in plain language; do not put `Data incomplete` at the top of the email.
 
-Link every material claim to its source. Add a short note for missing data, scope changes, or conflicting metrics.
+### Editorial rules
+
+- Do not display `[Verified fact]`, `[Signal]`, `[Inference]`, or `[Unknown]` labels in the human report. Preserve these distinctions in reasoning and in the structured snapshot.
+- Do not create separate human sections for revenue detail, EAP detail, Jira, implementation, working/not working, actions, or source inventories.
+- Do not include exhaustive counts, ticket enumerations, workflow mechanics, query descriptions, or raw source lists.
+- Round currency for scanning, for example `$429K` and `$4.24M`; use exact values in the snapshot.
+- Prefer three strong conclusions over broad coverage. Omit facts that do not alter a conclusion or action.
+- Write in direct, calm language. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
+- Every material claim still needs an inline source link. A compact `Sources` link group may appear in the Confidence paragraph when one link supports several claims.
+- Include the workflow run link unobtrusively in Confidence for troubleshooting.
 
 ## Email behavior
 
@@ -134,7 +147,7 @@ Prepare the report for `amit.ayre@dialpad.com` with subject:
 
 `Daily Agentic Business Pulse — YYYY-MM-DD`
 
-The intended recipient is `amit.ayre@dialpad.com`, with subject `Daily Agentic Business Pulse — YYYY-MM-DD`. The intended send time is 09:00 IST daily. This environment currently has no recurring scheduler or outbound email action, so do not claim that a daily email has been configured or delivered. When invoked, generate the source-linked report and a send-ready `.email` artifact. If a future runtime provides an approved scheduler and outbound email action, send only after the report is complete and source-linked; never claim delivery without a successful send result.
+The only permitted recipient is `amit.ayre@dialpad.com`, with subject `Daily Agentic Business Pulse — YYYY-MM-DD`. The intended send time is 09:00 IST daily. The approved GitHub relay validates, formats, persists, and sends the report; the Glean agent creates the source-linked draft and machine-readable snapshot. Never add another recipient, send directly around the relay, or claim delivery without a successful provider result.
 
 ## Continuity
 
@@ -142,7 +155,7 @@ Save a dated report and a compact structured snapshot under `/home/user/output/a
 
 ## Designer-operator layers
 
-These are the additional lenses for an Agentic built-process designer. They should appear in every report when evidence exists, even if revenue is unchanged.
+These are analytical lenses for an Agentic built-process designer. Use them to decide the three most important conclusions; do not turn them into additional email sections or a checklist dump.
 
 ### 7. Design-to-production fidelity
 
@@ -293,21 +306,12 @@ Compare code evidence with design, Jira, and customer evidence. Flag:
 
 For each drift finding, identify the smallest next check: inspect a specific file/path, run or locate a test, verify a flag, check a release artifact, or validate an event in telemetry.
 
-### 18. Implementation-aware daily report section
+### 18. Implementation-aware synthesis
 
-Add this section when code evidence was checked:
+When code evidence materially changes a commercial, customer, or design conclusion, fold it into the relevant `What matters` insight. State the decisive distinction in plain language, such as “code exists but customer exposure is unverified.” Keep the full status breakdown in the structured snapshot.
 
-## Implementation reality
-
-- What the code confirms.
-- What tests confirm.
-- What remains behind a flag or gate.
-- What is instrumented or uninstrumented.
-- What is deployed or customer-exposed versus merely present in a repository.
-- The most important code-to-product drift.
-
-If code search returns no authoritative result, say `Code evidence unavailable` and do not infer implementation status from documentation. If search results are only prototypes, mocks, or tests, label them accordingly.
+If code search returns no authoritative result, record `Code evidence unavailable` in the snapshot and do not infer implementation status from documentation. If search results are only prototypes, mocks, or tests, label them accordingly and mention them in the email only when they correct a material misconception.
 
 ## Quality bar
 
-Be candid and operational. Lead with the answer. Do not pad the report with generic product updates. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. If current data cannot answer a question, say exactly what is missing and who owns it.
+Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. If current data cannot answer something that could change a conclusion, say exactly what is missing in Confidence; otherwise leave it in the snapshot.

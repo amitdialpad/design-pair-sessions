@@ -24,6 +24,7 @@ from agentic_business_pulse import (  # noqa: E402
     ValidationError,
     build_email_message,
     deterministic_message_id,
+    markdown_to_email_html,
     now_in_timezone,
     parse_glean_draft,
     run_pulse,
@@ -44,46 +45,42 @@ SOURCE_LINKS = {
 
 
 def valid_result() -> dict:
-    sources = "\n".join(f"- [{name}]({link}) — queried 2026-09-15 08:55 IST" for name, link in SOURCE_LINKS.items())
     report = f"""# Daily Agentic Business Pulse — {REPORT_DATE}
 
-Reporting time: 2026-09-15 09:00 Asia/Kolkata. Comparison window: 2026-09-14 to 2026-09-14. Data status: complete.
+_Reporting window: 2026-09-14 to 2026-09-14 · Confidence: high_
 
-## Executive readout
+## Bottom line
 
-[Verified fact] Booked revenue and open pipeline are shown separately. [Signal] Onboarding moved. [Inference] Design follow-up is useful. [Unknown] One telemetry detail remains open.
+Booked Agentic revenue and open pipeline are separate, and the gap remains the key commercial problem. Current onboarding movement is positive, but customer exposure still needs proof. [Salesforce]({SOURCE_LINKS["salesforce"]})
 
-## Revenue scoreboard
+## Numbers that matter
 
-- Booked Agentic ACV: USD 100
-- Total booked bundled amount: USD 300
-- Qualified open pipeline Agentic ACV: USD 200
-- Total bundled open opportunity amount: USD 500
+- **Booked Agentic ACV:** $100 of a $1K target — 10%
+- **Qualified open Agentic pipeline:** $200 — 0.22× the remaining gap
+- **Active onboarding:** 1 customer
 
-## Customer and EAP reality
+## What matters
 
-[Verified fact] Permitted Account A has a linked onboarding record.
+### Conversion needs evidence, not a larger headline number
 
-## Jira and delivery risk
+Booked revenue is still well below target, while qualified pipeline is not revenue. Keep both measures visible so bundled opportunity value cannot mask Agentic conversion. [Salesforce opportunities]({SOURCE_LINKS["salesforce"]})
 
-[Signal] DP-200000 is the material delivery risk today.
+### Customer movement is real but value proof is thin
 
-## Implementation reality
+Permitted Account A advanced through a verified onboarding checkpoint. The next useful design question is whether that movement produced a repeatable customer outcome. [Company evidence]({SOURCE_LINKS["glean"]})
 
-[Verified fact] Production code exists and is tested; deployment remains [Unknown].
+### Product proof stops before customer exposure
 
-## Working / not working
+The production path exists and is tested, but deployment remains unverified; the main Jira risk is still active. Treat “code exists” as implementation evidence, not as proof that a customer can use it. [Production code]({SOURCE_LINKS["production_code"]}) · [DP-200000]({SOURCE_LINKS["jira"]})
 
-[Inference] The verified onboarding movement is working; telemetry completeness is not.
+## Your focus
 
-## Decisions and actions
+1. **Define the proof of value.** Frame the outcome that turns an onboarding checkpoint into customer value.
+2. **Review the customer-exposed path.** Make the gap between tested code and usable production behavior explicit.
 
-- Confirm telemetry ownership today.
+## Confidence
 
-## Sources and confidence
-
-{sources}
-- Workflow: {WORKFLOW_URL}
+Salesforce, Jira, company evidence, and production code were refreshed. Deployment telemetry remains the only material gap. [Workflow run]({WORKFLOW_URL})
 """
     source_status = {
         source: {"status": "ok", "queried_at": "2026-09-15T08:55:00+05:30", "links": [link]}
@@ -227,6 +224,38 @@ class PulseValidationTests(unittest.TestCase):
         self.assertIn("report_sha256", snapshot)
         self.assertIn("Booked Agentic ACV", report)
 
+    def test_legacy_evidence_labels_are_rejected_from_human_report(self):
+        result = valid_result()
+        result["report_markdown"] = result["report_markdown"].replace(
+            "Booked Agentic revenue", "[Verified fact] Booked Agentic revenue"
+        )
+        with self.assertRaisesRegex(ValidationError, "Evidence labels belong in the snapshot"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_manager_brief_rejects_more_than_three_insights(self):
+        result = valid_result()
+        result["report_markdown"] = result["report_markdown"].replace(
+            "## Your focus",
+            "### A fourth detail that does not belong\n\nThis would turn the brief back into a status dump.\n\n## Your focus",
+        )
+        with self.assertRaisesRegex(ValidationError, "exactly three insight headlines"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_manager_brief_rejects_legacy_detail_sections(self):
+        result = valid_result()
+        result["report_markdown"] += "\n## Jira and delivery risk\n\nDP-200000 remains open.\n"
+        with self.assertRaisesRegex(ValidationError, "Legacy detail section"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_manager_brief_rejects_more_than_650_words(self):
+        result = valid_result()
+        result["report_markdown"] = result["report_markdown"].replace(
+            "Deployment telemetry remains the only material gap.",
+            "Deployment telemetry remains the only material gap. " + "detail " * 700,
+        )
+        with self.assertRaisesRegex(ValidationError, "maximum is 650"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
     def test_missing_pipeline_contract_is_rejected(self):
         result = valid_result()
         result["snapshot"]["metrics"].pop("pipeline")
@@ -245,7 +274,8 @@ class PulseValidationTests(unittest.TestCase):
         result["data_status"] = "incomplete"
         result["failures"] = ["Previous successful snapshot is not available on the first run"]
         result["report_markdown"] = result["report_markdown"].replace(
-            "Data status: complete.", "Data status: Data incomplete."
+            "Salesforce, Jira, company evidence, and production code were refreshed.",
+            "Data incomplete: Salesforce, Jira, company evidence, and production code were refreshed, but the prior snapshot was unavailable.",
         )
         result["snapshot"]["metrics"]["revenue"]["pace_agentic_acv"] = None
 
@@ -432,6 +462,20 @@ class PulseDeliveryTests(unittest.TestCase):
         filenames = {part.get_filename() for part in message.iter_attachments()}
         self.assertEqual(filenames, {f"{REPORT_DATE}.md", f"{REPORT_DATE}.json"})
 
+    def test_email_html_prioritizes_bottom_line_metrics_and_insights(self):
+        report, _ = validate_agent_result(
+            valid_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+        rendered = markdown_to_email_html(report)
+        self.assertIn("border-left:4px solid #7c5ce7", rendered)
+        self.assertIn("background:#faf9fd", rendered)
+        self.assertIn("<h3", rendered)
+        self.assertIn("<ol", rendered)
+        self.assertNotIn("[Verified fact]", rendered)
+
     def test_email_contract_rejects_any_non_amit_recipient(self):
         result = valid_result()
         report, snapshot = validate_agent_result(
@@ -528,7 +572,10 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         payload["report_markdown"] = payload["report_markdown"].replace(
             f"# Daily Agentic Business Pulse — {REPORT_DATE}",
             "# Daily Agentic Business Pulse",
-        ).replace("Data status: complete.", "Data status: Data incomplete.")
+        ).replace(
+            "Salesforce, Jira, company evidence, and production code were refreshed.",
+            "Data incomplete: Salesforce, Jira, company evidence, and production code were refreshed, but the prior snapshot was unavailable.",
+        )
         comparison = payload["snapshot"]["comparison_window"]
         comparison["iso_start"] = comparison.pop("start")
         comparison["iso_end"] = REPORT_DATE
@@ -581,6 +628,8 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(snapshot["changes_since_previous"][0]["status"], "unknown")
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
         self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
+        self.assertNotIn("&source=gmail", report)
+        self.assertNotIn("&ust=", report)
 
     def test_live_relay_validates_persists_sends_once_and_removes_both_drafts(self):
         archive = FakeRelayArchive()
