@@ -824,13 +824,15 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         status = state.get("status")
         if isinstance(status, str) and status != "ok":
             normalized = status.casefold().strip()
-            if normalized.startswith(("complete", "partial")):
+            if normalized.startswith(("complete", "partial", "refresh", "fresh")):
                 state["detail"] = status
                 state["status"] = "ok"
 
     customers = _require_list(snapshot.get("customers"), "snapshot.customers")
     for customer_value in customers:
         customer = _require_mapping(customer_value, "snapshot.customers[]")
+        if "account_name" not in customer and isinstance(customer.get("name"), str):
+            customer["account_name"] = customer.pop("name")
         account_name = customer.get("account_name")
         if (
             "name_permitted" not in customer

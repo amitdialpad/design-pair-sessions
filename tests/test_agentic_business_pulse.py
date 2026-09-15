@@ -588,8 +588,8 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             "status": "unknown",
             "reason": "No prior successful snapshot is available",
         }
-        for state in payload["snapshot"]["source_status"].values():
-            state["status"] = "complete_for_current_query"
+        for index, state in enumerate(payload["snapshot"]["source_status"].values()):
+            state["status"] = "refreshed_partial" if index == 3 else "refreshed"
             state["evidence_links"] = [
                 f"https://www.google.com/url?q={link}&source=gmail" for link in state.pop("links")
             ]
@@ -597,7 +597,9 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             payload["report_markdown"] = payload["report_markdown"].replace(
                 link, f"https://www.google.com/url?q={link}&source=gmail&ust=1"
             )
-        payload["snapshot"]["customers"][0].pop("name_permitted")
+        customer = payload["snapshot"]["customers"][0]
+        customer["name"] = customer.pop("account_name")
+        customer.pop("name_permitted")
         claim = payload["snapshot"]["implementation_claims"][0]
         claim["statuses"] = {
             "code_exists": "verified",
@@ -627,6 +629,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(snapshot["metrics"]["eap"], {"active": 1})
         self.assertEqual(snapshot["changes_since_previous"][0]["status"], "unknown")
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
+        self.assertEqual(snapshot["customers"][0]["account_name"], "Permitted Account A")
         self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
         self.assertNotIn("&source=gmail", report)
         self.assertNotIn("&ust=", report)
