@@ -23,7 +23,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
@@ -322,6 +322,16 @@ def _valid_link(value: Any) -> bool:
         return False
     parsed = urlparse(value)
     return parsed.scheme == "https" and bool(parsed.netloc)
+
+
+def _unwrap_gmail_redirect(value: Any) -> Any:
+    if not isinstance(value, str):
+        return value
+    parsed = urlparse(value)
+    if parsed.netloc.casefold() not in {"google.com", "www.google.com"} or parsed.path != "/url":
+        return value
+    target = parse_qs(parsed.query).get("q", [None])[0]
+    return target if _valid_link(target) else value
 
 
 def _walk_forbidden_keys(value: Any, path: str = "snapshot") -> None:
@@ -706,6 +716,8 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         state = _require_mapping(source_status.get(source), f"snapshot.source_status.{source}")
         if "links" not in state and isinstance(state.get("evidence_links"), list):
             state["links"] = state.pop("evidence_links")
+        if isinstance(state.get("links"), list):
+            state["links"] = [_unwrap_gmail_redirect(link) for link in state["links"]]
         status = state.get("status")
         if isinstance(status, str) and status != "ok":
             normalized = status.casefold().strip()
@@ -739,6 +751,8 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     for claim_value in claims:
         claim = _require_mapping(claim_value, "snapshot.implementation_claims[]")
         statuses = claim.get("statuses")
+        if isinstance(claim.get("links"), list):
+            claim["links"] = [_unwrap_gmail_redirect(link) for link in claim["links"]]
         if isinstance(statuses, dict):
             normalized_statuses: list[str] = []
             for status_name, evidence in statuses.items():

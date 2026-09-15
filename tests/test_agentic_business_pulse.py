@@ -521,7 +521,9 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         }
         for state in payload["snapshot"]["source_status"].values():
             state["status"] = "complete_for_current_query"
-            state["evidence_links"] = state.pop("links")
+            state["evidence_links"] = [
+                f"https://www.google.com/url?q={link}&source=gmail" for link in state.pop("links")
+            ]
         payload["snapshot"]["customers"][0].pop("name_permitted")
         claim = payload["snapshot"]["implementation_claims"][0]
         claim["statuses"] = {
@@ -546,6 +548,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertTrue(report.startswith(f"# Daily Agentic Business Pulse — {REPORT_DATE}"))
         self.assertEqual(snapshot["comparison_window"]["end"], REPORT_DATE)
         self.assertEqual(snapshot["source_status"]["salesforce"]["status"], "ok")
+        self.assertEqual(snapshot["source_status"]["salesforce"]["links"], [SOURCE_LINKS["salesforce"]])
         self.assertEqual(snapshot["metrics"]["onboarding"], {"active": 1})
         self.assertEqual(snapshot["metrics"]["eap"], {"active": 1})
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
