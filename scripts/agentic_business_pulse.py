@@ -297,7 +297,9 @@ def _require_list(value: Any, path: str) -> list[Any]:
     return value
 
 
-def _require_number(value: Any, path: str) -> float | int:
+def _require_number(value: Any, path: str, *, allow_null: bool = False) -> float | int | None:
+    if value is None and allow_null:
+        return None
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ValidationError(f"{path} must be numeric, not unknown or bundled with another metric")
     return value
@@ -350,19 +352,28 @@ def validate_agent_result(
     workflow_url: str,
 ) -> tuple[str, dict[str, Any]]:
     failures = _require_list(result.get("failures", []), "failures")
-    if result.get("data_status") != "complete" or failures:
+    data_status = result.get("data_status")
+    if data_status not in {"complete", "incomplete"}:
+        raise ValidationError("data_status must be complete or incomplete")
+    if data_status == "complete" and failures:
+        raise ValidationError("A complete report cannot contain source or data failures")
+    if data_status == "incomplete":
         failed_sources: list[str] = []
         for item in failures:
             item_source = item.get("source") if isinstance(item, dict) else str(item)
             matched = next((source for source in REQUIRED_SOURCES if source in str(item_source).lower()), None)
-            failed_sources.append(matched or "unknown_source")
-        labels = ", ".join(sorted(set(failed_sources))) or "unspecified company-data source"
-        raise IntegrationError(f"Company data incomplete: {labels}. No report was sent.")
+            if matched:
+                failed_sources.append(matched)
+        if failed_sources:
+            labels = ", ".join(sorted(set(failed_sources)))
+            raise IntegrationError(f"Required company source failed: {labels}. No report was sent.")
 
     report = result.get("report_markdown")
     if not isinstance(report, str) or not report.strip():
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
+    if data_status == "incomplete" and "data incomplete" not in report.casefold():
+        raise ValidationError("An incomplete report must be clearly labeled Data incomplete")
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
     report_date = report_now.date().isoformat()
 
@@ -397,8 +408,8 @@ def validate_agent_result(
         comparison_end = date.fromisoformat(comparison["end"])
     except ValueError as error:
         raise ValidationError("Comparison-window start and end must be ISO dates") from error
-    if comparison_start > comparison_end or comparison_end >= report_now.date():
-        raise ValidationError("Comparison window must end before the current report date")
+    if comparison_start > comparison_end or comparison_end > report_now.date():
+        raise ValidationError("Comparison window cannot end after the current report date")
     if comparison["label"] not in report:
         raise ValidationError("Report must state the snapshot comparison-window label")
 
@@ -413,13 +424,21 @@ def validate_agent_result(
         "attainment_pct",
         "pace_agentic_acv",
     ):
-        _require_number(revenue.get(field), f"snapshot.metrics.revenue.{field}")
+        _require_number(
+            revenue.get(field),
+            f"snapshot.metrics.revenue.{field}",
+            allow_null=data_status == "incomplete",
+        )
     for field in (
         "qualified_agentic_acv",
         "total_bundled_opportunity_amount",
         "coverage_ratio",
     ):
-        _require_number(pipeline.get(field), f"snapshot.metrics.pipeline.{field}")
+        _require_number(
+            pipeline.get(field),
+            f"snapshot.metrics.pipeline.{field}",
+            allow_null=data_status == "incomplete",
+        )
     _require_mapping(metrics.get("onboarding"), "snapshot.metrics.onboarding")
     _require_mapping(metrics.get("eap"), "snapshot.metrics.eap")
 
@@ -467,6 +486,9 @@ def validate_agent_result(
 
     for field in ("decisions", "changes_since_previous", "unknowns"):
         _require_list(snapshot.get(field), f"snapshot.{field}")
+    if data_status == "incomplete" and not failures and not snapshot["unknowns"]:
+        raise ValidationError("An incomplete report must identify at least one failure or unknown")
+    snapshot["data_status"] = data_status
 
     if workflow_url not in report:
         raise ValidationError("Sources and confidence must include the workflow run URL")
@@ -660,9 +682,68 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     if not isinstance(report, str) or not report.strip():
         raise ValidationError("Glean Gmail draft machine block must include report_markdown")
     report = report.rstrip() + "\n"
+    undated_title = f"# {REPORT_SUBJECT_PREFIX}\n"
+    if report.startswith(undated_title):
+        report = f"# {REPORT_SUBJECT_PREFIX} — {report_date}\n" + report[len(undated_title):]
     if workflow_url not in report:
         report += f"\n- Workflow: {workflow_url}\n"
     result["report_markdown"] = report
+
+    snapshot = _require_mapping(result.get("snapshot"), "snapshot")
+    comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
+    for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
+        if canonical not in comparison and isinstance(comparison.get(glean_name), str):
+            comparison[canonical] = comparison.pop(glean_name)
+
+    source_status = _require_mapping(snapshot.get("source_status"), "snapshot.source_status")
+    for source in REQUIRED_SOURCES:
+        state = _require_mapping(source_status.get(source), f"snapshot.source_status.{source}")
+        if "links" not in state and isinstance(state.get("evidence_links"), list):
+            state["links"] = state.pop("evidence_links")
+        status = state.get("status")
+        if isinstance(status, str) and status != "ok":
+            normalized = status.casefold().strip()
+            if normalized.startswith(("complete", "partial")):
+                state["detail"] = status
+                state["status"] = "ok"
+
+    customers = _require_list(snapshot.get("customers"), "snapshot.customers")
+    for customer_value in customers:
+        customer = _require_mapping(customer_value, "snapshot.customers[]")
+        account_name = customer.get("account_name")
+        if (
+            "name_permitted" not in customer
+            and isinstance(account_name, str)
+            and account_name.strip()
+            and account_name in report
+        ):
+            customer["name_permitted"] = True
+
+    claims = _require_list(snapshot.get("implementation_claims"), "snapshot.implementation_claims")
+    negative_statuses = (
+        "unknown",
+        "not applicable",
+        "not verified",
+        "not production",
+        "not customer evidence",
+        "no evidence",
+        "none",
+        "false",
+    )
+    for claim_value in claims:
+        claim = _require_mapping(claim_value, "snapshot.implementation_claims[]")
+        statuses = claim.get("statuses")
+        if isinstance(statuses, dict):
+            normalized_statuses: list[str] = []
+            for status_name, evidence in statuses.items():
+                evidence_text = str(evidence).casefold().strip()
+                if status_name not in IMPLEMENTATION_STATUSES:
+                    continue
+                if not evidence_text or any(evidence_text.startswith(value) for value in negative_statuses):
+                    continue
+                normalized_statuses.append(status_name)
+            claim["status_details"] = statuses
+            claim["statuses"] = normalized_statuses
     return result
 
 

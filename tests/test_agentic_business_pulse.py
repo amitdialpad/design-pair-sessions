@@ -239,6 +239,31 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(IntegrationError, "salesforce"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
+    def test_incomplete_report_allows_unknown_metrics_when_all_sources_are_healthy(self):
+        result = valid_result()
+        result["data_status"] = "incomplete"
+        result["failures"] = ["Previous successful snapshot is not available on the first run"]
+        result["report_markdown"] = result["report_markdown"].replace(
+            "Data status: complete.", "Data status: Data incomplete."
+        )
+        result["snapshot"]["metrics"]["revenue"]["pace_agentic_acv"] = None
+
+        _, snapshot = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertEqual(snapshot["data_status"], "incomplete")
+        self.assertIsNone(snapshot["metrics"]["revenue"]["pace_agentic_acv"])
+
+    def test_complete_report_rejects_unknown_metric(self):
+        result = valid_result()
+        result["snapshot"]["metrics"]["revenue"]["pace_agentic_acv"] = None
+        with self.assertRaisesRegex(ValidationError, "pace_agentic_acv must be numeric"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
     def test_stale_source_is_rejected(self):
         result = valid_result()
         result["snapshot"]["source_status"]["salesforce"]["queried_at"] = "2026-09-14T08:00:00+05:30"
@@ -477,6 +502,48 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         message.set_content(f"<html><body><pre>{html.escape(body)}</pre></body></html>", subtype="html")
         parsed = parse_glean_draft(message, report_date=REPORT_DATE, workflow_url=WORKFLOW_URL)
         self.assertEqual(parsed["data_status"], "complete")
+
+    def test_glean_field_variants_are_normalized_before_validation(self):
+        payload = valid_result()
+        payload["data_status"] = "incomplete"
+        payload["failures"] = ["Prior successful snapshot unavailable"]
+        payload["report_markdown"] = payload["report_markdown"].replace(
+            f"# Daily Agentic Business Pulse — {REPORT_DATE}",
+            "# Daily Agentic Business Pulse",
+        ).replace("Data status: complete.", "Data status: Data incomplete.")
+        comparison = payload["snapshot"]["comparison_window"]
+        comparison["iso_start"] = comparison.pop("start")
+        comparison["iso_end"] = REPORT_DATE
+        comparison.pop("end")
+        for state in payload["snapshot"]["source_status"].values():
+            state["status"] = "complete_for_current_query"
+            state["evidence_links"] = state.pop("links")
+        payload["snapshot"]["customers"][0].pop("name_permitted")
+        claim = payload["snapshot"]["implementation_claims"][0]
+        claim["statuses"] = {
+            "code_exists": "verified",
+            "tested": "verified",
+            "flagged": "unknown",
+            "instrumented": "not verified",
+            "deployed": "not production",
+            "customer_exposed": "not customer evidence",
+        }
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        report, snapshot = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertTrue(report.startswith(f"# Daily Agentic Business Pulse — {REPORT_DATE}"))
+        self.assertEqual(snapshot["comparison_window"]["end"], REPORT_DATE)
+        self.assertEqual(snapshot["source_status"]["salesforce"]["status"], "ok")
+        self.assertTrue(snapshot["customers"][0]["name_permitted"])
+        self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
 
     def test_live_relay_validates_persists_sends_once_and_removes_both_drafts(self):
         archive = FakeRelayArchive()

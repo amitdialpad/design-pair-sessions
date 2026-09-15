@@ -14,7 +14,7 @@ Company-data collection runs natively inside private Glean Agent `8f3fd6d966c649
 
 The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
 
-At the same `30 3 * * *` UTC schedule, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, incomplete, or duplicate draft fails closed and uses the existing failure-notification path.
+At the same `30 3 * * *` UTC schedule, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. A clearly labeled `Data incomplete` report may pass only when every required company source was refreshed successfully, unavailable metrics are represented as `null`, and the exact gaps are disclosed; a failed required source still routes to failure notification.
 
 Required repository secrets:
 
@@ -39,7 +39,7 @@ The object has this shape:
 }
 ```
 
-The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. GitHub removes the machine block from the delivered report and adds the current workflow URL to the source record.
+The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, and implementation status maps; it does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block from the delivered report and adds the current workflow URL to the source record.
 
 ## Private persistence and delivery
 
@@ -60,7 +60,7 @@ The live message uses a deterministic RFC Message-ID derived from the IST report
 
 Normal report delivery stops when:
 
-- any required source is missing, failed, or stale;
+- any required source is missing, failed, or stale (a missing non-source metric may instead produce a clearly labeled `Data incomplete` report);
 - the current IST date or comparison window is invalid;
 - revenue and pipeline are not structurally separated;
 - Agentic ACV and total bundled amounts are not structurally separated;
