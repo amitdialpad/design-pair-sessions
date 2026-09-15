@@ -610,7 +610,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         ]
         claim = payload["snapshot"]["implementation_claims"][0]
         claim["statuses"] = {
-            "code_exists": "verified",
+            "exists": True,
             "tested": "verified",
             "flagged": "unknown",
             "instrumented": "not verified",
