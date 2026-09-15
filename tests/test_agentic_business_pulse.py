@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from agentic_business_pulse import (  # noqa: E402
     GLEAN_MACHINE_END,
     GLEAN_MACHINE_START,
+    GmailArchive,
     IntegrationError,
     PulseConfig,
     ValidationError,
@@ -467,6 +468,19 @@ class PulseDeliveryTests(unittest.TestCase):
                 sender=should_not_run,
             )
         self.assertFalse(calls)
+
+    def test_gmail_mailbox_names_are_quoted_for_imap_selection(self):
+        class FakeImapClient:
+            def __init__(self):
+                self.calls = []
+
+            def select(self, mailbox, readonly):
+                self.calls.append((mailbox, readonly))
+                return "OK", []
+
+        client = FakeImapClient()
+        self.assertTrue(GmailArchive._select(client, "[Gmail]/Sent Mail", readonly=True))
+        self.assertEqual(client.calls, [('"[Gmail]/Sent Mail"', True)])
 
 
 class GleanDraftRelayTests(PulseDeliveryTests):
