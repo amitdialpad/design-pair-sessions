@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import sys
 import unittest
 from datetime import datetime, timezone
@@ -97,12 +98,15 @@ Unread state stayed stale in another tab. This synchronizes it for the same user
 
     def test_smtp_refusal_is_a_send_failure(self):
         smtp = MagicMock()
+        stderr = io.StringIO()
         smtp.__enter__.return_value.sendmail.return_value = {"refused@example.com": (550, b"rejected")}
         with patch.dict(
             generate_brief.os.environ,
             {"GMAIL_USER": "sender@example.com", "GMAIL_APP_PASSWORD": "secret"},
             clear=False,
-        ), patch.object(generate_brief.smtplib, "SMTP", return_value=smtp):
+        ), patch.object(generate_brief.smtplib, "SMTP", return_value=smtp), patch.object(
+            generate_brief.sys, "stderr", stderr
+        ):
             sent = generate_brief.send_email(
                 "Beacon Brief: week of 14–20 Sep 2026",
                 "plain",
@@ -110,6 +114,7 @@ Unread state stayed stale in another tab. This synchronizes it for the same user
                 ["refused@example.com"],
             )
         self.assertFalse(sent)
+        self.assertIn("SMTP refused 1 recipient(s)", stderr.getvalue())
 
 
 if __name__ == "__main__":

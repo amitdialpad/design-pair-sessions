@@ -129,6 +129,11 @@ def enforce_message_recipient_contract(message: Message) -> None:
         raise ValidationError(
             f"Pulse message must contain exactly one recipient: {ONLY_ALLOWED_RECIPIENT}"
         )
+    if any(
+        part.get_content_disposition() == "attachment" or part.get_filename()
+        for part in message.walk()
+    ):
+        raise ValidationError("Pulse email and dry-run drafts must not contain attachments")
 
 
 @dataclass(frozen=True)
@@ -658,7 +663,6 @@ def build_email_message(
     *,
     report_date: str,
     report: str,
-    snapshot: dict[str, Any],
     sender: str,
     recipient: str,
     message_id: str,
@@ -675,18 +679,7 @@ def build_email_message(
     message["X-Dialpad-Pulse-Mode"] = "dry-run" if dry_run else "live"
     message.set_content(report)
     message.add_alternative(markdown_to_email_html(report), subtype="html")
-    message.add_attachment(
-        report.encode("utf-8"),
-        maintype="text",
-        subtype="markdown",
-        filename=f"{report_date}.md",
-    )
-    message.add_attachment(
-        (json.dumps(snapshot, indent=2, sort_keys=True) + "\n").encode("utf-8"),
-        maintype="application",
-        subtype="json",
-        filename=f"{report_date}.json",
-    )
+    enforce_message_recipient_contract(message)
     return message
 
 
@@ -888,7 +881,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
 
 
 class GmailArchive:
-    """Private report persistence and idempotency through the existing Gmail account."""
+    """Prepared-draft handling and delivery idempotency through the existing Gmail account."""
 
     def __init__(self, user: str, password: str, host: str = "imap.gmail.com") -> None:
         if not user or not password:
@@ -954,6 +947,31 @@ class GmailArchive:
 
     def draft_message_exists(self, message_id: str) -> bool:
         return self._message_exists(message_id, r"\Drafts", "[Gmail]/Drafts")
+
+    def delete_drafts_by_message_id(self, message_id: str) -> int:
+        """Remove replaceable dry-run drafts without touching a live delivery."""
+
+        client = self._connect()
+        try:
+            mailbox = self._special_mailbox(client, r"\Drafts", "[Gmail]/Drafts")
+            if not self._select(client, mailbox, readonly=False):
+                raise IntegrationError("Could not select Gmail Drafts for dry-run replacement")
+            status, data = client.uid("search", None, "HEADER", "Message-ID", f'"{message_id}"')
+            if status != "OK":
+                raise IntegrationError("Gmail dry-run draft search failed")
+            draft_uids = data[0].split() if data and data[0] else []
+            for uid in draft_uids:
+                store_status, _ = client.uid("store", uid, "+FLAGS.SILENT", r"(\Deleted)")
+                if store_status != "OK":
+                    raise IntegrationError("Could not replace an existing dry-run draft")
+            if draft_uids:
+                client.expunge()
+            return len(draft_uids)
+        finally:
+            try:
+                client.logout()
+            except Exception:
+                pass
 
     def find_glean_draft(self, report_date: str) -> tuple[str, Message] | None:
         """Find the one Glean-created draft for an IST report date."""
@@ -1064,7 +1082,7 @@ class GmailArchive:
                 message.as_bytes(),
             )
             if status != "OK":
-                raise IntegrationError("Could not persist report and snapshot as a Gmail draft")
+                raise IntegrationError("Could not persist the prepared body-only email as a Gmail draft")
             response = b" ".join(item for item in data or [] if isinstance(item, bytes)).decode("ascii", errors="ignore")
             match = re.search(r"APPENDUID\s+\d+\s+(\d+)", response)
             return match.group(1) if match else None
@@ -1181,6 +1199,8 @@ def run_pulse(
         )
 
     gmail_archive = archive or GmailArchive(config.gmail_user, config.gmail_password, config.imap_host)
+    if config.dry_run:
+        gmail_archive.delete_drafts_by_message_id(deterministic_message_id(report_date, dry_run=True))
     if not config.dry_run and gmail_archive.sent_message_exists(live_message_id):
         result = {
             "report_date": report_date,
@@ -1222,7 +1242,6 @@ def run_pulse(
     message = build_email_message(
         report_date=report_date,
         report=report,
-        snapshot=snapshot,
         sender=config.gmail_user,
         recipient=config.recipient,
         message_id=message_id,
@@ -1297,7 +1316,9 @@ def run_pulse_from_glean_draft(
         write_run_result(config.reports_dir, report_date, result)
         return result
     prepared_message_id = deterministic_message_id(report_date, dry_run=config.dry_run)
-    if gmail_archive.draft_message_exists(prepared_message_id):
+    if config.dry_run:
+        gmail_archive.delete_drafts_by_message_id(prepared_message_id)
+    elif gmail_archive.draft_message_exists(prepared_message_id):
         raise IntegrationError(
             "A validated relay draft already exists but no matching Sent copy was confirmed. "
             "The prior delivery state is ambiguous, so this retry will not risk a duplicate."
@@ -1328,7 +1349,6 @@ def run_pulse_from_glean_draft(
     message = build_email_message(
         report_date=report_date,
         report=report,
-        snapshot=snapshot,
         sender=config.gmail_user,
         recipient=config.recipient,
         message_id=prepared_message_id,
