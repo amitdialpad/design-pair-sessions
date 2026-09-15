@@ -705,6 +705,8 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     result["report_markdown"] = report
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
+    if isinstance(snapshot.get("changes_since_previous"), dict):
+        snapshot["changes_since_previous"] = [snapshot["changes_since_previous"]]
     metrics = _require_mapping(snapshot.get("metrics"), "snapshot.metrics")
     aggregate = snapshot.get("aggregate")
     if isinstance(aggregate, dict):

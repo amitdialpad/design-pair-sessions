@@ -519,6 +519,10 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             "onboarding": payload["snapshot"]["metrics"].pop("onboarding"),
             "eap": payload["snapshot"]["metrics"].pop("eap"),
         }
+        payload["snapshot"]["changes_since_previous"] = {
+            "status": "unknown",
+            "reason": "No prior successful snapshot is available",
+        }
         for state in payload["snapshot"]["source_status"].values():
             state["status"] = "complete_for_current_query"
             state["evidence_links"] = [
@@ -555,6 +559,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(snapshot["source_status"]["salesforce"]["links"], [SOURCE_LINKS["salesforce"]])
         self.assertEqual(snapshot["metrics"]["onboarding"], {"active": 1})
         self.assertEqual(snapshot["metrics"]["eap"], {"active": 1})
+        self.assertEqual(snapshot["changes_since_previous"][0]["status"], "unknown")
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
         self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
 
