@@ -16,11 +16,12 @@ The workflow sends one authenticated HTTPS request to that approved Glean Agent/
 
 Required repository secrets:
 
-- `PULSE_AGENT_URL`: HTTPS endpoint for the approved Glean Platform Agent run or its approved contract adapter.
 - `PULSE_AGENT_TOKEN`: least-privileged bearer credential approved for unattended Glean Platform Agent execution. Do not add direct Salesforce, Jira, or code-search credentials here.
 - `PULSE_SOURCE_CONTEXT_JSON`: JSON array containing the three approved internal source-context document links.
 - `GMAIL_USER`: existing Beacon Brief Gmail sender account.
 - `GMAIL_APP_PASSWORD`: existing Beacon Brief Gmail app password with SMTP and IMAP access.
+
+The non-secret Agent run endpoint is configured in the workflow for Agent `8f3fd6d966c64916b11b505a580ff64f`. The draft workflow must not be activated or dry-run until `PULSE_AGENT_TOKEN` exists and the Glean Agent input/output schema has been verified against the contract below.
 
 ## Company-agent request
 

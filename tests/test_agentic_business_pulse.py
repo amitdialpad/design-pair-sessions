@@ -419,6 +419,8 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertIn("PULSE_AGENT_URL", workflow)
+        self.assertIn("8f3fd6d966c64916b11b505a580ff64f/runs", workflow)
+        self.assertNotIn("secrets.PULSE_AGENT_URL", workflow)
         self.assertIn("PULSE_SOURCE_CONTEXT_JSON", workflow)
         self.assertNotIn("fixture", workflow.lower())
         self.assertIn("if: github.event_name != 'pull_request'", workflow)
