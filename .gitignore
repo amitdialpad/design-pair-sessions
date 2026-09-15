@@ -3,3 +3,4 @@ node_modules/
 **/dist/
 **/__pycache__/
 .claude/settings.local.json
+reports/agentic_business_pulse/

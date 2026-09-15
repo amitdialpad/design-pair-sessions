@@ -1,0 +1,66 @@
+name: Daily Agentic Business Pulse
+
+on:
+  schedule:
+    # 09:00 Asia/Kolkata. GitHub-hosted scheduled jobs can start several minutes late.
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Generate and retain a Gmail draft without sending
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-agentic-business-pulse
+  cancel-in-progress: false
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate automation
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Generate, validate, persist, and deliver pulse
+        env:
+          PULSE_RECIPIENT: amit.ayre@dialpad.com
+          PULSE_TIMEZONE: Asia/Kolkata
+          PULSE_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+          PULSE_AGENT_URL: ${{ secrets.PULSE_AGENT_URL }}
+          PULSE_AGENT_TOKEN: ${{ secrets.PULSE_AGENT_TOKEN }}
+          PULSE_SOURCE_CONTEXT_JSON: ${{ secrets.PULSE_SOURCE_CONTEXT_JSON }}
+          PULSE_SKILL_PATH: skills/daily-agentic-business-pulse/SKILL.md
+          PULSE_REPORTS_DIR: reports/agentic_business_pulse
+          PULSE_SOURCE_MAX_AGE_HOURS: '12'
+          PULSE_AGENT_TIMEOUT_SECONDS: '600'
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/run-agentic-business-pulse.py
+
+      - name: Notify Amit on failure
+        if: failure()
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          FAILURE_SUBJECT_PREFIX: Agentic Business Pulse failed
+          FAILURE_DESCRIPTION: The daily pulse did not pass its source, freshness, redaction, persistence, or delivery gates. No normal report email was sent.
+          FAILURE_COMMON_FIXES: |-
+            - Company-data agent unavailable → check PULSE_AGENT_URL and PULSE_AGENT_TOKEN
+            - Required source incomplete or stale → inspect the agent runtime and source freshness
+            - Gmail persistence or send failed → check GMAIL_USER and GMAIL_APP_PASSWORD
+            - Skill or source context missing → check the repository skill and PULSE_SOURCE_CONTEXT_JSON
+        run: python3 scripts/notify-failure.py
