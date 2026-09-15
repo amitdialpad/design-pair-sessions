@@ -636,7 +636,7 @@ def markdown_to_email_html(report: str) -> str:
         else:
             close_list()
             if current_section == "Bottom line":
-                style = "margin:0;padding:17px 18px;background:#f2effb;border-left:4px solid #7c5ce7;border-radius:8px;font-size:16px;line-height:1.55"
+                style = "margin:0 0 14px;font-size:16px;line-height:1.6;color:#312e35"
             elif current_section == "Confidence":
                 style = "margin:0 0 8px;color:#65606d;font-size:13px;line-height:1.55"
             elif not current_section and line.startswith(("_", "*")):
