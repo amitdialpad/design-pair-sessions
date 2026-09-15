@@ -600,6 +600,14 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         customer = payload["snapshot"]["customers"][0]
         customer["name"] = customer.pop("account_name")
         customer.pop("name_permitted")
+        payload["snapshot"]["customers"].append(
+            {"name": "Permitted Account B", "summary": "Stored only in the private snapshot."}
+        )
+        jira_item = payload["snapshot"]["jira_items"][0]
+        jira_item["link"] = jira_item.pop("links")[0]
+        payload["snapshot"]["source_status"]["jira"]["evidence_links"] = [
+            "https://dialpad.atlassian.net/issues/?jql=project%3DDP"
+        ]
         claim = payload["snapshot"]["implementation_claims"][0]
         claim["statuses"] = {
             "code_exists": "verified",
@@ -630,6 +638,9 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(snapshot["changes_since_previous"][0]["status"], "unknown")
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
         self.assertEqual(snapshot["customers"][0]["account_name"], "Permitted Account A")
+        self.assertTrue(snapshot["customers"][1]["name_permitted"])
+        self.assertEqual(snapshot["customers"][1]["account_name"], "Permitted Account B")
+        self.assertIn(SOURCE_LINKS["jira"], snapshot["source_status"]["jira"]["links"])
         self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
         self.assertNotIn("&source=gmail", report)
         self.assertNotIn("&ust=", report)
