@@ -4,6 +4,8 @@ Workflow: `Daily Agentic Business Pulse`
 
 Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. GitHub-hosted jobs may start several minutes late. A manual `workflow_dispatch` supports live and dry runs.
 
+Pull requests that change the pulse workflow, skill, scripts, operations guide, or tests run the unit-test validation job without loading any Actions secrets. Scheduled and manually dispatched runs must pass that validation job before the pulse job starts.
+
 ## Runtime boundary
 
 The public repository contains orchestration and validation code only. It does not contain company source credentials, internal document identifiers, reports, snapshots, or raw evidence.

@@ -374,12 +374,14 @@ class PulseWorkflowTests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
         self.assertIn("cron: '30 3 * * *'", workflow)
         self.assertIn("workflow_dispatch:", workflow)
+        self.assertIn("pull_request:", workflow)
         self.assertIn("dry_run:", workflow)
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertIn("PULSE_AGENT_URL", workflow)
         self.assertIn("PULSE_SOURCE_CONTEXT_JSON", workflow)
         self.assertNotIn("fixture", workflow.lower())
+        self.assertIn("if: github.event_name != 'pull_request'", workflow)
 
     def test_internal_source_document_ids_are_not_in_public_files(self):
         forbidden_direct_link_prefixes = (
