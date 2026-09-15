@@ -1109,11 +1109,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Deploying AI from pilot to production](https://claude.com/blog/deploying-ai-from-pilot-to-production)**<br><small>Sep 14, 2026 · Enterprise AI</small>
+
+This guide by Anthropic and Accenture shares seven considerations for taking enterprise AI from pilot to production, and the decisions leadership needs to make before the program advances.
+
+---
+
+**[How healthcare organizations use Claude Tag](https://claude.com/blog/how-healthcare-organizations-use-claude-tag)**<br><small>Sep 14, 2026 · Enterprise AI</small>
+
+How Insight Health, Tennr, and Medallion are building human-agent teams with Claude Tag.
+
+---
+
 **[Claude for Financial Advisors](https://claude.com/blog/claude-for-financial-advisors)**<br><small>Sep 14, 2026 · Product announcements</small>
 
 Financial advisors can now connect Claude to the custodians, portfolio platforms, CRMs, and planning tools they depend on, along with new skills tailored to the daily work of a financial advisor.
 
 ---
+
+**[Agentic coding is straining CI. Here’s how we scaled test impact analysis at Anthropic](https://claude.com/blog/agentic-coding-is-straining-ci-heres-how-we-scaled-test-impact-analysis-at-anthropic)**<br><small>Sep 14, 2026 · Claude Code</small>
+
+Our CI job volume increased 25x over 6 months. We patched our test selection service three times before finding a sustainable solution.
+
+:::details View past updates
 
 **[What 1,000 small business owners taught us about AI](https://claude.com/blog/what-1-000-small-business-owners-taught-us-about-ai)**<br><small>Sep 10, 2026 · Enterprise AI</small>
 
@@ -1131,7 +1149,7 @@ How T. Rowe Price is using Claude across the business, from driving fundamental 
 
 Tuning prompt caching, instructions, and effort can reduce Claude's cost without sacrificing application performance.
 
-:::details View past updates
+---
 
 **[Building commerce agents with Claude](https://claude.com/blog/claude-for-commerce-agents)**<br><small>Sep 2, 2026 · Product announcements</small>
 
@@ -1143,25 +1161,7 @@ We're launching a blueprint to help build commerce agents on Claude. It contains
 
 The architecture, latency & cost techniques, and eval practices for agents that make it easier to buy and sell online.
 
----
-
-**[Claude for Teachers, now available for U.S. K-12 schools and districts](https://claude.com/blog/claude-for-teachers-now-available-for-schools-and-districts)**<br><small>Aug 28, 2026 · Product announcements</small>
-
-Starting today, Claude for Teachers is available to U.S. K-12 schools and districts as a free Enterprise offering.
-
----
-
-**[How Anthropic employees use Claude Tag](https://claude.com/blog/how-anthropic-employees-use-claude-tag)**<br><small>Aug 28, 2026 · Enterprise AI</small>
-
-Producing customer-ready collateral, compiling weekly issue reports, and running legal review, all where the work already happens.
-
----
-
-**[How Warp builds self-improving agents on Claude](https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude)**<br><small>Aug 26, 2026 · Agents</small>
-
-How Warp devised a simple development pattern that anyone can use to create self-improving agents.
-
 :::
 
-*Updated September 14, 2026*
+*Updated September 15, 2026*
 <!-- CLAUDE_FEED_END -->
