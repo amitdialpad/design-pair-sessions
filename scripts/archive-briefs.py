@@ -30,9 +30,12 @@ VISIBLE_COUNT = 4
 
 
 def parse_date(issue_text: str) -> datetime | None:
-    """Extract end date from ### Week of D–D Mon YYYY heading."""
-    # Match "Week of 7–13 Apr 2026" — use the end date for sorting
-    m = re.search(r"Week of\s+\d{1,2}[–\-]+(\d{1,2}\s+\w+\s+\d{4})", issue_text)
+    """Extract the end date from same-month or cross-month week headings."""
+    # Matches "7–13 Apr 2026", "31 Aug–6 Sep 2026", and year boundaries.
+    m = re.search(
+        r"Week of\s+\d{1,2}(?:\s+\w+)?(?:\s+\d{4})?[–\-]+(\d{1,2}\s+\w+\s+\d{4})",
+        issue_text,
+    )
     if not m:
         return None
     try:

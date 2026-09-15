@@ -18,7 +18,7 @@ jobs:
 
       - name: Generate Beacon Brief
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_PAIR_SESSIONS }}
+          GH_TOKEN: ${{ secrets.BEACON_PAT }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DIALPAD_BEARER_TOKEN: ${{ secrets.DIALPAD_BEARER_TOKEN }}

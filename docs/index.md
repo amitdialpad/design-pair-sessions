@@ -6,9 +6,49 @@ New here? Start with [The process](/process), then explore the [Beacon toolkit](
 
 ## What's new in Beacon
 
-Auto-synced from [beacon-app releases](https://github.com/dialpad/beacon-app/releases). Toolkit page reflects these changes.
+Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/design` monorepo](https://github.com/dialpad/design/tree/main/apps/beacon).
 
 <!-- BEACON_RELEASES_START -->
+
+<!-- beacon-change:2c94897bc6650e580a7789a6674a89fb124669f6 -->
+
+**AI Receptionist analytics overview**
+
+Migrates Beacon PR #907 (DP-203387) into the Design monorepo without product changes. The AI Receptionist Overview brings core conversation, containment, and handle-time metrics into one view, with trends, skill-specific cards, a containment breakdown, and a transfer-destination donut. It also supports clear zero-data states, a multichannel-only Digital handle time metric, and clearer outcome language and export feedback in History.
+
+<span class="release-meta">[dialpad/design#107](https://github.com/dialpad/design/pull/107) · 14 September 2026</span>
+
+---
+
+<!-- beacon-change:1b671d4c38bb45d7936e89ab130e22e086a8a30e -->
+
+**Converge read attention across tabs**
+
+Read-position and unread changes could remain stale in another Beacon tab for the same user and company. That left Inbox badges, notifications, and conversation state out of sync until refresh. This adds a scoped read-attention@1 synchronization path that publishes changes between same-browser tabs while keeping IndexedDB mutations authoritative.
+
+<span class="release-meta">[dialpad/design#114](https://github.com/dialpad/design/pull/114) · 8 September 2026</span>
+
+---
+
+<!-- beacon-change:f586a09239ed57104b8120740df4eb9c0c700d0b -->
+
+**Add communication content foundation**
+
+DDT-2216 brings the communication-content foundation from beacon-quint into the Design monorepo. Generated calls and messages previously lacked one reviewable, deterministic path from company policy through authored content to the published Beacon world. This PR establishes that path and republishes the real company bundles that use it.
+
+<span class="release-meta">[dialpad/design#109](https://github.com/dialpad/design/pull/109) · 4 September 2026</span>
+
+---
+
+<!-- beacon-change:9fb36f6b79c155bc7eac12bf9a4235c95e1ef748 -->
+
+**Add active-call keypad tones**
+
+Active-call keypad entries had no audible feedback, so people could miss whether a digit, star, or pound input registered without watching the displayed value. This adds local DTMF feedback through Beacon's shared sound system while preserving the speaker-volume preference. It does not add RTP, SIP, or WebRTC DTMF signaling.
+
+<span class="release-meta">[dialpad/design#106](https://github.com/dialpad/design/pull/106) · 2 September 2026</span>
+
+---
 
 **Receptionist voice selection expanded to 12 options**
 
@@ -33,6 +73,8 @@ The system now fully supports generating and displaying call content throughout 
 <span class="release-meta">[v2026.8.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.31) · 21 August 2026</span>
 
 ---
+
+:::details View older updates
 
 **Call interface components unified and restructured**
 
@@ -74,8 +116,6 @@ The right sidebar now includes a new AI Assistant panel (AiAssistantPanelV2.vue)
 
 ---
 
-:::details View older releases
-
 **AI Receptionist gains preview, voice testing, and horizontal nav**
 
 The AI Receptionist configuration now includes a capabilities preview panel, voice testing controls, and restructured horizontal navigation across setup steps. Check the updated GreetingStep, KnowledgeStep, LeadCaptureStep, and new ReceptionistIdentityHeader and ReceptionistDeployControl components for the new layout and interaction patterns.
@@ -110,41 +150,41 @@ Every Monday. The week's Beacon changes, in plain English.
 
 ### Week of 7–13 Sep 2026
 
-This week was quiet on new features — no major shipping. The last real update was the AI Assistant panel added to contact conversations back on August 14th, which lets you see call summaries and insights right in the conversation sidebar. Since then, mostly bug fixes and documentation syncs have rolled through. If you're waiting for something specific, it's worth checking in with Josh about the timeline.
+Converge read attention across tabs was the only change merged into Beacon this week. Read-position and unread changes could remain stale in another Beacon tab for the same user and company. That left Inbox badges, notifications, and conversation state out of sync until refresh. This adds a scoped read-attention synchronization path between same-browser tabs while keeping IndexedDB mutations authoritative.
 
 #### What actually changed
 
-Nothing shipped to Beacon itself this week. The repo had a documentation sync on September 13th, but no new components, features, or interactions landed.
+- **[Converge read attention across tabs](https://github.com/dialpad/design/pull/114)** (`dialpad/design#114`). Read, notification, and mark-unread changes now synchronize between tabs for the same user and company. Inbox badges and conversation state no longer need a refresh to catch up.
 
 #### The bigger shift
 
-There's a noticeable gap between mid-August and now. The pace of shipping has slowed. This either means Josh is working on something bigger that isn't ready yet, or the team is consolidating what already shipped and letting designers catch up.
+This was a focused week with one merged Beacon change. No broader product pattern is claimed beyond that source record.
 
 #### Where things are still messy
 
-The call interface restructuring from August 20th (ActiveCallControls, CallbarOverlays, AdaptiveCallSurface) is still relatively fresh. If you're designing call flows, you may still need clarification on how these components map to your patterns. Same with the new Contact Center detail views and the meeting room video grid redesign — both are recent enough that edge cases might still surface.
+The synchronization is scoped to tabs in the same browser, user, and company. IndexedDB remains authoritative. This is not a claim of cross-device synchronization.
 
 #### What's coming next
 
-Based on the pattern, Josh is probably working on either deeper customization options for what shipped in August or foundational work that'll enable bigger features in the receptionist and contact center areas. The appointment booking and voice selection expansions suggest more configurability is coming.
+No follow-on work was explicitly announced in the merged PR.
 
 #### Try this
 
-Load up a Receptionist design and test the new 12-voice library with the Change Voice Modal. Switch between a couple voices in the preview panel and see which ones feel right for your use case. The show-more pattern should make it easy to browse without cluttering the interface.
+Open the same user and company in two browser tabs. In one tab, mark a conversation's last message unread. Confirm the other tab updates its unread state and count without a refresh.
 
 #### Quick notes
 
-- No breaking changes this week, so your existing designs stay intact
-- If you're deep in call interface customization, loop in Josh on any blockers
-- The AI Assistant panel is solid if you're designing conversation contexts
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- The PR includes scope isolation, stale-event rejection, teardown, persistence tests, and cross-tab coverage.
 
 #### One thing to remember
 
-Slower shipping weeks are usually a sign that larger pieces are being built underneath — stay patient and keep blocking issues documented.
+Read and unread state now converges across same-browser Beacon tabs for the same user and company.
 
 ---
 
-### Week of 31–6 Sep 2026
+### Week of 31 Aug–6 Sep 2026
 
 This was a quiet week. The main thing happening is that Josh is continuing to fill out the Contact Center and Receptionist features with more granular controls. If you're working on either of those flows, there are new pieces available to you now. The call interface got restructured under the hood, which shouldn't break anything but worth knowing if you're deep in calling UI. Everything else is incremental improvements to existing features.
 

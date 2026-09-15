@@ -3,11 +3,10 @@
 Generate a Beacon Brief newsletter issue and prepend it to docs/index.md.
 
 Reads:
-  - Recent git log (past 7 days)
-  - BEACON_RELEASES section from docs/index.md
+  - Beacon commits and pull requests merged to dialpad/design during the prior week
   - scripts/weekly-notes.md (if present — updated Wednesday by Amit)
 
-Uses Claude Haiku to write the newsletter, then:
+Builds the newsletter directly from those source records, then:
   1. Prepends to the BEACON_BRIEF_START/END section in docs/index.md
   2. Runs archive-briefs.py to rebalance visible/archived issues
 
@@ -29,8 +28,9 @@ from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
-from urllib.error import URLError
 from urllib.request import Request, urlopen
+
+from beacon_changes import GitHubError, clean_source_markdown, enrich_commit, fetch_commits
 
 PROJECT_DIR    = Path(__file__).parent.parent
 INDEX          = PROJECT_DIR / "docs" / "index.md"
@@ -39,48 +39,39 @@ ARCHIVE_SCRIPT = PROJECT_DIR / "scripts" / "archive-briefs.py"
 RECIPIENTS     = PROJECT_DIR / "scripts" / "brief-recipients.json"
 DM_RECIPIENTS  = PROJECT_DIR / "scripts" / "brief-dm-recipients.json"
 
-MARKER_START    = "<!-- BEACON_BRIEF_START -->"
-MARKER_END      = "<!-- BEACON_BRIEF_END -->"
-RELEASES_START  = "<!-- BEACON_RELEASES_START -->"
-RELEASES_END    = "<!-- BEACON_RELEASES_END -->"
+MARKER_START = "<!-- BEACON_BRIEF_START -->"
+MARKER_END = "<!-- BEACON_BRIEF_END -->"
 
 
 # ── Date helpers ──────────────────────────────────────────────────────────────
 
-def get_week_range() -> tuple[str, str, str]:
-    """Return (mon_str, sun_str, label) for the week that just ended (Mon–Sun).
+def get_week_context(now: datetime | None = None) -> tuple[datetime, datetime, str]:
+    """Return the UTC boundaries and label for the prior Monday-Sunday week.
 
     The brief runs on Monday and recaps the previous week.
-    On Monday Apr 13 → returns Mon Apr 6 – Sun Apr 12.
+    On Monday Apr 13, returns Apr 6 through Apr 12.
     """
-    today = datetime.now(timezone.utc)
-    # Yesterday is the Sunday that closed the previous week
-    sunday = today - timedelta(days=today.weekday() + 1)
-    monday = sunday - timedelta(days=6)
-    mon_str = monday.strftime("%-d %b %Y")
-    sun_str = sunday.strftime("%-d %b %Y")
-    # Short label e.g. "6–12 Apr 2026"
-    label = f"{monday.day}–{sun_str}"
-    return mon_str, sun_str, label
+    current = now or datetime.now(timezone.utc)
+    sunday_date = (current - timedelta(days=current.weekday() + 1)).date()
+    monday_date = sunday_date - timedelta(days=6)
+    monday = datetime.combine(monday_date, datetime.min.time(), tzinfo=timezone.utc)
+    sunday = datetime.combine(sunday_date, datetime.max.time(), tzinfo=timezone.utc)
+
+    if monday.year != sunday.year:
+        label = f"{monday.strftime('%-d %b %Y')}–{sunday.strftime('%-d %b %Y')}"
+    elif monday.month != sunday.month:
+        label = f"{monday.strftime('%-d %b')}–{sunday.strftime('%-d %b %Y')}"
+    else:
+        label = f"{monday.day}–{sunday.strftime('%-d %b %Y')}"
+    return monday, sunday, label
 
 
 # ── Source material ───────────────────────────────────────────────────────────
 
-def get_git_log() -> str:
-    result = subprocess.run(
-        ["git", "-C", str(PROJECT_DIR), "log", "--oneline", "--since=7 days ago"],
-        capture_output=True, text=True,
-    )
-    return result.stdout.strip() or "No commits this week."
-
-
-def get_releases_section() -> str:
-    content = INDEX.read_text()
-    start = content.find(RELEASES_START)
-    end   = content.find(RELEASES_END)
-    if start == -1 or end == -1:
-        return ""
-    return content[start + len(RELEASES_START):end].strip()
+def get_beacon_changes(monday: datetime, sunday: datetime) -> list[dict]:
+    """Fetch exact prior-week monorepo source material or stop the send."""
+    commits = fetch_commits(since=monday, until=sunday)
+    return [enrich_commit(commit) for commit in commits]
 
 
 def get_weekly_notes() -> str:
@@ -90,93 +81,123 @@ def get_weekly_notes() -> str:
     return ""
 
 
-# ── Claude API ────────────────────────────────────────────────────────────────
+# ── Source-grounded writing ──────────────────────────────────────────────────
 
-def _claude(prompt: str, max_tokens: int = 900) -> str | None:
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-    if not api_key:
-        print("[error] ANTHROPIC_API_KEY not set", file=sys.stderr)
-        return None
-    payload = {
-        "model": "claude-haiku-4-5-20251001",
-        "max_tokens": max_tokens,
-        "messages": [{"role": "user", "content": prompt}],
-    }
-    req = Request(
-        "https://api.anthropic.com/v1/messages",
-        data=json.dumps(payload).encode(),
-        headers={
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json",
-        },
-    )
-    try:
-        with urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read())
-            return data["content"][0]["text"].strip()
-    except (URLError, Exception) as e:
-        print(f"[warn] Claude API error: {e}", file=sys.stderr)
-        return None
+def _display_title(change: dict) -> str:
+    title = re.sub(r"^(feat|fix|bug|refactor|docs|chore)(\([^)]*\))?:\s*", "", change["title"], flags=re.I)
+    title = re.sub(r"^(?:[A-Z]+-\d+|NO-JIRA)\s+", "", title, flags=re.I)
+    title = re.sub(r"\s*\(#\d+\)\s*$", "", title).strip()
+    title = title[0].upper() + title[1:] if title else "Beacon change"
+    title = re.sub(r"\bAi\b", "AI", title)
+    return re.sub(r"(?i)\bAI receptionist\b", "AI Receptionist", title)
 
 
-BRIEF_PROMPT = """\
-You are writing the Beacon Brief — a weekly newsletter for product designers at Dialpad.
-Beacon is a prototyping tool built by their tech lead Josh. Designers use it with Claude Code to build and test UI.
+def _section(body: str, names: str) -> str:
+    clean = clean_source_markdown(body, limit=6000)
+    match = re.search(rf"(?ims)^##\s+[^\n]*?(?:{names})[^\n]*\n+(.*?)(?=^##\s+|\Z)", clean)
+    return match.group(1).strip() if match else ""
 
-Write in plain, human English. Like a colleague catching up a teammate after a week away.
-Short sentences. No em dashes. No corporate language. No filler phrases like "it is worth noting".
-Be specific. Name the command or feature. Explain what it actually does.
 
-Week: {week_range}
+def _summary(change: dict) -> str:
+    source = _section(change.get("body", ""), "summary|description")
+    if not source:
+        source = clean_source_markdown(change.get("body", ""), limit=1800)
+    paragraphs = [p.strip() for p in re.split(r"\n\s*\n", source) if p.strip() and not p.startswith("-")]
+    summary = " ".join(paragraphs[:2])
+    summary = re.sub(r"`([^`]+)`", r"\1", summary)
+    summary = re.sub(r"\[([^]]+)]\([^)]*\)", r"\1", summary)
+    summary = re.sub(r"\s+", " ", summary).strip()
+    return summary[:897].rstrip() + "..." if len(summary) > 900 else summary
 
-What shipped in Beacon this week:
-{releases}
-{notes_section}
-Recent repo commits (for context on what changed in the docs/site):
-{git_log}
 
-Write the newsletter in this exact format. If a section has nothing real to say, write one honest sentence. Do not pad.
+def _review_step(changes: list[dict]) -> str:
+    for change in changes:
+        review = _section(change.get("body", ""), "for reviewers|review")
+        source = review or clean_source_markdown(change.get("body", ""), limit=6000)
+        match = re.search(r"(?m)^- \[[ xX]\]\s+(.+)$", source)
+        if match:
+            return match.group(1).strip()
+    return "Open the changed Beacon area and compare it with the linked merged PR before using it in a prototype."
 
-### Week of {week_range}
 
-[Write an opening summary here — no heading, just prose. This is the most important part of the brief. Most designers will read only this and nothing else, so it needs to stand on its own. Cover what actually changed this week and what it means for design work. Be specific — name the features, explain what they do. Write as much as the week demands: a quiet week gets a short paragraph, a big week earns more. No length limit. Plain language, no jargon, no hedging. Someone who reads only this section should leave knowing whether this week was significant, what shipped, and whether any of it affects their current work.]
+def _next_steps(changes: list[dict]) -> str:
+    steps = []
+    for change in changes:
+        section = _section(change.get("body", ""), "next steps?")
+        plain = re.sub(r"\s+", " ", section).strip()
+        if plain and not re.match(r"(?i)^none\b", plain):
+            steps.append(plain)
+    return " ".join(steps) if steps else "No follow-on work was explicitly announced in this week's merged Beacon changes."
+
+
+def generate_brief(week_range: str, changes: list[dict], notes: str) -> str:
+    if changes:
+        titles = [_display_title(change) for change in changes]
+        if len(changes) == 1:
+            opening = f"{titles[0]} was the only change merged into Beacon this week. {_summary(changes[0])}"
+        else:
+            opening = (
+                f"{len(changes)} changes merged into Beacon this week: "
+                + "; ".join(title.lower() for title in titles)
+                + ". The details below come directly from the merged monorepo PRs."
+            )
+        change_lines = []
+        for change, title in zip(changes, titles):
+            reference = f"dialpad/design#{change['pr_number']}" if change.get("pr_number") else change["sha"][:8]
+            change_lines.append(f"- **[{title}]({change['link']})** ({reference}). {_summary(change)}")
+        actual_changes = "\n".join(change_lines)
+        bigger_shift = (
+            f"This was a focused week with {len(changes)} merged Beacon change"
+            f"{'s' if len(changes) != 1 else ''}. No broader pattern is claimed beyond those source records."
+        )
+        messy = "No unresolved issue was explicitly documented in this week's merged Beacon changes."
+        remember = f"The week's Beacon record is {', '.join(title.lower() for title in titles)}."
+    else:
+        opening = "No changes touching `apps/beacon` merged into the `dialpad/design` monorepo this week."
+        actual_changes = "No Beacon changes were merged during this Monday-to-Sunday window."
+        bigger_shift = "There is no change pattern to infer from an empty merge record."
+        messy = "No new unresolved issue was recorded because no Beacon change merged this week."
+        remember = "No Beacon change merged this week."
+
+    if notes:
+        opening += f" Amit's notes add: {re.sub(r'\s+', ' ', notes).strip()}"
+
+    quick_notes = [
+        "Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.",
+        "Window: Monday 00:00 through Sunday 23:59 UTC.",
+        "A migration is reported as a migration, not as a new product release.",
+    ]
+    return f"""### Week of {week_range}
+
+{opening}
 
 #### What actually changed
-[Specific commands, features, or data model changes that shipped. Name them. Explain what they do or unlock.]
+
+{actual_changes}
 
 #### The bigger shift
-[A pattern across what shipped, or a change in how Beacon works. Write as an observation. No attribution to any person or meeting.]
+
+{bigger_shift}
 
 #### Where things are still messy
-[What is in progress, unresolved, or known to be incomplete right now.]
+
+{messy}
 
 #### What's coming next
-[What is likely next based on the material. Write as an observation about where things are heading.]
+
+{_next_steps(changes)}
 
 #### Try this
-[One concrete thing to try in Beacon this week. Be specific. Make it feel like a tip from someone who already did it.]
+
+{_review_step(changes)}
 
 #### Quick notes
-- [Short bullet]
-- [Short bullet]
-- [Short bullet]
+
+{chr(10).join(f'- {note}' for note in quick_notes)}
 
 #### One thing to remember
-[One sentence. The most important thing to carry into the week.]
 
-Return only the newsletter text, starting with ### Week of..."""
-
-
-def generate_brief(week_range: str, releases: str, git_log: str, notes: str) -> str | None:
-    notes_section = f"\nAmit's notes from this week:\n{notes}\n" if notes else ""
-    prompt = BRIEF_PROMPT.format(
-        week_range=week_range,
-        releases=releases or "No new Beacon releases this week.",
-        git_log=git_log,
-        notes_section=notes_section,
-    )
-    return _claude(prompt)
+{remember}"""
 
 
 # ── File update ───────────────────────────────────────────────────────────────
@@ -209,6 +230,7 @@ def load_recipients() -> list[str]:
 
 def _inline(text: str) -> str:
     """Convert inline markdown (bold, code) to HTML."""
+    text = re.sub(r"\[([^]]+)]\((https?://[^)]+)\)", r'<a href="\2" style="color:#8a651d">\1</a>', text)
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(
         r"`([^`]+)`",
@@ -485,7 +507,7 @@ def send_dialpad_dms(week_range: str, contact_keys: list[str]) -> bool:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    _, _, week_range = get_week_range()
+    monday, sunday, week_range = get_week_context()
     print(f"Generating Beacon Brief for week of {week_range}...")
 
     # Guard: skip if a brief for this week already exists (line-exact match)
@@ -494,13 +516,16 @@ def main():
         print(f"Brief for week of {week_range} already exists — skipping.")
         sys.exit(1)
 
-    releases = get_releases_section()
-    git_log  = get_git_log()
-    notes    = get_weekly_notes()
+    try:
+        changes = get_beacon_changes(monday, sunday)
+    except GitHubError as error:
+        print(f"[error] Could not read dialpad/design Beacon changes: {error}", file=sys.stderr)
+        sys.exit(2)
+    notes = get_weekly_notes()
 
-    print(f"  Weekly notes: {'found' if notes else 'not found, generating from releases + commits'}")
+    print(f"  Weekly notes: {'found' if notes else 'not found, generating from monorepo changes'}")
 
-    issue = generate_brief(week_range, releases, git_log, notes)
+    issue = generate_brief(week_range, changes, notes)
     if not issue:
         sys.exit(2)
 
@@ -518,14 +543,13 @@ def main():
     # Send email
     print("  Sending email...")
     recipients = load_recipients()
-    _, _, week_label = get_week_range()
-    subject = f"Beacon Brief: week of {week_label}"
+    subject = f"Beacon Brief: week of {week_range}"
     send_email(subject, issue, issue, recipients)
 
     # Send Dialpad DMs
     print("  Sending Dialpad DMs...")
     dm_recipients = load_dm_recipients()
-    send_dialpad_dms(week_label, dm_recipients)
+    send_dialpad_dms(week_range, dm_recipients)
 
     print(f"Done. Week of {week_range} added.")
     sys.exit(0)
