@@ -690,6 +690,12 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     result["report_markdown"] = report
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
+    metrics = _require_mapping(snapshot.get("metrics"), "snapshot.metrics")
+    aggregate = snapshot.get("aggregate")
+    if isinstance(aggregate, dict):
+        for field in ("onboarding", "eap"):
+            if field not in metrics and isinstance(aggregate.get(field), dict):
+                metrics[field] = aggregate[field]
     comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
     for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
         if canonical not in comparison and isinstance(comparison.get(glean_name), str):

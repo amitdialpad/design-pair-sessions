@@ -515,6 +515,10 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         comparison["iso_start"] = comparison.pop("start")
         comparison["iso_end"] = REPORT_DATE
         comparison.pop("end")
+        payload["snapshot"]["aggregate"] = {
+            "onboarding": payload["snapshot"]["metrics"].pop("onboarding"),
+            "eap": payload["snapshot"]["metrics"].pop("eap"),
+        }
         for state in payload["snapshot"]["source_status"].values():
             state["status"] = "complete_for_current_query"
             state["evidence_links"] = state.pop("links")
@@ -542,6 +546,8 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertTrue(report.startswith(f"# Daily Agentic Business Pulse — {REPORT_DATE}"))
         self.assertEqual(snapshot["comparison_window"]["end"], REPORT_DATE)
         self.assertEqual(snapshot["source_status"]["salesforce"]["status"], "ok")
+        self.assertEqual(snapshot["metrics"]["onboarding"], {"active": 1})
+        self.assertEqual(snapshot["metrics"]["eap"], {"active": 1})
         self.assertTrue(snapshot["customers"][0]["name_permitted"])
         self.assertEqual(snapshot["implementation_claims"][0]["statuses"], ["code_exists", "tested"])
 
