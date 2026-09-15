@@ -262,7 +262,10 @@ class PulseDeliveryTests(unittest.TestCase):
 
     @staticmethod
     def fake_agent(config, payload):
-        return valid_result()
+        result = valid_result()
+        current_workflow_url = payload["reporting"]["workflow_url"]
+        result["report_markdown"] = result["report_markdown"].replace(WORKFLOW_URL, current_workflow_url)
+        return result
 
     @staticmethod
     def fake_sender(message, config):
