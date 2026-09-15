@@ -7,7 +7,7 @@ import json
 import sys
 from pathlib import Path
 
-from agentic_business_pulse import PulseConfig, PulseError, run_pulse
+from agentic_business_pulse import PulseConfig, PulseError, run_configured_pulse
 
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +16,7 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 def main() -> int:
     try:
         config = PulseConfig.from_env(PROJECT_DIR)
-        result = run_pulse(config)
+        result = run_configured_pulse(config)
     except PulseError as error:
         print(f"[pulse:error] {error}", file=sys.stderr)
         return 1

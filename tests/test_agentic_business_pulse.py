@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import sys
 import tempfile
@@ -15,13 +16,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from agentic_business_pulse import (  # noqa: E402
+    GLEAN_MACHINE_END,
+    GLEAN_MACHINE_START,
     IntegrationError,
     PulseConfig,
     ValidationError,
     build_email_message,
     deterministic_message_id,
     now_in_timezone,
+    parse_glean_draft,
     run_pulse,
+    run_pulse_from_glean_draft,
     validate_agent_result,
 )
 
@@ -166,6 +171,36 @@ class FakeArchive:
 
     def delete_draft(self, draft_uid: str | None) -> None:
         self.deleted.append(draft_uid)
+
+
+def glean_source_draft(result: dict | None = None, recipient: str = "amit.ayre@dialpad.com") -> EmailMessage:
+    message = EmailMessage()
+    message["Subject"] = f"Daily Agentic Business Pulse — {REPORT_DATE}"
+    message["From"] = "amit.ayre@dialpad.com"
+    message["To"] = recipient
+    payload = result or valid_result()
+    message.set_content(
+        payload["report_markdown"]
+        + "\n"
+        + GLEAN_MACHINE_START
+        + "\n"
+        + json.dumps(payload)
+        + "\n"
+        + GLEAN_MACHINE_END
+        + "\n"
+    )
+    return message
+
+
+class FakeRelayArchive(FakeArchive):
+    def __init__(self, source_message: EmailMessage | None = None, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.source_message = source_message or glean_source_draft()
+
+    def wait_for_glean_draft(self, report_date: str, *, wait_seconds: int, poll_seconds: int):
+        if report_date != REPORT_DATE:
+            raise AssertionError(report_date)
+        return "source-7", self.source_message
 
 
 class PulseValidationTests(unittest.TestCase):
@@ -409,6 +444,80 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertFalse(calls)
 
 
+class GleanDraftRelayTests(PulseDeliveryTests):
+    def test_glean_draft_parses_machine_result_and_locks_recipient(self):
+        parsed = parse_glean_draft(
+            glean_source_draft(), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        self.assertEqual(parsed["snapshot"]["report_date"], REPORT_DATE)
+        self.assertIn(WORKFLOW_URL, parsed["report_markdown"])
+
+        with self.assertRaisesRegex(ValidationError, "exactly one recipient"):
+            parse_glean_draft(
+                glean_source_draft(recipient="someone-else@dialpad.com"),
+                report_date=REPORT_DATE,
+                workflow_url=WORKFLOW_URL,
+            )
+
+    def test_html_only_glean_draft_preserves_machine_json(self):
+        payload = valid_result()
+        body = (
+            payload["report_markdown"]
+            + "\n"
+            + GLEAN_MACHINE_START
+            + "\n"
+            + json.dumps(payload)
+            + "\n"
+            + GLEAN_MACHINE_END
+        )
+        message = EmailMessage()
+        message["Subject"] = f"Daily Agentic Business Pulse — {REPORT_DATE}"
+        message["From"] = "amit.ayre@dialpad.com"
+        message["To"] = "amit.ayre@dialpad.com"
+        message.set_content(f"<html><body><pre>{html.escape(body)}</pre></body></html>", subtype="html")
+        parsed = parse_glean_draft(message, report_date=REPORT_DATE, workflow_url=WORKFLOW_URL)
+        self.assertEqual(parsed["data_status"], "complete")
+
+    def test_live_relay_validates_persists_sends_once_and_removes_both_drafts(self):
+        archive = FakeRelayArchive()
+        result = run_pulse_from_glean_draft(
+            self.config,
+            current_time=REPORT_NOW,
+            archive=archive,
+            sender=self.fake_sender,
+        )
+        self.assertEqual(result["run_status"], "success")
+        self.assertEqual(result["email_provider"], "gmail_smtp")
+        self.assertEqual(len(archive.drafts), 1)
+        self.assertEqual(archive.deleted, ["42", "source-7"])
+        self.assertTrue((self.reports_dir / f"{REPORT_DATE}.md").is_file())
+        snapshot = json.loads((self.reports_dir / f"{REPORT_DATE}.json").read_text())
+        self.assertEqual(snapshot["delivery"]["input"], "scheduled_glean_gmail_draft")
+
+    def test_dry_relay_never_sends_or_deletes_source_draft(self):
+        archive = FakeRelayArchive()
+        calls = []
+        config = PulseConfig(**{**self.config.__dict__, "dry_run": True})
+
+        result = run_pulse_from_glean_draft(
+            config,
+            current_time=REPORT_NOW,
+            archive=archive,
+            sender=lambda *args: calls.append(args),
+        )
+        self.assertEqual(result["run_status"], "dry_run_complete")
+        self.assertEqual(result["email_status"], "not_sent_draft_persisted")
+        self.assertFalse(calls)
+        self.assertEqual(archive.deleted, [])
+        self.assertEqual(len(archive.drafts), 1)
+
+    def test_missing_or_malformed_machine_block_fails_closed(self):
+        message = glean_source_draft()
+        message.set_content("# Daily Agentic Business Pulse — 2026-09-15\n")
+        with self.assertRaisesRegex(ValidationError, "machine-readable"):
+            parse_glean_draft(message, report_date=REPORT_DATE, workflow_url=WORKFLOW_URL)
+
+
 class PulseWorkflowTests(unittest.TestCase):
     def test_workflow_has_daily_ist_schedule_manual_dry_run_and_read_only_permissions(self):
         workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
@@ -418,10 +527,9 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("dry_run:", workflow)
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
-        self.assertIn("PULSE_AGENT_URL", workflow)
-        self.assertIn("8f3fd6d966c64916b11b505a580ff64f/runs", workflow)
-        self.assertNotIn("secrets.PULSE_AGENT_URL", workflow)
-        self.assertIn("PULSE_SOURCE_CONTEXT_JSON", workflow)
+        self.assertIn("PULSE_INPUT_MODE: glean_gmail_draft", workflow)
+        self.assertNotIn("PULSE_AGENT_TOKEN", workflow)
+        self.assertNotIn("/api/agents/", workflow)
         self.assertNotIn("fixture", workflow.lower())
         self.assertIn("if: github.event_name != 'pull_request'", workflow)
 

@@ -10,33 +10,24 @@ Pull requests that change the pulse workflow, skill, scripts, operations guide, 
 
 The public repository contains orchestration and validation code only. It does not contain company source credentials, internal document identifiers, reports, snapshots, or raw evidence.
 
-The intended runtime is a Glean Platform Agent because Glean can synthesize the connected Salesforce, Jira, company-document, meeting, and GitHub/code sources behind one permission-aware boundary. This is not automatic merely because a user can open Glean in a browser: Dialpad's Glean tenant must have each connector enabled for the automation identity, the Agent must expose the source-specific fields required by the skill, and GitHub Actions needs approved non-interactive Platform API authentication. An approved adapter may sit in front of the Agent when needed to enforce the JSON contract below.
+Company-data collection runs natively inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`. Its daily 09:00 schedule uses the user's existing Glean permissions and the Agent's approved Salesforce, Jira, company-search/document, email/calendar, and production-code tools. This avoids exporting direct company-source credentials or requiring a Glean Platform API token in GitHub.
 
-The workflow sends one authenticated HTTPS request to that approved Glean Agent/API boundary. The runtime must apply the complete repository skill at `skills/daily-agentic-business-pulse/SKILL.md` and return separate freshness, links, and failure status for Salesforce, Jira, Glean/company documents, and production code. Indexed or live Glean results do not waive those source-by-source quality gates.
+The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
+
+At the same `30 3 * * *` UTC schedule, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, incomplete, or duplicate draft fails closed and uses the existing failure-notification path.
 
 Required repository secrets:
 
-- `PULSE_AGENT_TOKEN`: least-privileged bearer credential approved for unattended Glean Platform Agent execution. Do not add direct Salesforce, Jira, or code-search credentials here.
-- `PULSE_SOURCE_CONTEXT_JSON`: JSON array containing the three approved internal source-context document links.
 - `GMAIL_USER`: existing Beacon Brief Gmail sender account.
 - `GMAIL_APP_PASSWORD`: existing Beacon Brief Gmail app password with SMTP and IMAP access.
 
-The non-secret Agent run endpoint is configured in the workflow for Agent `8f3fd6d966c64916b11b505a580ff64f`. The draft workflow must not be activated or dry-run until `PULSE_AGENT_TOKEN` exists and the Glean Agent input/output schema has been verified against the contract below.
+No `PULSE_AGENT_TOKEN`, direct Salesforce credential, Jira credential, Glean credential, or code-search credential is required by GitHub Actions.
 
-## Company-agent request
+## Glean draft contract
 
-The workflow posts JSON containing:
+The Glean Agent creates a draft with the exact subject `Daily Agentic Business Pulse — YYYY-MM-DD`, exactly one `To` recipient (`amit.ayre@dialpad.com`), and no Cc or Bcc. After the human-readable report, the draft includes one JSON object between the exact markers `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
 
-- the current IST report date/time and workflow URL;
-- the full skill text and its SHA-256 digest;
-- the most recent successful prior snapshot, or `null` on the first run;
-- the four required source classes;
-- the three source-context links supplied from the encrypted secret;
-- the required JSON response shape.
-
-The request payload and bearer credential are never logged.
-
-The agent must return one JSON object:
+The object has this shape:
 
 ```json
 {
@@ -48,7 +39,7 @@ The agent must return one JSON object:
 }
 ```
 
-The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery.
+The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. GitHub removes the machine block from the delivered report and adds the current workflow URL to the source record.
 
 ## Private persistence and delivery
 
@@ -61,7 +52,7 @@ Reports are written during execution to:
 
 That directory is gitignored. Before a live send, the exact email with both files attached is persisted as a Gmail draft. After Gmail SMTP accepts the message, the prepared draft is removed and the Sent copy becomes the durable private report/snapshot archive.
 
-Dry runs retain the prepared Gmail draft and do not call SMTP. The draft subject starts with `[DRY RUN]`.
+Dry runs validate the Glean source draft, retain it, create a private prepared Gmail draft with the Markdown and JSON attachments, and do not call SMTP. The prepared draft subject starts with `[DRY RUN]`.
 
 The live message uses a deterministic RFC Message-ID derived from the IST report date. Before generation, the workflow searches Gmail Sent for that ID. A retry therefore exits successfully without calling the agent or sending another report. If a matching prepared draft exists but no Sent copy can be confirmed, the workflow fails closed and asks for inspection instead of risking a duplicate. GitHub Actions concurrency also prevents overlapping pulse jobs.
 
@@ -82,12 +73,13 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 
 ## Manual verification
 
-1. Confirm the Glean Agent can return current, linked evidence from Salesforce, Jira, company search/documents, and production code under the automation identity; then configure the approved Agent/API endpoint and all required secrets.
-2. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
-3. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
-4. Inspect the `[DRY RUN]` Gmail draft and both attachments.
-5. Run manually with `dry_run=false`.
-6. Confirm exactly one report email, the matching attachments, an accepted Gmail result, and source freshness in the Actions summary.
-7. Re-run live for the same IST date and confirm `duplicate_skipped` / `already_sent`.
+1. Confirm Glean Agent `8f3fd6d966c64916b11b505a580ff64f` is published privately, scheduled daily at 09:00, connected to Gmail MCP, and restricted to `Create Draft` as its only Gmail write tool.
+2. Run the Glean Agent once manually and confirm it creates exactly one draft with the report and machine JSON block.
+3. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
+4. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
+5. Inspect the `[DRY RUN]` Gmail draft and both attachments.
+6. Run manually with `dry_run=false`.
+7. Confirm exactly one report email, the matching attachments, an accepted Gmail result, and source freshness in the Actions summary.
+8. Re-run live for the same IST date and confirm `duplicate_skipped` / `already_sent`.
 
 Fixtures are unit-test inputs only. They are never wired into the GitHub workflow and cannot pass validation as deployed or customer-exposed evidence.

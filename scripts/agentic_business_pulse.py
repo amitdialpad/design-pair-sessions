@@ -12,12 +12,14 @@ import re
 import smtplib
 import ssl
 import tempfile
+import time
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from email import message_from_bytes
 from email.message import EmailMessage, Message
 from email.policy import default as default_email_policy
 from email.utils import getaddresses
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
@@ -70,6 +72,8 @@ SECRET_PATTERNS = (
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
+GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
+GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
 
 
 class PulseError(RuntimeError):
@@ -136,6 +140,9 @@ class PulseConfig:
     allow_insecure_agent_url: bool = False
     imap_host: str = "imap.gmail.com"
     smtp_host: str = "smtp.gmail.com"
+    input_mode: str = "agent_api"
+    glean_draft_wait_seconds: int = 900
+    glean_draft_poll_seconds: int = 30
 
     @classmethod
     def from_env(cls, project_dir: Path) -> "PulseConfig":
@@ -174,6 +181,9 @@ class PulseConfig:
             allow_insecure_agent_url=parse_bool(os.environ.get("PULSE_ALLOW_INSECURE_AGENT_URL"), default=False),
             imap_host=os.environ.get("PULSE_IMAP_HOST", "imap.gmail.com").strip(),
             smtp_host=os.environ.get("PULSE_SMTP_HOST", "smtp.gmail.com").strip(),
+            input_mode=os.environ.get("PULSE_INPUT_MODE", "glean_gmail_draft").strip(),
+            glean_draft_wait_seconds=int(os.environ.get("PULSE_GLEAN_DRAFT_WAIT_SECONDS", "900")),
+            glean_draft_poll_seconds=int(os.environ.get("PULSE_GLEAN_DRAFT_POLL_SECONDS", "30")),
         )
 
 
@@ -566,6 +576,96 @@ def build_email_message(
     return message
 
 
+class _HTMLToText(HTMLParser):
+    """Minimal HTML-to-text conversion for Gmail draft bodies."""
+
+    BLOCK_TAGS = {"br", "div", "h1", "h2", "h3", "li", "p", "pre", "tr"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() in self.BLOCK_TAGS:
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() in self.BLOCK_TAGS:
+            self.parts.append("\n")
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+
+    def text(self) -> str:
+        return "".join(self.parts).replace("\r\n", "\n").replace("\r", "\n")
+
+
+def _decoded_part_text(part: Message) -> str:
+    payload = part.get_payload(decode=True)
+    if not isinstance(payload, bytes):
+        return str(part.get_payload())
+    charset = part.get_content_charset() or "utf-8"
+    try:
+        return payload.decode(charset)
+    except (LookupError, UnicodeDecodeError):
+        return payload.decode("utf-8", errors="replace")
+
+
+def message_body_text(message: Message) -> str:
+    """Return a draft body as text while preserving the machine JSON markers."""
+
+    candidates: list[tuple[str, str]] = []
+    if message.is_multipart():
+        for part in message.walk():
+            if part.get_content_disposition() == "attachment":
+                continue
+            content_type = part.get_content_type()
+            if content_type in {"text/plain", "text/html"}:
+                candidates.append((content_type, _decoded_part_text(part)))
+    else:
+        candidates.append((message.get_content_type(), _decoded_part_text(message)))
+
+    for content_type, body in candidates:
+        if GLEAN_MACHINE_START not in body or GLEAN_MACHINE_END not in body:
+            continue
+        if content_type == "text/html":
+            parser = _HTMLToText()
+            parser.feed(body)
+            return parser.text()
+        return body.replace("\r\n", "\n").replace("\r", "\n")
+    raise ValidationError("Glean Gmail draft is missing the machine-readable report block")
+
+
+def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) -> dict[str, Any]:
+    """Validate the Glean-created envelope and recover its structured agent result."""
+
+    expected_subject = f"{REPORT_SUBJECT_PREFIX} — {report_date}"
+    if str(message.get("Subject", "")).strip() != expected_subject:
+        raise ValidationError(f"Glean Gmail draft subject must be {expected_subject!r}")
+    enforce_message_recipient_contract(message)
+
+    body = message_body_text(message)
+    if body.count(GLEAN_MACHINE_START) != 1 or body.count(GLEAN_MACHINE_END) != 1:
+        raise ValidationError("Glean Gmail draft must contain exactly one machine-readable report block")
+    _, remainder = body.split(GLEAN_MACHINE_START, 1)
+    machine_json, _ = remainder.split(GLEAN_MACHINE_END, 1)
+    try:
+        result = json.loads(machine_json.strip())
+    except json.JSONDecodeError as error:
+        raise ValidationError("Glean Gmail draft machine block is not valid JSON") from error
+    if not isinstance(result, dict):
+        raise ValidationError("Glean Gmail draft machine block must be a JSON object")
+
+    report = result.get("report_markdown")
+    if not isinstance(report, str) or not report.strip():
+        raise ValidationError("Glean Gmail draft machine block must include report_markdown")
+    report = report.rstrip() + "\n"
+    if workflow_url not in report:
+        report += f"\n- Workflow: {workflow_url}\n"
+    result["report_markdown"] = report
+    return result
+
+
 class GmailArchive:
     """Private report persistence and idempotency through the existing Gmail account."""
 
@@ -629,6 +729,66 @@ class GmailArchive:
 
     def draft_message_exists(self, message_id: str) -> bool:
         return self._message_exists(message_id, r"\Drafts", "[Gmail]/Drafts")
+
+    def find_glean_draft(self, report_date: str) -> tuple[str, Message] | None:
+        """Find the one Glean-created draft for an IST report date."""
+
+        client = self._connect()
+        try:
+            mailbox = self._special_mailbox(client, r"\Drafts", "[Gmail]/Drafts")
+            if not self._select(client, mailbox, readonly=True):
+                raise IntegrationError("Could not select Gmail Drafts for the Glean report")
+            status, data = client.uid("search", None, "SUBJECT", f'"{REPORT_SUBJECT_PREFIX}"')
+            if status != "OK":
+                raise IntegrationError("Gmail Glean-draft search failed")
+            expected_subject = f"{REPORT_SUBJECT_PREFIX} — {report_date}"
+            matches: list[tuple[str, Message]] = []
+            for uid in reversed((data[0].split() if data and data[0] else [])[-40:]):
+                status, rows = client.uid("fetch", uid, "(RFC822)")
+                if status != "OK" or not rows:
+                    continue
+                raw = next((item[1] for item in rows if isinstance(item, tuple) and len(item) > 1), None)
+                if not raw:
+                    continue
+                message = message_from_bytes(raw, policy=default_email_policy)
+                if str(message.get("Subject", "")).strip() != expected_subject:
+                    continue
+                try:
+                    enforce_message_recipient_contract(message)
+                except ValidationError:
+                    continue
+                matches.append((uid.decode("ascii"), message))
+            if len(matches) > 1:
+                raise IntegrationError(
+                    f"Multiple Glean drafts exist for {report_date}; refusing an ambiguous or duplicate send"
+                )
+            return matches[0] if matches else None
+        finally:
+            try:
+                client.logout()
+            except Exception:
+                pass
+
+    def wait_for_glean_draft(
+        self,
+        report_date: str,
+        *,
+        wait_seconds: int,
+        poll_seconds: int,
+    ) -> tuple[str, Message]:
+        if wait_seconds < 0 or poll_seconds < 1:
+            raise PulseError("Glean draft wait must be non-negative and polling must be at least one second")
+        deadline = time.monotonic() + wait_seconds
+        while True:
+            found = self.find_glean_draft(report_date)
+            if found:
+                return found
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise IntegrationError(
+                    f"No validated Glean draft appeared for {report_date} within {wait_seconds} seconds"
+                )
+            time.sleep(min(poll_seconds, remaining))
 
     def load_previous_snapshot(self, current_report_date: str) -> dict[str, Any] | None:
         client = self._connect()
@@ -878,3 +1038,120 @@ def run_pulse(
     }
     write_run_result(config.reports_dir, report_date, result)
     return result
+
+
+def run_pulse_from_glean_draft(
+    config: PulseConfig,
+    *,
+    current_time: datetime | None = None,
+    archive: GmailArchive | None = None,
+    sender: Callable[[EmailMessage, PulseConfig], dict[str, Any]] = send_gmail,
+) -> dict[str, Any]:
+    """Validate and deliver the output of a native scheduled Glean Agent run."""
+
+    enforce_only_allowed_recipient(config.recipient)
+    report_now = now_in_timezone(config.timezone_name, current_time)
+    report_date = report_now.date().isoformat()
+    workflow_url = workflow_url_from_env()
+    live_message_id = deterministic_message_id(report_date, dry_run=False)
+
+    if not config.skill_path.is_file():
+        raise IntegrationError(f"Complete pulse skill is missing: {config.skill_path}")
+    if len(config.skill_path.read_text(encoding="utf-8").splitlines()) < 100:
+        raise IntegrationError("Pulse skill appears truncated; refusing to validate a shortened prompt")
+
+    gmail_archive = archive or GmailArchive(config.gmail_user, config.gmail_password, config.imap_host)
+    if not config.dry_run and gmail_archive.sent_message_exists(live_message_id):
+        result = {
+            "report_date": report_date,
+            "run_status": "duplicate_skipped",
+            "email_status": "already_sent",
+            "message_id": live_message_id,
+            "workflow_url": workflow_url,
+        }
+        write_run_result(config.reports_dir, report_date, result)
+        return result
+    prepared_message_id = deterministic_message_id(report_date, dry_run=config.dry_run)
+    if gmail_archive.draft_message_exists(prepared_message_id):
+        raise IntegrationError(
+            "A validated relay draft already exists but no matching Sent copy was confirmed. "
+            "The prior delivery state is ambiguous, so this retry will not risk a duplicate."
+        )
+
+    source_draft_uid, source_message = gmail_archive.wait_for_glean_draft(
+        report_date,
+        wait_seconds=config.glean_draft_wait_seconds,
+        poll_seconds=config.glean_draft_poll_seconds,
+    )
+    agent_result = parse_glean_draft(
+        source_message,
+        report_date=report_date,
+        workflow_url=workflow_url,
+    )
+    report, snapshot = validate_agent_result(
+        agent_result,
+        report_now=report_now,
+        source_max_age_hours=config.source_max_age_hours,
+        workflow_url=workflow_url,
+    )
+    snapshot["delivery"] = {
+        "message_id": prepared_message_id,
+        "mode": "dry_run" if config.dry_run else "live",
+        "input": "scheduled_glean_gmail_draft",
+    }
+    report_path, snapshot_path = persist_output_files(config.reports_dir, report_date, report, snapshot)
+    message = build_email_message(
+        report_date=report_date,
+        report=report,
+        snapshot=snapshot,
+        sender=config.gmail_user,
+        recipient=config.recipient,
+        message_id=prepared_message_id,
+        dry_run=config.dry_run,
+    )
+    prepared_draft_uid = gmail_archive.persist_draft(message)
+
+    if config.dry_run:
+        result = {
+            "report_date": report_date,
+            "run_status": "dry_run_complete",
+            "email_status": "not_sent_draft_persisted",
+            "message_id": prepared_message_id,
+            "workflow_url": workflow_url,
+            "report_path": str(report_path),
+            "snapshot_path": str(snapshot_path),
+            "source_freshness": {
+                source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
+            },
+            "agent_request_id": agent_result.get("agent_request_id", "not_provided"),
+        }
+        write_run_result(config.reports_dir, report_date, result)
+        return result
+
+    email_result = sender(message, config)
+    gmail_archive.delete_draft(prepared_draft_uid)
+    gmail_archive.delete_draft(source_draft_uid)
+    result = {
+        "report_date": report_date,
+        "run_status": "success",
+        "email_status": email_result["status"],
+        "email_provider": email_result["provider"],
+        "message_id": email_result["message_id"],
+        "workflow_url": workflow_url,
+        "report_path": str(report_path),
+        "snapshot_path": str(snapshot_path),
+        "source_freshness": {
+            source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
+        },
+        "agent_request_id": agent_result.get("agent_request_id", "not_provided"),
+    }
+    write_run_result(config.reports_dir, report_date, result)
+    return result
+
+
+def run_configured_pulse(config: PulseConfig) -> dict[str, Any]:
+    if config.input_mode == "glean_gmail_draft":
+        return run_pulse_from_glean_draft(config)
+    if config.input_mode == "agent_api":
+        return run_pulse(config)
+    raise PulseError(f"Unsupported PULSE_INPUT_MODE: {config.input_mode!r}")
