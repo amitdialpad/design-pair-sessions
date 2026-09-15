@@ -819,7 +819,11 @@ class GmailArchive:
 
     @staticmethod
     def _select(client: imaplib.IMAP4_SSL, mailbox: str, readonly: bool) -> bool:
-        status, _ = client.select(mailbox, readonly=readonly)
+        mailbox_argument = mailbox
+        if not (mailbox.startswith('"') and mailbox.endswith('"')):
+            escaped = mailbox.replace("\\", "\\\\").replace('"', '\\"')
+            mailbox_argument = f'"{escaped}"'
+        status, _ = client.select(mailbox_argument, readonly=readonly)
         return status == "OK"
 
     def _message_exists(self, message_id: str, flag: str, fallback: str) -> bool:
