@@ -23,20 +23,29 @@ user = os.environ.get("GMAIL_USER", "").strip()
 password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
 workflow = os.environ.get("WORKFLOW_NAME", "Unknown workflow")
 run_url = os.environ.get("RUN_URL", "")
+subject_prefix = os.environ.get("FAILURE_SUBJECT_PREFIX", "Beacon sync failed")
+description = os.environ.get(
+    "FAILURE_DESCRIPTION",
+    "This means the site or Beacon app may not have received today's update.",
+)
+common_fixes = os.environ.get(
+    "FAILURE_COMMON_FIXES",
+    "  - BEACON_PAT expired → rotate at github.com/settings/tokens and update the secret\n"
+    "  - Anthropic API error → check usage at console.anthropic.com\n"
+    "  - GitHub API rate limit → re-run the workflow in a few minutes",
+)
 
 if not user or not password:
     print("[notify] No Gmail credentials — skipping failure email")
     sys.exit(0)
 
-subject = f"Beacon sync failed: {workflow}"
+subject = f"{subject_prefix}: {workflow}"
 body = (
     f"The '{workflow}' workflow failed on amitdialpad/design-pair-sessions.\n\n"
-    f"This means the site or Beacon app may not have received today's update.\n\n"
+    f"{description}\n\n"
     f"View the failed run:\n{run_url}\n\n"
     f"Common fixes:\n"
-    f"  - BEACON_PAT expired → rotate at github.com/settings/tokens and update the secret\n"
-    f"  - Anthropic API error → check usage at console.anthropic.com\n"
-    f"  - GitHub API rate limit → re-run the workflow in a few minutes\n"
+    f"{common_fixes}\n"
 )
 
 msg = MIMEText(body)

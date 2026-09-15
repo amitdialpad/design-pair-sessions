@@ -1,0 +1,92 @@
+name: Daily Agentic Business Pulse
+
+on:
+  schedule:
+    # 09:00 Asia/Kolkata. GitHub-hosted scheduled jobs can start several minutes late.
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate the current Glean draft and retain a relay draft without sending
+        required: false
+        default: false
+        type: boolean
+  pull_request:
+    paths:
+      - '.github/workflows/daily-agentic-business-pulse.yml'
+      - 'operations/daily-agentic-business-pulse.md'
+      - 'scripts/agentic_business_pulse.py'
+      - 'scripts/run-agentic-business-pulse.py'
+      - 'scripts/notify-failure.py'
+      - 'skills/daily-agentic-business-pulse/**'
+      - 'tests/test_agentic_business_pulse.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate automation
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+  pulse:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    concurrency:
+      group: daily-agentic-business-pulse
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate, validate, persist, and deliver pulse
+        env:
+          PULSE_RECIPIENT: amit.ayre@dialpad.com
+          PULSE_TIMEZONE: Asia/Kolkata
+          PULSE_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+          PULSE_INPUT_MODE: glean_gmail_draft
+          PULSE_SKILL_PATH: skills/daily-agentic-business-pulse/SKILL.md
+          PULSE_REPORTS_DIR: reports/agentic_business_pulse
+          PULSE_SOURCE_MAX_AGE_HOURS: '12'
+          PULSE_GLEAN_DRAFT_WAIT_SECONDS: '900'
+          PULSE_GLEAN_DRAFT_POLL_SECONDS: '30'
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 scripts/run-agentic-business-pulse.py
+
+  notify-failure:
+    if: ${{ always() && github.event_name != 'pull_request' && (needs.validate.result == 'failure' || needs.pulse.result == 'failure') }}
+    needs:
+      - validate
+      - pulse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Notify Amit on failure
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          FAILURE_SUBJECT_PREFIX: Agentic Business Pulse failed
+          FAILURE_DESCRIPTION: The daily pulse did not pass its source, freshness, redaction, persistence, or delivery gates. No normal report email was sent.
+          FAILURE_COMMON_FIXES: |-
+            - Glean draft missing → check Agent 8f3fd6d966c64916b11b505a580ff64f schedule and Gmail MCP connection
+            - Required source incomplete or stale → inspect Glean connector coverage and source freshness
+            - Gmail persistence or send failed → check GMAIL_USER and GMAIL_APP_PASSWORD
+            - Skill missing or shortened → synchronize the complete repository skill
+        run: python3 scripts/notify-failure.py
