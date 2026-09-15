@@ -874,6 +874,8 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         if isinstance(statuses, dict):
             normalized_statuses: list[str] = []
             for status_name, evidence in statuses.items():
+                if status_name == "exists":
+                    status_name = "code_exists"
                 evidence_text = str(evidence).casefold().strip()
                 if status_name not in IMPLEMENTATION_STATUSES:
                     continue
