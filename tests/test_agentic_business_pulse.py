@@ -524,6 +524,10 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             state["evidence_links"] = [
                 f"https://www.google.com/url?q={link}&source=gmail" for link in state.pop("links")
             ]
+        for link in SOURCE_LINKS.values():
+            payload["report_markdown"] = payload["report_markdown"].replace(
+                link, f"https://www.google.com/url?q={link}&source=gmail&ust=1"
+            )
         payload["snapshot"]["customers"][0].pop("name_permitted")
         claim = payload["snapshot"]["implementation_claims"][0]
         claim["statuses"] = {

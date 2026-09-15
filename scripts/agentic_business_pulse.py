@@ -692,6 +692,11 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     if not isinstance(report, str) or not report.strip():
         raise ValidationError("Glean Gmail draft machine block must include report_markdown")
     report = report.rstrip() + "\n"
+    report = re.sub(
+        r"https://(?:www\.)?google\.com/url\?[^)\s\"']+",
+        lambda match: str(_unwrap_gmail_redirect(match.group(0))),
+        report,
+    )
     undated_title = f"# {REPORT_SUBJECT_PREFIX}\n"
     if report.startswith(undated_title):
         report = f"# {REPORT_SUBJECT_PREFIX} — {report_date}\n" + report[len(undated_title):]
