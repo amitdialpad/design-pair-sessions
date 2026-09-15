@@ -507,6 +507,10 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         payload = valid_result()
         payload["data_status"] = "incomplete"
         payload["failures"] = ["Prior successful snapshot unavailable"]
+        payload["agent_request_id"] = (
+            "https://www.google.com/url?q=https://app.glean.com/chat/ae65479207fa42d39377ffdae6084ffd"
+            "&source=gmail"
+        )
         payload["report_markdown"] = payload["report_markdown"].replace(
             f"# Daily Agentic Business Pulse — {REPORT_DATE}",
             "# Daily Agentic Business Pulse",
@@ -554,6 +558,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         )
 
         self.assertTrue(report.startswith(f"# Daily Agentic Business Pulse — {REPORT_DATE}"))
+        self.assertEqual(parsed["agent_request_id"], "ae65479207fa42d39377ffdae6084ffd")
         self.assertEqual(snapshot["comparison_window"]["end"], REPORT_DATE)
         self.assertEqual(snapshot["source_status"]["salesforce"]["status"], "ok")
         self.assertEqual(snapshot["source_status"]["salesforce"]["links"], [SOURCE_LINKS["salesforce"]])

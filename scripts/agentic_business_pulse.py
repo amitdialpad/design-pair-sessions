@@ -703,6 +703,15 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     if workflow_url not in report:
         report += f"\n- Workflow: {workflow_url}\n"
     result["report_markdown"] = report
+    agent_request_id = result.get("agent_request_id")
+    if isinstance(agent_request_id, str) and not re.fullmatch(r"[A-Za-z0-9._:-]{1,200}", agent_request_id):
+        request_url = _unwrap_gmail_redirect(agent_request_id)
+        request_path = urlparse(request_url).path if isinstance(request_url, str) else ""
+        request_slug = request_path.rstrip("/").rsplit("/", 1)[-1]
+        if re.fullmatch(r"[A-Za-z0-9._:-]{1,200}", request_slug):
+            result["agent_request_id"] = request_slug
+        else:
+            result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
     if isinstance(snapshot.get("changes_since_previous"), dict):
