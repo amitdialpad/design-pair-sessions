@@ -30,6 +30,13 @@ from zoneinfo import ZoneInfo
 
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
 REQUIRED_SECTIONS = (
+    "Bottom line",
+    "Numbers that matter",
+    "What matters",
+    "Your focus",
+    "Confidence",
+)
+LEGACY_REPORT_SECTIONS = (
     "Executive readout",
     "Revenue scoreboard",
     "Customer and EAP reality",
@@ -39,7 +46,8 @@ REQUIRED_SECTIONS = (
     "Decisions and actions",
     "Sources and confidence",
 )
-EVIDENCE_LABELS = ("[Verified fact]", "[Signal]", "[Inference]", "[Unknown]")
+VISIBLE_EVIDENCE_LABELS = ("[Verified fact]", "[Signal]", "[Inference]", "[Unknown]", "[Decision]", "[Action]")
+MAX_REPORT_WORDS = 650
 IMPLEMENTATION_STATUSES = {
     "code_exists",
     "tested",
@@ -354,6 +362,24 @@ def _scan_sensitive_text(text: str, path: str) -> None:
         raise ValidationError(f"Unredacted email address found in {path}")
 
 
+def _visible_word_count(report: str) -> int:
+    text = re.sub(r"\[([^]]+)]\(https://[^)]+\)", r"\1", report)
+    text = re.sub(r"https://\S+", "", text)
+    return len(re.findall(r"\b[\w$%.×'-]+\b", text))
+
+
+def _report_section(report: str, section: str, next_section: str | None) -> str:
+    start_match = re.search(rf"(?m)^## {re.escape(section)}\s*$", report)
+    if not start_match:
+        return ""
+    end = len(report)
+    if next_section:
+        end_match = re.search(rf"(?m)^## {re.escape(next_section)}\s*$", report[start_match.end() :])
+        if end_match:
+            end = start_match.end() + end_match.start()
+    return report[start_match.end() : end].strip()
+
+
 def validate_agent_result(
     result: dict[str, Any],
     *,
@@ -382,8 +408,6 @@ def validate_agent_result(
     if not isinstance(report, str) or not report.strip():
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
-    if data_status == "incomplete" and "data incomplete" not in report.casefold():
-        raise ValidationError("An incomplete report must be clearly labeled Data incomplete")
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
     report_date = report_now.date().isoformat()
 
@@ -396,9 +420,37 @@ def validate_agent_result(
     positions = [report.index(f"## {section}") for section in REQUIRED_SECTIONS]
     if positions != sorted(positions):
         raise ValidationError("Required report sections are out of order")
-    for label in EVIDENCE_LABELS:
-        if label not in report:
-            raise ValidationError(f"Report must use evidence label {label}")
+    for section in LEGACY_REPORT_SECTIONS:
+        if re.search(rf"(?m)^## {re.escape(section)}\s*$", report):
+            raise ValidationError(f"Legacy detail section is not allowed in the manager brief: {section}")
+    for label in VISIBLE_EVIDENCE_LABELS:
+        if label.casefold() in report.casefold():
+            raise ValidationError(f"Evidence labels belong in the snapshot, not the human report: {label}")
+    word_count = _visible_word_count(report)
+    if word_count > MAX_REPORT_WORDS:
+        raise ValidationError(f"Manager brief is {word_count} words; maximum is {MAX_REPORT_WORDS}")
+
+    insight_body = _report_section(report, "What matters", "Your focus")
+    insight_headings = re.findall(r"(?m)^### [^#\n].+$", insight_body)
+    if len(insight_headings) != 3:
+        raise ValidationError("What matters must contain exactly three insight headlines")
+    if len(re.findall(r"(?m)^### [^#\n].+$", report)) != 3:
+        raise ValidationError("Only the three What matters insight headlines may use level-three headings")
+
+    numbers_body = _report_section(report, "Numbers that matter", "What matters")
+    number_items = re.findall(r"(?m)^-\s+\S", numbers_body)
+    if not 3 <= len(number_items) <= 4:
+        raise ValidationError("Numbers that matter must contain three or four scannable metrics")
+
+    focus_body = _report_section(report, "Your focus", "Confidence")
+    focus_items = re.findall(r"(?m)^(?:-\s+|\d+[.)]\s+)\S", focus_body)
+    if not 1 <= len(focus_items) <= 3:
+        raise ValidationError("Your focus must contain one to three actions")
+
+    if data_status == "incomplete":
+        confidence_body = _report_section(report, "Confidence", None)
+        if "data incomplete" not in confidence_body.casefold():
+            raise ValidationError("An incomplete report must say Data incomplete in Confidence")
 
     if snapshot.get("schema_version") != 1:
         raise ValidationError("snapshot.schema_version must be 1")
@@ -528,6 +580,8 @@ def _inline_markdown(value: str) -> str:
         escaped,
     )
     escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
+    escaped = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", escaped)
+    escaped = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#f3f1f8;padding:1px 4px\">\1</code>", escaped)
     return escaped
 
@@ -535,40 +589,68 @@ def _inline_markdown(value: str) -> str:
 def markdown_to_email_html(report: str) -> str:
     parts: list[str] = []
     in_list = False
+    list_type = "ul"
+    current_section = ""
+
+    def close_list() -> None:
+        nonlocal in_list
+        if in_list:
+            parts.append(f"</{list_type}>")
+            in_list = False
+
     for raw_line in report.splitlines():
         line = raw_line.strip()
         if line.startswith("# "):
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f'<h1 style="font-size:28px;line-height:1.25;margin:0 0 24px">{_inline_markdown(line[2:])}</h1>')
+            close_list()
+            parts.append('<div style="width:48px;height:4px;background:#7c5ce7;border-radius:4px;margin:0 0 22px"></div>')
+            parts.append(f'<h1 style="font-size:28px;line-height:1.2;letter-spacing:-0.4px;margin:0 0 12px;color:#19171c">{_inline_markdown(line[2:])}</h1>')
         elif line.startswith("## "):
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f'<h2 style="font-size:18px;margin:28px 0 10px">{_inline_markdown(line[3:])}</h2>')
+            close_list()
+            current_section = line[3:]
+            parts.append(f'<h2 style="font-size:17px;line-height:1.3;margin:30px 0 12px;color:#19171c">{_inline_markdown(current_section)}</h2>')
+        elif line.startswith("### "):
+            close_list()
+            parts.append(f'<h3 style="font-size:16px;line-height:1.35;margin:22px 0 6px;color:#33295c">{_inline_markdown(line[4:])}</h3>')
         elif line.startswith("- "):
+            if current_section == "Numbers that matter":
+                close_list()
+                parts.append(
+                    '<div style="border:1px solid #e7e2f2;border-radius:10px;padding:12px 14px;'
+                    f'margin:0 0 8px;background:#faf9fd">{_inline_markdown(line[2:])}</div>'
+                )
+            else:
+                if not in_list:
+                    list_type = "ul"
+                    parts.append('<ul style="padding-left:21px;margin:0 0 16px">')
+                    in_list = True
+                parts.append(f'<li style="margin:0 0 9px;padding-left:2px">{_inline_markdown(line[2:])}</li>')
+        elif re.match(r"^\d+[.)]\s+", line):
             if not in_list:
-                parts.append('<ul style="padding-left:20px;margin:0 0 16px">')
+                list_type = "ol"
+                parts.append('<ol style="padding-left:24px;margin:0 0 16px">')
                 in_list = True
-            parts.append(f'<li style="margin:0 0 7px">{_inline_markdown(line[2:])}</li>')
+            item = re.sub(r"^\d+[.)]\s+", "", line)
+            parts.append(f'<li style="margin:0 0 11px;padding-left:3px">{_inline_markdown(item)}</li>')
         elif not line:
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
+            close_list()
         else:
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f'<p style="margin:0 0 14px">{_inline_markdown(line)}</p>')
-    if in_list:
-        parts.append("</ul>")
+            close_list()
+            if current_section == "Bottom line":
+                style = "margin:0;padding:17px 18px;background:#f2effb;border-left:4px solid #7c5ce7;border-radius:8px;font-size:16px;line-height:1.55"
+            elif current_section == "Confidence":
+                style = "margin:0 0 8px;color:#65606d;font-size:13px;line-height:1.55"
+            elif not current_section and line.startswith(("_", "*")):
+                style = "margin:0 0 22px;color:#716b79;font-size:13px"
+            else:
+                style = "margin:0 0 14px"
+            parts.append(f'<p style="{style}">{_inline_markdown(line)}</p>')
+    close_list()
     body = "\n".join(parts)
     return (
-        '<!doctype html><html><body style="margin:0;background:#ffffff">'
-        '<main style="max-width:680px;margin:0 auto;padding:40px 28px;'
+        '<!doctype html><html><body style="margin:0;background:#f5f4f7;padding:24px 10px">'
+        '<main style="max-width:680px;margin:0 auto;padding:38px 34px;background:#ffffff;border:1px solid #ebe8ef;border-radius:14px;'
         "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;"
-        f'font-size:15px;line-height:1.6;color:#202124">{body}</main></body></html>'
+        f'font-size:15px;line-height:1.6;color:#312e35">{body}</main></body></html>'
     )
 
 
@@ -697,11 +779,16 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         lambda match: str(_unwrap_gmail_redirect(match.group(0))),
         report,
     )
+    report = re.sub(
+        r"&(?:amp;)?source=gmail(?:&(?:amp;)?ust=\d+)?(?:&(?:amp;)?sa=[A-Za-z])?",
+        "",
+        report,
+    )
     undated_title = f"# {REPORT_SUBJECT_PREFIX}\n"
     if report.startswith(undated_title):
         report = f"# {REPORT_SUBJECT_PREFIX} — {report_date}\n" + report[len(undated_title):]
     if workflow_url not in report:
-        report += f"\n- Workflow: {workflow_url}\n"
+        report += f"\n[Workflow run]({workflow_url})\n"
     result["report_markdown"] = report
     agent_request_id = result.get("agent_request_id")
     if isinstance(agent_request_id, str) and not re.fullmatch(r"[A-Za-z0-9._:-]{1,200}", agent_request_id):

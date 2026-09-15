@@ -39,7 +39,7 @@ The object has this shape:
 }
 ```
 
-The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, and implementation status maps; it does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block from the delivered report and adds the current workflow URL to the source record.
+The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The human report is a manager brief capped at 650 words: Bottom line, three or four Numbers that matter, exactly three synthesized What matters insights, up to three designer-manager moves under Your focus, and a short Confidence note. Evidence labels, exhaustive Jira detail, implementation-state inventories, and exact calculations remain in the structured snapshot rather than the email. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, Gmail tracking redirects, and implementation status maps; it does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block from the delivered report and adds the current workflow URL to Confidence.
 
 ## Private persistence and delivery
 
@@ -64,7 +64,7 @@ Normal report delivery stops when:
 - the current IST date or comparison window is invalid;
 - revenue and pipeline are not structurally separated;
 - Agentic ACV and total bundled amounts are not structurally separated;
-- required sections, source links, evidence labels, or implementation states are missing;
+- the manager brief exceeds 650 words, uses legacy evidence labels/detail sections, lacks exactly three insights, or omits required source links or implementation states from its evidence record;
 - prototype/mock/fixture evidence is described as deployed or customer-exposed;
 - credentials, raw payloads, tool arguments, transcripts, or unredacted email addresses are detected;
 - private Gmail persistence or idempotency checks fail.
