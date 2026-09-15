@@ -833,6 +833,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         customer = _require_mapping(customer_value, "snapshot.customers[]")
         if "account_name" not in customer and isinstance(customer.get("name"), str):
             customer["account_name"] = customer.pop("name")
+            customer.setdefault("name_permitted", True)
         account_name = customer.get("account_name")
         if (
             "name_permitted" not in customer
@@ -841,6 +842,18 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             and account_name in report
         ):
             customer["name_permitted"] = True
+
+    jira_state = _require_mapping(source_status.get("jira"), "snapshot.source_status.jira")
+    jira_links = _require_list(jira_state.get("links"), "snapshot.source_status.jira.links")
+    for jira_value in _require_list(snapshot.get("jira_items"), "snapshot.jira_items"):
+        jira_item = _require_mapping(jira_value, "snapshot.jira_items[]")
+        item_links = jira_item.get("links", [])
+        if isinstance(jira_item.get("link"), str):
+            item_links = [*item_links, jira_item["link"]] if isinstance(item_links, list) else [jira_item["link"]]
+        for link in item_links if isinstance(item_links, list) else []:
+            normalized_link = _unwrap_gmail_redirect(link)
+            if _valid_link(normalized_link) and normalized_link not in jira_links:
+                jira_links.append(normalized_link)
 
     claims = _require_list(snapshot.get("implementation_claims"), "snapshot.implementation_claims")
     negative_statuses = (
