@@ -16,6 +16,7 @@ from beacon_changes import (
     clean_source_markdown,
     enrich_commit,
     fetch_commits,
+    is_designer_facing,
     new_commits_since,
 )
 
@@ -27,28 +28,9 @@ MARKER_START = "<!-- BEACON_RELEASES_START -->"
 MARKER_END = "<!-- BEACON_RELEASES_END -->"
 VISIBLE_COUNT = 8
 
-_VISIBLE_PREFIXES = (
-    "apps/beacon/src/",
-    "apps/beacon/public/",
-    "apps/beacon/data/",
-    "apps/beacon/mock-engine/",
-)
-_SKIP_FILE_PATTERNS = (".spec.", ".test.", "/tests/", "__tests__")
-
-
-def _designer_facing_files(change: dict) -> list[str]:
-    return [
-        name
-        for name in change.get("files", [])
-        if name.startswith(_VISIBLE_PREFIXES) and not any(pattern in name for pattern in _SKIP_FILE_PATTERNS)
-    ]
-
-
 def summarize_change(change: dict) -> tuple[str, str] | None:
     """Create a conservative entry directly from the PR title and description."""
-    if re.match(r"^(docs|chore|test|ci|build)(\([^)]*\))?:", change["title"], flags=re.I):
-        return None
-    if not _designer_facing_files(change):
+    if not is_designer_facing(change):
         return None
 
     title = re.sub(r"^(feat|fix|bug|refactor)(\([^)]*\))?:\s*", "", change["title"], flags=re.I)

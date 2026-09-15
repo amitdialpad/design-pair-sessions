@@ -12,6 +12,13 @@ from urllib.parse import urlencode
 REPO = "dialpad/design"
 BEACON_PATH = "apps/beacon"
 MONOREPO_CUTOVER_AT = "2026-08-26T00:00:00Z"
+DESIGNER_FACING_PREFIXES = (
+    "apps/beacon/src/",
+    "apps/beacon/public/",
+    "apps/beacon/data/",
+    "apps/beacon/mock-engine/",
+)
+SKIP_FILE_PATTERNS = (".spec.", ".test.", "/tests/", "__tests__")
 
 
 class GitHubError(RuntimeError):
@@ -124,3 +131,19 @@ def clean_source_markdown(text: str, limit: int = 2600) -> str:
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     return text[:limit].rstrip()
 
+
+def designer_facing_files(change: dict) -> list[str]:
+    """Return changed files that can affect the Beacon experience or its demo data."""
+    return [
+        name
+        for name in change.get("files", [])
+        if name.startswith(DESIGNER_FACING_PREFIXES)
+        and not any(pattern in name for pattern in SKIP_FILE_PATTERNS)
+    ]
+
+
+def is_designer_facing(change: dict) -> bool:
+    """Exclude documentation, chores, CI, and test-only changes from team updates."""
+    if re.match(r"^(docs|chore|test|ci|build)(\([^)]*\))?:", change.get("title", ""), flags=re.I):
+        return False
+    return bool(designer_facing_files(change))

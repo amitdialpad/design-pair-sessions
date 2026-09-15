@@ -18,6 +18,7 @@ Exit codes:
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -30,7 +31,7 @@ from email.mime.text import MIMEText
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-from beacon_changes import GitHubError, clean_source_markdown, enrich_commit, fetch_commits
+from beacon_changes import GitHubError, clean_source_markdown, enrich_commit, fetch_commits, is_designer_facing
 
 PROJECT_DIR    = Path(__file__).parent.parent
 INDEX          = PROJECT_DIR / "docs" / "index.md"
@@ -71,7 +72,8 @@ def get_week_context(now: datetime | None = None) -> tuple[datetime, datetime, s
 def get_beacon_changes(monday: datetime, sunday: datetime) -> list[dict]:
     """Fetch exact prior-week monorepo source material or stop the send."""
     commits = fetch_commits(since=monday, until=sunday)
-    return [enrich_commit(commit) for commit in commits]
+    changes = [enrich_commit(commit) for commit in commits]
+    return [change for change in changes if is_designer_facing(change)]
 
 
 def get_weekly_notes() -> str:
@@ -107,6 +109,7 @@ def _summary(change: dict) -> str:
     summary = re.sub(r"`([^`]+)`", r"\1", summary)
     summary = re.sub(r"\[([^]]+)]\([^)]*\)", r"\1", summary)
     summary = re.sub(r"\s+", " ", summary).strip()
+    summary = re.sub(r"(?i)^Migrates\b", "This merged change migrates", summary)
     return summary[:897].rstrip() + "..." if len(summary) > 900 else summary
 
 
@@ -138,7 +141,7 @@ def generate_brief(week_range: str, changes: list[dict], notes: str) -> str:
         else:
             opening = (
                 f"{len(changes)} changes merged into Beacon this week: "
-                + "; ".join(title.lower() for title in titles)
+                + "; ".join(titles)
                 + ". The details below come directly from the merged monorepo PRs."
             )
         change_lines = []
@@ -148,10 +151,11 @@ def generate_brief(week_range: str, changes: list[dict], notes: str) -> str:
         actual_changes = "\n".join(change_lines)
         bigger_shift = (
             f"This was a focused week with {len(changes)} merged Beacon change"
-            f"{'s' if len(changes) != 1 else ''}. No broader pattern is claimed beyond those source records."
+            f"{'s' if len(changes) != 1 else ''}. No broader pattern is claimed beyond "
+            f"{'those source records' if len(changes) != 1 else 'that source record'}."
         )
         messy = "No unresolved issue was explicitly documented in this week's merged Beacon changes."
-        remember = f"The week's Beacon record is {', '.join(title.lower() for title in titles)}."
+        remember = f"The week's Beacon record is {', '.join(titles)}."
     else:
         opening = "No changes touching `apps/beacon` merged into the `dialpad/design` monorepo this week."
         actual_changes = "No Beacon changes were merged during this Monday-to-Sunday window."
@@ -226,6 +230,18 @@ def load_recipients() -> list[str]:
         data = json.loads(RECIPIENTS.read_text())
         return data.get("recipients", [])
     return []
+
+
+def validate_recipients(recipients: list[str]) -> list[str]:
+    """Fail closed on an empty, duplicated, or malformed team recipient list."""
+    if not recipients:
+        raise ValueError("No Beacon Brief email recipients are configured")
+    if len(recipients) != len(set(recipients)):
+        raise ValueError("Beacon Brief recipient list contains duplicates")
+    invalid = [address for address in recipients if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", address)]
+    if invalid:
+        raise ValueError(f"Beacon Brief recipient list contains {len(invalid)} malformed address(es)")
+    return recipients
 
 
 def _inline(text: str) -> str:
@@ -436,7 +452,10 @@ def send_email(subject: str, plain_text: str, issue: str, recipients: list[str])
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
             server.login(gmail_user, gmail_pass)
-            server.sendmail(gmail_user, recipients, msg.as_string())
+            refused = server.sendmail(gmail_user, recipients, msg.as_string())
+            if refused:
+                print(f"[warn] SMTP refused {len(refused)} recipient(s)", file=sys.stderr)
+                return False
         print(f"  Email sent to {len(recipients)} recipient(s) (BCC).")
         return True
     except Exception as e:
@@ -506,13 +525,42 @@ def send_dialpad_dms(week_range: str, contact_keys: list[str]) -> bool:
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate and send the weekly Beacon Brief")
+    parser.add_argument("--dry-run", action="store_true", help="Validate and render without writing or sending")
+    parser.add_argument(
+        "--as-of",
+        help="ISO timestamp used to calculate the prior week during a dry run",
+    )
+    return parser.parse_args()
+
+
+def parse_as_of(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 def main():
-    monday, sunday, week_range = get_week_context()
+    args = parse_args()
+    if args.as_of and not args.dry_run:
+        print("[error] --as-of is only allowed with --dry-run", file=sys.stderr)
+        sys.exit(2)
+    try:
+        as_of = parse_as_of(args.as_of)
+    except ValueError as error:
+        print(f"[error] Invalid --as-of timestamp: {error}", file=sys.stderr)
+        sys.exit(2)
+
+    monday, sunday, week_range = get_week_context(as_of)
     print(f"Generating Beacon Brief for week of {week_range}...")
 
     # Guard: skip if a brief for this week already exists (line-exact match)
     existing_content = INDEX.read_text()
-    if f"\n### Week of {week_range}\n" in existing_content:
+    if not args.dry_run and f"\n### Week of {week_range}\n" in existing_content:
         print(f"Brief for week of {week_range} already exists — skipping.")
         sys.exit(1)
 
@@ -529,22 +577,43 @@ def main():
     if not issue:
         sys.exit(2)
 
+    try:
+        recipients = validate_recipients(load_recipients())
+    except ValueError as error:
+        print(f"[error] {error}", file=sys.stderr)
+        sys.exit(2)
+
+    subject = f"Beacon Brief: week of {week_range}"
+    html = build_html_email(issue)
+    if args.dry_run:
+        refs = [f"dialpad/design#{change['pr_number']}" for change in changes if change.get("pr_number")]
+        print("Dry run passed. Nothing was written or sent.")
+        print(f"  Subject: {subject}")
+        print(f"  Team email recipients: {len(recipients)}")
+        print(f"  Designer-facing changes: {len(changes)} ({', '.join(refs) if refs else 'none'})")
+        print(f"  HTML bytes: {len(html.encode())}")
+        sys.exit(0)
+
     print("  Writing to docs/index.md...")
     content     = INDEX.read_text()
     new_content = prepend_to_brief(content, issue)
+    if new_content == content:
+        print("[error] Beacon Brief page content was not updated", file=sys.stderr)
+        sys.exit(2)
     INDEX.write_text(new_content)
 
     print("  Rebalancing archive...")
     result = subprocess.run(["python3", str(ARCHIVE_SCRIPT)], capture_output=True, text=True)
     print(f"  {result.stdout.strip()}")
     if result.returncode != 0:
-        print(f"[warn] archive-briefs: {result.stderr.strip()}", file=sys.stderr)
+        print(f"[error] archive-briefs: {result.stderr.strip()}", file=sys.stderr)
+        sys.exit(2)
 
     # Send email
     print("  Sending email...")
-    recipients = load_recipients()
-    subject = f"Beacon Brief: week of {week_range}"
-    send_email(subject, issue, issue, recipients)
+    if not send_email(subject, issue, issue, recipients):
+        print("[error] Beacon Brief email was not accepted for all recipients", file=sys.stderr)
+        sys.exit(2)
 
     # Send Dialpad DMs
     print("  Sending Dialpad DMs...")

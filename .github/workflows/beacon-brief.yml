@@ -5,6 +5,16 @@ on:
     # Monday 4:30 AM UTC = 10 AM IST
     - cron: '30 4 * * 1'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Generate and validate without writing or sending
+        required: true
+        default: true
+        type: boolean
+      as_of:
+        description: Optional ISO timestamp for dry-run week calculation
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -13,6 +23,9 @@ permissions:
 jobs:
   generate-brief:
     runs-on: ubuntu-latest
+    env:
+      BRIEF_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+      BRIEF_AS_OF: ${{ inputs.as_of || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -23,11 +36,19 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DIALPAD_BEARER_TOKEN: ${{ secrets.DIALPAD_BEARER_TOKEN }}
         id: brief
-        run: python3 scripts/generate-brief.py
-        continue-on-error: true
+        run: |
+          if [ "$BRIEF_DRY_RUN" = "true" ]; then
+            if [ -n "$BRIEF_AS_OF" ]; then
+              python3 scripts/generate-brief.py --dry-run --as-of "$BRIEF_AS_OF"
+            else
+              python3 scripts/generate-brief.py --dry-run
+            fi
+          else
+            python3 scripts/generate-brief.py
+          fi
 
       - name: Commit and push
-        if: steps.brief.outcome == 'success'
+        if: steps.brief.outcome == 'success' && env.BRIEF_DRY_RUN != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -36,7 +57,7 @@ jobs:
           git pull --rebase && git push
 
       - name: Trigger site deploy
-        if: steps.brief.outcome == 'success'
+        if: steps.brief.outcome == 'success' && env.BRIEF_DRY_RUN != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions
