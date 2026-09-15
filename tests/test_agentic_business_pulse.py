@@ -656,6 +656,89 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertNotIn("&source=gmail", report)
         self.assertNotIn("&ust=", report)
 
+    def test_healthy_sources_with_secondary_gaps_do_not_mark_report_incomplete(self):
+        payload = valid_result()
+        payload["data_status"] = "incomplete"
+        payload["failures"] = ["Prior successful pulse snapshot unavailable"]
+        payload["snapshot"]["metrics"]["eap"] = {
+            "customer_count": None,
+            "usage_7d": None,
+            "outcome_metric": None,
+        }
+        payload["snapshot"]["unknowns"] = [
+            "Current EAP customer count and outcome baseline",
+            "End-to-end deployment, flag state, and customer-exposure proof",
+            "Prior successful pulse deltas",
+        ]
+        payload["report_markdown"] = payload["report_markdown"].replace(
+            "Salesforce, Jira, company evidence, and production code were refreshed. "
+            "Deployment telemetry remains the only material gap.",
+            "Data incomplete here: Salesforce, Jira, company evidence, and production code were refreshed; "
+            "the missing evidence is an earlier successful snapshot, current EAP outcomes, and deployment proof.",
+        )
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        report, snapshot = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertEqual(parsed["data_status"], "complete")
+        self.assertEqual(parsed["failures"], [])
+        self.assertEqual(snapshot["data_status"], "complete")
+        self.assertNotIn("Data incomplete", report)
+        self.assertIn("All required sources were refreshed for this report.", report)
+        self.assertIn("Customer-value conclusions remain directional", report)
+        self.assertIn("Production exposure is stated only where", report)
+        self.assertEqual(report.count(f"[Workflow run]({WORKFLOW_URL})"), 1)
+
+    def test_missing_core_metric_remains_incomplete(self):
+        payload = valid_result()
+        payload["data_status"] = "incomplete"
+        payload["snapshot"]["metrics"]["revenue"]["target_agentic_acv"] = None
+        payload["report_markdown"] = payload["report_markdown"].replace(
+            "Salesforce, Jira, company evidence, and production code were refreshed.",
+            "Data incomplete: Salesforce, Jira, company evidence, and production code were refreshed, "
+            "but the current target was unavailable.",
+        )
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        _, snapshot = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertEqual(snapshot["data_status"], "incomplete")
+
+    def test_complete_healthy_result_cannot_deliver_stale_incomplete_copy(self):
+        payload = valid_result()
+        payload["report_markdown"] = payload["report_markdown"].replace(
+            "Salesforce, Jira, company evidence, and production code were refreshed. "
+            "Deployment telemetry remains the only material gap.",
+            "Data incomplete here: an old generic warning survived in the draft.",
+        )
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        report, _ = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertNotIn("Data incomplete", report)
+        self.assertIn("All required sources were refreshed for this report.", report)
+
     def test_live_relay_validates_persists_sends_once_and_removes_both_drafts(self):
         archive = FakeRelayArchive()
         result = run_pulse_from_glean_draft(

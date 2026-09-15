@@ -82,6 +82,19 @@ REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
+CORE_REVENUE_FIELDS = (
+    "booked_agentic_acv",
+    "booked_total_bundled_amount",
+    "target_agentic_acv",
+    "gap_agentic_acv",
+    "attainment_pct",
+    "pace_agentic_acv",
+)
+CORE_PIPELINE_FIELDS = (
+    "qualified_agentic_acv",
+    "total_bundled_opportunity_amount",
+    "coverage_ratio",
+)
 
 
 class PulseError(RuntimeError):
@@ -385,6 +398,114 @@ def _report_section(report: str, section: str, next_section: str | None) -> str:
     return report[start_match.end() : end].strip()
 
 
+def _is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _is_secondary_limitation(value: Any) -> bool:
+    """Return whether an agent-reported gap limits scope without invalidating the pulse."""
+
+    text = str(value).casefold()
+    patterns = (
+        r"(?:prior|previous|earlier).{0,40}(?:snapshot|pulse|report)",
+        r"eap.{0,40}(?:count|baseline|outcome|usage|conversion|roi)",
+        r"target.{0,40}(?:owner|change|history|log)",
+        r"(?:deployment|deployed|flag state|customer[- ]?exposure|instrumentation).{0,40}(?:proof|evidence|record|status)",
+    )
+    return any(re.search(pattern, text) for pattern in patterns)
+
+
+def _healthy_report_has_core_metrics(snapshot: dict[str, Any]) -> bool:
+    source_status = snapshot.get("source_status")
+    metrics = snapshot.get("metrics")
+    if not isinstance(source_status, dict) or not isinstance(metrics, dict):
+        return False
+    if not all(
+        isinstance(source_status.get(source), dict)
+        and source_status[source].get("status") == "ok"
+        for source in REQUIRED_SOURCES
+    ):
+        return False
+    revenue = metrics.get("revenue")
+    pipeline = metrics.get("pipeline")
+    if not isinstance(revenue, dict) or not isinstance(pipeline, dict):
+        return False
+    return all(_is_number(revenue.get(field)) for field in CORE_REVENUE_FIELDS) and all(
+        _is_number(pipeline.get(field)) for field in CORE_PIPELINE_FIELDS
+    )
+
+
+def _concise_confidence(report: str, snapshot: dict[str, Any], workflow_url: str) -> str:
+    """Replace an over-broad incomplete warning with claim-scoped confidence."""
+
+    match = re.search(r"(?ms)^## Confidence\s*\n.*\Z", report)
+    if not match:
+        return report
+    report_before_confidence = report[: match.start()].rstrip()
+    unknowns = " ".join(str(item) for item in snapshot.get("unknowns", [])).casefold()
+    sentences = ["All required sources were refreshed for this report."]
+    if re.search(r"eap|outcome|usage|conversion|roi|customer value", unknowns):
+        sentences.append(
+            "Customer-value conclusions remain directional because current EAP outcome metrics were not available."
+        )
+    if re.search(r"deploy|customer[- ]?exposure|flag|instrument", unknowns):
+        sentences.append(
+            "Production exposure is stated only where the linked evidence verifies it."
+        )
+
+    source_labels = {
+        "salesforce": "Salesforce",
+        "jira": "Jira",
+        "glean": "Company evidence",
+        "production_code": "Production code",
+    }
+    missing_citations: list[str] = []
+    source_status = snapshot.get("source_status", {})
+    for source in REQUIRED_SOURCES:
+        state = source_status.get(source, {}) if isinstance(source_status, dict) else {}
+        links = state.get("links", []) if isinstance(state, dict) else []
+        if isinstance(links, list) and links and not any(link in report_before_confidence for link in links):
+            missing_citations.append(f"[{source_labels[source]}]({links[0]})")
+    if missing_citations:
+        sentences.append("Sources: " + " · ".join(missing_citations) + ".")
+    sentences.append(f"[Workflow run]({workflow_url})")
+    return report_before_confidence + "\n\n## Confidence\n\n" + " ".join(sentences) + "\n"
+
+
+def _normalize_healthy_data_status(result: dict[str, Any], workflow_url: str) -> None:
+    """Treat secondary evidence gaps as scoped unknowns, not a failed overall report."""
+
+    declared_status = result.get("data_status")
+    if declared_status not in {"complete", "incomplete"}:
+        return
+    snapshot = result.get("snapshot")
+    failures = result.get("failures", [])
+    if not isinstance(snapshot, dict) or not isinstance(failures, list):
+        return
+    if failures and (
+        declared_status == "complete" or not all(_is_secondary_limitation(item) for item in failures)
+    ):
+        return
+    if not _healthy_report_has_core_metrics(snapshot):
+        return
+
+    unknowns = snapshot.get("unknowns")
+    if isinstance(unknowns, list):
+        for item in failures:
+            limitation = str(item).strip()
+            if limitation and limitation not in unknowns:
+                unknowns.append(limitation)
+    if declared_status == "incomplete":
+        result["failures"] = []
+        result["data_status"] = "complete"
+        snapshot["data_status"] = "complete"
+    report = result.get("report_markdown")
+    confidence = _report_section(report, "Confidence", None) if isinstance(report, str) else ""
+    should_rewrite_confidence = declared_status == "incomplete" or "data incomplete" in confidence.casefold()
+    if isinstance(report, str) and should_rewrite_confidence:
+        result["report_markdown"] = _concise_confidence(report, snapshot, workflow_url)
+
+
 def validate_agent_result(
     result: dict[str, Any],
     *,
@@ -452,10 +573,12 @@ def validate_agent_result(
     if not 1 <= len(focus_items) <= 3:
         raise ValidationError("Your focus must contain one to three actions")
 
+    confidence_body = _report_section(report, "Confidence", None)
     if data_status == "incomplete":
-        confidence_body = _report_section(report, "Confidence", None)
         if "data incomplete" not in confidence_body.casefold():
             raise ValidationError("An incomplete report must say Data incomplete in Confidence")
+    elif "data incomplete" in confidence_body.casefold():
+        raise ValidationError("A complete report cannot say Data incomplete in Confidence")
 
     if snapshot.get("schema_version") != 1:
         raise ValidationError("snapshot.schema_version must be 1")
@@ -877,6 +1000,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
                 normalized_statuses.append(status_name)
             claim["status_details"] = statuses
             claim["statuses"] = normalized_statuses
+    _normalize_healthy_data_status(result, workflow_url)
     return result
 
 

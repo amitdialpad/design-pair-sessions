@@ -1,5 +1,5 @@
 ---
-name: Daily Agentic Business Pulse
+name: daily-agentic-business-pulse
 description: Produces a daily evidence-based view of Dialpad Agentic revenue, pipeline, customer pain, Jira delivery risk, EAP performance, onboarding, and expansion signals, then prepares or sends the report to Amit Ayre.
 ---
 # Daily Agentic Business Pulse
@@ -31,7 +31,7 @@ Use live company sources first. Prefer the most recent authoritative source for 
 
 ### 1. Establish the reporting window
 
-Use the current date in the user's preferred timezone. Compare against the most recent successful report and the prior business day or seven-day baseline, depending on the metric. State the comparison window explicitly.
+Use the current date in the user's preferred timezone. Compare against the most recent successful report and the prior business day or seven-day baseline, depending on the metric. State the comparison window explicitly. If no earlier structured snapshot is available, report current facts without inventing a delta; that continuity gap alone does not make the current report incomplete.
 
 ### 2. Refresh revenue and pipeline
 
@@ -128,7 +128,9 @@ Give Amit no more than three designer-manager moves. Each must be something he c
 
 ## Confidence
 
-Use one short paragraph. Say which source families were refreshed and name only the missing evidence that could change a conclusion. If data is incomplete, say so here in plain language; do not put `Data incomplete` at the top of the email.
+Use one short paragraph, normally one or two sentences. If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete` and begin with `All required sources were refreshed for this report.` Missing prior snapshots, EAP counts or outcome baselines, target-owner history, and deployment/flag/customer-exposure proof are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
+
+Use `data_status: incomplete` only when a required headline metric is unavailable despite a healthy source refresh. In that case, say `Data incomplete` here and identify the specific decision affected. A missing, failed, or stale required source is a source failure and must follow the failure path rather than producing a normal report. Never use `Data incomplete` as a generic disclaimer or inventory every desirable-but-unavailable field in the email.
 
 ### Editorial rules
 
@@ -314,4 +316,4 @@ If code search returns no authoritative result, record `Code evidence unavailabl
 
 ## Quality bar
 
-Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. If current data cannot answer something that could change a conclusion, say exactly what is missing in Confidence; otherwise leave it in the snapshot.
+Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. Mention a missing item in Confidence only when it changes a headline conclusion or decision; otherwise leave it in `snapshot.unknowns`.
