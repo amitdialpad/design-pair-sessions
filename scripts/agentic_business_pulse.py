@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta, timezone
 from email import message_from_bytes
 from email.message import EmailMessage, Message
 from email.policy import default as default_email_policy
+from email.utils import getaddresses
 from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
@@ -68,6 +69,7 @@ SECRET_PATTERNS = (
 )
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
+ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 
 
 class PulseError(RuntimeError):
@@ -93,6 +95,28 @@ def parse_bool(value: str | bool | None, default: bool = False) -> bool:
     if normalized in {"0", "false", "no", "off", ""}:
         return False
     raise PulseError(f"Invalid boolean value: {value!r}")
+
+
+def enforce_only_allowed_recipient(recipient: str) -> str:
+    normalized = recipient.strip().casefold()
+    if normalized != ONLY_ALLOWED_RECIPIENT:
+        raise ValidationError(
+            f"Pulse delivery is locked to {ONLY_ALLOWED_RECIPIENT}; refusing any other recipient"
+        )
+    return ONLY_ALLOWED_RECIPIENT
+
+
+def enforce_message_recipient_contract(message: Message) -> None:
+    recipient_headers = (
+        message.get_all("To", [])
+        + message.get_all("Cc", [])
+        + message.get_all("Bcc", [])
+    )
+    addresses = [address.casefold() for _, address in getaddresses(recipient_headers) if address]
+    if addresses != [ONLY_ALLOWED_RECIPIENT]:
+        raise ValidationError(
+            f"Pulse message must contain exactly one recipient: {ONLY_ALLOWED_RECIPIENT}"
+        )
 
 
 @dataclass(frozen=True)
@@ -123,7 +147,9 @@ class PulseConfig:
         if not isinstance(source_context_value, list) or not all(isinstance(item, str) for item in source_context_value):
             raise PulseError("PULSE_SOURCE_CONTEXT_JSON must be a JSON array of HTTPS links")
         return cls(
-            recipient=os.environ.get("PULSE_RECIPIENT", "amit.ayre@dialpad.com").strip(),
+            recipient=enforce_only_allowed_recipient(
+                os.environ.get("PULSE_RECIPIENT", ONLY_ALLOWED_RECIPIENT)
+            ),
             timezone_name=os.environ.get("PULSE_TIMEZONE", "Asia/Kolkata").strip(),
             agent_url=os.environ.get("PULSE_AGENT_URL", "").strip(),
             agent_token=os.environ.get("PULSE_AGENT_TOKEN", "").strip(),
@@ -208,8 +234,8 @@ def build_agent_request(
 def invoke_company_agent(config: PulseConfig, payload: dict[str, Any]) -> dict[str, Any]:
     if not config.agent_url or not config.agent_token:
         raise IntegrationError(
-            "Approved company-data agent is not configured. "
-            "Set PULSE_AGENT_URL and PULSE_AGENT_TOKEN; no report was generated or sent."
+            "Approved Glean Agent/API boundary is not configured. Set PULSE_AGENT_URL and "
+            "PULSE_AGENT_TOKEN; no report was generated or sent."
         )
 
     parsed = urlparse(config.agent_url)
@@ -232,18 +258,20 @@ def invoke_company_agent(config: PulseConfig, payload: dict[str, Any]) -> dict[s
         with urlopen(request, timeout=config.agent_timeout_seconds, context=ssl.create_default_context()) as response:
             raw = response.read(5_000_001)
             if len(raw) > 5_000_000:
-                raise IntegrationError("Company-data agent response exceeded 5 MB")
+                raise IntegrationError("Glean Agent/API response exceeded 5 MB")
     except HTTPError as error:
-        raise IntegrationError(f"Company-data agent returned HTTP {error.code}") from error
+        raise IntegrationError(f"Glean Agent/API returned HTTP {error.code}") from error
     except (URLError, TimeoutError) as error:
-        raise IntegrationError(f"Company-data agent request failed: {error.reason if isinstance(error, URLError) else error}") from error
+        raise IntegrationError(
+            f"Glean Agent/API request failed: {error.reason if isinstance(error, URLError) else error}"
+        ) from error
 
     try:
         result = json.loads(raw)
     except json.JSONDecodeError as error:
-        raise IntegrationError("Company-data agent returned invalid JSON") from error
+        raise IntegrationError("Glean Agent/API returned invalid JSON") from error
     if not isinstance(result, dict):
-        raise IntegrationError("Company-data agent response must be a JSON object")
+        raise IntegrationError("Glean Agent/API response must be a JSON object")
     return result
 
 
@@ -512,6 +540,7 @@ def build_email_message(
     message_id: str,
     dry_run: bool,
 ) -> EmailMessage:
+    recipient = enforce_only_allowed_recipient(recipient)
     subject_prefix = "[DRY RUN] " if dry_run else ""
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
@@ -679,6 +708,8 @@ class GmailArchive:
 
 
 def send_gmail(message: EmailMessage, config: PulseConfig) -> dict[str, Any]:
+    enforce_only_allowed_recipient(config.recipient)
+    enforce_message_recipient_contract(message)
     if not config.gmail_user or not config.gmail_password:
         raise IntegrationError("GMAIL_USER and GMAIL_APP_PASSWORD are required")
     try:
@@ -747,6 +778,7 @@ def run_pulse(
     archive: GmailArchive | None = None,
     sender: Callable[[EmailMessage, PulseConfig], dict[str, Any]] = send_gmail,
 ) -> dict[str, Any]:
+    enforce_only_allowed_recipient(config.recipient)
     report_now = now_in_timezone(config.timezone_name, current_time)
     report_date = report_now.date().isoformat()
     workflow_url = workflow_url_from_env()

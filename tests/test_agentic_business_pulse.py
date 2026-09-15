@@ -371,6 +371,43 @@ class PulseDeliveryTests(unittest.TestCase):
         filenames = {part.get_filename() for part in message.iter_attachments()}
         self.assertEqual(filenames, {f"{REPORT_DATE}.md", f"{REPORT_DATE}.json"})
 
+    def test_email_contract_rejects_any_non_amit_recipient(self):
+        result = valid_result()
+        report, snapshot = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+        with self.assertRaisesRegex(ValidationError, "locked to amit.ayre@dialpad.com"):
+            build_email_message(
+                report_date=REPORT_DATE,
+                report=report,
+                snapshot=snapshot,
+                sender="amit.ayre@dialpad.com",
+                recipient="someone-else@dialpad.com",
+                message_id=deterministic_message_id(REPORT_DATE),
+                dry_run=False,
+            )
+
+    def test_run_rejects_non_amit_recipient_before_agent_or_archive(self):
+        config = PulseConfig(**{**self.config.__dict__, "recipient": "someone-else@dialpad.com"})
+        calls = []
+
+        def should_not_run(*args):
+            calls.append(args)
+            return valid_result()
+
+        with self.assertRaisesRegex(ValidationError, "locked to amit.ayre@dialpad.com"):
+            run_pulse(
+                config,
+                current_time=REPORT_NOW,
+                agent=should_not_run,
+                archive=FakeArchive(),
+                sender=should_not_run,
+            )
+        self.assertFalse(calls)
+
 
 class PulseWorkflowTests(unittest.TestCase):
     def test_workflow_has_daily_ist_schedule_manual_dry_run_and_read_only_permissions(self):

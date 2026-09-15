@@ -86,8 +86,8 @@ jobs:
           FAILURE_SUBJECT_PREFIX: Agentic Business Pulse failed
           FAILURE_DESCRIPTION: The daily pulse did not pass its source, freshness, redaction, persistence, or delivery gates. No normal report email was sent.
           FAILURE_COMMON_FIXES: |-
-            - Company-data agent unavailable → check PULSE_AGENT_URL and PULSE_AGENT_TOKEN
-            - Required source incomplete or stale → inspect the agent runtime and source freshness
+            - Glean Agent/API unavailable → check PULSE_AGENT_URL and PULSE_AGENT_TOKEN
+            - Required source incomplete or stale → inspect Glean connector coverage and source freshness
             - Gmail persistence or send failed → check GMAIL_USER and GMAIL_APP_PASSWORD
             - Skill or source context missing → check the repository skill and PULSE_SOURCE_CONTEXT_JSON
         run: python3 scripts/notify-failure.py

@@ -10,12 +10,14 @@ Pull requests that change the pulse workflow, skill, scripts, operations guide, 
 
 The public repository contains orchestration and validation code only. It does not contain company source credentials, internal document identifiers, reports, snapshots, or raw evidence.
 
-The workflow sends one authenticated HTTPS request to an approved company-data agent. That runtime must be able to query Salesforce, Jira, Glean/document reading, and production code, and must apply the complete repository skill at `skills/daily-agentic-business-pulse/SKILL.md`.
+The intended runtime is a Glean Platform Agent because Glean can synthesize the connected Salesforce, Jira, company-document, meeting, and GitHub/code sources behind one permission-aware boundary. This is not automatic merely because a user can open Glean in a browser: Dialpad's Glean tenant must have each connector enabled for the automation identity, the Agent must expose the source-specific fields required by the skill, and GitHub Actions needs approved non-interactive Platform API authentication. An approved adapter may sit in front of the Agent when needed to enforce the JSON contract below.
+
+The workflow sends one authenticated HTTPS request to that approved Glean Agent/API boundary. The runtime must apply the complete repository skill at `skills/daily-agentic-business-pulse/SKILL.md` and return separate freshness, links, and failure status for Salesforce, Jira, Glean/company documents, and production code. Indexed or live Glean results do not waive those source-by-source quality gates.
 
 Required repository secrets:
 
-- `PULSE_AGENT_URL`: HTTPS endpoint for the approved company-data agent.
-- `PULSE_AGENT_TOKEN`: bearer credential for that one agent boundary. Do not add direct Salesforce, Jira, Glean, or code-search credentials here.
+- `PULSE_AGENT_URL`: HTTPS endpoint for the approved Glean Platform Agent run or its approved contract adapter.
+- `PULSE_AGENT_TOKEN`: least-privileged bearer credential approved for unattended Glean Platform Agent execution. Do not add direct Salesforce, Jira, or code-search credentials here.
 - `PULSE_SOURCE_CONTEXT_JSON`: JSON array containing the three approved internal source-context document links.
 - `GMAIL_USER`: existing Beacon Brief Gmail sender account.
 - `GMAIL_APP_PASSWORD`: existing Beacon Brief Gmail app password with SMTP and IMAP access.
@@ -49,6 +51,8 @@ The snapshot schema and report rules are defined in the skill and enforced again
 
 ## Private persistence and delivery
 
+The report recipient is immutable: `amit.ayre@dialpad.com`. Runtime validation rejects any other `To`, `Cc`, or `Bcc` destination before SMTP is called. Failure notifications use the same single-recipient convention.
+
 Reports are written during execution to:
 
 - `reports/agentic_business_pulse/YYYY-MM-DD.md`
@@ -77,7 +81,7 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 
 ## Manual verification
 
-1. Configure the approved company agent and all required secrets.
+1. Confirm the Glean Agent can return current, linked evidence from Salesforce, Jira, company search/documents, and production code under the automation identity; then configure the approved Agent/API endpoint and all required secrets.
 2. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
 3. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
 4. Inspect the `[DRY RUN]` Gmail draft and both attachments.
