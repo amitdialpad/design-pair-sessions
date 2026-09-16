@@ -64,7 +64,7 @@ Normal report delivery stops when:
 - the current IST date or comparison window is invalid;
 - revenue and pipeline are not structurally separated;
 - Agentic ACV and total bundled amounts are not structurally separated;
-- the manager brief exceeds 650 words, uses analyst jargon or unexplained `ACV`/`EAP` shorthand, uses legacy evidence labels/detail sections, lacks the three Money → Customers → Product insights, or omits required source links or implementation states from its evidence record;
+- the manager brief exceeds 650 words, uses analyst jargon or business/product acronyms, uses legacy evidence labels/detail sections, lacks the three Money → Customers → Product insights, or omits required source links or implementation states from its evidence record;
 - prototype/mock/fixture evidence is described as deployed or customer-exposed;
 - credentials, raw payloads, tool arguments, transcripts, or unredacted email addresses are detected;
 - private Gmail persistence or idempotency checks fail.

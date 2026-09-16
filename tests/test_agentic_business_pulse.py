@@ -262,12 +262,12 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "plain language"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
-    def test_acv_must_be_explained_before_use(self):
+    def test_business_acronyms_are_rejected_from_human_report(self):
         result = valid_result()
         result["report_markdown"] = result["report_markdown"].replace(
             "$100 already booked for Agentic", "$100 Agentic ACV booked"
         )
-        with self.assertRaisesRegex(ValidationError, "Explain ACV"):
+        with self.assertRaisesRegex(ValidationError, "plain language instead of ACV"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
     def test_manager_brief_rejects_legacy_detail_sections(self):

@@ -143,7 +143,7 @@ Give Amit no more than three designer-manager moves. Write each as a concrete pr
 
 ## What to trust
 
-Use one short paragraph, normally one or two sentences. Say what the reader can rely on and name only the missing evidence that would materially change a conclusion. Do not inventory tools or write `Salesforce, Jira, Glean, email/calendar, and production-code search were refreshed`. Prefer: `Trust the revenue and delivery facts. Treat the customer-value story as early until we have a current measured outcome.`
+Use one short paragraph, normally one or two sentences. Say what the reader can rely on and name only the single most important decision the missing evidence prevents. Do not inventory tools, sources, or every gap. Do not write `Salesforce, Jira, Glean, email/calendar, and production-code search were refreshed`. Prefer: `Trust today's booked and possible-deal numbers. Data incomplete: we cannot say whether bookings are ahead or behind plan because the current quarter goal was not available.` Put other limitations in the relevant Money, Customers, or Product paragraph and in `snapshot.unknowns`.
 
 If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete`. Missing prior snapshots, early-access customer counts or outcome baselines, target-owner history, and proof that a change is live for customers are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
 
@@ -157,10 +157,9 @@ Use `data_status: incomplete` only when a required headline metric is unavailabl
 - Round currency for scanning, for example `$429K` and `$4.24M`; use exact values in the snapshot.
 - Prefer three strong conclusions over broad coverage. Omit facts that do not alter a conclusion or action.
 - Write in direct, calm, conversational language. Use short sentences and concrete verbs. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
-- Translate acronyms on first use: `ACV` becomes `annual contract value`, `EAP` becomes `early-access program`, `GA` becomes `generally available`, and `DTMF` becomes `phone-keypad input`. If the acronym is not needed again, omit it entirely.
-- Do not use phrases such as `commercial health`, `conversion-constrained`, `funnel quality`, `operating view`, `evidence chain`, `proof-of-value contract`, `rollout trust`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
-- Prefer `simple definition of success` over `proof-of-value contract`, `shared view` over `operating view`, `signals showing what happened` over `telemetry`, `real customers can use it` over `customer exposure`, and `safely undo the rollout` over `rollback state`.
-- No sentence may contain more than two unexplained acronyms.
+- Do not use business or product acronyms in the human email. Write `contract value booked for Agentic`, `early-access customers`, `generally available`, and `phone-keypad input`; never write `ACV`, `EAP`, `GA`, or `DTMF`. Acronyms remain allowed in the private snapshot.
+- Do not use phrases such as `commercial health`, `commercial wedge`, `conversion-constrained`, `funnel quality`, `open book`, `operating view`, `evidence chain`, `preflight`, `proof-of-value contract`, `proof milestone`, `qualified open`, `rollout state`, `rollout trust`, `surface area`, `telemetry`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
+- Prefer `simple definition of success`, `shared view`, `signals showing what happened`, `real customers can use it`, `final safety check before publishing`, and `safely undo the release`.
 - Every material claim still needs an inline source link. A compact `Sources` link group may appear in `What to trust` when one link supports several claims.
 - Include the workflow run link unobtrusively in `What to trust` for troubleshooting.
 
