@@ -143,7 +143,7 @@ Give Amit no more than three designer-manager moves. Write each as a concrete pr
 
 ## What to trust
 
-Use one short paragraph, normally one or two sentences. Say what the reader can rely on and name only the single most important decision the missing evidence prevents. Do not inventory tools, sources, or every gap. Do not write `Salesforce, Jira, Glean, email/calendar, and production-code search were refreshed`. Prefer: `Trust today's booked and possible-deal numbers. Data incomplete: we cannot say whether bookings are ahead or behind plan because the current quarter goal was not available.` Put other limitations in the relevant Money, Customers, or Product paragraph and in `snapshot.unknowns`.
+Use one short paragraph, normally one or two sentences. Start with `Trust today's booked and possible-deal numbers.` Then name only the single most important decision the missing evidence prevents. This section must not contain the words `Salesforce`, `Jira`, `Glean`, `repository`, `source`, `search`, `email`, or `calendar`; the only link here is the workflow run. Prefer: `Trust today's booked and possible-deal numbers. Data incomplete: we cannot say whether bookings are ahead or behind plan because the current quarter goal was not available.` Put other limitations in the relevant Money, Customers, or Product paragraph and in `snapshot.unknowns`.
 
 If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete`. Missing prior snapshots, early-access customer counts or outcome baselines, target-owner history, and proof that a change is live for customers are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
 
@@ -158,9 +158,9 @@ Use `data_status: incomplete` only when a required headline metric is unavailabl
 - Prefer three strong conclusions over broad coverage. Omit facts that do not alter a conclusion or action.
 - Write in direct, calm, conversational language. Use short sentences and concrete verbs. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
 - Do not use business or product acronyms in the human email. Write `contract value booked for Agentic`, `early-access customers`, `generally available`, and `phone-keypad input`; never write `ACV`, `EAP`, `GA`, or `DTMF`. Acronyms remain allowed in the private snapshot.
-- Do not use phrases such as `commercial health`, `commercial wedge`, `conversion-constrained`, `funnel quality`, `open book`, `operating view`, `evidence chain`, `preflight`, `proof-of-value contract`, `proof milestone`, `qualified open`, `rollout state`, `rollout trust`, `surface area`, `telemetry`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
+- Do not use phrases such as `commercial health`, `commercial wedge`, `conversion-constrained`, `attainment`, `bundled opportunity amount`, `Best Case`, `coverage`, `funnel quality`, `open book`, `operating view`, `evidence chain`, `preflight`, `proof-of-value contract`, `proof milestone`, `qualified open`, `rollout state`, `rollout trust`, `surface area`, `telemetry`, `value event`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
 - Prefer `simple definition of success`, `shared view`, `signals showing what happened`, `real customers can use it`, `final safety check before publishing`, and `safely undo the release`.
-- Every material claim still needs an inline source link. A compact `Sources` link group may appear in `What to trust` when one link supports several claims.
+- Every material claim still needs an inline source link in the relevant Money, Customers, or Product story paragraph. Do not collect source links in `What to trust`.
 - Include the workflow run link unobtrusively in `What to trust` for troubleshooting.
 
 ## Email behavior
