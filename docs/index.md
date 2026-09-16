@@ -1109,11 +1109,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Building an AI-native revenue organization](https://claude.com/blog/building-an-ai-native-revenue-organization)**<br><small>Sep 15, 2026 · Enterprise AI</small>
+
+In this guide, Anthropic shares how revenue leaders can roll out Claude across a sales organization, including the setup decisions, a three-phase rollout plan, and an ROI measurement framework.
+
+---
+
+**[Bringing Salesforce into Claude](https://claude.com/blog/salesforce-in-claude)**<br><small>Sep 15, 2026 · Enterprise AI</small>
+
+Sellers can now research companies, prep for calls, review pipeline, and draft CRM updates with Anthropic's new Salesforce in Claude plugin.
+
+---
+
+**[Claude for Small Business launches new workflows, integrations, and training programs](https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs)**<br><small>Sep 15, 2026</small>
+
+We’re releasing new Claude for Small Business workflows and integrations to help owners run and grow their business, and kicking off the next leg of our Claude SMB Tour.
+
+---
+
 **[Deploying AI from pilot to production](https://claude.com/blog/deploying-ai-from-pilot-to-production)**<br><small>Sep 14, 2026 · Enterprise AI</small>
 
 This guide by Anthropic and Accenture shares seven considerations for taking enterprise AI from pilot to production, and the decisions leadership needs to make before the program advances.
 
----
+:::details View past updates
 
 **[How healthcare organizations use Claude Tag](https://claude.com/blog/how-healthcare-organizations-use-claude-tag)**<br><small>Sep 14, 2026 · Enterprise AI</small>
 
@@ -1131,7 +1149,7 @@ Financial advisors can now connect Claude to the custodians, portfolio platforms
 
 Our CI job volume increased 25x over 6 months. We patched our test selection service three times before finding a sustainable solution.
 
-:::details View past updates
+---
 
 **[What 1,000 small business owners taught us about AI](https://claude.com/blog/what-1-000-small-business-owners-taught-us-about-ai)**<br><small>Sep 10, 2026 · Enterprise AI</small>
 
@@ -1143,25 +1161,7 @@ Lina Ochman, Head of U.S. SMB at Anthropic, shares what she learned during our C
 
 How T. Rowe Price is using Claude across the business, from driving fundamental research to building investment tools.
 
----
-
-**[Reducing cost and improving performance with Claude Platform](https://claude.com/blog/reducing-cost-and-improving-performance-with-claude-platform)**<br><small>Sep 8, 2026 · Agents</small>
-
-Tuning prompt caching, instructions, and effort can reduce Claude's cost without sacrificing application performance.
-
----
-
-**[Building commerce agents with Claude](https://claude.com/blog/claude-for-commerce-agents)**<br><small>Sep 2, 2026 · Product announcements</small>
-
-We're launching a blueprint to help build commerce agents on Claude. It contains the harnesses, patterns, and guardrails an engineering team needs to get a commerce agent running in days.
-
----
-
-**[A guide to the anatomy of effective commerce agents](https://claude.com/blog/the-anatomy-of-effective-commerce-agents)**<br><small>Sep 2, 2026 · Agents</small>
-
-The architecture, latency & cost techniques, and eval practices for agents that make it easier to buy and sell online.
-
 :::
 
-*Updated September 15, 2026*
+*Updated September 16, 2026*
 <!-- CLAUDE_FEED_END -->
