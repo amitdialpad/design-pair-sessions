@@ -56,15 +56,24 @@ LEGACY_REPORT_SECTIONS = (
 VISIBLE_EVIDENCE_LABELS = ("[Verified fact]", "[Signal]", "[Inference]", "[Unknown]", "[Decision]", "[Action]")
 MANAGER_JARGON = (
     "commercial health",
+    "commercial wedge",
     "conversion-constrained",
     "evidence chain",
     "funnel quality",
+    "open book",
     "operating view",
+    "preflight",
     "proof-of-value contract",
+    "proof milestone",
+    "qualified open",
+    "rollout state",
     "rollout trust",
+    "surface area",
+    "telemetry",
     "customer exposure",
     "production exposure",
 )
+MANAGER_ACRONYMS = ("ACV", "EAP", "GA", "DTMF")
 STORY_LENSES = ("Money", "Customers", "Product")
 MAX_REPORT_WORDS = 650
 IMPLEMENTATION_STATUSES = {
@@ -586,10 +595,9 @@ def validate_agent_result(
     for phrase in MANAGER_JARGON:
         if phrase in report.casefold():
             raise ValidationError(f"Translate analyst jargon into plain language in the human report: {phrase}")
-    for acronym, explanation in (("ACV", "annual contract value"), ("EAP", "early-access program")):
-        acronym_match = re.search(rf"\b{acronym}\b", report)
-        if acronym_match and explanation not in report[: acronym_match.start()].casefold():
-            raise ValidationError(f"Explain {acronym} in plain language before using the acronym")
+    for acronym in MANAGER_ACRONYMS:
+        if re.search(rf"\b{acronym}\b", report):
+            raise ValidationError(f"Use plain language instead of {acronym} in the human report")
     word_count = _visible_word_count(report)
     if word_count > MAX_REPORT_WORDS:
         raise ValidationError(f"Manager brief is {word_count} words; maximum is {MAX_REPORT_WORDS}")
