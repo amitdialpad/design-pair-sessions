@@ -2,7 +2,7 @@
 
 Workflow: `Daily Agentic Business Pulse`
 
-Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. Because GitHub can delay or omit an individual scheduled event, idempotent fallbacks run at `45 3 * * *` and `0 4 * * *` UTC (09:15 and 09:30 IST). The deterministic daily Message-ID makes later runs exit successfully after the first accepted send. A manual `workflow_dispatch` supports live and dry runs.
+Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. Because GitHub can delay or omit an individual scheduled event, idempotent fallbacks run at 09:15, 09:30, 10:00, and 11:00 IST. The deterministic daily Message-ID makes later runs exit successfully after the first accepted send. A manual `workflow_dispatch` supports live and dry runs.
 
 Pull requests that change the pulse workflow, skill, scripts, operations guide, or tests run the unit-test validation job without loading any Actions secrets. Scheduled and manually dispatched runs must pass that validation job before the pulse job starts.
 
