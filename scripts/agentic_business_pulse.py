@@ -753,25 +753,26 @@ def validate_agent_result(
     return report, snapshot
 
 
-def _inline_markdown(value: str) -> str:
+def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     escaped = html.escape(value, quote=True)
     escaped = re.sub(
         r"\[([^]]+)]\((https://[^)]+)\)",
-        r'<a href="\2" style="color:#5f45bd;text-decoration:underline">\1</a>',
+        rf'<a href="\2" style="color:{link_color};text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px">\1</a>',
         escaped,
     )
     escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
     escaped = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"<em>\1</em>", escaped)
-    escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#f3f1f8;padding:1px 4px\">\1</code>", escaped)
+    escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#e8e3db;padding:1px 4px\">\1</code>", escaped)
     return escaped
 
 
 def markdown_to_email_html(report: str) -> str:
-    parts: list[str] = []
+    parts: list[str] = ['<div class="pulse-content" style="padding:44px 46px 48px">']
     in_list = False
     list_type = "ul"
     current_section = ""
+    trust_section_open = False
 
     def close_list() -> None:
         nonlocal in_list
@@ -783,22 +784,78 @@ def markdown_to_email_html(report: str) -> str:
         line = raw_line.strip()
         if line.startswith("# "):
             close_list()
-            parts.append('<div style="width:48px;height:4px;background:#7c5ce7;border-radius:4px;margin:0 0 22px"></div>')
-            parts.append(f'<h1 style="font-size:28px;line-height:1.2;letter-spacing:-0.4px;margin:0 0 12px;color:#19171c">{_inline_markdown(line[2:])}</h1>')
+            title = line[2:]
+            title_text, separator, report_date = title.rpartition(" — ")
+            if not separator:
+                title_text, report_date = title, ""
+            display_title = html.escape(title_text).replace("Business Pulse", "<br>Business Pulse")
+            parts.append(
+                '<p style="margin:0 0 30px;font-size:10px;line-height:1.2;letter-spacing:2.2px;'
+                'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Daily pulse</p>'
+            )
+            parts.append(
+                f'<h1 class="pulse-title" style="font-family:Georgia,\'Times New Roman\',serif;font-size:44px;'
+                f'line-height:1.03;letter-spacing:-1.5px;margin:0;color:#24211f;font-weight:700">{display_title}</h1>'
+            )
+            parts.append('<div style="width:92px;height:5px;background:#ef5da8;margin:20px 0 20px"></div>')
+            if report_date:
+                parts.append(
+                    f'<p style="margin:0 0 8px;font-size:13px;line-height:1.4;color:#6d6761">{html.escape(report_date)}</p>'
+                )
         elif line.startswith("## "):
             close_list()
             current_section = line[3:]
-            parts.append(f'<h2 style="font-size:17px;line-height:1.3;margin:30px 0 12px;color:#19171c">{_inline_markdown(current_section)}</h2>')
+            if current_section == "What to trust":
+                parts.append('</div><div class="pulse-trust" style="background:#191718;padding:34px 46px 38px;color:#f5f0ea">')
+                trust_section_open = True
+                parts.append(
+                    f'<h2 style="font-size:10px;line-height:1.3;letter-spacing:2px;text-transform:uppercase;'
+                    f'margin:0 0 16px;color:#ff8bc6">{_inline_markdown(current_section, link_color="#ff8bc6")}</h2>'
+                )
+            else:
+                parts.append(
+                    f'<h2 style="font-size:10px;line-height:1.3;letter-spacing:2px;text-transform:uppercase;'
+                    f'margin:42px 0 16px;color:#b72e79">{_inline_markdown(current_section)}</h2>'
+                )
         elif line.startswith("### "):
             close_list()
-            parts.append(f'<h3 style="font-size:16px;line-height:1.35;margin:22px 0 6px;color:#33295c">{_inline_markdown(line[4:])}</h3>')
+            story_label, separator, story_headline = line[4:].partition(" — ")
+            if separator:
+                parts.append(
+                    f'<p style="margin:30px 0 5px;font-size:11px;line-height:1.3;letter-spacing:1.5px;'
+                    f'text-transform:uppercase;color:#b72e79;font-weight:700">{_inline_markdown(story_label)}</p>'
+                )
+                parts.append(
+                    f'<h3 class="story-headline" style="font-family:Georgia,\'Times New Roman\',serif;font-size:27px;'
+                    f'line-height:1.22;letter-spacing:-0.4px;margin:0 0 12px;color:#24211f;font-weight:700">'
+                    f'{_inline_markdown(story_headline)}</h3>'
+                )
+            else:
+                parts.append(
+                    f'<h3 class="story-headline" style="font-family:Georgia,\'Times New Roman\',serif;font-size:27px;'
+                    f'line-height:1.22;margin:28px 0 10px;color:#24211f">{_inline_markdown(line[4:])}</h3>'
+                )
         elif line.startswith("- "):
             if current_section == "The numbers":
                 close_list()
-                parts.append(
-                    '<div style="border:1px solid #e7e2f2;border-radius:10px;padding:12px 14px;'
-                    f'margin:0 0 8px;background:#faf9fd">{_inline_markdown(line[2:])}</div>'
-                )
+                metric = line[2:]
+                metric_match = re.match(r"\*\*(.+?)\*\*\s+[—-]\s+(.+)", metric)
+                if metric_match:
+                    metric_name, metric_meaning = metric_match.groups()
+                    parts.append(
+                        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+                        'style="border-collapse:collapse;border-top:1px solid #d8d2c9"><tr><td style="padding:18px 0 20px">'
+                        f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:22px;line-height:1.25;'
+                        f'color:#24211f;font-weight:700">{_inline_markdown(metric_name)}</div>'
+                        f'<div style="font-size:13px;line-height:1.55;color:#68625d;margin-top:5px">'
+                        f'{_inline_markdown(metric_meaning)}</div></td></tr></table>'
+                    )
+                else:
+                    parts.append(
+                        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+                        'style="border-collapse:collapse;border-top:1px solid #d8d2c9"><tr><td style="padding:18px 0 20px">'
+                        f'{_inline_markdown(metric)}</td></tr></table>'
+                    )
             else:
                 if not in_list:
                     list_type = "ul"
@@ -806,32 +863,56 @@ def markdown_to_email_html(report: str) -> str:
                     in_list = True
                 parts.append(f'<li style="margin:0 0 9px;padding-left:2px">{_inline_markdown(line[2:])}</li>')
         elif re.match(r"^\d+[.)]\s+", line):
-            if not in_list:
-                list_type = "ol"
-                parts.append('<ol style="padding-left:24px;margin:0 0 16px">')
-                in_list = True
+            item_number = int(re.match(r"^(\d+)", line).group(1))
             item = re.sub(r"^\d+[.)]\s+", "", line)
-            parts.append(f'<li style="margin:0 0 11px;padding-left:3px">{_inline_markdown(item)}</li>')
+            if current_section == "What this means for design":
+                close_list()
+                parts.append(
+                    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+                    'style="border-collapse:collapse;border-top:1px solid #d8d2c9"><tr>'
+                    f'<td valign="top" width="52" style="padding:20px 12px 22px 0;font-family:Georgia,\'Times New Roman\',serif;'
+                    f'font-size:24px;line-height:1;color:#ef5da8">{item_number:02d}</td>'
+                    f'<td valign="top" style="padding:18px 0 22px;font-size:15px;line-height:1.65;color:#332f2b">'
+                    f'{_inline_markdown(item)}</td></tr></table>'
+                )
+            else:
+                if not in_list:
+                    list_type = "ol"
+                    parts.append('<ol style="padding-left:24px;margin:0 0 16px">')
+                    in_list = True
+                parts.append(f'<li style="margin:0 0 11px;padding-left:3px">{_inline_markdown(item)}</li>')
         elif not line:
             close_list()
         else:
             close_list()
             if current_section == "TL;DR":
-                style = "margin:0 0 14px;font-size:16px;line-height:1.6;color:#312e35"
+                style = "font-family:Georgia,'Times New Roman',serif;margin:0 0 18px;font-size:23px;line-height:1.48;letter-spacing:-0.2px;color:#2a2724"
             elif current_section == "What to trust":
-                style = "margin:0 0 8px;color:#65606d;font-size:13px;line-height:1.55"
+                style = "margin:0;color:#d6d0ca;font-size:13px;line-height:1.65"
             elif not current_section and line.startswith(("_", "*")):
-                style = "margin:0 0 22px;color:#716b79;font-size:13px"
+                style = "margin:0 0 30px;color:#6d6761;font-size:13px;line-height:1.5"
             else:
-                style = "margin:0 0 14px"
-            parts.append(f'<p style="{style}">{_inline_markdown(line)}</p>')
+                style = "margin:0 0 16px;font-size:15px;line-height:1.72;color:#45403b"
+            link_color = "#ff8bc6" if current_section == "What to trust" else "#6f3fc8"
+            parts.append(f'<p style="{style}">{_inline_markdown(line, link_color=link_color)}</p>')
     close_list()
+    if trust_section_open:
+        parts.append("</div>")
+    else:
+        parts.append("</div>")
     body = "\n".join(parts)
     return (
-        '<!doctype html><html><body style="margin:0;background:#f5f4f7;padding:24px 10px">'
-        '<main style="max-width:680px;margin:0 auto;padding:38px 34px;background:#ffffff;border:1px solid #ebe8ef;border-radius:14px;'
-        "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;"
-        f'font-size:15px;line-height:1.6;color:#312e35">{body}</main></body></html>'
+        '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        '<style>@media only screen and (max-width:600px){.pulse-outer{padding:0!important}.pulse-shell{border:0!important}'
+        '.pulse-content{padding:34px 24px 40px!important}.pulse-trust{padding:30px 24px 34px!important}'
+        '.pulse-title{font-size:38px!important}.story-headline{font-size:24px!important}}</style></head>'
+        '<body style="margin:0;background:#ebe9e4;padding:0">'
+        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ebe9e4">'
+        '<tr><td class="pulse-outer" align="center" style="padding:28px 12px">'
+        '<table role="presentation" width="680" cellspacing="0" cellpadding="0" class="pulse-shell" '
+        'style="width:100%;max-width:680px;border-collapse:collapse;background:#f5f2ec;border:1px solid #ddd8cf">'
+        '<tr><td style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif;'
+        f'font-size:15px;line-height:1.7;color:#45403b">{body}</td></tr></table></td></tr></table></body></html>'
     )
 
 
