@@ -270,6 +270,15 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "plain language instead of ACV"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
+    def test_what_to_trust_rejects_source_inventory(self):
+        result = valid_result()
+        result["report_markdown"] = result["report_markdown"].replace(
+            "Trust the revenue and delivery facts.",
+            "Trust the Salesforce, Jira, and repository search results.",
+        )
+        with self.assertRaisesRegex(ValidationError, "must not inventory tools or sources"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
     def test_manager_brief_rejects_legacy_detail_sections(self):
         result = valid_result()
         result["report_markdown"] += "\n## Jira and delivery risk\n\nDP-200000 remains open.\n"

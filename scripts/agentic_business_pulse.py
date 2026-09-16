@@ -58,7 +58,11 @@ MANAGER_JARGON = (
     "commercial health",
     "commercial wedge",
     "conversion-constrained",
+    "attainment",
+    "bundled opportunity amount",
     "evidence chain",
+    "best case",
+    "coverage",
     "funnel quality",
     "open book",
     "operating view",
@@ -70,10 +74,21 @@ MANAGER_JARGON = (
     "rollout trust",
     "surface area",
     "telemetry",
+    "value event",
     "customer exposure",
     "production exposure",
 )
 MANAGER_ACRONYMS = ("ACV", "EAP", "GA", "DTMF")
+TRUST_INVENTORY_TERMS = (
+    "salesforce",
+    "jira",
+    "glean",
+    "repository",
+    "source",
+    "code search",
+    "email",
+    "calendar",
+)
 STORY_LENSES = ("Money", "Customers", "Product")
 MAX_REPORT_WORDS = 650
 IMPLEMENTATION_STATUSES = {
@@ -493,21 +508,6 @@ def _concise_confidence(report: str, snapshot: dict[str, Any], workflow_url: str
             "A code change is only described as usable by customers when the evidence proves that it is live."
         )
 
-    source_labels = {
-        "salesforce": "Salesforce",
-        "jira": "Jira",
-        "glean": "Company evidence",
-        "production_code": "Production code",
-    }
-    missing_citations: list[str] = []
-    source_status = snapshot.get("source_status", {})
-    for source in REQUIRED_SOURCES:
-        state = source_status.get(source, {}) if isinstance(source_status, dict) else {}
-        links = state.get("links", []) if isinstance(state, dict) else []
-        if isinstance(links, list) and links and not any(link in report_before_confidence for link in links):
-            missing_citations.append(f"[{source_labels[source]}]({links[0]})")
-    if missing_citations:
-        sentences.append("Sources: " + " · ".join(missing_citations) + ".")
     sentences.append(f"[Workflow run]({workflow_url})")
     return report_before_confidence + "\n\n## What to trust\n\n" + " ".join(sentences) + "\n"
 
@@ -623,6 +623,9 @@ def validate_agent_result(
         raise ValidationError("What this means for design must contain one to three actions")
 
     confidence_body = _report_section(report, "What to trust", None)
+    for term in TRUST_INVENTORY_TERMS:
+        if re.search(rf"\b{re.escape(term)}\b", confidence_body, flags=re.IGNORECASE):
+            raise ValidationError(f"What to trust must not inventory tools or sources: {term}")
     if data_status == "incomplete":
         if "data incomplete" not in confidence_body.casefold():
             raise ValidationError("An incomplete report must say Data incomplete in What to trust")
