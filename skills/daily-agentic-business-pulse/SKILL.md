@@ -165,11 +165,11 @@ Use `data_status: incomplete` only when a required headline metric is unavailabl
 
 ## Email behavior
 
-Prepare the report for `amit.ayre@dialpad.com` with subject:
+Prepare the internal Glean relay draft for `amit.ayre@dialpad.com` with subject:
 
-`Daily Agentic Business Pulse — YYYY-MM-DD`
+`[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse — YYYY-MM-DD`
 
-The only permitted recipient is `amit.ayre@dialpad.com`, with subject `Daily Agentic Business Pulse — YYYY-MM-DD`. The intended send time is 09:00 IST daily. The approved GitHub relay validates, formats, persists, and sends the report; the Glean agent creates the source-linked draft and machine-readable snapshot. Never add another recipient, send directly around the relay, or claim delivery without a successful provider result.
+The only permitted recipient is `amit.ayre@dialpad.com`. The Glean source draft is an internal transport envelope and must never be sent manually because it contains the machine-readable snapshot. The approved GitHub relay removes that block, renders the Markdown as readable email HTML, and sends the user-facing message with subject `Daily Agentic Business Pulse — YYYY-MM-DD` at 09:00 IST daily. Never add another recipient, send directly around the relay, or claim delivery without a successful provider result.
 
 ## Continuity
 
