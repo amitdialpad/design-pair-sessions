@@ -30,12 +30,19 @@ from zoneinfo import ZoneInfo
 
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
 REQUIRED_SECTIONS = (
-    "Bottom line",
-    "Numbers that matter",
-    "What matters",
-    "Your focus",
-    "Confidence",
+    "TL;DR",
+    "The numbers",
+    "The story",
+    "What this means for design",
+    "What to trust",
 )
+REPORT_SECTION_ALIASES = {
+    "Bottom line": "TL;DR",
+    "Numbers that matter": "The numbers",
+    "What matters": "The story",
+    "Your focus": "What this means for design",
+    "Confidence": "What to trust",
+}
 LEGACY_REPORT_SECTIONS = (
     "Executive readout",
     "Revenue scoreboard",
@@ -47,6 +54,18 @@ LEGACY_REPORT_SECTIONS = (
     "Sources and confidence",
 )
 VISIBLE_EVIDENCE_LABELS = ("[Verified fact]", "[Signal]", "[Inference]", "[Unknown]", "[Decision]", "[Action]")
+MANAGER_JARGON = (
+    "commercial health",
+    "conversion-constrained",
+    "evidence chain",
+    "funnel quality",
+    "operating view",
+    "proof-of-value contract",
+    "rollout trust",
+    "customer exposure",
+    "production exposure",
+)
+STORY_LENSES = ("Money", "Customers", "Product")
 MAX_REPORT_WORDS = 650
 IMPLEMENTATION_STATUSES = {
     "code_exists",
@@ -398,6 +417,18 @@ def _report_section(report: str, section: str, next_section: str | None) -> str:
     return report[start_match.end() : end].strip()
 
 
+def _normalize_report_section_headings(report: str) -> str:
+    """Accept the former manager-brief headings while the Glean agent rolls forward."""
+
+    for old_heading, new_heading in REPORT_SECTION_ALIASES.items():
+        report = re.sub(
+            rf"(?m)^## {re.escape(old_heading)}\s*$",
+            f"## {new_heading}",
+            report,
+        )
+    return report
+
+
 def _is_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool)
 
@@ -436,21 +467,21 @@ def _healthy_report_has_core_metrics(snapshot: dict[str, Any]) -> bool:
 
 
 def _concise_confidence(report: str, snapshot: dict[str, Any], workflow_url: str) -> str:
-    """Replace an over-broad incomplete warning with claim-scoped confidence."""
+    """Replace an over-broad warning with a plain description of what is reliable."""
 
-    match = re.search(r"(?ms)^## Confidence\s*\n.*\Z", report)
+    match = re.search(r"(?ms)^## What to trust\s*\n.*\Z", report)
     if not match:
         return report
     report_before_confidence = report[: match.start()].rstrip()
     unknowns = " ".join(str(item) for item in snapshot.get("unknowns", [])).casefold()
-    sentences = ["All required sources were refreshed for this report."]
+    sentences = ["The revenue and delivery facts in this report were checked against current company sources."]
     if re.search(r"eap|outcome|usage|conversion|roi|customer value", unknowns):
         sentences.append(
-            "Customer-value conclusions remain directional because current EAP outcome metrics were not available."
+            "The customer-value story is less certain because current early-access outcomes were not available."
         )
     if re.search(r"deploy|customer[- ]?exposure|flag|instrument", unknowns):
         sentences.append(
-            "Production exposure is stated only where the linked evidence verifies it."
+            "A code change is only described as usable by customers when the evidence proves that it is live."
         )
 
     source_labels = {
@@ -469,7 +500,7 @@ def _concise_confidence(report: str, snapshot: dict[str, Any], workflow_url: str
     if missing_citations:
         sentences.append("Sources: " + " · ".join(missing_citations) + ".")
     sentences.append(f"[Workflow run]({workflow_url})")
-    return report_before_confidence + "\n\n## Confidence\n\n" + " ".join(sentences) + "\n"
+    return report_before_confidence + "\n\n## What to trust\n\n" + " ".join(sentences) + "\n"
 
 
 def _normalize_healthy_data_status(result: dict[str, Any], workflow_url: str) -> None:
@@ -500,7 +531,7 @@ def _normalize_healthy_data_status(result: dict[str, Any], workflow_url: str) ->
         result["data_status"] = "complete"
         snapshot["data_status"] = "complete"
     report = result.get("report_markdown")
-    confidence = _report_section(report, "Confidence", None) if isinstance(report, str) else ""
+    confidence = _report_section(report, "What to trust", None) if isinstance(report, str) else ""
     should_rewrite_confidence = declared_status == "incomplete" or "data incomplete" in confidence.casefold()
     if isinstance(report, str) and should_rewrite_confidence:
         result["report_markdown"] = _concise_confidence(report, snapshot, workflow_url)
@@ -552,33 +583,43 @@ def validate_agent_result(
     for label in VISIBLE_EVIDENCE_LABELS:
         if label.casefold() in report.casefold():
             raise ValidationError(f"Evidence labels belong in the snapshot, not the human report: {label}")
+    for phrase in MANAGER_JARGON:
+        if phrase in report.casefold():
+            raise ValidationError(f"Translate analyst jargon into plain language in the human report: {phrase}")
+    for acronym, explanation in (("ACV", "annual contract value"), ("EAP", "early-access program")):
+        acronym_match = re.search(rf"\b{acronym}\b", report)
+        if acronym_match and explanation not in report[: acronym_match.start()].casefold():
+            raise ValidationError(f"Explain {acronym} in plain language before using the acronym")
     word_count = _visible_word_count(report)
     if word_count > MAX_REPORT_WORDS:
         raise ValidationError(f"Manager brief is {word_count} words; maximum is {MAX_REPORT_WORDS}")
 
-    insight_body = _report_section(report, "What matters", "Your focus")
+    insight_body = _report_section(report, "The story", "What this means for design")
     insight_headings = re.findall(r"(?m)^### [^#\n].+$", insight_body)
     if len(insight_headings) != 3:
-        raise ValidationError("What matters must contain exactly three insight headlines")
+        raise ValidationError("The story must contain exactly three insight headlines")
+    for heading, lens in zip(insight_headings, STORY_LENSES, strict=True):
+        if not re.match(rf"^### {re.escape(lens)}\s+[—:-]", heading, flags=re.IGNORECASE):
+            raise ValidationError(f"The story must follow the Money, Customers, Product order; expected {lens}")
     if len(re.findall(r"(?m)^### [^#\n].+$", report)) != 3:
-        raise ValidationError("Only the three What matters insight headlines may use level-three headings")
+        raise ValidationError("Only the three The story insight headlines may use level-three headings")
 
-    numbers_body = _report_section(report, "Numbers that matter", "What matters")
+    numbers_body = _report_section(report, "The numbers", "The story")
     number_items = re.findall(r"(?m)^-\s+\S", numbers_body)
     if not 3 <= len(number_items) <= 4:
-        raise ValidationError("Numbers that matter must contain three or four scannable metrics")
+        raise ValidationError("The numbers must contain three or four scannable metrics")
 
-    focus_body = _report_section(report, "Your focus", "Confidence")
+    focus_body = _report_section(report, "What this means for design", "What to trust")
     focus_items = re.findall(r"(?m)^(?:-\s+|\d+[.)]\s+)\S", focus_body)
     if not 1 <= len(focus_items) <= 3:
-        raise ValidationError("Your focus must contain one to three actions")
+        raise ValidationError("What this means for design must contain one to three actions")
 
-    confidence_body = _report_section(report, "Confidence", None)
+    confidence_body = _report_section(report, "What to trust", None)
     if data_status == "incomplete":
         if "data incomplete" not in confidence_body.casefold():
-            raise ValidationError("An incomplete report must say Data incomplete in Confidence")
+            raise ValidationError("An incomplete report must say Data incomplete in What to trust")
     elif "data incomplete" in confidence_body.casefold():
-        raise ValidationError("A complete report cannot say Data incomplete in Confidence")
+        raise ValidationError("A complete report cannot say Data incomplete in What to trust")
 
     if snapshot.get("schema_version") != 1:
         raise ValidationError("snapshot.schema_version must be 1")
@@ -740,7 +781,7 @@ def markdown_to_email_html(report: str) -> str:
             close_list()
             parts.append(f'<h3 style="font-size:16px;line-height:1.35;margin:22px 0 6px;color:#33295c">{_inline_markdown(line[4:])}</h3>')
         elif line.startswith("- "):
-            if current_section == "Numbers that matter":
+            if current_section == "The numbers":
                 close_list()
                 parts.append(
                     '<div style="border:1px solid #e7e2f2;border-radius:10px;padding:12px 14px;'
@@ -763,9 +804,9 @@ def markdown_to_email_html(report: str) -> str:
             close_list()
         else:
             close_list()
-            if current_section == "Bottom line":
+            if current_section == "TL;DR":
                 style = "margin:0 0 14px;font-size:16px;line-height:1.6;color:#312e35"
-            elif current_section == "Confidence":
+            elif current_section == "What to trust":
                 style = "margin:0 0 8px;color:#65606d;font-size:13px;line-height:1.55"
             elif not current_section and line.startswith(("_", "*")):
                 style = "margin:0 0 22px;color:#716b79;font-size:13px"
@@ -903,6 +944,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     undated_title = f"# {REPORT_SUBJECT_PREFIX}\n"
     if report.startswith(undated_title):
         report = f"# {REPORT_SUBJECT_PREFIX} — {report_date}\n" + report[len(undated_title):]
+    report = _normalize_report_section_headings(report)
     if workflow_url not in report:
         report += f"\n[Workflow run]({workflow_url})\n"
     result["report_markdown"] = report

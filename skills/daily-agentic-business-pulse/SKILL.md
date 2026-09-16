@@ -96,41 +96,58 @@ Prioritize conclusions that affect revenue conversion, customer time to value, E
 
 ### 6. Create the daily report
 
-Write for a design and product leader, not for an operations analyst. The email is a decision brief, not an evidence dump. Keep the full evidence taxonomy, issue inventory, calculations, and implementation-status detail in the structured snapshot. In the human report, synthesize those records into a few hard conclusions and link the supporting sources inline.
+Write for a design manager and product thinker, not for an operations analyst. The email should feel like a short story told by a smart colleague: what is happening, why it matters, and what Amit can shape. Keep the full evidence taxonomy, issue inventory, calculations, and implementation-status detail in the structured snapshot. In the human report, synthesize those records into a few hard conclusions and link the supporting sources inline.
 
 Use exactly this structure and keep the complete report at 650 words or fewer:
 
 # Daily Agentic Business Pulse — YYYY-MM-DD
 
-_Reporting window: DATE–DATE · Confidence: High, medium, or low_
+_What this covers: DATE–DATE · Compared with: DATE or “first comparable report”_
 
-## Bottom line
+## TL;DR
 
-In two or three sentences, state the commercial health, the most important reason, and the decision implication. Lead with the conclusion. Do not open with data availability, methodology, or an evidence label.
+Use three to five short sentences to answer: What is happening? Why should Amit care? What should change now? Lead with the human conclusion, not a metric label. Do not open with data availability, methodology, source names, or an evidence label. A reader who stops here should still understand the day.
 
-## Numbers that matter
+## The numbers
 
-Show only three or four rounded metrics that change the reader's understanding. Normally include booked Agentic ACV against target, qualified Agentic pipeline and coverage of the remaining gap, and the strongest customer rollout or value measure. Keep booked revenue and open pipeline visually and verbally separate. Keep Agentic-specific ACV separate from total bundled opportunity amount. Put secondary calculations and exact precision in the snapshot.
+Show only three or four rounded metrics that change the reader's understanding. Write every item as **plain-English number** — what it means and why it matters. For example:
 
-## What matters
+- **$31K already booked for Agentic** — annual contract value that is won, not a possible deal.
+- **$643K still in play** — possible Agentic business, not booked revenue.
+- **$2.9M total value of those deals** — the whole bundled deals; only part of this belongs to Agentic.
+- **3 early-access customers confirmed active** — the tracker is a month old, so treat this count cautiously.
 
-Use exactly three `###` insight headlines. Each insight gets one short paragraph that combines:
+Normally include booked Agentic annual contract value against target, possible Agentic business, and the strongest customer rollout or value measure. Keep booked revenue and open pipeline visually and verbally separate. Keep Agentic-specific annual contract value separate from total bundled opportunity amount. Put secondary calculations and exact precision in the snapshot.
 
-- The hard fact or repeated signal.
-- What it means commercially or for the customer.
-- The product, design, or execution implication.
+## The story
+
+Use exactly three `###` conclusion headlines, in this order:
+
+1. `### Money — …`
+2. `### Customers — …`
+3. `### Product — …`
+
+Each insight gets one short paragraph that tells a mini-story in this order:
+
+- What happened.
+- Why it matters to the business or customer.
+- What it means for the product or design.
 
 Cluster related Jira tickets, customer reports, and code findings into a pattern; do not list tickets one by one. Cite one or two decisive sources inline with descriptive link text. Mention a specific ticket, customer, feature flag, or code path only when it materially changes a conclusion.
 
-## Your focus
+Headlines must state the conclusion in ordinary language. Prefer `Money — interest is not turning into booked business fast enough` over `Funnel quality needs an Agentic-specific operating view`.
 
-Give Amit no more than three designer-manager moves. Each must be something he can clarify, frame, review, or force as a product/design leader, with the expected business effect. Do not give him a generic project-management task list or assign work to other people without evidence of ownership.
+## What this means for design
 
-## Confidence
+Give Amit no more than three designer-manager moves. Write each as a concrete product/design move followed by `Why:` and the expected business or customer effect. Each must be something he can clarify, frame, review, or make visible as a product/design leader. Do not give him a generic project-management task list or assign work to other people without evidence of ownership.
 
-Use one short paragraph, normally one or two sentences. If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete` and begin with `All required sources were refreshed for this report.` Missing prior snapshots, EAP counts or outcome baselines, target-owner history, and deployment/flag/customer-exposure proof are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
+## What to trust
 
-Use `data_status: incomplete` only when a required headline metric is unavailable despite a healthy source refresh. In that case, say `Data incomplete` here and identify the specific decision affected. A missing, failed, or stale required source is a source failure and must follow the failure path rather than producing a normal report. Never use `Data incomplete` as a generic disclaimer or inventory every desirable-but-unavailable field in the email.
+Use one short paragraph, normally one or two sentences. Say what the reader can rely on and name only the missing evidence that would materially change a conclusion. Do not inventory tools or write `Salesforce, Jira, Glean, email/calendar, and production-code search were refreshed`. Prefer: `Trust the revenue and delivery facts. Treat the customer-value story as early until we have a current measured outcome.`
+
+If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete`. Missing prior snapshots, early-access customer counts or outcome baselines, target-owner history, and proof that a change is live for customers are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
+
+Use `data_status: incomplete` only when a required headline metric is unavailable despite a healthy source refresh. In that case, say `Data incomplete` and explain the consequence in ordinary language, for example: `We cannot tell whether bookings are ahead or behind plan because the current Agentic target was not available.` A missing, failed, or stale required source is a source failure and must follow the failure path rather than producing a normal report. Never use `Data incomplete` as a generic disclaimer or inventory every desirable-but-unavailable field in the email.
 
 ### Editorial rules
 
@@ -139,9 +156,13 @@ Use `data_status: incomplete` only when a required headline metric is unavailabl
 - Do not include exhaustive counts, ticket enumerations, workflow mechanics, query descriptions, or raw source lists.
 - Round currency for scanning, for example `$429K` and `$4.24M`; use exact values in the snapshot.
 - Prefer three strong conclusions over broad coverage. Omit facts that do not alter a conclusion or action.
-- Write in direct, calm language. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
-- Every material claim still needs an inline source link. A compact `Sources` link group may appear in the Confidence paragraph when one link supports several claims.
-- Include the workflow run link unobtrusively in Confidence for troubleshooting.
+- Write in direct, calm, conversational language. Use short sentences and concrete verbs. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
+- Translate acronyms on first use: `ACV` becomes `annual contract value`, `EAP` becomes `early-access program`, `GA` becomes `generally available`, and `DTMF` becomes `phone-keypad input`. If the acronym is not needed again, omit it entirely.
+- Do not use phrases such as `commercial health`, `conversion-constrained`, `funnel quality`, `operating view`, `evidence chain`, `proof-of-value contract`, `rollout trust`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
+- Prefer `simple definition of success` over `proof-of-value contract`, `shared view` over `operating view`, `signals showing what happened` over `telemetry`, `real customers can use it` over `customer exposure`, and `safely undo the rollout` over `rollback state`.
+- No sentence may contain more than two unexplained acronyms.
+- Every material claim still needs an inline source link. A compact `Sources` link group may appear in `What to trust` when one link supports several claims.
+- Include the workflow run link unobtrusively in `What to trust` for troubleshooting.
 
 ## Email behavior
 
@@ -310,10 +331,10 @@ For each drift finding, identify the smallest next check: inspect a specific fil
 
 ### 18. Implementation-aware synthesis
 
-When code evidence materially changes a commercial, customer, or design conclusion, fold it into the relevant `What matters` insight. State the decisive distinction in plain language, such as “code exists but customer exposure is unverified.” Keep the full status breakdown in the structured snapshot.
+When code evidence materially changes a commercial, customer, or design conclusion, fold it into the relevant `Product` insight under `The story`. State the decisive distinction in plain language, such as “the code exists, but we cannot yet prove that real customers can use it.” Keep the full status breakdown in the structured snapshot.
 
 If code search returns no authoritative result, record `Code evidence unavailable` in the snapshot and do not infer implementation status from documentation. If search results are only prototypes, mocks, or tests, label them accordingly and mention them in the email only when they correct a material misconception.
 
 ## Quality bar
 
-Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. Mention a missing item in Confidence only when it changes a headline conclusion or decision; otherwise leave it in `snapshot.unknowns`.
+Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. Mention a missing item in `What to trust` only when it changes a headline conclusion or decision; otherwise leave it in `snapshot.unknowns`.
