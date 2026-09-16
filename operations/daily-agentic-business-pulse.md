@@ -2,7 +2,7 @@
 
 Workflow: `Daily Agentic Business Pulse`
 
-Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. GitHub-hosted jobs may start several minutes late. A manual `workflow_dispatch` supports live and dry runs.
+Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. Because GitHub can delay or omit an individual scheduled event, idempotent fallbacks run at 09:15, 09:30, 10:00, and 11:00 IST. The deterministic daily Message-ID makes later runs exit successfully after the first accepted send. A manual `workflow_dispatch` supports live and dry runs.
 
 Pull requests that change the pulse workflow, skill, scripts, operations guide, or tests run the unit-test validation job without loading any Actions secrets. Scheduled and manually dispatched runs must pass that validation job before the pulse job starts.
 
@@ -14,7 +14,7 @@ Company-data collection runs natively inside private Glean Agent `8f3fd6d966c649
 
 The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
 
-At the same `30 3 * * *` UTC schedule, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
+At the primary and fallback schedules, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. The relay then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
 
 Required repository secrets:
 

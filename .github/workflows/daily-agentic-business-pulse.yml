@@ -2,8 +2,12 @@ name: Daily Agentic Business Pulse
 
 on:
   schedule:
-    # 09:00 Asia/Kolkata. GitHub-hosted scheduled jobs can start several minutes late.
+    # 09:00 Asia/Kolkata, with idempotent fallbacks when GitHub misses a scheduled event.
     - cron: '30 3 * * *'
+    - cron: '45 3 * * *'
+    - cron: '0 4 * * *'
+    - cron: '30 4 * * *'
+    - cron: '30 5 * * *'
   workflow_dispatch:
     inputs:
       dry_run:

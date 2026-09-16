@@ -788,6 +788,11 @@ class PulseWorkflowTests(unittest.TestCase):
     def test_workflow_has_daily_ist_schedule_manual_dry_run_and_read_only_permissions(self):
         workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
         self.assertIn("cron: '30 3 * * *'", workflow)
+        self.assertIn("cron: '45 3 * * *'", workflow)
+        self.assertIn("cron: '0 4 * * *'", workflow)
+        self.assertIn("cron: '30 4 * * *'", workflow)
+        self.assertIn("cron: '30 5 * * *'", workflow)
+        self.assertEqual(workflow.count("cron:"), 5)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("pull_request:", workflow)
         self.assertIn("dry_run:", workflow)
