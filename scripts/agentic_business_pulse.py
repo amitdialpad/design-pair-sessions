@@ -122,6 +122,7 @@ SECRET_PATTERNS = (
 )
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
+GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
@@ -921,7 +922,7 @@ def message_body_text(message: Message) -> str:
 def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) -> dict[str, Any]:
     """Validate the Glean-created envelope and recover its structured agent result."""
 
-    expected_subject = f"{REPORT_SUBJECT_PREFIX} — {report_date}"
+    expected_subject = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {report_date}"
     if str(message.get("Subject", "")).strip() != expected_subject:
         raise ValidationError(f"Glean Gmail draft subject must be {expected_subject!r}")
     enforce_message_recipient_contract(message)
@@ -1158,10 +1159,10 @@ class GmailArchive:
             mailbox = self._special_mailbox(client, r"\Drafts", "[Gmail]/Drafts")
             if not self._select(client, mailbox, readonly=True):
                 raise IntegrationError("Could not select Gmail Drafts for the Glean report")
-            status, data = client.uid("search", None, "SUBJECT", f'"{REPORT_SUBJECT_PREFIX}"')
+            status, data = client.uid("search", None, "SUBJECT", f'"{GLEAN_DRAFT_SUBJECT_PREFIX}"')
             if status != "OK":
                 raise IntegrationError("Gmail Glean-draft search failed")
-            expected_subject = f"{REPORT_SUBJECT_PREFIX} — {report_date}"
+            expected_subject = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {report_date}"
             matches: list[tuple[str, Message]] = []
             for uid in reversed((data[0].split() if data and data[0] else [])[-40:]):
                 status, rows = client.uid("fetch", uid, "(RFC822)")

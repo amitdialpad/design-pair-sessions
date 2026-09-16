@@ -25,7 +25,7 @@ No `PULSE_AGENT_TOKEN`, direct Salesforce credential, Jira credential, Glean cre
 
 ## Glean draft contract
 
-The Glean Agent creates a draft with the exact subject `Daily Agentic Business Pulse — YYYY-MM-DD`, exactly one `To` recipient (`amit.ayre@dialpad.com`), and no Cc or Bcc. After the human-readable report, the draft includes one JSON object between the exact markers `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
+The Glean Agent creates an internal relay draft with the exact subject `[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse — YYYY-MM-DD`, exactly one `To` recipient (`amit.ayre@dialpad.com`), and no Cc or Bcc. This source draft must never be sent manually. After the human-readable report, it includes one JSON object between the exact markers `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
 
 The object has this shape:
 
@@ -39,7 +39,7 @@ The object has this shape:
 }
 ```
 
-The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The human report is a plain-language manager brief capped at 650 words: `TL;DR`, three or four explained numbers, a Money → Customers → Product story, up to three concrete design implications, and a short `What to trust` note. Every story paragraph says what happened, why it matters, and what it means for product/design. Analyst shorthand and untranslated acronyms are rejected. Evidence labels, exhaustive Jira detail, implementation-state inventories, and exact calculations remain in the structured snapshot rather than the email. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, Gmail tracking redirects, implementation status maps, and the previous manager-brief heading names during rollout. It also promotes an overly cautious `incomplete` result to `complete` when all required sources are healthy, every core commercial metric is populated, and any reported gaps are only claim-scoped limitations; in that case it replaces the warning inventory with a plain description of what is reliable. It does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block from the delivered report and adds the current workflow URL to `What to trust`.
+The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The human report is a plain-language manager brief capped at 650 words: `TL;DR`, three or four explained numbers, a Money → Customers → Product story, up to three concrete design implications, and a short `What to trust` note. Every story paragraph says what happened, why it matters, and what it means for product/design. Analyst shorthand and untranslated acronyms are rejected. Evidence labels, exhaustive Jira detail, implementation-state inventories, and exact calculations remain in the structured snapshot rather than the email. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, Gmail tracking redirects, implementation status maps, and the previous manager-brief heading names during rollout. It also promotes an overly cautious `incomplete` result to `complete` when all required sources are healthy, every core commercial metric is populated, and any reported gaps are only claim-scoped limitations; in that case it replaces the warning inventory with a plain description of what is reliable. It does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block, renders the Markdown as readable HTML, and adds the current workflow URL to `What to trust` before creating or sending any user-facing message.
 
 ## Private persistence and delivery
 
@@ -74,7 +74,7 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 ## Manual verification
 
 1. Confirm Glean Agent `8f3fd6d966c64916b11b505a580ff64f` is published privately, scheduled daily at 09:00, connected to Gmail MCP, and restricted to `Create Draft` as its only Gmail write tool.
-2. Run the Glean Agent once manually and confirm it creates exactly one draft with the report and machine JSON block.
+2. Run the Glean Agent once manually and confirm it creates exactly one `[INTERNAL RELAY — DO NOT SEND]` draft with the report and machine JSON block. Never send this source draft manually.
 3. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
 4. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
 5. Inspect the `[DRY RUN]` Gmail draft and confirm the full report is readable with no attachments.

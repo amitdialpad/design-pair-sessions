@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from agentic_business_pulse import (  # noqa: E402
+    GLEAN_DRAFT_SUBJECT_PREFIX,
     GLEAN_MACHINE_END,
     GLEAN_MACHINE_START,
     GmailArchive,
@@ -178,7 +179,7 @@ class FakeArchive:
 
 def glean_source_draft(result: dict | None = None, recipient: str = "amit.ayre@dialpad.com") -> EmailMessage:
     message = EmailMessage()
-    message["Subject"] = f"Daily Agentic Business Pulse — {REPORT_DATE}"
+    message["Subject"] = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {REPORT_DATE}"
     message["From"] = "amit.ayre@dialpad.com"
     message["To"] = recipient
     payload = result or valid_result()
@@ -503,8 +504,12 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertEqual(message["To"], "amit.ayre@dialpad.com")
         self.assertEqual(message["Subject"], f"Daily Agentic Business Pulse — {REPORT_DATE}")
         self.assertEqual(list(message.iter_attachments()), [])
-        self.assertIn("already booked for Agentic", message.get_body(preferencelist=("plain",)).get_content())
-        self.assertIn("<!doctype html>", message.get_body(preferencelist=("html",)).get_content())
+        plain_body = message.get_body(preferencelist=("plain",)).get_content()
+        html_body = message.get_body(preferencelist=("html",)).get_content()
+        self.assertIn("already booked for Agentic", plain_body)
+        self.assertIn("<!doctype html>", html_body)
+        self.assertNotIn(GLEAN_MACHINE_START, plain_body)
+        self.assertNotIn(GLEAN_MACHINE_START, html_body)
 
     def test_email_html_prioritizes_bottom_line_metrics_and_insights(self):
         report, _ = validate_agent_result(
@@ -598,7 +603,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             + GLEAN_MACHINE_END
         )
         message = EmailMessage()
-        message["Subject"] = f"Daily Agentic Business Pulse — {REPORT_DATE}"
+        message["Subject"] = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {REPORT_DATE}"
         message["From"] = "amit.ayre@dialpad.com"
         message["To"] = "amit.ayre@dialpad.com"
         message.set_content(f"<html><body><pre>{html.escape(body)}</pre></body></html>", subtype="html")
