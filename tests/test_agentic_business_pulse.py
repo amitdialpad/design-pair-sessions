@@ -22,6 +22,7 @@ from agentic_business_pulse import (  # noqa: E402
     GmailArchive,
     IntegrationError,
     PulseConfig,
+    PulseError,
     ValidationError,
     build_email_message,
     deterministic_message_id,
@@ -31,6 +32,7 @@ from agentic_business_pulse import (  # noqa: E402
     run_pulse,
     run_pulse_from_glean_draft,
     validate_agent_result,
+    wait_until_local_delivery_time,
 )
 
 
@@ -213,6 +215,34 @@ class PulseValidationTests(unittest.TestCase):
         report_now = now_in_timezone("Asia/Kolkata", utc_time)
         self.assertEqual(report_now.date().isoformat(), REPORT_DATE)
         self.assertEqual(report_now.strftime("%H:%M"), "09:00")
+
+    def test_scheduled_runner_waits_until_nine_ist(self):
+        slept = []
+        early = datetime(2026, 9, 15, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
+        ready = wait_until_local_delivery_time(
+            "Asia/Kolkata",
+            "09:00",
+            current_time=early,
+            sleeper=slept.append,
+        )
+        self.assertEqual(slept, [17580.0])
+        self.assertEqual(ready, REPORT_NOW)
+
+    def test_manual_runs_do_not_wait_for_a_delivery_window(self):
+        slept = []
+        early = datetime(2026, 9, 15, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
+        ready = wait_until_local_delivery_time(
+            "Asia/Kolkata",
+            "",
+            current_time=early,
+            sleeper=slept.append,
+        )
+        self.assertEqual(slept, [])
+        self.assertEqual(ready, early)
+
+    def test_invalid_delivery_window_fails_closed(self):
+        with self.assertRaisesRegex(PulseError, "24-hour HH:MM"):
+            wait_until_local_delivery_time("Asia/Kolkata", "9am", current_time=REPORT_NOW)
 
     def test_valid_report_preserves_separate_revenue_and_pipeline_metrics(self):
         report, snapshot = validate_agent_result(
@@ -853,11 +883,11 @@ class GleanDraftRelayTests(PulseDeliveryTests):
 class PulseWorkflowTests(unittest.TestCase):
     def test_workflow_has_daily_ist_schedule_manual_dry_run_and_read_only_permissions(self):
         workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
-        self.assertIn("cron: '30 3 * * *'", workflow)
-        self.assertIn("cron: '45 3 * * *'", workflow)
-        self.assertIn("cron: '0 4 * * *'", workflow)
-        self.assertIn("cron: '30 4 * * *'", workflow)
-        self.assertIn("cron: '30 5 * * *'", workflow)
+        self.assertIn("cron: '37 22 * * *'", workflow)
+        self.assertIn("cron: '17 23 * * *'", workflow)
+        self.assertIn("cron: '23 0 * * *'", workflow)
+        self.assertIn("cron: '37 1 * * *'", workflow)
+        self.assertIn("cron: '37 3 * * *'", workflow)
         self.assertEqual(workflow.count("cron:"), 5)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("pull_request:", workflow)
@@ -865,6 +895,9 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertIn("PULSE_INPUT_MODE: glean_gmail_draft", workflow)
+        self.assertIn("PULSE_NOT_BEFORE_LOCAL_TIME:", workflow)
+        self.assertIn("PULSE_GLEAN_DRAFT_WAIT_SECONDS: '1800'", workflow)
+        self.assertIn("timeout-minutes: 345", workflow)
         self.assertIn("actions/checkout@v7", workflow)
         self.assertIn("actions/setup-python@v7", workflow)
         self.assertIn("actions/upload-artifact@v7", workflow)
