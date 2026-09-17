@@ -211,6 +211,7 @@ class PulseConfig:
     imap_host: str = "imap.gmail.com"
     smtp_host: str = "smtp.gmail.com"
     input_mode: str = "agent_api"
+    not_before_local_time: str = ""
     glean_draft_wait_seconds: int = 900
     glean_draft_poll_seconds: int = 30
 
@@ -252,6 +253,7 @@ class PulseConfig:
             imap_host=os.environ.get("PULSE_IMAP_HOST", "imap.gmail.com").strip(),
             smtp_host=os.environ.get("PULSE_SMTP_HOST", "smtp.gmail.com").strip(),
             input_mode=os.environ.get("PULSE_INPUT_MODE", "glean_gmail_draft").strip(),
+            not_before_local_time=os.environ.get("PULSE_NOT_BEFORE_LOCAL_TIME", "").strip(),
             glean_draft_wait_seconds=int(os.environ.get("PULSE_GLEAN_DRAFT_WAIT_SECONDS", "900")),
             glean_draft_poll_seconds=int(os.environ.get("PULSE_GLEAN_DRAFT_POLL_SECONDS", "30")),
         )
@@ -264,6 +266,35 @@ def now_in_timezone(timezone_name: str, now: datetime | None = None) -> datetime
     if now.tzinfo is None:
         raise PulseError("Injected current time must be timezone-aware")
     return now.astimezone(tz)
+
+
+def wait_until_local_delivery_time(
+    timezone_name: str,
+    not_before_local_time: str,
+    *,
+    current_time: datetime | None = None,
+    sleeper: Callable[[float], None] = time.sleep,
+) -> datetime:
+    """Hold an early-started scheduled runner until the intended local delivery time."""
+
+    report_now = now_in_timezone(timezone_name, current_time)
+    if not not_before_local_time:
+        return report_now
+    match = re.fullmatch(r"([01]\d|2[0-3]):([0-5]\d)", not_before_local_time)
+    if not match:
+        raise PulseError("PULSE_NOT_BEFORE_LOCAL_TIME must use 24-hour HH:MM format")
+    target = report_now.replace(
+        hour=int(match.group(1)),
+        minute=int(match.group(2)),
+        second=0,
+        microsecond=0,
+    )
+    if report_now >= target:
+        return report_now
+    sleeper((target - report_now).total_seconds())
+    if current_time is not None:
+        return target
+    return now_in_timezone(timezone_name)
 
 
 def workflow_url_from_env() -> str:
@@ -1549,11 +1580,17 @@ def run_pulse_from_glean_draft(
     current_time: datetime | None = None,
     archive: GmailArchive | None = None,
     sender: Callable[[EmailMessage, PulseConfig], dict[str, Any]] = send_gmail,
+    sleeper: Callable[[float], None] = time.sleep,
 ) -> dict[str, Any]:
     """Validate and deliver the output of a native scheduled Glean Agent run."""
 
     enforce_only_allowed_recipient(config.recipient)
-    report_now = now_in_timezone(config.timezone_name, current_time)
+    report_now = wait_until_local_delivery_time(
+        config.timezone_name,
+        config.not_before_local_time,
+        current_time=current_time,
+        sleeper=sleeper,
+    )
     report_date = report_now.date().isoformat()
     workflow_url = workflow_url_from_env()
     live_message_id = deterministic_message_id(report_date, dry_run=False)

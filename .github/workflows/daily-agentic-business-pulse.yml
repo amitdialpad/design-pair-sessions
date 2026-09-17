@@ -2,12 +2,14 @@ name: Daily Agentic Business Pulse
 
 on:
   schedule:
-    # 09:00 Asia/Kolkata, with idempotent fallbacks when GitHub misses a scheduled event.
-    - cron: '30 3 * * *'
-    - cron: '45 3 * * *'
-    - cron: '0 4 * * *'
-    - cron: '30 4 * * *'
-    - cron: '30 5 * * *'
+    # Prewarm well before 09:00 Asia/Kolkata because this repository's scheduled
+    # events have recently arrived 4-6 hours late. The runner waits in the cloud
+    # until 09:00 IST; odd-minute fallbacks avoid GitHub's busiest cron boundaries.
+    - cron: '37 22 * * *'
+    - cron: '17 23 * * *'
+    - cron: '23 0 * * *'
+    - cron: '37 1 * * *'
+    - cron: '37 3 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -45,7 +47,7 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: validate
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 345
     concurrency:
       group: daily-agentic-business-pulse
       cancel-in-progress: false
@@ -62,10 +64,11 @@ jobs:
           PULSE_TIMEZONE: Asia/Kolkata
           PULSE_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
           PULSE_INPUT_MODE: glean_gmail_draft
+          PULSE_NOT_BEFORE_LOCAL_TIME: ${{ github.event_name == 'schedule' && '09:00' || '' }}
           PULSE_SKILL_PATH: skills/daily-agentic-business-pulse/SKILL.md
           PULSE_REPORTS_DIR: reports/agentic_business_pulse
           PULSE_SOURCE_MAX_AGE_HOURS: '12'
-          PULSE_GLEAN_DRAFT_WAIT_SECONDS: '900'
+          PULSE_GLEAN_DRAFT_WAIT_SECONDS: '1800'
           PULSE_GLEAN_DRAFT_POLL_SECONDS: '30'
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}

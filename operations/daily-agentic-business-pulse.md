@@ -2,7 +2,7 @@
 
 Workflow: `Daily Agentic Business Pulse`
 
-Scheduled execution: every day at `30 3 * * *` UTC, which is 09:00 in `Asia/Kolkata`. Because GitHub can delay or omit an individual scheduled event, idempotent fallbacks run at 09:15, 09:30, 10:00, and 11:00 IST. The deterministic daily Message-ID makes later runs exit successfully after the first accepted send. A manual `workflow_dispatch` supports live and dry runs.
+Scheduled delivery remains 09:00 in `Asia/Kolkata`, but the GitHub runner is prewarmed several hours earlier. This repository's own run history showed 4-6 hour delays for scheduled events, including the otherwise reliable Beacon syncs and weekly brief. Five odd-minute cron events therefore begin at 04:07, 04:47, 05:53, 07:07, and 09:07 IST. The first runner GitHub releases waits in the cloud until 09:00 before checking Gmail; later runs exit idempotently after the first accepted send. A manual `workflow_dispatch` never waits and continues to support live and dry runs.
 
 Pull requests that change the pulse workflow, skill, scripts, operations guide, or tests run the unit-test validation job without loading any Actions secrets. Scheduled and manually dispatched runs must pass that validation job before the pulse job starts.
 
@@ -10,11 +10,11 @@ Pull requests that change the pulse workflow, skill, scripts, operations guide, 
 
 The public repository contains orchestration and validation code only. It does not contain company source credentials, internal document identifiers, reports, snapshots, or raw evidence.
 
-Company-data collection runs natively inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`. Its daily 09:00 schedule uses the user's existing Glean permissions and the Agent's approved Salesforce, Jira, company-search/document, email/calendar, and production-code tools. This avoids exporting direct company-source credentials or requiring a Glean Platform API token in GitHub.
+Company-data collection runs natively inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`. Its daily 08:00 schedule gives the Agent time to finish before the 09:00 delivery gate, using the user's existing Glean permissions and the Agent's approved Salesforce, Jira, company-search/document, email/calendar, and production-code tools. This avoids exporting direct company-source credentials or requiring a Glean Platform API token in GitHub.
 
 The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
 
-At the primary and fallback schedules, GitHub Actions uses the existing Gmail sender secrets to wait up to 15 minutes for that private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. The relay then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
+At the primary and fallback schedules, GitHub Actions prewarms a hosted runner and holds it until 09:00 IST. It then uses the existing Gmail sender secrets to wait up to 30 minutes for the private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. The relay then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
 
 Required repository secrets:
 
@@ -73,7 +73,7 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 
 ## Manual verification
 
-1. Confirm Glean Agent `8f3fd6d966c64916b11b505a580ff64f` is published privately, scheduled daily at 09:00, connected to Gmail MCP, and restricted to `Create Draft` as its only Gmail write tool.
+1. Confirm Glean Agent `8f3fd6d966c64916b11b505a580ff64f` is published privately, scheduled daily at 08:00, connected to Gmail MCP, and restricted to `Create Draft` as its only Gmail write tool.
 2. Run the Glean Agent once manually and confirm it creates exactly one `[INTERNAL RELAY — DO NOT SEND]` draft with the report and machine JSON block. Never send this source draft manually.
 3. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
 4. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
