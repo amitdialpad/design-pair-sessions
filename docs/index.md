@@ -1109,6 +1109,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude Cowork and chat are now one Claude](https://claude.com/blog/cowork-is-now-claude)**<br><small>Sep 16, 2026</small>
+
+Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Max plans. Hand over the task and Claude does the work. You keep the final say.
+
+---
+
 **[Building an AI-native revenue organization](https://claude.com/blog/building-an-ai-native-revenue-organization)**<br><small>Sep 15, 2026 · Enterprise AI</small>
 
 In this guide, Anthropic shares how revenue leaders can roll out Claude across a sales organization, including the setup decisions, a three-phase rollout plan, and an ROI measurement framework.
@@ -1125,13 +1131,13 @@ Sellers can now research companies, prep for calls, review pipeline, and draft C
 
 We’re releasing new Claude for Small Business workflows and integrations to help owners run and grow their business, and kicking off the next leg of our Claude SMB Tour.
 
----
+:::details View past updates
 
 **[Deploying AI from pilot to production](https://claude.com/blog/deploying-ai-from-pilot-to-production)**<br><small>Sep 14, 2026 · Enterprise AI</small>
 
 This guide by Anthropic and Accenture shares seven considerations for taking enterprise AI from pilot to production, and the decisions leadership needs to make before the program advances.
 
-:::details View past updates
+---
 
 **[How healthcare organizations use Claude Tag](https://claude.com/blog/how-healthcare-organizations-use-claude-tag)**<br><small>Sep 14, 2026 · Enterprise AI</small>
 
@@ -1155,13 +1161,7 @@ Our CI job volume increased 25x over 6 months. We patched our test selection ser
 
 Lina Ochman, Head of U.S. SMB at Anthropic, shares what she learned during our Claude Small Business Tour, and what’s next for the program.
 
----
-
-**[T. Rowe Price brings more of Claude to its investment process](https://claude.com/blog/t-rowe-price-brings-more-of-claude-to-its-investment-process)**<br><small>Sep 10, 2026</small>
-
-How T. Rowe Price is using Claude across the business, from driving fundamental research to building investment tools.
-
 :::
 
-*Updated September 16, 2026*
+*Updated September 17, 2026*
 <!-- CLAUDE_FEED_END -->
