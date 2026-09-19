@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:86360d70a6331d5a40b42b459359759bc7a2ca08 -->
+
+**Enable sidebar devtools on dialpad.design production environment**
+
+Shift+Cmd+Click on the Dialpad logo (and the ?dev=true URL param) updated the DevTools store and the URL, but the docked DevTools panel never rendered on any remote Beacon deploy in this repository. isDevToolsEnvironmentEnabled() (apps/beacon/src/config/devToolsEnvironment.ts) only treated a build as dev-tools-eligible when the hostname contained github, preview, or staging. Both Beacon's PR previews and its main deploy are actually served from beacon-test.dialpad.design (a GCS bucket via the Cloud Run proxy) — a hostname that matched none of those substrings, so the check silently returned false on every remote build. That gated out the entire docked-sidebar path (the dynamic @/plugins/d...
+
+<span class="release-meta">[dialpad/design#122](https://github.com/dialpad/design/pull/122) · 18 September 2026</span>
+
+---
+
 <!-- beacon-change:2c94897bc6650e580a7789a6674a89fb124669f6 -->
 
 **AI Receptionist analytics overview**
