@@ -14,7 +14,7 @@ Company-data collection runs natively inside private Glean Agent `8f3fd6d966c649
 
 The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
 
-At the primary and fallback schedules, GitHub Actions prewarms a hosted runner and holds it until 09:00 IST. It then uses the existing Gmail sender secrets to wait up to 30 minutes for the private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. The relay then validates the recipient, report date, sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the existing failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
+At the primary and fallback schedules, GitHub Actions prewarms a hosted runner and holds it until 09:00 IST. It then uses the existing Gmail sender secrets to wait up to 30 minutes for the private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. Gmail draft discovery searches with the ASCII-only phrase `Daily Agentic Business Pulse`, then requires the exact Unicode internal subject, current IST date, one allowed recipient, and no attachments on every fetched candidate. The relay then validates the report sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
 
 Required repository secrets:
 
@@ -69,7 +69,9 @@ Normal report delivery stops when:
 - credentials, raw payloads, tool arguments, transcripts, or unredacted email addresses are detected;
 - private Gmail persistence or idempotency checks fail.
 
-The failed Actions run invokes the existing Gmail failure-notification path and links to the workflow run. It does not send a stale or partial normal report.
+An expected pulse application failure is recorded as `handled_failure` in the Actions summary and invokes the existing Gmail failure-notification mechanics. Pulse alerts opt into a deterministic Message-ID for the current `Asia/Kolkata` date. Gmail Sent is checked before SMTP, so the first fallback can send one plain-language alert and later fallbacks suppress it. A successfully handled pulse failure therefore does not also fail the workflow and trigger repeated GitHub “Run failed” mail.
+
+Checkout, setup, validation-runner, unexpected Python, and artifact failures remain failed workflow runs. If Gmail cannot confirm failure-alert deduplication or cannot send the alert, the notifier also leaves the run failed so GitHub remains the final alert path. Other Beacon workflows do not opt into daily deduplication and retain their existing notifier behavior.
 
 ## Manual verification
 
@@ -81,5 +83,6 @@ The failed Actions run invokes the existing Gmail failure-notification path and 
 6. Run manually with `dry_run=false`.
 7. Confirm exactly one body-only report email, an accepted Gmail result, the private run artifact, and source freshness in the Actions summary.
 8. Re-run live for the same IST date and confirm `duplicate_skipped` / `already_sent`.
+9. On the next unattended schedule, confirm the first successful run delivers once and later fallbacks finish as duplicate skips without another report or failure alert.
 
 Fixtures are unit-test inputs only. They are never wired into the GitHub workflow and cannot pass validation as deployed or customer-exposed evidence.

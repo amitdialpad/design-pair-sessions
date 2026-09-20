@@ -22,10 +22,12 @@ on:
       - '.github/workflows/daily-agentic-business-pulse.yml'
       - 'operations/daily-agentic-business-pulse.md'
       - 'scripts/agentic_business_pulse.py'
+      - 'scripts/failure_notification.py'
       - 'scripts/run-agentic-business-pulse.py'
       - 'scripts/notify-failure.py'
       - 'skills/daily-agentic-business-pulse/**'
       - 'tests/test_agentic_business_pulse.py'
+      - 'tests/test_failure_notification.py'
 
 permissions:
   contents: read
@@ -59,6 +61,7 @@ jobs:
           python-version: '3.12'
 
       - name: Generate, validate, persist, and deliver pulse
+        id: pulse
         env:
           PULSE_RECIPIENT: amit.ayre@dialpad.com
           PULSE_TIMEZONE: Asia/Kolkata
@@ -72,36 +75,19 @@ jobs:
           PULSE_GLEAN_DRAFT_POLL_SECONDS: '30'
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          FAILURE_SUBJECT_PREFIX: Daily Agentic Business Pulse needs attention
+          FAILURE_DESCRIPTION: The report did not pass its source, freshness, validation, persistence, or delivery checks.
+          FAILURE_DEDUPE_DAILY: 'true'
+          FAILURE_TIMEZONE: Asia/Kolkata
         run: python3 scripts/run-agentic-business-pulse.py
 
       - name: Persist private pulse outputs
+        if: steps.pulse.outputs.handled_failure != 'true'
         uses: actions/upload-artifact@v7
         with:
           name: agentic-business-pulse-${{ github.run_id }}
           path: reports/agentic_business_pulse/
           if-no-files-found: error
           retention-days: 90
-
-  notify-failure:
-    if: ${{ always() && github.event_name != 'pull_request' && (needs.validate.result == 'failure' || needs.pulse.result == 'failure') }}
-    needs:
-      - validate
-      - pulse
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Notify Amit on failure
-        env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          FAILURE_SUBJECT_PREFIX: Agentic Business Pulse failed
-          FAILURE_DESCRIPTION: The daily pulse did not pass its source, freshness, redaction, persistence, or delivery gates. No normal report email was sent.
-          FAILURE_COMMON_FIXES: |-
-            - Glean draft missing → check Agent 8f3fd6d966c64916b11b505a580ff64f schedule and Gmail MCP connection
-            - Required source incomplete or stale → inspect Glean connector coverage and source freshness
-            - Gmail persistence or send failed → check GMAIL_USER and GMAIL_APP_PASSWORD
-            - Skill missing or shortened → synchronize the complete repository skill
-        run: python3 scripts/notify-failure.py
