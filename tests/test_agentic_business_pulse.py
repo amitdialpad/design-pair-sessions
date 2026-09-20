@@ -799,6 +799,25 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertNotIn("&source=gmail", report)
         self.assertNotIn("&ust=", report)
 
+    def test_glean_healthy_source_status_is_normalized_to_ok(self):
+        payload = valid_result()
+        for state in payload["snapshot"]["source_status"].values():
+            state["status"] = "healthy"
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        _, snapshot = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertTrue(
+            all(state["status"] == "ok" for state in snapshot["source_status"].values())
+        )
+
     def test_former_section_names_are_normalized_during_rollout(self):
         payload = valid_result()
         replacements = {

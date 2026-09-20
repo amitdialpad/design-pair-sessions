@@ -1154,7 +1154,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
         status = state.get("status")
         if isinstance(status, str) and status != "ok":
             normalized = status.casefold().strip()
-            if normalized.startswith(("complete", "partial", "refresh", "fresh")):
+            if normalized.startswith(("complete", "healthy", "partial", "refresh", "fresh")):
                 state["detail"] = status
                 state["status"] = "ok"
 
