@@ -884,6 +884,40 @@ class GleanDraftRelayTests(PulseDeliveryTests):
 
         self.assertEqual(snapshot["data_status"], "incomplete")
 
+    def test_incomplete_consequence_is_moved_into_what_to_trust(self):
+        payload = valid_result()
+        payload["data_status"] = "incomplete"
+        payload["snapshot"]["metrics"]["revenue"]["target_agentic_acv"] = None
+        consequence = (
+            "Data incomplete: the refreshed quarter goal is missing, so we cannot say "
+            "whether bookings are ahead or behind plan."
+        )
+        payload["report_markdown"] = payload["report_markdown"].replace(
+            "Show booked Agentic business separately from possible deals so a large bundled deal cannot make progress look stronger than it is.",
+            "Show booked Agentic business separately from possible deals so a large bundled deal cannot make progress look stronger than it is. "
+            + consequence,
+        ).replace(
+            "Trust the revenue and delivery facts.",
+            "Trust today's booked and possible-deal numbers.",
+        )
+
+        parsed = parse_glean_draft(
+            glean_source_draft(payload), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
+        )
+        report, snapshot = validate_agent_result(
+            parsed,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        story = report.split("## What to trust", 1)[0]
+        trust = report.split("## What to trust", 1)[1]
+        self.assertNotIn(consequence, story)
+        self.assertIn(consequence, trust)
+        self.assertEqual(report.count(consequence), 1)
+        self.assertEqual(snapshot["data_status"], "incomplete")
+
     def test_complete_healthy_result_cannot_deliver_stale_incomplete_copy(self):
         payload = valid_result()
         payload["report_markdown"] = payload["report_markdown"].replace(
