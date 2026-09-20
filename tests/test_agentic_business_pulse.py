@@ -311,6 +311,23 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "must not inventory tools or sources"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
+    def test_what_to_trust_ignores_source_name_inside_workflow_link_url(self):
+        result = valid_result()
+        glean_workflow_url = "https://app.glean.com/chat/current-pulse-run"
+        result["report_markdown"] = result["report_markdown"].replace(
+            WORKFLOW_URL,
+            glean_workflow_url,
+        )
+
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=glean_workflow_url,
+        )
+
+        self.assertIn(f"[Workflow run]({glean_workflow_url})", report)
+
     def test_manager_brief_rejects_legacy_detail_sections(self):
         result = valid_result()
         result["report_markdown"] += "\n## Jira and delivery risk\n\nDP-200000 remains open.\n"
