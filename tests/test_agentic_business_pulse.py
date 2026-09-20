@@ -46,6 +46,12 @@ SOURCE_LINKS = {
     "glean": "https://app.glean.com/search?q=agentic",
     "production_code": "https://github.com/dialpad/firespotter/pull/1",
 }
+DASHBOARD_SOURCE_LINKS = {
+    "agentic_analytics": "https://analytics.dialpad.com/agentic/customer-activity",
+    "salesforce": SOURCE_LINKS["salesforce"],
+    "jira": SOURCE_LINKS["jira"],
+    "glean": SOURCE_LINKS["glean"],
+}
 
 
 def valid_result() -> dict:
@@ -90,6 +96,198 @@ Trust the revenue and delivery facts. Treat the customer-value story as early un
         source: {"status": "ok", "queried_at": "2026-09-15T08:55:00+05:30", "links": [link]}
         for source, link in SOURCE_LINKS.items()
     }
+    return _legacy_result(report, source_status)
+
+
+def valid_dashboard_result() -> dict:
+    source_status = {
+        source: {
+            "status": "ok",
+            "queried_at": "2026-09-15T08:55:00+05:30",
+            "links": [link],
+            "access_mode": "read_only",
+        }
+        for source, link in DASHBOARD_SOURCE_LINKS.items()
+    }
+    customers = [
+        {
+            "account_name": "Communicare IT",
+            "name_permitted": True,
+            "lifecycle_stage": "live",
+            "movement": "moved",
+            "agent_or_use_case": "IT support agent",
+            "links": ["https://analytics.dialpad.com/agentic/customers/communicare-it"],
+            "integrations": [{"name": "Salesforce", "status": "connected"}],
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "available",
+            },
+            "activity": {
+                "conversations_24h": 42,
+                "conversations_7d": 120,
+                "conversations_previous_7d": 100,
+                "skill_starts_24h": 50,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": 90,
+                "transferred": 20,
+                "resolved": 106,
+                "not_resolved": 10,
+                "unknown_resolution": 4,
+                "ai_csat": 4.3,
+                "average_handle_seconds": 92,
+            },
+            "jira": {"new_or_changed_24h": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "Early access", "movement_24h": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Batteries Plus",
+            "name_permitted": True,
+            "lifecycle_stage": "test",
+            "movement": "failing",
+            "agent_or_use_case": "Retail support agent",
+            "links": ["https://analytics.dialpad.com/agentic/customers/batteries-plus"],
+            "integrations": [{"name": "Custom order API", "status": "failing"}],
+            "metric_coverage": {"connector_actions": "available", "conversation_outcomes": "available"},
+            "activity": {
+                "conversations_24h": 8,
+                "conversations_7d": 30,
+                "conversations_previous_7d": 25,
+                "skill_starts_24h": 15,
+                "connector_action_attempts_24h": 12,
+                "connector_action_successes_24h": 10,
+                "connector_action_failures_24h": 2,
+            },
+            "outcomes_7d": {
+                "contained": 18,
+                "transferred": 8,
+                "resolved": 20,
+                "not_resolved": 6,
+                "unknown_resolution": 4,
+                "ai_csat": 3.8,
+                "average_handle_seconds": 130,
+            },
+            "jira": {"new_or_changed_24h": 1, "open_customer_bugs": 1, "keys": ["DP-200001"]},
+            "commercial": {"stage": "UAT", "movement_24h": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Curri",
+            "name_permitted": True,
+            "lifecycle_stage": "build",
+            "movement": "no_data",
+            "agent_or_use_case": "Logistics agent",
+            "links": ["https://dialpad.lightning.force.com/lightning/r/Account/curri/view"],
+            "integrations": [{"name": "BYO MCP", "status": "building"}],
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "not_instrumented",
+            },
+            "activity": {
+                "conversations_24h": 0,
+                "conversations_7d": 0,
+                "conversations_previous_7d": 0,
+                "skill_starts_24h": 0,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": None,
+                "transferred": None,
+                "resolved": None,
+                "not_resolved": None,
+                "unknown_resolution": None,
+                "ai_csat": None,
+                "average_handle_seconds": None,
+            },
+            "jira": {"new_or_changed_24h": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "Early access", "movement_24h": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Comprehensive Urology",
+            "name_permitted": True,
+            "lifecycle_stage": "validate",
+            "movement": "moved",
+            "agent_or_use_case": "Patient intake agent",
+            "links": ["https://analytics.dialpad.com/agentic/customers/comprehensive-urology"],
+            "integrations": [{"name": "Scheduling API", "status": "testing"}],
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "available",
+            },
+            "activity": {
+                "conversations_24h": 4,
+                "conversations_7d": 12,
+                "conversations_previous_7d": 0,
+                "skill_starts_24h": 5,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": 8,
+                "transferred": 3,
+                "resolved": 9,
+                "not_resolved": 2,
+                "unknown_resolution": 1,
+                "ai_csat": 4.1,
+                "average_handle_seconds": 105,
+            },
+            "jira": {"new_or_changed_24h": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "UAT approved", "movement_24h": "advanced", "agentic_acv": None},
+        },
+    ]
+    return {
+        "report_markdown": f"# Agentic Customer Dashboard — {REPORT_DATE}\n",
+        "agent_request_id": "dashboard-request-123",
+        "data_status": "complete",
+        "failures": [],
+        "snapshot": {
+            "schema_version": 2,
+            "report_date": REPORT_DATE,
+            "generated_at": "2026-09-15T09:00:00+05:30",
+            "comparison_window": {
+                "start": "2026-09-14",
+                "end": "2026-09-15",
+                "label": "last 24 hours and trailing seven days",
+            },
+            "source_status": source_status,
+            "summary": {
+                "active_customer_count": 4,
+                "movers_24h": 3,
+                "conversations_24h": 54,
+                "customers_with_failures_24h": 1,
+                "customers_without_current_data": 1,
+            },
+            "customers": customers,
+            "insights": [
+                {
+                    "account_name": "Batteries Plus",
+                    "text": "Ten of 12 connector actions succeeded, but two failures and a changed Jira defect make the action path today's clearest risk.",
+                    "links": ["https://dialpad.atlassian.net/browse/DP-200001"],
+                },
+                {
+                    "account_name": "Communicare IT",
+                    "text": "Forty-two conversations ran in 24 hours; trailing volume rose by 20 and 88% were resolved, while connector action results remain uninstrumented.",
+                    "links": ["https://analytics.dialpad.com/agentic/customers/communicare-it"],
+                },
+                {
+                    "account_name": "Comprehensive Urology",
+                    "text": "Customer testing has measurable traffic after approval: 12 conversations in seven days, nine resolved, and no changed blocker.",
+                    "links": ["https://analytics.dialpad.com/agentic/customers/comprehensive-urology"],
+                },
+            ],
+            "commercial_changes": ["Comprehensive Urology advanced to UAT approved."],
+            "unknowns": ["Connector action outcomes are not instrumented for Communicare IT, Curri, or Comprehensive Urology."],
+            "changes_since_previous": ["Communicare IT volume rose; Comprehensive Urology began measured validation."],
+        },
+    }
+
+
+def _legacy_result(report: str, source_status: dict) -> dict:
     return {
         "report_markdown": report,
         "agent_request_id": "agent-request-123",
@@ -415,6 +613,92 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "email address"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
+    def test_customer_dashboard_is_deterministic_and_orders_attention_first(self):
+        report, snapshot = validate_agent_result(
+            valid_dashboard_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertTrue(report.startswith(f"# Agentic Customer Dashboard — {REPORT_DATE}"))
+        self.assertLess(report.index("Batteries Plus"), report.index("Communicare IT"))
+        self.assertLess(report.index("Communicare IT"), report.index("Curri"))
+        self.assertIn("42 conversations", report)
+        self.assertIn("88% resolved", report)
+        self.assertIn("action result not instrumented", report)
+        self.assertNotIn("## The story", report)
+        self.assertNotIn("## What this means for design", report)
+        self.assertEqual(snapshot["data_status"], "complete")
+        self.assertIn("report_sha256", snapshot)
+
+    def test_customer_dashboard_requires_read_only_sources(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["agentic_analytics"]["access_mode"] = "write"
+
+        with self.assertRaisesRegex(ValidationError, "access_mode must be read_only"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_fails_closed_when_analytics_is_unhealthy(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["agentic_analytics"]["status"] = "timeout"
+
+        with self.assertRaisesRegex(IntegrationError, "agentic_analytics"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_stale_analytics(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["agentic_analytics"]["queried_at"] = "2026-09-14T08:00:00+05:30"
+
+        with self.assertRaisesRegex(ValidationError, "agentic_analytics.*stale"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_invented_action_counts(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][0]
+        customer["activity"]["connector_action_attempts_24h"] = 42
+
+        with self.assertRaisesRegex(ValidationError, "must not invent connector action counts"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_action_results_above_attempts(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][1]
+        customer["activity"]["connector_action_successes_24h"] = 11
+        customer["activity"]["connector_action_failures_24h"] = 2
+
+        with self.assertRaisesRegex(ValidationError, "cannot exceed attempts"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_summary_not_derived_from_rows(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["summary"]["conversations_24h"] = 999
+
+        with self.assertRaisesRegex(ValidationError, "does not match customer rows"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_does_not_repeat_no_change_customer_analysis(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["customers"][0]["movement"] = "no_change"
+        result["snapshot"]["summary"]["movers_24h"] = 2
+
+        with self.assertRaisesRegex(ValidationError, "cannot repeat a no-change customer"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_html_renders_semantic_matrix(self):
+        report, _ = validate_agent_result(
+            valid_dashboard_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+        rendered = markdown_to_email_html(report)
+
+        self.assertIn('<th scope="col"', rendered)
+        self.assertIn("<tbody><tr>", rendered)
+        self.assertIn("Batteries Plus", rendered)
+        self.assertNotIn("| Customer |", rendered)
+
 
 class PulseDeliveryTests(unittest.TestCase):
     def setUp(self):
@@ -682,6 +966,32 @@ class PulseDeliveryTests(unittest.TestCase):
 
 
 class GleanDraftRelayTests(PulseDeliveryTests):
+    def test_schema_v2_glean_draft_dry_run_renders_customer_matrix(self):
+        archive = FakeRelayArchive(source_message=glean_source_draft(valid_dashboard_result()))
+        config = PulseConfig(**{**self.config.__dict__, "dry_run": True})
+        calls = []
+
+        result = run_pulse_from_glean_draft(
+            config,
+            current_time=REPORT_NOW,
+            archive=archive,
+            sender=lambda *args: calls.append(args),
+        )
+
+        self.assertEqual(result["run_status"], "dry_run_complete")
+        self.assertFalse(calls)
+        self.assertEqual(len(archive.drafts), 1)
+        message = archive.drafts[0]
+        self.assertEqual(list(message.iter_attachments()), [])
+        plain_body = message.get_body(preferencelist=("plain",)).get_content()
+        html_body = message.get_body(preferencelist=("html",)).get_content()
+        self.assertIn("## Customer matrix", plain_body)
+        self.assertIn("42 conversations", plain_body)
+        self.assertIn('<th scope="col"', html_body)
+        self.assertNotIn(GLEAN_MACHINE_START, plain_body)
+        snapshot = json.loads((self.reports_dir / f"{REPORT_DATE}.json").read_text())
+        self.assertEqual(snapshot["schema_version"], 2)
+
     def test_glean_draft_parses_machine_result_and_locks_recipient(self):
         parsed = parse_glean_draft(
             glean_source_draft(), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL

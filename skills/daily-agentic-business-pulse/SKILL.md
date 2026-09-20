@@ -1,339 +1,260 @@
 ---
 name: daily-agentic-business-pulse
-description: Produces a daily evidence-based view of Dialpad Agentic revenue, pipeline, customer pain, Jira delivery risk, EAP performance, onboarding, and expansion signals, then prepares or sends the report to Amit Ayre.
+description: Produces a daily, evidence-based Agentic customer operating dashboard showing who moved, how they moved, what they used, where they failed, and what happened after publishing.
 ---
-# Daily Agentic Business Pulse
+# Daily Agentic Customer Dashboard
 
 ## Mission
 
-Default intended schedule: daily at 09:00 IST. This skill defines the report workflow but does not create a scheduler; an external automation must invoke it at that time. When invoked, track whether Dialpad Agentic is converting into revenue and customer value—not merely whether teams are shipping features.
+Run daily at 09:00 `Asia/Kolkata`. Show the complete active Agentic customer roster and answer:
 
-The report must cover:
+- Who moved in the last 24 hours?
+- Where is each customer in `Build → Test → Validate → Publish → Live`?
+- Which agent, use case, skill, connector, or system is being used?
+- What happened in the last 24 hours and trailing seven days?
+- Where are actions, conversations, or customer outcomes failing?
+- Which customer bugs or commercial records changed?
+- What is genuinely unknown or not instrumented?
 
-- Revenue, bookings, target attainment, remaining gap, pace, and pipeline quality.
-- Agentic pipeline by quarter, forecast category, stage, owner, account, and Agentic-specific ACV.
-- Customer issues and friction from Jira, support/customer feedback, meetings, docs, and messages.
-- What is working and what is failing across Agentic product areas and EAPs.
-- EAP cohort performance, customer onboarding, activation, usage, outcomes, and risks.
-- Concrete actions, owners, and decisions needed.
+This is a customer operating dashboard, not a recurring design essay. Do not repeat a known product problem unless its measurable customer effect, affected account, severity, owner, or status changed today.
 
-## Source priority
+## Safety and access boundary
 
-Use live company sources first. Prefer the most recent authoritative source for each metric and preserve the source link and date.
+All company-source access is read-only.
 
-1. Salesforce for bookings, opportunities, forecast categories, ACV, close dates, accounts, owners, onboarding/commercial status, and expansion signals.
-2. Jira for customer-impacting defects, blockers, aging work, launch readiness, and ownership.
-3. Glean search/document reading for EAP updates, customer feedback, product plans, launch notes, strategy, and meeting decisions.
-4. Slack, email, and meeting sources for recent customer and field signals when available.
-5. Prior daily snapshots only for comparison; never use them as a substitute for a fresh lookup.
+- Use only approved search, read, list, view, or `SELECT` operations.
+- Never run DML, DDL, create/replace, export, load, write, update, comment, transition, label, configure, grant, delete, or send operations against analytics, BigQuery, Pinot, Salesforce, Jira, Glean content, repositories, or customer systems.
+- Never change source-system permissions, connectors, dashboards, queries, datasets, agents, or configuration.
+- Never request broader access to fill a report gap.
+- The only allowed write in the source Agent is its existing Gmail `Create Draft` action for the private relay envelope, addressed only to `amit.ayre@dialpad.com`.
+- Never store raw conversations, transcripts, prompts, tool arguments, customer payloads, credentials, or secrets.
+
+If a safe approved read path does not exist, mark the integration unavailable and use the failure path. Do not improvise a new source or manually manufacture a metric.
+
+## Authoritative source map
+
+Use the source that owns each fact. Preserve its link and query time.
+
+1. **Agentic Analytics** — the approved read-only, Pinot-backed analytics path for conversations, skill starts, containment, transfer, resolution, handle time, and AI customer-satisfaction measures. This is the required behavioral source.
+2. **Salesforce** — the active customer roster, account identity, customer/commercial stage, opportunity movement, Agentic-specific contract value, and named use case when recorded.
+3. **Jira** — customer-impacting bugs, new or changed blockers, current status, and ticket identity.
+4. **Glean company search and documents** — qualitative customer context, implementation updates, meeting decisions, and weekly status statements. Use this to explain numbers, never to replace them.
+5. **Production code** — optional and conditional. Inspect only when a newly changed customer failure or contradiction needs implementation context. Do not search code every day by default.
+6. **BigQuery** — use only when a named, approved view is documented as authoritative for a specific report metric. BigQuery access by itself does not make a dataset current, complete, or suitable. Never substitute a stale event table for Agentic Analytics.
+
+Required source families are `agentic_analytics`, `salesforce`, `jira`, and `glean`. A normal report requires all four to be healthy, fresh, linked, and recorded with `access_mode: read_only`.
 
 ## Daily procedure
 
-### 1. Establish the reporting window
+### 1. Establish the roster and time window
 
-Use the current date in the user's preferred timezone. Compare against the most recent successful report and the prior business day or seven-day baseline, depending on the metric. State the comparison window explicitly. If no earlier structured snapshot is available, report current facts without inventing a delta; that continuity gap alone does not make the current report incomplete.
+Use the current IST date. Start from the complete active Agentic customer roster in Salesforce, including early access, build, validation, UAT, published, and live customers. Do not include only customers mentioned in the latest weekly email.
 
-### 2. Refresh revenue and pipeline
+Compare:
 
-Query Salesforce and the latest official revenue/target source. Separate these categories:
+- Last 24 hours for activity, failures, Jira changes, stage changes, and commercial movement.
+- Trailing seven days against the preceding seven days for usage and outcomes.
 
-- Closed-won/booked revenue.
-- Current-quarter target.
-- Remaining target gap and attainment percentage.
-- Required weekly pace for the remaining selling period.
-- Open pipeline by fiscal quarter and forecast category.
-- Weighted forecast, if an authoritative probability/forecast field exists.
-- Agentic-specific ACV versus total opportunity amount.
-- New, advanced, slipped, reduced, stalled, won, and lost opportunities since the prior report.
+Use the canonical company/account identifier for joins. If two systems cannot be joined safely and deterministically, do not guess from a similar name. Record the customer row as `no_data` and explain the identity gap in `unknowns`.
 
-Never describe open pipeline as revenue. Never combine different target scopes without calling out the change. If the official target changed, show the current target and the previous baseline separately.
+### 2. Place every customer in one journey stage
 
-Calculate:
+Use exactly one current stage:
 
-- Attainment = booked revenue / current target.
-- Remaining gap = current target - booked revenue.
-- Pipeline coverage = relevant qualified pipeline / remaining gap.
-- Required weekly pace = remaining gap / selling weeks remaining.
+- `build`
+- `test`
+- `validate`
+- `publish`
+- `live`
+- `paused`
 
-Break out Agentic Connectors, Agentic Billing, and other Agentic motions whenever the data supports it. Flag bundled opportunities where total amount materially exceeds Agentic-specific ACV.
+This is the current customer journey position, not a product-readiness claim. A published connector is not customer value until an agent uses it and an outcome is measured.
 
-### 3. Refresh customer pain and delivery risk
+### 3. Refresh behavioral activity and outcomes
 
-Search Jira and customer-facing sources for the last 24 hours and last 7 days. Prioritize issues that affect:
+For every customer, retrieve when available:
 
-- Customer onboarding or time to first value.
-- Connector setup, authentication, propagation, action execution, testing, publishing, or troubleshooting.
-- Agent quality, resolution, latency, safety, analytics, billing, or usage visibility.
-- EAP customers, design partners, pilots, or active revenue opportunities.
-- Launch blockers, repeated defects, escalations, or support dependency.
-
-For each important issue, capture: customer or cohort if known, symptom, business impact, ticket, status, age, owner, next action, and whether it is recurring.
-
-### 4. Refresh EAP and onboarding performance
-
-Find the latest evidence for each Agentic EAP or design-partner cohort. Track, where available:
-
-- Cohort name, customer count, invited, onboarded, activated, connected, deployed, and active.
-- Time from invitation to first value.
-- Usage and repeat usage.
-- Task completion, resolution, escalation, CSAT, or other outcome measures.
-- Feedback themes and representative customer language.
-- Accounts blocked, stalled, churned, or converted to paid usage.
-- Next onboarding dates and responsible owner.
-
-If a metric is unavailable, write `Not available` rather than estimating it. Distinguish anecdotal feedback from measured performance.
-
-### 5. Synthesize what is working and what needs work
-
-Produce no more than five conclusions. Each conclusion must be tagged as one of:
-
-- `Verified` — supported by a current source or calculated from current records.
-- `Signal` — repeated anecdotal evidence or an early directional trend.
-- `Inference` — a reasoned interpretation that needs validation.
-- `Unknown` — important but not currently measurable.
-
-Prioritize conclusions that affect revenue conversion, customer time to value, EAP continuation, expansion, or launch risk.
-
-### 6. Create the daily report
-
-Write for a design manager and product thinker, not for an operations analyst. The email should feel like a short story told by a smart colleague: what is happening, why it matters, and what Amit can shape. Keep the full evidence taxonomy, issue inventory, calculations, and implementation-status detail in the structured snapshot. In the human report, synthesize those records into a few hard conclusions and link the supporting sources inline.
-
-Use exactly this structure and keep the complete report at 650 words or fewer:
-
-# Daily Agentic Business Pulse — YYYY-MM-DD
-
-_What this covers: DATE–DATE · Compared with: DATE or “first comparable report”_
-
-## TL;DR
-
-Use three to five short sentences to answer: What is happening? Why should Amit care? What should change now? Lead with the human conclusion, not a metric label. Do not open with data availability, methodology, source names, or an evidence label. A reader who stops here should still understand the day.
-
-## The numbers
-
-Show only three or four rounded metrics that change the reader's understanding. Write every item as **plain-English number** — what it means and why it matters. For example:
-
-- **$31K already booked for Agentic** — annual contract value that is won, not a possible deal.
-- **$643K still in play** — possible Agentic business, not booked revenue.
-- **$2.9M total value of those deals** — the whole bundled deals; only part of this belongs to Agentic.
-- **3 early-access customers confirmed active** — the tracker is a month old, so treat this count cautiously.
-
-Normally include booked Agentic annual contract value against target, possible Agentic business, and the strongest customer rollout or value measure. Keep booked revenue and open pipeline visually and verbally separate. Keep Agentic-specific annual contract value separate from total bundled opportunity amount. Put secondary calculations and exact precision in the snapshot.
-
-## The story
-
-Use exactly three `###` conclusion headlines, in this order:
-
-1. `### Money — …`
-2. `### Customers — …`
-3. `### Product — …`
-
-Each insight gets one short paragraph that tells a mini-story in this order:
-
-- What happened.
-- Why it matters to the business or customer.
-- What it means for the product or design.
-
-Cluster related Jira tickets, customer reports, and code findings into a pattern; do not list tickets one by one. Cite one or two decisive sources inline with descriptive link text. Mention a specific ticket, customer, feature flag, or code path only when it materially changes a conclusion.
-
-Headlines must state the conclusion in ordinary language. Prefer `Money — interest is not turning into booked business fast enough` over `Funnel quality needs an Agentic-specific operating view`.
-
-## What this means for design
-
-Give Amit no more than three designer-manager moves. Write each as a concrete product/design move followed by `Why:` and the expected business or customer effect. Each must be something he can clarify, frame, review, or make visible as a product/design leader. Do not give him a generic project-management task list or assign work to other people without evidence of ownership.
-
-## What to trust
-
-Use one short paragraph, normally one or two sentences. Start with `Trust today's booked and possible-deal numbers.` Then name only the single most important decision the missing evidence prevents. This section must not contain the words `Salesforce`, `Jira`, `Glean`, `repository`, `source`, `search`, `email`, or `calendar`; the only link here is the workflow run. Prefer: `Trust today's booked and possible-deal numbers. Data incomplete: we cannot say whether bookings are ahead or behind plan because the current quarter goal was not available.` Put other limitations in the relevant Money, Customers, or Product paragraph and in `snapshot.unknowns`.
-
-If every required source family was refreshed and the core booked-revenue, target, gap, attainment, pace, qualified-pipeline, bundled-amount, and coverage metrics are available, set `data_status` to `complete`. Missing prior snapshots, early-access customer counts or outcome baselines, target-owner history, and proof that a change is live for customers are claim-scoped limitations: keep them in `snapshot.unknowns` and narrow the affected conclusion instead of calling the whole report incomplete.
-
-Use `data_status: incomplete` only when a required headline metric is unavailable despite a healthy source refresh. In that case, say `Data incomplete` and explain the consequence in ordinary language, for example: `We cannot tell whether bookings are ahead or behind plan because the current Agentic target was not available.` A missing, failed, or stale required source is a source failure and must follow the failure path rather than producing a normal report. Never use `Data incomplete` as a generic disclaimer or inventory every desirable-but-unavailable field in the email.
-
-### Editorial rules
-
-- Do not display `[Verified fact]`, `[Signal]`, `[Inference]`, or `[Unknown]` labels in the human report. Preserve these distinctions in reasoning and in the structured snapshot.
-- Do not create separate human sections for revenue detail, EAP detail, Jira, implementation, working/not working, actions, or source inventories.
-- Do not include exhaustive counts, ticket enumerations, workflow mechanics, query descriptions, or raw source lists.
-- Round currency for scanning, for example `$429K` and `$4.24M`; use exact values in the snapshot.
-- Prefer three strong conclusions over broad coverage. Omit facts that do not alter a conclusion or action.
-- Write in direct, calm, conversational language. Use short sentences and concrete verbs. Avoid status-report prose, throat-clearing, repeated caveats, and generic product commentary.
-- Do not use business or product acronyms in the human email. Write `contract value booked for Agentic`, `early-access customers`, `generally available`, and `phone-keypad input`; never write `ACV`, `EAP`, `GA`, or `DTMF`. Acronyms remain allowed in the private snapshot.
-- Do not use phrases such as `commercial health`, `commercial wedge`, `conversion-constrained`, `attainment`, `bundled opportunity amount`, `Best Case`, `coverage`, `funnel quality`, `open book`, `operating view`, `evidence chain`, `preflight`, `proof-of-value contract`, `proof milestone`, `qualified open`, `rollout state`, `rollout trust`, `surface area`, `telemetry`, `value event`, `customer exposure`, or `production exposure`. Say what happened in everyday words.
-- Prefer `simple definition of success`, `shared view`, `signals showing what happened`, `real customers can use it`, `final safety check before publishing`, and `safely undo the release`.
-- Every material claim still needs an inline source link in the relevant Money, Customers, or Product story paragraph. Do not collect source links in `What to trust`.
-- Include the workflow run link unobtrusively in `What to trust` for troubleshooting.
-
-## Email behavior
-
-Prepare the internal Glean relay draft for `amit.ayre@dialpad.com` with subject:
-
-`[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse — YYYY-MM-DD`
-
-The only permitted recipient is `amit.ayre@dialpad.com`. The Glean source draft is an internal transport envelope and must never be sent manually because it contains the machine-readable snapshot. The approved GitHub relay removes that block, renders the Markdown as readable email HTML, and sends the user-facing message with subject `Daily Agentic Business Pulse — YYYY-MM-DD` at 09:00 IST daily. Never add another recipient, send directly around the relay, or claim delivery without a successful provider result.
-
-## Continuity
-
-Save a dated report and a compact structured snapshot under `/home/user/output/agentic_business_pulse/`. Preserve the previous snapshot so the next run can identify movement. Do not store customer secrets, credentials, raw payloads, or sensitive transcript content. Store links, aggregates, ticket IDs, account names only when permitted, and short redacted summaries.
-
-## Designer-operator layers
-
-These are analytical lenses for an Agentic built-process designer. Use them to decide the three most important conclusions; do not turn them into additional email sections or a checklist dump.
-
-### 7. Design-to-production fidelity
-
-For each material Agentic flow in design, development, code review, or rollout, compare the intended experience with production reality. Track:
-
-- Customer-visible promise versus actual supported behavior.
-- Production APIs and gates reused versus new assumptions.
-- Empty, loading, success, failure, retry, propagation-delay, rollback, and post-create states.
-- Telemetry for each meaningful step and whether it avoids credentials, secrets, customer payloads, and raw tool arguments.
-- Accessibility, content, localization, and responsive-layout readiness.
-- Design source, FE/BE/QA/security reviewers, acceptance criteria, and named owner.
-- Whether a prototype, EAP, controlled cohort, or production claim is being overstated.
-
-Flag `Design-ready`, `Build-ready`, `Pilot-ready`, `Production-ready`, and `Evidence-missing` separately. Do not call a flow self-serve if a hidden managed dependency remains.
-
-### 8. Customer journey and handoff integrity
-
-Trace one customer outcome across Sales/SE, Professional Services/SA, FDE, and Customer Success. For active opportunities and EAP accounts, check:
-
-- Original business goal and measurable success criteria.
-- Customer IT and business stakeholders engaged.
-- Use cases validated on real customer scenarios.
-- Architecture, build-versus-configure decisions, dependencies, and known limitations.
-- Handoff completeness and whether decisions survived into implementation.
-- Scope changes, unresolved assumptions, and risks/decisions/actions/issues.
-- Post-launch owner, health signal, value proof, and next expansion candidate.
-
-Call out `handoff breakage` when the next team has to rediscover context or when a customer is handed a status update instead of a usable health and outcome record.
-
-### 9. Agentic activation funnel
-
-Track the funnel for the relevant product or cohort, not just total onboarding:
-
-`Invited → Started → Understood the use case → Connected a system → Created an action/tool → Tested → Published → Executed in an agent → Reused → Expanded`
-
-For each step, capture conversion, time spent, abandonment reason, support/FDE intervention, and the strongest customer evidence. Pay special attention to the first meaningful outcome and repeated use.
-
-For Connector work, separate the technical lifecycle from the business lifecycle. A successful connector publish is not customer value until an agent uses it to complete a meaningful job.
-
-### 10. Outcome and measurement readiness
-
-For every EAP, customer pilot, or major product claim, answer:
-
-- What baseline existed before deployment?
-- What exact outcome is being measured?
-- Is the definition governed and stable?
-- Is instrumentation complete enough to trust the result?
-- Can the customer see the evidence?
-- Is cost or ROI measured, estimated, or unknown?
-- What would cause the customer to continue, expand, or stop?
-
-Track data-coverage gaps, metric-definition conflicts, and manual workarounds as product risks—not analytics footnotes.
-
-### 11. Customer evidence matrix
-
-Organize evidence by persona:
-
-- Business sponsor: value, risk, economic case, executive proof.
-- Technical admin: setup clarity, auth, data mapping, debugging, control.
-- Agent designer/operator: authoring, testing, observability, iteration.
-- End customer or caller: resolution, trust, handoff quality, effort.
-- SE/PS/FDE/CS: scoping, implementation, support load, handoff, expansion.
-
-For each recurring issue, record frequency, severity, source, affected persona, affected stage, and the smallest product/process change that could remove it. Distinguish one loud anecdote from a repeated pattern.
-
-### 12. Decision and dependency queue
-
-Maintain a short queue of unresolved decisions that are slowing design or delivery. For each item, capture:
-
-- Decision required.
-- Why it matters now.
-- Options and trade-offs.
-- Decision owner.
-- Date needed.
-- Downstream teams or customer commitments affected.
-- Reversibility if the decision is wrong.
-
-Separate `blocked by decision`, `blocked by dependency`, `blocked by evidence`, and `blocked by capacity`. Do not turn every open question into a Jira ticket.
-
-### 13. Daily design moves for Amit
-
-End the report with up to three recommended designer-led actions for the next working day:
-
-1. One customer or field signal to validate.
-2. One product/process decision to force or clarify.
-3. One artifact, flow, or handoff to improve.
-
-Each action must name the expected business effect: faster technical win, less FDE effort, higher activation, better agent outcome, lower support risk, stronger proof of value, or expansion readiness.
-
-### 14. Contradiction checks
-
-Actively look for mismatches such as:
-
-- Sales positioning says self-serve while Jira shows repeated FDE intervention.
-- A feature is described as shipped while telemetry or customer exposure is absent.
-- A connector succeeds technically but no customer workflow uses it.
-- A customer reports value while the official metric definition cannot reproduce it.
-- A pipeline opportunity is labeled Agentic but has little or no Agentic-specific ACV.
-- A design review approves a flow whose production API, failure behavior, or rollback path is unknown.
-
-Surface the contradiction plainly and recommend the smallest evidence-gathering action.
-
-### 15. Weekly synthesis mode
-
-On the final run of each workweek, add:
-
-- What changed materially this week.
-- Which leading indicators improved or deteriorated.
-- The top three repeated customer problems.
-- The biggest design-to-production risk.
-- One thing to stop doing.
-- One thing to double down on.
-- The single most important decision for the following week.
-
-### 16. Production-code ground truth
-
-Use production-code search for implementation questions, decision logic, schemas, feature flags, event names, routing, permissions, and runtime behavior. Do not rely on Jira or design documentation when the question is how the system actually behaves.
-
-For each important flow, trace as far as evidence allows:
-
-`UI state → route/guard → client/API → backend/service → registry/runtime → analytics event → test coverage`
-
-Search for the concrete identifiers named in current work, such as feature flags, canonical IDs, lifecycle states, propagation events, authentication boundaries, action/tool schemas, and billing/usage keys. Prefer implementation and test evidence over comments or mock data.
-
-Report these separately:
-
-- `Implemented in code` — the behavior exists in a real application/service path.
-- `Covered by tests` — unit, integration, end-to-end, or contract coverage exists.
-- `Flagged or gated` — the behavior is behind the expected feature, route, license, admin, or company gate.
-- `Instrumented` — the relevant success, failure, latency, propagation, or usage events are emitted.
-- `Deployed` — release, branch, environment, or launch evidence confirms exposure.
-- `Customer-exposed` — an EAP, design partner, or production cohort can actually use it.
-
-Never collapse these into a single `shipped` label. Code existence is not proof of deployment, and deployment is not proof of customer exposure.
-
-### 17. Code-to-product drift checks
-
-Compare code evidence with design, Jira, and customer evidence. Flag:
-
-- A documented flow with no matching production route, API, or event.
-- A code path that exists only as a prototype, mock, fixture, test helper, or local preview.
-- A feature flag or permission that prevents the documented audience from reaching the flow.
-- A UI state with no backend behavior, failure handling, rollback, or observability.
-- A backend capability that is not discoverable or executable through the intended product surface.
-- Tests that validate shape or status code but not the customer outcome.
-- Analytics events that omit the identity, propagation time, failure surface, or outcome needed for diagnosis.
-- Sensitive credentials, auth codes, headers, tool arguments, raw responses, or customer payloads appearing in logs or analytics.
-
-For each drift finding, identify the smallest next check: inspect a specific file/path, run or locate a test, verify a flag, check a release artifact, or validate an event in telemetry.
-
-### 18. Implementation-aware synthesis
-
-When code evidence materially changes a commercial, customer, or design conclusion, fold it into the relevant `Product` insight under `The story`. State the decisive distinction in plain language, such as “the code exists, but we cannot yet prove that real customers can use it.” Keep the full status breakdown in the structured snapshot.
-
-If code search returns no authoritative result, record `Code evidence unavailable` in the snapshot and do not infer implementation status from documentation. If search results are only prototypes, mocks, or tests, label them accordingly and mention them in the email only when they correct a material misconception.
-
-## Quality bar
-
-Be candid and decisive. Lead with the answer. The human email must be understandable in under three minutes. Do not pad it with generic product updates, evidence labels, source mechanics, or exhaustive issue detail. Do not treat prototypes, pipeline, plans, or anecdotes as shipped revenue. Surface contradictions rather than smoothing them over. Mention a missing item in `What to trust` only when it changes a headline conclusion or decision; otherwise leave it in `snapshot.unknowns`.
+- Conversations in the last 24 hours.
+- Skill starts in the last 24 hours.
+- Conversations in the trailing seven days and preceding seven days.
+- Connector/action attempts, successes, and failures in the last 24 hours.
+- Seven-day contained, transferred, resolved, not resolved, and unknown-resolution counts.
+- Seven-day AI customer-satisfaction and average handle time.
+
+Use definitions governed by the analytics source. Never infer successful actions from skill starts, conversations, or a qualitative statement such as “performing well.”
+
+For `connector_actions` and `conversation_outcomes`, record one coverage state:
+
+- `available` — the source supplies governed numeric values.
+- `not_instrumented` — the source does not record the measure.
+- `not_applicable` — the measure does not apply to this customer/use case.
+
+Zero is a measured value. It is not interchangeable with `null` or `not_instrumented`. When coverage is not `available`, all associated metrics must be `null`; never insert plausible numbers.
+
+### 4. Refresh product, customer, and commercial movement
+
+For each customer:
+
+- Record the agent or use case.
+- Record the connectors, systems, or skills and their status: `building`, `testing`, `connected`, `failing`, or `unknown`.
+- Count Jira issues created or materially changed in the last 24 hours.
+- Count currently open customer-impacting Jira bugs and retain their keys.
+- Record the Salesforce commercial stage and movement: `advanced`, `slipped`, `won`, `lost`, `value_changed`, or `no_change`.
+- Record Agentic-specific contract value only when the governed field exists; do not use the total bundled opportunity amount as Agentic value.
+
+Assign one movement label:
+
+- `failing` — a measured action failure or newly changed customer blocker needs attention.
+- `moved` — a lifecycle, behavioral, outcome, or commercial measure materially changed.
+- `no_data` — the customer belongs on the roster but current behavioral evidence cannot be retrieved.
+- `no_change` — current evidence was retrieved and no material change occurred.
+
+Order the dashboard `failing`, `moved`, `no_data`, then `no_change`.
+
+### 5. Interpret only changed rows
+
+Write one short analysis item only for customers marked `failing`, `moved`, or `no_data`. Each item must:
+
+- State the measured change or exact missing measure.
+- Explain why it matters to this customer or the business.
+- Include at least one direct evidence link.
+- Stay under 320 characters.
+
+Do not write an analysis item for `no_change`. Do not restate generic product principles. Do not turn the matrix into paragraphs.
+
+### 6. Produce schema version 2
+
+The machine JSON is authoritative. `report_markdown` in the source draft may contain only a short preview; the GitHub relay renders the final email deterministically from `snapshot`.
+
+Required top-level shape:
+
+```json
+{
+  "report_markdown": "# Agentic Customer Dashboard — YYYY-MM-DD\n",
+  "snapshot": {
+    "schema_version": 2,
+    "report_date": "YYYY-MM-DD",
+    "generated_at": "ISO-8601 timestamp",
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD",
+      "label": "last 24 hours and trailing seven days"
+    },
+    "source_status": {},
+    "summary": {},
+    "customers": [],
+    "insights": [],
+    "commercial_changes": [],
+    "unknowns": [],
+    "changes_since_previous": []
+  },
+  "agent_request_id": "non-sensitive-runtime-id",
+  "data_status": "complete",
+  "failures": []
+}
+```
+
+Each required `source_status` item:
+
+```json
+{
+  "status": "ok",
+  "queried_at": "ISO-8601 timestamp",
+  "links": ["https://..."],
+  "access_mode": "read_only"
+}
+```
+
+Each customer row:
+
+```json
+{
+  "account_name": "Permitted customer name",
+  "name_permitted": true,
+  "lifecycle_stage": "live",
+  "movement": "moved",
+  "agent_or_use_case": "Customer support agent",
+  "links": ["https://..."],
+  "integrations": [{"name": "Salesforce", "status": "connected"}],
+  "metric_coverage": {
+    "connector_actions": "not_instrumented",
+    "conversation_outcomes": "available"
+  },
+  "activity": {
+    "conversations_24h": 42,
+    "conversations_7d": 120,
+    "conversations_previous_7d": 100,
+    "skill_starts_24h": 50,
+    "connector_action_attempts_24h": null,
+    "connector_action_successes_24h": null,
+    "connector_action_failures_24h": null
+  },
+  "outcomes_7d": {
+    "contained": 90,
+    "transferred": 20,
+    "resolved": 106,
+    "not_resolved": 10,
+    "unknown_resolution": 4,
+    "ai_csat": 4.3,
+    "average_handle_seconds": 92
+  },
+  "jira": {
+    "new_or_changed_24h": 0,
+    "open_customer_bugs": 0,
+    "keys": []
+  },
+  "commercial": {
+    "stage": "Early access",
+    "movement_24h": "no_change",
+    "agentic_acv": null
+  }
+}
+```
+
+`summary` must be calculated from the customer rows and contain:
+
+- `active_customer_count`
+- `movers_24h`
+- `conversations_24h`
+- `customers_with_failures_24h`
+- `customers_without_current_data`
+
+The relay rejects mismatched summaries, negative or non-finite numbers, values that exceed their denominators, invented values under unavailable coverage, duplicate customer names, missing evidence, stale sources, and writable source access.
+
+## Deterministic human report
+
+The relay produces these sections; the Agent must not improvise another layout:
+
+1. `Today` — four derived summary lines.
+2. `Customer matrix` — customer, journey/commercial state, last-24-hour activity, seven-day result, and risk.
+3. `Analysis` — short changed-customer interpretations only.
+4. `Missing instrumentation` — explicit gaps that change what can be concluded.
+5. `Evidence` — one link per source family plus the workflow run.
+
+Keep the final report under 700 visible words. The matrix is the primary artifact; prose is secondary.
+
+## Failure behavior
+
+Do not produce a normal report when:
+
+- Agentic Analytics, Salesforce, Jira, or Glean is missing, unhealthy, stale, or not read-only.
+- The complete active roster cannot be established.
+- Customer identity cannot be joined safely for enough rows to claim completeness.
+- Required governed metrics cannot be retrieved from their authoritative source.
+- The current IST date or comparison window is invalid.
+- A source would require a write or configuration change.
+
+Return `data_status: incomplete` with a concise failure entry and let the relay invoke its once-per-IST-date failure notification. Never reuse yesterday's metrics as today's data and never turn a weekly email into fabricated telemetry.
+
+## Email and continuity
+
+Create exactly one internal Gmail relay draft with:
+
+- Subject: `[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse — YYYY-MM-DD`
+- To: `amit.ayre@dialpad.com`
+- No Cc, Bcc, or attachments.
+- One JSON object between `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
+
+The internal draft must never be sent manually. The approved GitHub relay validates the snapshot, removes the machine block, renders the customer matrix as HTML, and uses the existing deterministic Message-ID. The user-facing subject remains `Daily Agentic Business Pulse — YYYY-MM-DD` for continuity.
+
+Save only the dated Markdown report and compact JSON snapshot in the private runtime artifact. Prior snapshots are comparison inputs only, never substitutes for current source reads.
