@@ -583,6 +583,48 @@ def _normalize_healthy_data_status(result: dict[str, Any], workflow_url: str) ->
         result["report_markdown"] = _concise_confidence(report, snapshot, workflow_url)
 
 
+def _normalize_incomplete_confidence(result: dict[str, Any]) -> None:
+    """Move an existing incomplete-data consequence into What to trust."""
+
+    if result.get("data_status") != "incomplete":
+        return
+    report = result.get("report_markdown")
+    if not isinstance(report, str):
+        return
+    confidence_match = re.search(r"(?m)^## What to trust\s*$", report)
+    if not confidence_match:
+        return
+    confidence_body = report[confidence_match.end() :]
+    if "data incomplete" in confidence_body.casefold():
+        return
+
+    earlier_report = report[: confidence_match.start()]
+    consequence_match = re.search(
+        r"(?i)Data incomplete:\s*[^.\n]+\.(?=\s|$)",
+        earlier_report,
+    )
+    if not consequence_match:
+        return
+    consequence = consequence_match.group(0).strip()
+    earlier_report = (
+        earlier_report[: consequence_match.start()]
+        + earlier_report[consequence_match.end() :]
+    )
+    earlier_report = re.sub(r"[ \t]{2,}", " ", earlier_report)
+
+    workflow_link = re.search(r"\[Workflow run]\(https://[^)]+\)", confidence_body)
+    if workflow_link:
+        confidence_body = (
+            confidence_body[: workflow_link.start()]
+            + consequence
+            + " "
+            + confidence_body[workflow_link.start() :]
+        )
+    else:
+        confidence_body = confidence_body.rstrip() + " " + consequence + "\n"
+    result["report_markdown"] = earlier_report + report[confidence_match.start() : confidence_match.end()] + confidence_body
+
+
 def validate_agent_result(
     result: dict[str, Any],
     *,
@@ -1173,6 +1215,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             claim["status_details"] = statuses
             claim["statuses"] = normalized_statuses
     _normalize_healthy_data_status(result, workflow_url)
+    _normalize_incomplete_confidence(result)
     return result
 
 
