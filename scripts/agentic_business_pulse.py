@@ -123,6 +123,7 @@ SECRET_PATTERNS = (
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
 GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse"
+GLEAN_DRAFT_SEARCH_PHRASE = "Daily Agentic Business Pulse"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
@@ -1271,7 +1272,10 @@ class GmailArchive:
             mailbox = self._special_mailbox(client, r"\Drafts", "[Gmail]/Drafts")
             if not self._select(client, mailbox, readonly=True):
                 raise IntegrationError("Could not select Gmail Drafts for the Glean report")
-            status, data = client.uid("search", None, "SUBJECT", f'"{GLEAN_DRAFT_SUBJECT_PREFIX}"')
+            # imaplib requires search arguments to be ASCII unless an explicit
+            # charset is negotiated. Search broadly with the stable ASCII text,
+            # then enforce the full Unicode subject and date on fetched messages.
+            status, data = client.uid("search", None, "SUBJECT", f'"{GLEAN_DRAFT_SEARCH_PHRASE}"')
             if status != "OK":
                 raise IntegrationError("Gmail Glean-draft search failed")
             expected_subject = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {report_date}"

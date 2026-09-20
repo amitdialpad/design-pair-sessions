@@ -9,6 +9,7 @@ import unittest
 from datetime import datetime
 from email.message import EmailMessage
 from pathlib import Path
+from unittest.mock import patch
 from zoneinfo import ZoneInfo
 
 
@@ -610,6 +611,58 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertTrue(GmailArchive._select(client, "[Gmail]/Sent Mail", readonly=True))
         self.assertEqual(client.calls, [('"[Gmail]/Sent Mail"', True)])
 
+    def test_glean_search_is_ascii_then_enforces_exact_subject_date_and_recipient(self):
+        correct = glean_source_draft()
+        wrong_date = glean_source_draft()
+        wrong_date.replace_header(
+            "Subject", f"{GLEAN_DRAFT_SUBJECT_PREFIX} — 2026-09-14"
+        )
+        wrong_recipient = glean_source_draft(recipient="someone-else@dialpad.com")
+        raw_messages = {
+            b"1": correct.as_bytes(),
+            b"2": wrong_date.as_bytes(),
+            b"3": wrong_recipient.as_bytes(),
+        }
+
+        class AsciiOnlyImapClient:
+            def __init__(self):
+                self.search_arguments = None
+
+            def list(self):
+                return "OK", [b'(\\HasNoChildren \\Drafts) "/" "[Gmail]/Drafts"']
+
+            def select(self, mailbox, readonly):
+                return "OK", []
+
+            def uid(self, command, *arguments):
+                if command == "search":
+                    self.search_arguments = arguments
+                    for argument in arguments:
+                        if isinstance(argument, str):
+                            argument.encode("ascii")
+                    return "OK", [b"1 2 3"]
+                if command == "fetch":
+                    uid = arguments[0]
+                    return "OK", [(b"message", raw_messages[uid])]
+                raise AssertionError(command)
+
+            def logout(self):
+                return "BYE", []
+
+        client = AsciiOnlyImapClient()
+        archive = GmailArchive("amit.ayre@dialpad.com", "password")
+        with patch.object(archive, "_connect", return_value=client):
+            found = archive.find_glean_draft(REPORT_DATE)
+
+        self.assertIsNotNone(found)
+        uid, message = found
+        self.assertEqual(uid, "1")
+        self.assertEqual(message["Subject"], f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {REPORT_DATE}")
+        self.assertEqual(
+            client.search_arguments,
+            (None, "SUBJECT", '"Daily Agentic Business Pulse"'),
+        )
+
 
 class GleanDraftRelayTests(PulseDeliveryTests):
     def test_glean_draft_parses_machine_result_and_locks_recipient(self):
@@ -897,6 +950,11 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("PULSE_INPUT_MODE: glean_gmail_draft", workflow)
         self.assertIn("PULSE_NOT_BEFORE_LOCAL_TIME:", workflow)
         self.assertIn("PULSE_GLEAN_DRAFT_WAIT_SECONDS: '1800'", workflow)
+        self.assertIn("FAILURE_DEDUPE_DAILY: 'true'", workflow)
+        self.assertIn("FAILURE_TIMEZONE: Asia/Kolkata", workflow)
+        self.assertIn("id: pulse", workflow)
+        self.assertIn("if: steps.pulse.outputs.handled_failure != 'true'", workflow)
+        self.assertNotIn("\n  notify-failure:", workflow)
         self.assertIn("timeout-minutes: 345", workflow)
         self.assertIn("actions/checkout@v7", workflow)
         self.assertIn("actions/setup-python@v7", workflow)
