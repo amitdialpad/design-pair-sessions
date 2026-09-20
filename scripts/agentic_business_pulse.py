@@ -456,10 +456,14 @@ def _scan_sensitive_text(text: str, path: str) -> None:
         raise ValidationError(f"Unredacted email address found in {path}")
 
 
-def _visible_word_count(report: str) -> int:
+def _visible_markdown_text(report: str) -> str:
     text = re.sub(r"\[([^]]+)]\(https://[^)]+\)", r"\1", report)
     text = re.sub(r"https://\S+", "", text)
-    return len(re.findall(r"\b[\w$%.×'-]+\b", text))
+    return text
+
+
+def _visible_word_count(report: str) -> int:
+    return len(re.findall(r"\b[\w$%.×'-]+\b", _visible_markdown_text(report)))
 
 
 def _report_section(report: str, section: str, next_section: str | None) -> str:
@@ -656,8 +660,9 @@ def validate_agent_result(
         raise ValidationError("What this means for design must contain one to three actions")
 
     confidence_body = _report_section(report, "What to trust", None)
+    confidence_visible_text = _visible_markdown_text(confidence_body)
     for term in TRUST_INVENTORY_TERMS:
-        if re.search(rf"\b{re.escape(term)}\b", confidence_body, flags=re.IGNORECASE):
+        if re.search(rf"\b{re.escape(term)}\b", confidence_visible_text, flags=re.IGNORECASE):
             raise ValidationError(f"What to trust must not inventory tools or sources: {term}")
     if data_status == "incomplete":
         if "data incomplete" not in confidence_body.casefold():
