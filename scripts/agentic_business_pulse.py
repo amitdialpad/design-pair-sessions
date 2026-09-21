@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate, validate, archive, and email the Daily Agentic Business Pulse."""
+"""Generate, validate, archive, and email the Weekly Agentic Customer Review."""
 
 from __future__ import annotations
 
@@ -30,13 +30,11 @@ from zoneinfo import ZoneInfo
 
 
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
-DASHBOARD_REQUIRED_SOURCES = ("agentic_analytics", "salesforce", "jira", "glean")
+DASHBOARD_REQUIRED_SOURCES = ("salesforce", "jira", "glean")
 DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused"}
 DASHBOARD_MOVEMENTS = {"failing", "moved", "no_data", "no_change"}
 DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_data": 2, "no_change": 3}
-DASHBOARD_COVERAGE = {"available", "not_instrumented", "not_applicable"}
 DASHBOARD_SOURCE_LABELS = {
-    "agentic_analytics": "Agentic Analytics",
     "salesforce": "Customer and commercial records",
     "jira": "Customer bugs",
     "glean": "Customer context",
@@ -134,9 +132,9 @@ SECRET_PATTERNS = (
     re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
 )
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
-REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
-GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse"
-GLEAN_DRAFT_SEARCH_PHRASE = "Daily Agentic Business Pulse"
+REPORT_SUBJECT_PREFIX = "Weekly Agentic Customer Review"
+GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review"
+GLEAN_DRAFT_SEARCH_PHRASE = "Weekly Agentic Customer Review"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
@@ -694,65 +692,28 @@ def _dashboard_journey(customer: dict[str, Any]) -> str:
     stage = str(customer["lifecycle_stage"]).title()
     use_case = str(customer["agent_or_use_case"])
     integrations = customer["integrations"]
-    integration_names = ", ".join(str(item["name"]) for item in integrations) if integrations else "No connector recorded"
+    integration_names = (
+        ", ".join(f"{item['name']} ({item['status']})" for item in integrations)
+        if integrations
+        else "No connector recorded"
+    )
     commercial_stage = str(customer["commercial"]["stage"])
     return f"{stage} · {use_case} · {integration_names} · {commercial_stage}"
 
 
-def _dashboard_today(customer: dict[str, Any]) -> str:
-    activity = customer["activity"]
-    parts = [
-        _format_dashboard_measure(activity["conversations_24h"], "conversation"),
-        _format_dashboard_measure(activity["skill_starts_24h"], "skill start"),
-    ]
-    if customer["metric_coverage"]["connector_actions"] == "available":
-        parts.append(
-            f"{_format_dashboard_count(activity['connector_action_successes_24h'])}/"
-            f"{_format_dashboard_count(activity['connector_action_attempts_24h'])} actions succeeded"
-        )
-        if activity["connector_action_failures_24h"]:
-            parts.append(_format_dashboard_measure(activity["connector_action_failures_24h"], "failure"))
-    else:
-        parts.append("action result not instrumented")
-    return " · ".join(parts)
-
-
-def _dashboard_outcome(customer: dict[str, Any]) -> str:
-    activity = customer["activity"]
-    outcomes = customer["outcomes_7d"]
-    parts = [
-        _format_dashboard_measure(activity["conversations_7d"], "conversation"),
-        _format_dashboard_delta(activity["conversations_7d"], activity["conversations_previous_7d"]),
-    ]
-    if customer["metric_coverage"]["conversation_outcomes"] == "available":
-        resolved_rate = _format_dashboard_percent(outcomes["resolved"], activity["conversations_7d"])
-        contained_rate = _format_dashboard_percent(outcomes["contained"], activity["conversations_7d"])
-        if resolved_rate:
-            parts.append(f"{resolved_rate} resolved")
-        if contained_rate:
-            parts.append(f"{contained_rate} contained")
-        if outcomes["ai_csat"] is not None:
-            parts.append(f"{outcomes['ai_csat']:.1f} AI CSAT")
-    else:
-        parts.append("outcomes not instrumented")
-    return " · ".join(parts)
-
-
 def _dashboard_risk(customer: dict[str, Any]) -> str:
     jira = customer["jira"]
-    activity = customer["activity"]
     parts: list[str] = []
-    if customer["metric_coverage"]["connector_actions"] == "available" and activity["connector_action_failures_24h"]:
-        parts.append(_format_dashboard_measure(activity["connector_action_failures_24h"], "action failure"))
-    if jira["new_or_changed_24h"]:
-        parts.append(_format_dashboard_measure(jira["new_or_changed_24h"], "Jira change"))
+    if jira["new_or_changed_7d"]:
+        parts.append(_format_dashboard_measure(jira["new_or_changed_7d"], "Jira change"))
     if jira["open_customer_bugs"]:
         keys = ", ".join(str(item) for item in jira["keys"][:2])
         parts.append(
             _format_dashboard_measure(jira["open_customer_bugs"], "open bug")
             + (f" ({keys})" if keys else "")
         )
-    return " · ".join(parts) or "No measured failure or changed blocker"
+    parts.append(str(customer["next_watch"]))
+    return " · ".join(parts)
 
 
 def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> str:
@@ -767,22 +728,22 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     comparison = snapshot["comparison_window"]
     report_date = snapshot["report_date"]
     lines = [
-        f"# Agentic Customer Dashboard — {report_date}",
-        f"_What changed: {comparison['label']}_",
+        f"# Weekly Agentic Customer Review — {report_date}",
+        f"_Weekly review: {comparison['label']}_",
         "",
-        "## Today",
+        "## This week",
         "",
-        f"- **{_format_dashboard_measure(summary['movers_24h'], 'customer')} moved** — a verified lifecycle, usage, outcome, or commercial change.",
-        f"- **{_format_dashboard_measure(summary['conversations_24h'], 'customer conversation')}** — observed across the active roster in the last 24 hours.",
-        f"- **{_format_dashboard_measure(summary['customers_with_failures_24h'], 'customer')} "
-        f"{'needs' if summary['customers_with_failures_24h'] == 1 else 'need'} attention** — a measured failure or changed customer blocker appeared.",
+        f"- **{_format_dashboard_measure(summary['movers_7d'], 'customer')} moved** — a verified lifecycle, customer, delivery, or commercial change.",
+        f"- **{_format_dashboard_measure(summary['commercial_moves_7d'], 'commercial record')} changed** — advanced, slipped, won, lost, or changed value.",
+        f"- **{_format_dashboard_measure(summary['customers_with_changed_blockers_7d'], 'customer')} "
+        f"{'needs' if summary['customers_with_changed_blockers_7d'] == 1 else 'need'} attention** — a customer blocker changed this week.",
         f"- **{_format_dashboard_measure(summary['customers_without_current_data'], 'customer')} "
-        f"{'lacks' if summary['customers_without_current_data'] == 1 else 'lack'} current behavioral data** — shown explicitly instead of filled with narrative status.",
+        f"{'lacks' if summary['customers_without_current_data'] == 1 else 'lack'} current joined records** — shown explicitly instead of filled with narrative status.",
         "",
         "## Customer matrix",
         "",
-        "| Customer | Journey and commercial state | Last 24 hours | Seven-day result | Risk |",
-        "|---|---|---:|---:|---|",
+        "| Customer | Journey and commercial state | What changed this week | Risk and next watch |",
+        "|---|---|---|---|",
     ]
     for customer in customers:
         lines.append(
@@ -792,8 +753,7 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
                 for value in (
                     _dashboard_customer_link(customer),
                     _dashboard_journey(customer),
-                    _dashboard_today(customer),
-                    _dashboard_outcome(customer),
+                    customer["change_this_week"],
                     _dashboard_risk(customer),
                 )
             )
@@ -813,12 +773,12 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     else:
         lines.append("- No customer-level change needs interpretation today.")
 
-    lines.extend(["", "## Missing instrumentation", ""])
+    lines.extend(["", "## Missing records", ""])
     unknowns = snapshot["unknowns"]
     if unknowns:
         lines.extend(f"- {item}" for item in unknowns)
     else:
-        lines.append("- No material measurement gap changed today's interpretation.")
+        lines.append("- No material customer-record gap changed this week's interpretation.")
 
     lines.extend(["", "## Evidence", ""])
     source_status = snapshot["source_status"]
@@ -879,63 +839,13 @@ def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, A
         if integration.get("status") not in {"building", "testing", "connected", "failing", "unknown"}:
             raise ValidationError(f"{path}.integrations[{integration_index}].status is invalid")
 
-    coverage = _require_mapping(customer.get("metric_coverage"), f"{path}.metric_coverage")
-    for field in ("connector_actions", "conversation_outcomes"):
-        if coverage.get(field) not in DASHBOARD_COVERAGE:
-            raise ValidationError(f"{path}.metric_coverage.{field} is invalid")
-
-    activity = _require_mapping(customer.get("activity"), f"{path}.activity")
-    for field in ("conversations_24h", "conversations_7d", "conversations_previous_7d", "skill_starts_24h"):
-        _dashboard_number(activity.get(field), f"{path}.activity.{field}")
-    action_fields = (
-        "connector_action_attempts_24h",
-        "connector_action_successes_24h",
-        "connector_action_failures_24h",
-    )
-    for field in action_fields:
-        _dashboard_number(activity.get(field), f"{path}.activity.{field}", allow_null=True)
-    if coverage["connector_actions"] == "available":
-        if any(activity.get(field) is None for field in action_fields):
-            raise ValidationError(f"{path} says connector actions are available but a count is null")
-        attempts = activity["connector_action_attempts_24h"]
-        completed_actions = (
-            activity["connector_action_successes_24h"]
-            + activity["connector_action_failures_24h"]
-        )
-        if completed_actions > attempts:
-            raise ValidationError(f"{path} connector success and failure counts cannot exceed attempts")
-    elif any(activity.get(field) is not None for field in action_fields):
-        raise ValidationError(f"{path} must not invent connector action counts when they are not instrumented")
-
-    outcomes = _require_mapping(customer.get("outcomes_7d"), f"{path}.outcomes_7d")
-    outcome_fields = (
-        "contained",
-        "transferred",
-        "resolved",
-        "not_resolved",
-        "unknown_resolution",
-        "ai_csat",
-        "average_handle_seconds",
-    )
-    for field in outcome_fields:
-        _dashboard_number(outcomes.get(field), f"{path}.outcomes_7d.{field}", allow_null=True)
-    if coverage["conversation_outcomes"] == "available":
-        if any(outcomes.get(field) is None for field in outcome_fields):
-            raise ValidationError(f"{path} says conversation outcomes are available but a metric is null")
-        conversations_7d = activity["conversations_7d"]
-        for field in ("contained", "transferred", "resolved", "not_resolved", "unknown_resolution"):
-            if outcomes[field] > conversations_7d:
-                raise ValidationError(f"{path}.outcomes_7d.{field} cannot exceed conversations_7d")
-        resolution_total = outcomes["resolved"] + outcomes["not_resolved"] + outcomes["unknown_resolution"]
-        if resolution_total > conversations_7d:
-            raise ValidationError(f"{path} resolution counts cannot exceed conversations_7d")
-        if outcomes["ai_csat"] > 5:
-            raise ValidationError(f"{path}.outcomes_7d.ai_csat cannot exceed 5")
-    elif any(outcomes.get(field) is not None for field in outcome_fields):
-        raise ValidationError(f"{path} must not invent conversation outcomes when they are not instrumented")
+    for field in ("change_this_week", "next_watch"):
+        value = customer.get(field)
+        if not isinstance(value, str) or not value.strip() or len(value) > 320:
+            raise ValidationError(f"{path}.{field} must be a short plain-language statement")
 
     jira = _require_mapping(customer.get("jira"), f"{path}.jira")
-    _dashboard_number(jira.get("new_or_changed_24h"), f"{path}.jira.new_or_changed_24h")
+    _dashboard_number(jira.get("new_or_changed_7d"), f"{path}.jira.new_or_changed_7d")
     _dashboard_number(jira.get("open_customer_bugs"), f"{path}.jira.open_customer_bugs")
     keys = _require_list(jira.get("keys"), f"{path}.jira.keys")
     if not all(isinstance(key, str) and re.fullmatch(r"[A-Z][A-Z0-9]+-\d+", key) for key in keys):
@@ -944,8 +854,8 @@ def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, A
     commercial = _require_mapping(customer.get("commercial"), f"{path}.commercial")
     if not isinstance(commercial.get("stage"), str) or not commercial["stage"].strip():
         raise ValidationError(f"{path}.commercial.stage is required")
-    if commercial.get("movement_24h") not in {"advanced", "slipped", "won", "lost", "value_changed", "no_change"}:
-        raise ValidationError(f"{path}.commercial.movement_24h is invalid")
+    if commercial.get("movement_7d") not in {"advanced", "slipped", "won", "lost", "value_changed", "no_change"}:
+        raise ValidationError(f"{path}.commercial.movement_7d is invalid")
     _dashboard_number(commercial.get("agentic_acv"), f"{path}.commercial.agentic_acv", allow_null=True)
     return customer
 
@@ -978,8 +888,12 @@ def validate_customer_dashboard_result(
         comparison_end = date.fromisoformat(comparison["end"])
     except ValueError as error:
         raise ValidationError("Comparison-window start and end must be ISO dates") from error
-    if comparison_start > comparison_end or comparison_end > report_now.date():
-        raise ValidationError("Comparison window cannot end after the current report date")
+    if report_now.weekday() != 0:
+        raise ValidationError("Weekly customer review may run only on Monday in Asia/Kolkata")
+    expected_start = report_now.date() - timedelta(days=7)
+    expected_end = report_now.date() - timedelta(days=1)
+    if comparison_start != expected_start or comparison_end != expected_end:
+        raise ValidationError("Comparison window must cover the previous Monday through Sunday")
 
     _validate_dashboard_source_status(
         snapshot, report_now=report_now, source_max_age_hours=source_max_age_hours
@@ -994,10 +908,13 @@ def validate_customer_dashboard_result(
     summary = _require_mapping(snapshot.get("summary"), "snapshot.summary")
     expected_summary = {
         "active_customer_count": len(validated_customers),
-        "movers_24h": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
-        "conversations_24h": sum(customer["activity"]["conversations_24h"] for customer in validated_customers),
-        "customers_with_failures_24h": sum(customer["movement"] == "failing" for customer in validated_customers),
+        "movers_7d": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
+        "customers_with_changed_blockers_7d": sum(customer["movement"] == "failing" for customer in validated_customers),
         "customers_without_current_data": sum(customer["movement"] == "no_data" for customer in validated_customers),
+        "commercial_moves_7d": sum(
+            customer["commercial"]["movement_7d"] != "no_change"
+            for customer in validated_customers
+        ),
     }
     for field, expected in expected_summary.items():
         _dashboard_number(summary.get(field), f"snapshot.summary.{field}")
@@ -1029,8 +946,8 @@ def validate_customer_dashboard_result(
     _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
     snapshot["data_status"] = "complete"
     report = render_customer_dashboard(snapshot, workflow_url)
-    if _visible_word_count(report) > 700:
-        raise ValidationError("Customer dashboard exceeds 700 visible words")
+    if _visible_word_count(report) > 1600:
+        raise ValidationError("Customer dashboard exceeds 1600 visible words")
     _walk_forbidden_keys(snapshot)
     _scan_sensitive_text(report, "report_markdown")
     _scan_sensitive_text(json.dumps(snapshot, sort_keys=True), "snapshot")
@@ -1367,10 +1284,10 @@ def markdown_to_email_html(report: str) -> str:
             title_text, separator, report_date = title.rpartition(" — ")
             if not separator:
                 title_text, report_date = title, ""
-            display_title = html.escape(title_text).replace("Business Pulse", "<br>Business Pulse")
+            display_title = html.escape(title_text).replace("Customer Review", "<br>Customer Review")
             parts.append(
                 '<p style="margin:0 0 30px;font-size:10px;line-height:1.2;letter-spacing:2.2px;'
-                'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Daily pulse</p>'
+                'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Weekly review</p>'
             )
             parts.append(
                 f'<h1 class="pulse-title" style="font-family:Georgia,\'Times New Roman\',serif;font-size:44px;'
@@ -1510,7 +1427,7 @@ def build_email_message(
     subject_prefix = "[DRY RUN] " if dry_run else ""
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
-    message["From"] = f"Daily Agentic Business Pulse <{sender}>"
+    message["From"] = f"Weekly Agentic Customer Review <{sender}>"
     message["To"] = recipient
     message["Message-ID"] = message_id
     message["X-Dialpad-Pulse-Date"] = report_date
@@ -2031,7 +1948,7 @@ def write_run_result(reports_dir: Path, report_date: str, result: dict[str, Any]
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "").strip()
     if summary_path:
         lines = [
-            "## Daily Agentic Business Pulse",
+            "## Weekly Agentic Customer Review",
             "",
             f"- Report date: `{report_date}`",
             f"- Run status: `{result.get('run_status', 'unknown')}`",
