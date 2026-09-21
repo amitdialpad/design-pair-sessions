@@ -158,6 +158,43 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 14–20 Sep 2026
+
+2 changes merged into Beacon this week: Enable sidebar devtools on dialpad.design production environment; AI Receptionist analytics overview. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Enable sidebar devtools on dialpad.design production environment](https://github.com/dialpad/design/pull/122)** (dialpad/design#122). Shift+Cmd+Click on the Dialpad logo (and the ?dev=true URL param) updated the DevTools store and the URL, but the docked DevTools panel never rendered on any remote Beacon deploy in this repository. isDevToolsEnvironmentEnabled() (apps/beacon/src/config/devToolsEnvironment.ts) only treated a build as dev-tools-eligible when the hostname contained github, preview, or staging. Both Beacon's PR previews and its main deploy are actually served from beacon-test.dialpad.design (a GCS bucket via the Cloud Run proxy) — a hostname that matched none of those substrings, so the check silently returned false on every remote build. That gated out the entire docked-sidebar path (the dynamic @/plugins/devTools import in normal-main.ts, and App.vue's own devToolsOpen computed), while TopBar.vue's click handler has no environment check and kept flipping the store/URL regardless — hence "URL changes, n...
+- **[AI Receptionist analytics overview](https://github.com/dialpad/design/pull/107)** (dialpad/design#107). This merged change migrates Beacon PR #907 (DP-203387) into the Design monorepo without product changes. The AI Receptionist Overview brings core conversation, containment, and handle-time metrics into one view, with trends, skill-specific cards, a containment breakdown, and a transfer-destination donut. It also supports clear zero-data states, a multichannel-only Digital handle time metric, and clearer outcome language and export feedback in History.
+
+#### The bigger shift
+
+This was a focused week with 2 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+- Once this PR's preview deploys, sign in with an `@dialpad.com` account and Shift+Cmd+Click the Dialpad logo on the preview — confirm the docked DevTools panel actually opens. This is the live confirmation that wasn't possible locally.
+
+#### Try this
+
+Open a receptionist with all three skills configured and confirm the metric cards wrap evenly without a full-width orphan card.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Enable sidebar devtools on dialpad.design production environment, AI Receptionist analytics overview.
+
+---
+
 ### Week of 7–13 Sep 2026
 
 Converge read attention across tabs was the only change merged into Beacon this week. Read-position and unread changes could remain stale in another Beacon tab for the same user and company. That left Inbox badges, notifications, and conversation state out of sync until refresh. This adds a scoped read-attention synchronization path between same-browser tabs while keeping IndexedDB mutations authoritative.
@@ -284,7 +321,7 @@ Build a receptionist flow and test all 12 voices back to back using the Change V
 
 The structure underneath Beacon is getting simpler, but the things you can configure are getting more specific.
 
----
+:::details View August 2026
 
 ### Week of 17–23 Aug 2026
 
@@ -1073,6 +1110,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
