@@ -37,8 +37,8 @@ from agentic_business_pulse import (  # noqa: E402
 )
 
 
-REPORT_DATE = "2026-09-15"
-REPORT_NOW = datetime(2026, 9, 15, 9, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
+REPORT_DATE = "2026-09-21"
+REPORT_NOW = datetime(2026, 9, 21, 9, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
 WORKFLOW_URL = "https://github.com/amitdialpad/design-pair-sessions/actions/runs/123"
 SOURCE_LINKS = {
     "salesforce": "https://dialpad.lightning.force.com/lightning/o/Opportunity/list",
@@ -46,12 +46,18 @@ SOURCE_LINKS = {
     "glean": "https://app.glean.com/search?q=agentic",
     "production_code": "https://github.com/dialpad/firespotter/pull/1",
 }
+DASHBOARD_SOURCE_LINKS = {
+    "salesforce": SOURCE_LINKS["salesforce"],
+    "jira": SOURCE_LINKS["jira"],
+    "glean": SOURCE_LINKS["glean"],
+    "production_code": SOURCE_LINKS["production_code"],
+}
 
 
 def valid_result() -> dict:
-    report = f"""# Daily Agentic Business Pulse — {REPORT_DATE}
+    report = f"""# Weekly Agentic Customer Review — {REPORT_DATE}
 
-_What this covers: 2026-09-14 to 2026-09-14 · Compared with: the previous successful report_
+_What this covers: 2026-09-20 to 2026-09-20 · Compared with: the previous successful report_
 
 ## TL;DR
 
@@ -87,9 +93,210 @@ The product path exists in code and has tests, while the main Jira risk is still
 Trust the revenue and delivery facts. Treat the customer-value story as early until we have a measured outcome, and do not assume the code is live for customers without direct proof. [Workflow run]({WORKFLOW_URL})
 """
     source_status = {
-        source: {"status": "ok", "queried_at": "2026-09-15T08:55:00+05:30", "links": [link]}
+        source: {"status": "ok", "queried_at": "2026-09-21T08:55:00+05:30", "links": [link]}
         for source, link in SOURCE_LINKS.items()
     }
+    return _legacy_result(report, source_status)
+
+
+def valid_dashboard_result() -> dict:
+    source_status = {
+        source: {
+            "status": "ok",
+            "queried_at": "2026-09-21T08:55:00+05:30",
+            "links": [link],
+            "access_mode": "read_only",
+        }
+        for source, link in DASHBOARD_SOURCE_LINKS.items()
+    }
+    customers = [
+        {
+            "account_name": "Communicare IT",
+            "name_permitted": True,
+            "lifecycle_stage": "live",
+            "movement": "moved",
+            "agent_or_use_case": "IT support agent",
+            "links": [SOURCE_LINKS["salesforce"]],
+            "integrations": [{"name": "Salesforce", "status": "connected"}],
+            "change_this_week": "Advanced to live support after the customer checkpoint was completed.",
+            "next_watch": "Confirm the first post-launch customer review.",
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "available",
+            },
+            "activity": {
+                "conversations_24h": 42,
+                "conversations_7d": 120,
+                "conversations_previous_7d": 100,
+                "skill_starts_24h": 50,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": 90,
+                "transferred": 20,
+                "resolved": 106,
+                "not_resolved": 10,
+                "unknown_resolution": 4,
+                "ai_csat": 4.3,
+                "average_handle_seconds": 92,
+            },
+            "jira": {"new_or_changed_7d": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "Early access", "movement_7d": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Batteries Plus",
+            "name_permitted": True,
+            "lifecycle_stage": "test",
+            "movement": "failing",
+            "agent_or_use_case": "Retail support agent",
+            "links": [SOURCE_LINKS["salesforce"]],
+            "integrations": [{"name": "Custom order API", "status": "failing"}],
+            "change_this_week": "Customer testing exposed an authentication blocker in the publishing path.",
+            "next_watch": "Confirm the fix owner and retest date.",
+            "metric_coverage": {"connector_actions": "available", "conversation_outcomes": "available"},
+            "activity": {
+                "conversations_24h": 8,
+                "conversations_7d": 30,
+                "conversations_previous_7d": 25,
+                "skill_starts_24h": 15,
+                "connector_action_attempts_24h": 12,
+                "connector_action_successes_24h": 10,
+                "connector_action_failures_24h": 2,
+            },
+            "outcomes_7d": {
+                "contained": 18,
+                "transferred": 8,
+                "resolved": 20,
+                "not_resolved": 6,
+                "unknown_resolution": 4,
+                "ai_csat": 3.8,
+                "average_handle_seconds": 130,
+            },
+            "jira": {"new_or_changed_7d": 1, "open_customer_bugs": 1, "keys": ["DP-200001"]},
+            "commercial": {"stage": "UAT", "movement_7d": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Curri",
+            "name_permitted": True,
+            "lifecycle_stage": "build",
+            "movement": "no_change",
+            "agent_or_use_case": "Logistics agent",
+            "links": ["https://dialpad.lightning.force.com/lightning/r/Account/curri/view"],
+            "integrations": [{"name": "BYO MCP", "status": "building"}],
+            "change_this_week": "No verified lifecycle or commercial change was recorded.",
+            "next_watch": "Confirm the next build checkpoint.",
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "not_instrumented",
+            },
+            "activity": {
+                "conversations_24h": 0,
+                "conversations_7d": 0,
+                "conversations_previous_7d": 0,
+                "skill_starts_24h": 0,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": None,
+                "transferred": None,
+                "resolved": None,
+                "not_resolved": None,
+                "unknown_resolution": None,
+                "ai_csat": None,
+                "average_handle_seconds": None,
+            },
+            "jira": {"new_or_changed_7d": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "Early access", "movement_7d": "no_change", "agentic_acv": None},
+        },
+        {
+            "account_name": "Comprehensive Urology",
+            "name_permitted": True,
+            "lifecycle_stage": "validate",
+            "movement": "moved",
+            "agent_or_use_case": "Patient intake agent",
+            "links": [SOURCE_LINKS["salesforce"]],
+            "integrations": [{"name": "Scheduling API", "status": "testing"}],
+            "change_this_week": "Customer sign-off moved the project into validation.",
+            "next_watch": "Watch the first customer validation session.",
+            "metric_coverage": {
+                "connector_actions": "not_instrumented",
+                "conversation_outcomes": "available",
+            },
+            "activity": {
+                "conversations_24h": 4,
+                "conversations_7d": 12,
+                "conversations_previous_7d": 0,
+                "skill_starts_24h": 5,
+                "connector_action_attempts_24h": None,
+                "connector_action_successes_24h": None,
+                "connector_action_failures_24h": None,
+            },
+            "outcomes_7d": {
+                "contained": 8,
+                "transferred": 3,
+                "resolved": 9,
+                "not_resolved": 2,
+                "unknown_resolution": 1,
+                "ai_csat": 4.1,
+                "average_handle_seconds": 105,
+            },
+            "jira": {"new_or_changed_7d": 0, "open_customer_bugs": 0, "keys": []},
+            "commercial": {"stage": "UAT approved", "movement_7d": "advanced", "agentic_acv": None},
+        },
+    ]
+    return {
+        "report_markdown": f"# Weekly Agentic Customer Review — {REPORT_DATE}\n",
+        "agent_request_id": "dashboard-request-123",
+        "data_status": "complete",
+        "failures": [],
+        "snapshot": {
+            "schema_version": 2,
+            "report_date": REPORT_DATE,
+            "generated_at": "2026-09-21T09:00:00+05:30",
+            "comparison_window": {
+                "start": "2026-09-14",
+                "end": "2026-09-20",
+                "label": "Monday September 14 through Sunday September 20",
+            },
+            "source_status": source_status,
+            "summary": {
+                "reported_deployment_count": 30,
+                "active_customer_count": 4,
+                "movers_7d": 3,
+                "customers_with_changed_blockers_7d": 1,
+                "customers_without_current_data": 0,
+                "commercial_moves_7d": 1,
+            },
+            "customers": customers,
+            "insights": [
+                {
+                    "account_name": "Batteries Plus",
+                    "text": "Customer testing exposed a publishing blocker; the changed Jira defect now needs a confirmed owner and retest date.",
+                    "links": ["https://dialpad.atlassian.net/browse/DP-200001"],
+                },
+                {
+                    "account_name": "Communicare IT",
+                    "text": "The customer advanced to live support after completing its checkpoint; the next proof is the first post-launch review.",
+                    "links": [SOURCE_LINKS["salesforce"]],
+                },
+                {
+                    "account_name": "Comprehensive Urology",
+                    "text": "Customer sign-off moved the project into validation; the next meaningful evidence is the first customer validation session.",
+                    "links": [SOURCE_LINKS["glean"]],
+                },
+            ],
+            "commercial_changes": ["Comprehensive Urology advanced to UAT approved."],
+            "unknowns": ["Curri has no verified lifecycle change in the current weekly window."],
+            "changes_since_previous": ["Communicare IT moved live; Comprehensive Urology entered validation."],
+        },
+    }
+
+
+def _legacy_result(report: str, source_status: dict) -> dict:
     return {
         "report_markdown": report,
         "agent_request_id": "agent-request-123",
@@ -98,8 +305,8 @@ Trust the revenue and delivery facts. Treat the customer-value story as early un
         "snapshot": {
             "schema_version": 1,
             "report_date": REPORT_DATE,
-            "generated_at": "2026-09-15T09:00:00+05:30",
-            "comparison_window": {"start": "2026-09-14", "end": "2026-09-14", "label": "2026-09-14 to 2026-09-14"},
+            "generated_at": "2026-09-21T09:00:00+05:30",
+            "comparison_window": {"start": "2026-09-20", "end": "2026-09-20", "label": "2026-09-20 to 2026-09-20"},
             "metrics": {
                 "revenue": {
                     "booked_agentic_acv": 100,
@@ -170,7 +377,7 @@ class FakeArchive:
         return 1 if self.ambiguous_draft else 0
 
     def load_previous_snapshot(self, current_report_date: str):
-        return {"report_date": "2026-09-14"}
+        return {"report_date": "2026-09-20"}
 
     def persist_draft(self, message: EmailMessage) -> str:
         self.drafts.append(message)
@@ -212,14 +419,14 @@ class FakeRelayArchive(FakeArchive):
 
 class PulseValidationTests(unittest.TestCase):
     def test_reporting_date_uses_ist_calendar_day(self):
-        utc_time = datetime(2026, 9, 15, 3, 30, tzinfo=ZoneInfo("UTC"))
+        utc_time = datetime(2026, 9, 21, 3, 30, tzinfo=ZoneInfo("UTC"))
         report_now = now_in_timezone("Asia/Kolkata", utc_time)
         self.assertEqual(report_now.date().isoformat(), REPORT_DATE)
         self.assertEqual(report_now.strftime("%H:%M"), "09:00")
 
     def test_scheduled_runner_waits_until_nine_ist(self):
         slept = []
-        early = datetime(2026, 9, 15, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
+        early = datetime(2026, 9, 21, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
         ready = wait_until_local_delivery_time(
             "Asia/Kolkata",
             "09:00",
@@ -231,7 +438,7 @@ class PulseValidationTests(unittest.TestCase):
 
     def test_manual_runs_do_not_wait_for_a_delivery_window(self):
         slept = []
-        early = datetime(2026, 9, 15, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
+        early = datetime(2026, 9, 21, 4, 7, tzinfo=ZoneInfo("Asia/Kolkata"))
         ready = wait_until_local_delivery_time(
             "Asia/Kolkata",
             "",
@@ -384,7 +591,7 @@ class PulseValidationTests(unittest.TestCase):
 
     def test_stale_source_is_rejected(self):
         result = valid_result()
-        result["snapshot"]["source_status"]["salesforce"]["queried_at"] = "2026-09-14T08:00:00+05:30"
+        result["snapshot"]["source_status"]["salesforce"]["queried_at"] = "2026-09-20T08:00:00+05:30"
         with self.assertRaisesRegex(ValidationError, "salesforce is stale"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
@@ -414,6 +621,158 @@ class PulseValidationTests(unittest.TestCase):
         result["snapshot"]["customers"][0]["summary"] = "Contact person@example.com"
         with self.assertRaisesRegex(ValidationError, "email address"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_is_deterministic_and_orders_attention_first(self):
+        report, snapshot = validate_agent_result(
+            valid_dashboard_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertTrue(report.startswith(f"# Weekly Agentic Customer Review — {REPORT_DATE}"))
+        self.assertLess(report.index("Batteries Plus"), report.index("Communicare IT"))
+        self.assertLess(report.index("Communicare IT"), report.index("Curri"))
+        self.assertIn("30 deployments reported", report)
+        self.assertIn("Customer testing exposed an authentication blocker", report)
+        self.assertIn("No verified lifecycle or commercial change", report)
+        self.assertNotIn("conversation", report.casefold())
+        self.assertNotIn("## The story", report)
+        self.assertNotIn("## What this means for design", report)
+        self.assertEqual(snapshot["data_status"], "complete")
+        self.assertIn("report_sha256", snapshot)
+
+    def test_customer_dashboard_requires_read_only_sources(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["salesforce"]["access_mode"] = "write"
+
+        with self.assertRaisesRegex(ValidationError, "access_mode must be read_only"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_fails_closed_when_salesforce_is_unhealthy(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["salesforce"]["status"] = "timeout"
+
+        with self.assertRaisesRegex(IntegrationError, "salesforce"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_stale_salesforce(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["source_status"]["salesforce"]["queried_at"] = "2026-09-20T08:00:00+05:30"
+
+        with self.assertRaisesRegex(ValidationError, "salesforce.*stale"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_runs_only_on_monday(self):
+        result = valid_dashboard_result()
+        tuesday = datetime(2026, 9, 22, 9, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
+        result["snapshot"]["report_date"] = "2026-09-22"
+        result["snapshot"]["generated_at"] = "2026-09-22T09:00:00+05:30"
+
+        with self.assertRaisesRegex(ValidationError, "only on Monday"):
+            validate_agent_result(result, report_now=tuesday, source_max_age_hours=48, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_requires_previous_monday_through_sunday(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["comparison_window"]["start"] = "2026-09-15"
+
+        with self.assertRaisesRegex(ValidationError, "previous Monday through Sunday"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_requires_a_weekly_change_statement(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][0]
+        customer["change_this_week"] = ""
+
+        with self.assertRaisesRegex(ValidationError, "change_this_week"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_accepts_unknown_lifecycle_for_verified_customer_signal(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][2]
+        customer["lifecycle_stage"] = "unknown"
+        customer["change_this_week"] = (
+            "Current approved evidence does not support a safe operating lifecycle mapping."
+        )
+        result["snapshot"]["unknowns"] = [
+            "Curri has no safely verified operating lifecycle stage in the current weekly window."
+        ]
+
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIn("Unknown", report)
+        self.assertIn("does not support a safe operating lifecycle mapping", report)
+
+    def test_customer_dashboard_rejects_rows_without_a_verified_weekly_signal(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["customers"][2]["movement"] = "no_data"
+
+        with self.assertRaisesRegex(ValidationError, "movement is invalid"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
+    def test_reported_deployment_count_cannot_be_smaller_than_verified_rows(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["summary"]["reported_deployment_count"] = 3
+
+        with self.assertRaisesRegex(ValidationError, "cannot be smaller"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
+    def test_customer_dashboard_requires_a_next_watch(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][1]
+        customer["next_watch"] = ""
+
+        with self.assertRaisesRegex(ValidationError, "next_watch"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_rejects_summary_not_derived_from_rows(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["summary"]["commercial_moves_7d"] = 999
+
+        with self.assertRaisesRegex(ValidationError, "does not match customer rows"):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_customer_dashboard_allows_analysis_for_verified_no_change_signal(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["customers"][0]["movement"] = "no_change"
+        result["snapshot"]["summary"]["movers_7d"] = 2
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIn("Communicare IT", report)
+
+    def test_customer_dashboard_html_renders_semantic_matrix(self):
+        report, _ = validate_agent_result(
+            valid_dashboard_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+        rendered = markdown_to_email_html(report)
+
+        self.assertIn('<th scope="col"', rendered)
+        self.assertIn("<tbody><tr>", rendered)
+        self.assertIn("Batteries Plus", rendered)
+        self.assertNotIn("| Customer |", rendered)
 
 
 class PulseDeliveryTests(unittest.TestCase):
@@ -550,7 +909,7 @@ class PulseDeliveryTests(unittest.TestCase):
             dry_run=False,
         )
         self.assertEqual(message["To"], "amit.ayre@dialpad.com")
-        self.assertEqual(message["Subject"], f"Daily Agentic Business Pulse — {REPORT_DATE}")
+        self.assertEqual(message["Subject"], f"Weekly Agentic Customer Review — {REPORT_DATE}")
         self.assertEqual(list(message.iter_attachments()), [])
         plain_body = message.get_body(preferencelist=("plain",)).get_content()
         html_body = message.get_body(preferencelist=("html",)).get_content()
@@ -573,8 +932,8 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertIn("background:#191718", rendered)
         self.assertIn("background:#ef5da8", rendered)
         self.assertIn('<meta charset="utf-8">', rendered)
-        self.assertIn("Agentic / Daily pulse", rendered)
-        self.assertIn("Business Pulse</h1>", rendered)
+        self.assertIn("Agentic / Weekly review", rendered)
+        self.assertIn("Customer Review</h1>", rendered)
         self.assertIn("01</td>", rendered)
         self.assertNotIn("background:#faf9fd", rendered)
         self.assertNotIn("[Verified fact]", rendered)
@@ -632,7 +991,7 @@ class PulseDeliveryTests(unittest.TestCase):
         correct = glean_source_draft()
         wrong_date = glean_source_draft()
         wrong_date.replace_header(
-            "Subject", f"{GLEAN_DRAFT_SUBJECT_PREFIX} — 2026-09-14"
+            "Subject", f"{GLEAN_DRAFT_SUBJECT_PREFIX} — 2026-09-20"
         )
         wrong_recipient = glean_source_draft(recipient="someone-else@dialpad.com")
         raw_messages = {
@@ -677,11 +1036,37 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertEqual(message["Subject"], f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {REPORT_DATE}")
         self.assertEqual(
             client.search_arguments,
-            (None, "SUBJECT", '"Daily Agentic Business Pulse"'),
+            (None, "SUBJECT", '"Weekly Agentic Customer Review"'),
         )
 
 
 class GleanDraftRelayTests(PulseDeliveryTests):
+    def test_schema_v2_glean_draft_dry_run_renders_customer_matrix(self):
+        archive = FakeRelayArchive(source_message=glean_source_draft(valid_dashboard_result()))
+        config = PulseConfig(**{**self.config.__dict__, "dry_run": True})
+        calls = []
+
+        result = run_pulse_from_glean_draft(
+            config,
+            current_time=REPORT_NOW,
+            archive=archive,
+            sender=lambda *args: calls.append(args),
+        )
+
+        self.assertEqual(result["run_status"], "dry_run_complete")
+        self.assertFalse(calls)
+        self.assertEqual(len(archive.drafts), 1)
+        message = archive.drafts[0]
+        self.assertEqual(list(message.iter_attachments()), [])
+        plain_body = message.get_body(preferencelist=("plain",)).get_content()
+        html_body = message.get_body(preferencelist=("html",)).get_content()
+        self.assertIn("## Verified customer movement", plain_body)
+        self.assertIn("Customer testing exposed an authentication blocker", plain_body)
+        self.assertIn('<th scope="col"', html_body)
+        self.assertNotIn(GLEAN_MACHINE_START, plain_body)
+        snapshot = json.loads((self.reports_dir / f"{REPORT_DATE}.json").read_text())
+        self.assertEqual(snapshot["schema_version"], 2)
+
     def test_glean_draft_parses_machine_result_and_locks_recipient(self):
         parsed = parse_glean_draft(
             glean_source_draft(), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL
@@ -724,8 +1109,8 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             "&source=gmail"
         )
         payload["report_markdown"] = payload["report_markdown"].replace(
-            f"# Daily Agentic Business Pulse — {REPORT_DATE}",
-            "# Daily Agentic Business Pulse",
+            f"# Weekly Agentic Customer Review — {REPORT_DATE}",
+            "# Weekly Agentic Customer Review",
         ).replace(
             "Trust the revenue and delivery facts.",
             "Data incomplete: the weekly pace cannot be calculated because there is no earlier report to compare with.",
@@ -782,7 +1167,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
             workflow_url=WORKFLOW_URL,
         )
 
-        self.assertTrue(report.startswith(f"# Daily Agentic Business Pulse — {REPORT_DATE}"))
+        self.assertTrue(report.startswith(f"# Weekly Agentic Customer Review — {REPORT_DATE}"))
         self.assertEqual(parsed["agent_request_id"], "ae65479207fa42d39377ffdae6084ffd")
         self.assertEqual(snapshot["comparison_window"]["end"], REPORT_DATE)
         self.assertEqual(snapshot["source_status"]["salesforce"]["status"], "ok")
@@ -998,19 +1383,19 @@ class GleanDraftRelayTests(PulseDeliveryTests):
 
     def test_missing_or_malformed_machine_block_fails_closed(self):
         message = glean_source_draft()
-        message.set_content("# Daily Agentic Business Pulse — 2026-09-15\n")
+        message.set_content("# Weekly Agentic Customer Review — 2026-09-21\n")
         with self.assertRaisesRegex(ValidationError, "machine-readable"):
             parse_glean_draft(message, report_date=REPORT_DATE, workflow_url=WORKFLOW_URL)
 
 
 class PulseWorkflowTests(unittest.TestCase):
-    def test_workflow_has_daily_ist_schedule_manual_dry_run_and_read_only_permissions(self):
+    def test_workflow_has_weekly_monday_ist_schedule_manual_dry_run_and_read_only_permissions(self):
         workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
-        self.assertIn("cron: '37 22 * * *'", workflow)
-        self.assertIn("cron: '17 23 * * *'", workflow)
-        self.assertIn("cron: '23 0 * * *'", workflow)
-        self.assertIn("cron: '37 1 * * *'", workflow)
-        self.assertIn("cron: '37 3 * * *'", workflow)
+        self.assertIn("cron: '37 22 * * 0'", workflow)
+        self.assertIn("cron: '17 23 * * 0'", workflow)
+        self.assertIn("cron: '23 0 * * 1'", workflow)
+        self.assertIn("cron: '37 1 * * 1'", workflow)
+        self.assertIn("cron: '37 3 * * 1'", workflow)
         self.assertEqual(workflow.count("cron:"), 5)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("pull_request:", workflow)

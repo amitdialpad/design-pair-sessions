@@ -2,14 +2,13 @@ name: Daily Agentic Business Pulse
 
 on:
   schedule:
-    # Prewarm well before 09:00 Asia/Kolkata because this repository's scheduled
-    # events have recently arrived 4-6 hours late. The runner waits in the cloud
-    # until 09:00 IST; odd-minute fallbacks avoid GitHub's busiest cron boundaries.
-    - cron: '37 22 * * *'
-    - cron: '17 23 * * *'
-    - cron: '23 0 * * *'
-    - cron: '37 1 * * *'
-    - cron: '37 3 * * *'
+    # Monday-only fallbacks prewarm before 09:00 Asia/Kolkata. Sunday UTC
+    # entries cross midnight into Monday IST; later entries are Monday UTC.
+    - cron: '37 22 * * 0'
+    - cron: '17 23 * * 0'
+    - cron: '23 0 * * 1'
+    - cron: '37 1 * * 1'
+    - cron: '37 3 * * 1'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -77,7 +76,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           WORKFLOW_NAME: ${{ github.workflow }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          FAILURE_SUBJECT_PREFIX: Daily Agentic Business Pulse needs attention
+          FAILURE_SUBJECT_PREFIX: Weekly Agentic Customer Review needs attention
           FAILURE_DESCRIPTION: The report did not pass its source, freshness, validation, persistence, or delivery checks.
           FAILURE_DEDUPE_DAILY: 'true'
           FAILURE_TIMEZONE: Asia/Kolkata

@@ -1,88 +1,92 @@
-# Daily Agentic Business Pulse operations
+# Weekly Agentic Customer Review operations
 
-Workflow: `Daily Agentic Business Pulse`
+Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
 
-Scheduled delivery remains 09:00 in `Asia/Kolkata`, but the GitHub runner is prewarmed several hours earlier. This repository's own run history showed 4-6 hour delays for scheduled events, including the otherwise reliable Beacon syncs and weekly brief. Five odd-minute cron events therefore begin at 04:07, 04:47, 05:53, 07:07, and 09:07 IST. The first runner GitHub releases waits in the cloud until 09:00 before checking Gmail; later runs exit idempotently after the first accepted send. A manual `workflow_dispatch` never waits and continues to support live and dry runs.
+Delivery is Monday at 09:00 `Asia/Kolkata`. The user-facing email is `Weekly Agentic Customer Review — YYYY-MM-DD`.
 
-Pull requests that change the pulse workflow, skill, scripts, operations guide, or tests run the unit-test validation job without loading any Actions secrets. Scheduled and manually dispatched runs must pass that validation job before the pulse job starts.
+The review contains only named customers with specific, current, safely attributable signals, ordered by failing, moved, then other useful current states. It reports lifecycle when known, use case, connectors/systems, weekly movement, Jira risk, commercial movement, and the next item Amit can watch or help unblock. It is not a portfolio census and contains no unsupported product-usage telemetry or generic data disclaimer.
 
-## Runtime boundary
+## Schedule
 
-The public repository contains orchestration and validation code only. It does not contain company source credentials, internal document identifiers, reports, snapshots, or raw evidence.
+The private Glean Agent runs Mondays at 08:00 IST. GitHub has five Monday-only fallback cron events beginning at 04:07, 04:47, 05:53, 07:07, and 09:07 IST. The first runner released waits until 09:00 before checking Gmail; later runs exit after the first accepted send.
 
-Company-data collection runs natively inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`. Its daily 08:00 schedule gives the Agent time to finish before the 09:00 delivery gate, using the user's existing Glean permissions and the Agent's approved Salesforce, Jira, company-search/document, email/calendar, and production-code tools. This avoids exporting direct company-source credentials or requiring a Glean Platform API token in GitHub.
+Manual `workflow_dispatch` supports a no-send dry run and never waits for 09:00.
 
-The Agent must retain the complete Daily Agentic Business Pulse skill, create only one Gmail draft addressed only to `amit.ayre@dialpad.com`, and include the machine-readable relay block described below. The Gmail MCP connection is restricted inside the Agent to `Create Draft`; it has no enabled mailbox-read, label, trash, recovery, Jira-write, or Salesforce-write tools.
+## Source and safety boundary
 
-At the primary and fallback schedules, GitHub Actions prewarms a hosted runner and holds it until 09:00 IST. It then uses the existing Gmail sender secrets to wait up to 30 minutes for the private draft. It first checks the deterministic IST-date Message-ID, so fallback runs cannot send a second email after Gmail has accepted the first one. Gmail draft discovery searches with the ASCII-only phrase `Daily Agentic Business Pulse`, then requires the exact Unicode internal subject, current IST date, one allowed recipient, and no attachments on every fetched candidate. The relay then validates the report sections, source freshness and links, redaction, revenue/pipeline separation, implementation states, and JSON snapshot before sending. A missing, malformed, stale, or duplicate draft fails closed and uses the failure-notification path. `Data incomplete` is reserved for a missing headline decision metric when every required company source was nevertheless refreshed successfully. Secondary limitations such as no prior snapshot, incomplete EAP outcome coverage, target-owner history, or unverified deployment/customer exposure remain scoped unknowns and do not downgrade the entire report. A failed required source still routes to failure notification.
+Company-data collection runs inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`.
 
-Required repository secrets:
+Required read-only sources:
 
-- `GMAIL_USER`: existing Beacon Brief Gmail sender account.
-- `GMAIL_APP_PASSWORD`: existing Beacon Brief Gmail app password with SMTP and IMAP access.
+- Salesforce for exact-match identity, journey/commercial stage, use case, and Agentic-specific value for customers already named in current evidence.
+- Jira for customer-impacting bugs and issues changed in the weekly window.
+- Glean company search, documents, email, and calendar for customer context and the weekly Agentic newsletter.
+- Production code only when a changed customer blocker needs implementation context; it is not required for an unchanged review.
 
-No `PULSE_AGENT_TOKEN`, direct Salesforce credential, Jira credential, Glean credential, or code-search credential is required by GitHub Actions.
+The review does not use BigQuery, Pinot, or Agentic Analytics. It never claims conversations, action-success, containment, resolution, CSAT, or other product telemetry.
 
-## Glean draft contract
+No Salesforce or Jira writes, repository writes, source-system configuration, permissions changes, exports, or customer-system mutations are allowed. The only Glean Agent write is Gmail MCP `Create Draft` for the internal relay envelope.
 
-The Glean Agent creates an internal relay draft with the exact subject `[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse — YYYY-MM-DD`, exactly one `To` recipient (`amit.ayre@dialpad.com`), and no Cc or Bcc. This source draft must never be sent manually. After the human-readable report, it includes one JSON object between the exact markers `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
+## Internal source draft
 
-The object has this shape:
+The Glean Agent creates exactly one draft:
 
-```json
-{
-  "report_markdown": "# Daily Agentic Business Pulse — YYYY-MM-DD\n...",
-  "snapshot": {},
-  "agent_request_id": "non-sensitive-runtime-id",
-  "data_status": "complete",
-  "failures": []
-}
-```
+- Subject: `[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD`
+- To: `amit.ayre@dialpad.com`
+- No Cc, Bcc, or attachments
+- One schema-version-2 JSON block between the established machine markers
 
-The snapshot schema and report rules are defined in the skill and enforced again by `scripts/agentic_business_pulse.py` before persistence or delivery. The human report is a plain-language manager brief capped at 650 words: `TL;DR`, three or four explained numbers, a Money → Customers → Product story, up to three concrete design implications, and a short `What to trust` note. Every story paragraph says what happened, why it matters, and what it means for product/design. Analyst shorthand and untranslated acronyms are rejected. Evidence labels, exhaustive Jira detail, implementation-state inventories, and exact calculations remain in the structured snapshot rather than the email. The relay deterministically normalizes known Glean formatting variants such as `iso_start`/`iso_end`, `evidence_links`, descriptive healthy-source statuses, Gmail tracking redirects, implementation status maps, and the previous manager-brief heading names during rollout. It also promotes an overly cautious `incomplete` result to `complete` when all required sources are healthy, every core commercial metric is populated, and any reported gaps are only claim-scoped limitations; in that case it replaces the warning inventory with a plain description of what is reliable. It does not synthesize evidence or turn unknown/deployment-negative states into production claims. GitHub removes the machine block, renders the Markdown as readable HTML, and adds the current workflow URL to `What to trust` before creating or sending any user-facing message.
+The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
 
-## Private persistence and delivery
+Schema version 2 requires:
 
-The report recipient is immutable: `amit.ayre@dialpad.com`. Runtime validation rejects any other `To`, `Cc`, or `Bcc` destination before SMTP is called. Failure notifications use the same single-recipient convention.
+- Fresh read-only receipts for Salesforce, Jira, and Glean, plus production code only when used.
+- The previous Monday-through-Sunday comparison window.
+- At least one named customer with a specific verified weekly signal.
+- One lifecycle and movement state per customer.
+- Agent/use case, integrations, weekly change, Jira state, commercial state, and next watch.
+- A summary derived exactly from customer rows.
+- Evidence-linked analysis for included customer signals when it clarifies implications or how Amit can help.
 
-Reports are written during execution to:
+## Delivery protection
+
+The recipient is immutable: `amit.ayre@dialpad.com`. Any other To, Cc, or Bcc fails before SMTP.
+
+The live email and failure notification use deterministic IST-date Message-IDs. Gmail Sent is checked before delivery, so retries and fallback schedules cannot send duplicates. The email contains no attachments or machine JSON.
+
+Runtime files remain private:
 
 - `reports/agentic_business_pulse/YYYY-MM-DD.md`
 - `reports/agentic_business_pulse/YYYY-MM-DD.json`
 
-That directory is gitignored. Before a live send, the exact body-only email is persisted as a Gmail draft. After Gmail SMTP accepts the message, the prepared draft is removed. The Markdown report, structured snapshot, and run result are retained as a private GitHub Actions artifact for 90 days; they are never attached to the email.
-
-Dry runs validate the Glean source draft, retain it, replace any earlier same-day preview, create a body-only private Gmail draft, and do not call SMTP. The prepared draft subject starts with `[DRY RUN]`.
-
-The live message uses a deterministic RFC Message-ID derived from the IST report date. Before generation, the workflow searches Gmail Sent for that ID. A retry therefore exits successfully without calling the agent or sending another report. If a matching prepared draft exists but no Sent copy can be confirmed, the workflow fails closed and asks for inspection instead of risking a duplicate. GitHub Actions concurrency also prevents overlapping pulse jobs.
+They are retained only in the private GitHub Actions artifact.
 
 ## Failure behavior
 
-Normal report delivery stops when:
+The normal review fails closed when:
 
-- any required source is missing, failed, or stale (a missing headline decision metric may instead produce a clearly labeled `Data incomplete` report when all required sources are healthy);
-- the current IST date or comparison window is invalid;
-- revenue and pipeline are not structurally separated;
-- Agentic ACV and total bundled amounts are not structurally separated;
-- the manager brief exceeds 650 words, uses analyst jargon or business/product acronyms, uses legacy evidence labels/detail sections, lacks the three Money → Customers → Product insights, or omits required source links or implementation states from its evidence record;
-- prototype/mock/fixture evidence is described as deployed or customer-exposed;
+- a required source is missing, unhealthy, stale, or not marked read-only;
+- no named customer has a specific verified signal in the weekly window;
+- a claimed signal cannot be attributed safely enough to include;
+- the run is not Monday in `Asia/Kolkata`;
+- the comparison window is not the previous Monday through Sunday;
+- summary counts do not match customer rows;
+- customer names, links, Jira keys, or commercial values are invalid;
 - credentials, raw payloads, tool arguments, transcripts, or unredacted email addresses are detected;
-- private Gmail persistence or idempotency checks fail.
+- Gmail persistence, recipient validation, or idempotency checks fail.
 
-An expected pulse application failure is recorded as `handled_failure` in the Actions summary and invokes the existing Gmail failure-notification mechanics. Pulse alerts opt into a deterministic Message-ID for the current `Asia/Kolkata` date. Gmail Sent is checked before SMTP, so the first fallback can send one plain-language alert and later fallbacks suppress it. A successfully handled pulse failure therefore does not also fail the workflow and trigger repeated GitHub “Run failed” mail.
+Expected application failures use the existing once-per-IST-date failure alert. If the notifier fails, the workflow remains failed so GitHub is the final alert path.
 
-Checkout, setup, validation-runner, unexpected Python, and artifact failures remain failed workflow runs. If Gmail cannot confirm failure-alert deduplication or cannot send the alert, the notifier also leaves the run failed so GitHub remains the final alert path. Other Beacon workflows do not opt into daily deduplication and retain their existing notifier behavior.
+## Release verification
 
-## Manual verification
+1. Run all repository tests and pull-request validation.
+2. Update the private Glean Agent instructions and schedule in draft.
+3. Preview the Agent and confirm a complete schema-v2 snapshot with no source writes.
+4. Publish only after the preview validates.
+5. Run GitHub with `dry_run=true`.
+6. Confirm one private body-only draft, no SMTP call, one recipient, no attachments, no machine JSON, and a readable verified-signal matrix.
+7. Only then run live once.
+8. Confirm Gmail accepts one email for `amit.ayre@dialpad.com`.
+9. Re-run live and confirm `duplicate_skipped`.
 
-1. Confirm Glean Agent `8f3fd6d966c64916b11b505a580ff64f` is published privately, scheduled daily at 08:00, connected to Gmail MCP, and restricted to `Create Draft` as its only Gmail write tool.
-2. Run the Glean Agent once manually and confirm it creates exactly one `[INTERNAL RELAY — DO NOT SEND]` draft with the report and machine JSON block. Never send this source draft manually.
-3. Run `Daily Agentic Business Pulse` manually with `dry_run=true`.
-4. Confirm the Actions summary reports `dry_run_complete` and `not_sent_draft_persisted`.
-5. Inspect the `[DRY RUN]` Gmail draft and confirm the full report is readable with no attachments.
-6. Run manually with `dry_run=false`.
-7. Confirm exactly one body-only report email, an accepted Gmail result, the private run artifact, and source freshness in the Actions summary.
-8. Re-run live for the same IST date and confirm `duplicate_skipped` / `already_sent`.
-9. On the next unattended schedule, confirm the first successful run delivers once and later fallbacks finish as duplicate skips without another report or failure alert.
-
-Fixtures are unit-test inputs only. They are never wired into the GitHub workflow and cannot pass validation as deployed or customer-exposed evidence.
+Fixtures prove structure only. They never prove real customer facts.

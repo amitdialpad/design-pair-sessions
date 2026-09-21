@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate, validate, archive, and email the Daily Agentic Business Pulse."""
+"""Generate, validate, archive, and email the Weekly Agentic Customer Review."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import hashlib
 import html
 import imaplib
 import json
+import math
 import os
 import re
 import smtplib
@@ -29,6 +30,16 @@ from zoneinfo import ZoneInfo
 
 
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
+DASHBOARD_REQUIRED_SOURCES = ("salesforce", "jira", "glean")
+DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused", "unknown"}
+DASHBOARD_MOVEMENTS = {"failing", "moved", "no_change"}
+DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_change": 2}
+DASHBOARD_SOURCE_LABELS = {
+    "salesforce": "Customer and commercial records",
+    "jira": "Customer bugs",
+    "glean": "Customer context",
+    "production_code": "Production implementation",
+}
 REQUIRED_SECTIONS = (
     "TL;DR",
     "The numbers",
@@ -121,9 +132,9 @@ SECRET_PATTERNS = (
     re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
 )
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
-REPORT_SUBJECT_PREFIX = "Daily Agentic Business Pulse"
-GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Daily Agentic Business Pulse"
-GLEAN_DRAFT_SEARCH_PHRASE = "Daily Agentic Business Pulse"
+REPORT_SUBJECT_PREFIX = "Weekly Agentic Customer Review"
+GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review"
+GLEAN_DRAFT_SEARCH_PHRASE = "Weekly Agentic Customer Review"
 ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
@@ -334,9 +345,10 @@ def build_agent_request(
         },
         "previous_snapshot": previous_snapshot,
         "source_context": list(source_context),
-        "required_sources": list(REQUIRED_SOURCES),
+        "required_sources": list(DASHBOARD_REQUIRED_SOURCES),
         "response_contract": {
             "content_type": "application/json",
+            "snapshot_schema_version": 2,
             "fields": ["report_markdown", "snapshot", "agent_request_id", "data_status", "failures"],
             "no_markdown_fence": True,
         },
@@ -625,6 +637,352 @@ def _normalize_incomplete_confidence(result: dict[str, Any]) -> None:
     result["report_markdown"] = earlier_report + report[confidence_match.start() : confidence_match.end()] + confidence_body
 
 
+def _dashboard_number(value: Any, path: str, *, allow_null: bool = False) -> float | int | None:
+    number = _require_number(value, path, allow_null=allow_null)
+    if number is not None:
+        if not math.isfinite(float(number)):
+            raise ValidationError(f"{path} must be finite")
+        if number < 0:
+            raise ValidationError(f"{path} cannot be negative")
+    return number
+
+
+def _format_dashboard_count(value: float | int | None) -> str:
+    if value is None:
+        return "Not measured"
+    if isinstance(value, float) and not value.is_integer():
+        return f"{value:,.1f}"
+    return f"{int(value):,}"
+
+
+def _format_dashboard_measure(
+    value: float | int | None, singular: str, plural: str | None = None
+) -> str:
+    label = singular if value == 1 else (plural or f"{singular}s")
+    return f"{_format_dashboard_count(value)} {label}"
+
+
+def _format_dashboard_percent(numerator: float | int | None, denominator: float | int | None) -> str | None:
+    if numerator is None or denominator in (None, 0):
+        return None
+    return f"{round(float(numerator) * 100 / float(denominator))}%"
+
+
+def _format_dashboard_delta(current: float | int, previous: float | int) -> str:
+    delta = current - previous
+    if delta == 0:
+        return "flat vs prior 7d"
+    sign = "+" if delta > 0 else ""
+    return f"{sign}{_format_dashboard_count(delta)} vs prior 7d"
+
+
+def _dashboard_cell(value: str) -> str:
+    return value.replace("|", "\\|").replace("\n", " ").strip()
+
+
+def _dashboard_customer_link(customer: dict[str, Any]) -> str:
+    name = str(customer["account_name"])
+    links = customer.get("links", [])
+    if links:
+        return f"[{name}]({links[0]})"
+    return name
+
+
+def _dashboard_journey(customer: dict[str, Any]) -> str:
+    stage = str(customer["lifecycle_stage"]).title()
+    use_case = str(customer["agent_or_use_case"])
+    integrations = customer["integrations"]
+    integration_names = (
+        ", ".join(f"{item['name']} ({item['status']})" for item in integrations)
+        if integrations
+        else "No connector recorded"
+    )
+    commercial_stage = str(customer["commercial"]["stage"])
+    return f"{stage} · {use_case} · {integration_names} · {commercial_stage}"
+
+
+def _dashboard_risk(customer: dict[str, Any]) -> str:
+    jira = customer["jira"]
+    parts: list[str] = []
+    if jira["new_or_changed_7d"]:
+        parts.append(_format_dashboard_measure(jira["new_or_changed_7d"], "Jira change"))
+    if jira["open_customer_bugs"]:
+        keys = ", ".join(str(item) for item in jira["keys"][:2])
+        parts.append(
+            _format_dashboard_measure(jira["open_customer_bugs"], "open bug")
+            + (f" ({keys})" if keys else "")
+        )
+    parts.append(str(customer["next_watch"]))
+    return " · ".join(parts)
+
+
+def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> str:
+    customers = sorted(
+        snapshot["customers"],
+        key=lambda customer: (
+            DASHBOARD_MOVEMENT_ORDER[customer["movement"]],
+            str(customer["account_name"]).casefold(),
+        ),
+    )
+    summary = snapshot["summary"]
+    comparison = snapshot["comparison_window"]
+    report_date = snapshot["report_date"]
+    lines = [
+        f"# Weekly Agentic Customer Review — {report_date}",
+        f"_Weekly review: {comparison['label']}_",
+        "",
+        "## This week",
+        "",
+    ]
+    reported_deployments = summary.get("reported_deployment_count")
+    if reported_deployments is not None:
+        lines.append(
+            f"- **{_format_dashboard_measure(reported_deployments, 'deployment')} reported** — "
+            f"{_format_dashboard_measure(summary['active_customer_count'], 'customer')} had a specific verified signal this week."
+        )
+    else:
+        lines.append(
+            f"- **{_format_dashboard_measure(summary['active_customer_count'], 'customer')} had a verified signal** — only evidence-backed changes and current risks are included."
+        )
+    lines.extend(
+        [
+            f"- **{_format_dashboard_measure(summary['movers_7d'], 'customer')} moved or became blocked** — a verified lifecycle, customer, delivery, or commercial change.",
+            f"- **{_format_dashboard_measure(summary['commercial_moves_7d'], 'commercial record')} changed** — advanced, slipped, won, lost, or changed value.",
+            f"- **{_format_dashboard_measure(summary['customers_with_changed_blockers_7d'], 'customer')} "
+            f"{'needs' if summary['customers_with_changed_blockers_7d'] == 1 else 'need'} attention** — a customer blocker changed this week.",
+            "",
+            "## Verified customer movement",
+            "",
+            "| Customer | Journey and commercial state | What changed this week | Risk and next watch |",
+            "|---|---|---|---|",
+        ]
+    )
+    for customer in customers:
+        lines.append(
+            "| "
+            + " | ".join(
+                _dashboard_cell(value)
+                for value in (
+                    _dashboard_customer_link(customer),
+                    _dashboard_journey(customer),
+                    customer["change_this_week"],
+                    _dashboard_risk(customer),
+                )
+            )
+            + " |"
+        )
+
+    lines.extend(["", "## Analysis", ""])
+    insights = snapshot["insights"]
+    if insights:
+        customer_by_name = {customer["account_name"]: customer for customer in customers}
+        for insight in insights:
+            customer = customer_by_name[insight["account_name"]]
+            evidence = insight["links"][0] if insight["links"] else customer["links"][0]
+            lines.append(
+                f"- **[{insight['account_name']}]({evidence})** — {insight['text']}"
+            )
+    else:
+        lines.append("- No customer-level change needs interpretation today.")
+
+    lines.extend(["", "## Gaps to resolve", ""])
+    unknowns = snapshot["unknowns"]
+    if unknowns:
+        lines.extend(f"- {item}" for item in unknowns)
+    else:
+        lines.append("- No material customer-record gap changed this week's interpretation.")
+
+    lines.extend(["", "## Evidence", ""])
+    source_status = snapshot["source_status"]
+    evidence_links: list[str] = []
+    for source in (*DASHBOARD_REQUIRED_SOURCES, "production_code"):
+        state = source_status.get(source)
+        if not isinstance(state, dict) or not state.get("links"):
+            continue
+        evidence_links.append(f"[{DASHBOARD_SOURCE_LABELS[source]}]({state['links'][0]})")
+    evidence_links.append(f"[Workflow run]({workflow_url})")
+    lines.append(" · ".join(evidence_links))
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _validate_dashboard_source_status(
+    snapshot: dict[str, Any], *, report_now: datetime, source_max_age_hours: int
+) -> None:
+    source_status = _require_mapping(snapshot.get("source_status"), "snapshot.source_status")
+    freshness_cutoff = report_now.astimezone(timezone.utc) - timedelta(hours=source_max_age_hours)
+    future_limit = report_now.astimezone(timezone.utc) + timedelta(minutes=10)
+    for source in DASHBOARD_REQUIRED_SOURCES:
+        state = _require_mapping(source_status.get(source), f"snapshot.source_status.{source}")
+        if state.get("status") != "ok":
+            raise IntegrationError(f"Required source {source} is not healthy; no report was sent")
+        if state.get("access_mode") != "read_only":
+            raise ValidationError(f"snapshot.source_status.{source}.access_mode must be read_only")
+        queried_at = _parse_datetime(state.get("queried_at"), f"snapshot.source_status.{source}.queried_at")
+        queried_utc = queried_at.astimezone(timezone.utc)
+        if queried_utc < freshness_cutoff or queried_utc > future_limit:
+            raise ValidationError(f"Required source {source} is stale or future-dated")
+        links = _require_list(state.get("links"), f"snapshot.source_status.{source}.links")
+        if not links or not all(_valid_link(link) for link in links):
+            raise ValidationError(f"Required source {source} needs at least one HTTPS evidence link")
+
+
+def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, Any]:
+    path = f"snapshot.customers[{index}]"
+    customer = _require_mapping(customer_value, path)
+    if customer.get("name_permitted") is not True:
+        raise ValidationError(f"{path} must use a permitted or redacted account name")
+    if not isinstance(customer.get("account_name"), str) or not customer["account_name"].strip():
+        raise ValidationError(f"{path}.account_name is required")
+    if customer.get("lifecycle_stage") not in DASHBOARD_STAGES:
+        raise ValidationError(f"{path}.lifecycle_stage is invalid")
+    if customer.get("movement") not in DASHBOARD_MOVEMENTS:
+        raise ValidationError(f"{path}.movement is invalid")
+    if not isinstance(customer.get("agent_or_use_case"), str) or not customer["agent_or_use_case"].strip():
+        raise ValidationError(f"{path}.agent_or_use_case is required")
+    links = _require_list(customer.get("links"), f"{path}.links")
+    if not links or not all(_valid_link(link) for link in links):
+        raise ValidationError(f"{path}.links needs at least one HTTPS evidence link")
+
+    integrations = _require_list(customer.get("integrations"), f"{path}.integrations")
+    for integration_index, integration_value in enumerate(integrations):
+        integration = _require_mapping(integration_value, f"{path}.integrations[{integration_index}]")
+        if not isinstance(integration.get("name"), str) or not integration["name"].strip():
+            raise ValidationError(f"{path}.integrations[{integration_index}].name is required")
+        if integration.get("status") not in {"building", "testing", "connected", "failing", "unknown"}:
+            raise ValidationError(f"{path}.integrations[{integration_index}].status is invalid")
+
+    for field in ("change_this_week", "next_watch"):
+        value = customer.get(field)
+        if not isinstance(value, str) or not value.strip() or len(value) > 320:
+            raise ValidationError(f"{path}.{field} must be a short plain-language statement")
+
+    jira = _require_mapping(customer.get("jira"), f"{path}.jira")
+    _dashboard_number(jira.get("new_or_changed_7d"), f"{path}.jira.new_or_changed_7d")
+    _dashboard_number(jira.get("open_customer_bugs"), f"{path}.jira.open_customer_bugs")
+    keys = _require_list(jira.get("keys"), f"{path}.jira.keys")
+    if not all(isinstance(key, str) and re.fullmatch(r"[A-Z][A-Z0-9]+-\d+", key) for key in keys):
+        raise ValidationError(f"{path}.jira.keys must contain Jira keys")
+
+    commercial = _require_mapping(customer.get("commercial"), f"{path}.commercial")
+    if not isinstance(commercial.get("stage"), str) or not commercial["stage"].strip():
+        raise ValidationError(f"{path}.commercial.stage is required")
+    if commercial.get("movement_7d") not in {"advanced", "slipped", "won", "lost", "value_changed", "no_change"}:
+        raise ValidationError(f"{path}.commercial.movement_7d is invalid")
+    _dashboard_number(commercial.get("agentic_acv"), f"{path}.commercial.agentic_acv", allow_null=True)
+    return customer
+
+
+def validate_customer_dashboard_result(
+    result: dict[str, Any],
+    *,
+    snapshot: dict[str, Any],
+    report_now: datetime,
+    source_max_age_hours: int,
+    workflow_url: str,
+) -> tuple[str, dict[str, Any]]:
+    if result.get("data_status") != "complete" or result.get("failures"):
+        raise IntegrationError("Customer dashboard requires healthy read-only sources; no report was sent")
+    report_date = report_now.date().isoformat()
+    if snapshot.get("schema_version") != 2:
+        raise ValidationError("snapshot.schema_version must be 2")
+    if snapshot.get("report_date") != report_date:
+        raise ValidationError("Snapshot report date does not match the current IST date")
+    generated_at = _parse_datetime(snapshot.get("generated_at"), "snapshot.generated_at")
+    if generated_at.astimezone(report_now.tzinfo).date() != report_now.date():
+        raise ValidationError("snapshot.generated_at is not on the current IST report date")
+
+    comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
+    for field in ("start", "end", "label"):
+        if not isinstance(comparison.get(field), str) or not comparison[field].strip():
+            raise ValidationError(f"snapshot.comparison_window.{field} is required")
+    try:
+        comparison_start = date.fromisoformat(comparison["start"])
+        comparison_end = date.fromisoformat(comparison["end"])
+    except ValueError as error:
+        raise ValidationError("Comparison-window start and end must be ISO dates") from error
+    if report_now.weekday() != 0:
+        raise ValidationError("Weekly customer review may run only on Monday in Asia/Kolkata")
+    expected_start = report_now.date() - timedelta(days=7)
+    expected_end = report_now.date() - timedelta(days=1)
+    if comparison_start != expected_start or comparison_end != expected_end:
+        raise ValidationError("Comparison window must cover the previous Monday through Sunday")
+
+    _validate_dashboard_source_status(
+        snapshot, report_now=report_now, source_max_age_hours=source_max_age_hours
+    )
+    customers = _require_list(snapshot.get("customers"), "snapshot.customers")
+    if not customers:
+        raise ValidationError("snapshot.customers must contain at least one verified customer signal")
+    validated_customers = [_validate_dashboard_customer(value, index) for index, value in enumerate(customers)]
+    if len({customer["account_name"] for customer in validated_customers}) != len(validated_customers):
+        raise ValidationError("snapshot.customers cannot contain duplicate account names")
+
+    summary = _require_mapping(snapshot.get("summary"), "snapshot.summary")
+    reported_deployment_count = summary.get("reported_deployment_count")
+    if reported_deployment_count is not None:
+        _dashboard_number(
+            reported_deployment_count,
+            "snapshot.summary.reported_deployment_count",
+        )
+        if reported_deployment_count < len(validated_customers):
+            raise ValidationError(
+                "snapshot.summary.reported_deployment_count cannot be smaller than verified customer rows"
+            )
+    expected_summary = {
+        "active_customer_count": len(validated_customers),
+        "movers_7d": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
+        "customers_with_changed_blockers_7d": sum(customer["movement"] == "failing" for customer in validated_customers),
+        "customers_without_current_data": 0,
+        "commercial_moves_7d": sum(
+            customer["commercial"]["movement_7d"] != "no_change"
+            for customer in validated_customers
+        ),
+    }
+    for field, expected in expected_summary.items():
+        _dashboard_number(summary.get(field), f"snapshot.summary.{field}")
+        if summary[field] != expected:
+            raise ValidationError(f"snapshot.summary.{field} does not match customer rows")
+
+    insights = _require_list(snapshot.get("insights"), "snapshot.insights")
+    customer_by_name = {customer["account_name"]: customer for customer in validated_customers}
+    if len(insights) > len(validated_customers):
+        raise ValidationError("snapshot.insights cannot outnumber customers")
+    for index, insight_value in enumerate(insights):
+        insight = _require_mapping(insight_value, f"snapshot.insights[{index}]")
+        customer = customer_by_name.get(insight.get("account_name"))
+        if customer is None:
+            raise ValidationError(f"snapshot.insights[{index}] must name a customer row")
+        if not isinstance(insight.get("text"), str) or not insight["text"].strip() or len(insight["text"]) > 320:
+            raise ValidationError(f"snapshot.insights[{index}].text must be a short interpretation")
+        links = _require_list(insight.get("links"), f"snapshot.insights[{index}].links")
+        if not links or not all(_valid_link(link) for link in links):
+            raise ValidationError(f"snapshot.insights[{index}].links needs evidence")
+    insight_names = [insight["account_name"] for insight in insights]
+    if len(set(insight_names)) != len(insight_names):
+        raise ValidationError("snapshot.insights cannot repeat a customer")
+
+    _require_list(snapshot.get("commercial_changes"), "snapshot.commercial_changes")
+    _require_list(snapshot.get("unknowns"), "snapshot.unknowns")
+    _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
+    snapshot["data_status"] = "complete"
+    report = render_customer_dashboard(snapshot, workflow_url)
+    if _visible_word_count(report) > 1600:
+        raise ValidationError("Customer dashboard exceeds 1600 visible words")
+    _walk_forbidden_keys(snapshot)
+    _scan_sensitive_text(report, "report_markdown")
+    _scan_sensitive_text(json.dumps(snapshot, sort_keys=True), "snapshot")
+    snapshot["report_sha256"] = hashlib.sha256(report.encode("utf-8")).hexdigest()
+    run_metadata = _require_mapping(snapshot.get("run", {}), "snapshot.run")
+    agent_request_id = str(result.get("agent_request_id", ""))
+    if agent_request_id:
+        if not re.fullmatch(r"[A-Za-z0-9._:-]{1,200}", agent_request_id):
+            raise ValidationError("agent_request_id contains unsafe characters")
+        run_metadata["agent_request_id"] = agent_request_id
+    run_metadata["workflow_url"] = workflow_url
+    snapshot["run"] = run_metadata
+    return report, snapshot
+
+
 def validate_agent_result(
     result: dict[str, Any],
     *,
@@ -654,6 +1012,14 @@ def validate_agent_result(
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
+    if snapshot.get("schema_version") == 2:
+        return validate_customer_dashboard_result(
+            result,
+            snapshot=snapshot,
+            report_now=report_now,
+            source_max_age_hours=source_max_age_hours,
+            workflow_url=workflow_url,
+        )
     report_date = report_now.date().isoformat()
 
     expected_title = f"# {REPORT_SUBJECT_PREFIX} — {report_date}"
@@ -832,6 +1198,16 @@ def validate_agent_result(
     return report, snapshot
 
 
+def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
+    required_sources = (
+        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") == 2 else REQUIRED_SOURCES
+    )
+    return {
+        source: snapshot["source_status"][source]["queried_at"]
+        for source in required_sources
+    }
+
+
 def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     escaped = html.escape(value, quote=True)
     escaped = re.sub(
@@ -844,6 +1220,51 @@ def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     escaped = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#e8e3db;padding:1px 4px\">\1</code>", escaped)
     return escaped
+
+
+def _markdown_table_cells(line: str) -> list[str]:
+    marker = "\x00PIPE\x00"
+    protected = line.strip().strip("|").replace("\\|", marker)
+    return [cell.strip().replace(marker, "|") for cell in protected.split("|")]
+
+
+def _is_markdown_table_separator(line: str) -> bool:
+    cells = _markdown_table_cells(line)
+    return bool(cells) and all(re.fullmatch(r":?-{3,}:?", cell) for cell in cells)
+
+
+def _render_markdown_table(lines: list[str]) -> str:
+    header = _markdown_table_cells(lines[0])
+    rows = [_markdown_table_cells(line) for line in lines[2:]]
+    column_count = len(header)
+    if any(len(row) != column_count for row in rows):
+        raise ValidationError("Customer dashboard table rows must match the header")
+    header_html = "".join(
+        '<th scope="col" style="padding:10px 9px;text-align:left;vertical-align:bottom;'
+        'font-size:10px;line-height:1.35;letter-spacing:.4px;text-transform:uppercase;'
+        f'color:#6d6761;border-bottom:2px solid #b72e79">{_inline_markdown(cell)}</th>'
+        for cell in header
+    )
+    row_html = []
+    for row in rows:
+        row_html.append(
+            "<tr>"
+            + "".join(
+                '<td style="padding:11px 9px;vertical-align:top;font-size:11px;line-height:1.45;'
+                f'color:#332f2b;border-bottom:1px solid #d8d2c9">{_inline_markdown(cell)}</td>'
+                for cell in row
+            )
+            + "</tr>"
+        )
+    return (
+        '<div class="pulse-matrix" style="width:100%;overflow-x:auto;margin:0 0 22px">'
+        '<table width="100%" cellspacing="0" cellpadding="0" style="min-width:720px;'
+        'border-collapse:collapse;background:#fbf9f5"><thead><tr>'
+        + header_html
+        + "</tr></thead><tbody>"
+        + "".join(row_html)
+        + "</tbody></table></div>"
+    )
 
 
 def markdown_to_email_html(report: str) -> str:
@@ -859,18 +1280,34 @@ def markdown_to_email_html(report: str) -> str:
             parts.append(f"</{list_type}>")
             in_list = False
 
-    for raw_line in report.splitlines():
+    report_lines = report.splitlines()
+    line_index = 0
+    while line_index < len(report_lines):
+        raw_line = report_lines[line_index]
         line = raw_line.strip()
+        if (
+            line.startswith("|")
+            and line_index + 1 < len(report_lines)
+            and _is_markdown_table_separator(report_lines[line_index + 1].strip())
+        ):
+            close_list()
+            table_lines = [line, report_lines[line_index + 1].strip()]
+            line_index += 2
+            while line_index < len(report_lines) and report_lines[line_index].strip().startswith("|"):
+                table_lines.append(report_lines[line_index].strip())
+                line_index += 1
+            parts.append(_render_markdown_table(table_lines))
+            continue
         if line.startswith("# "):
             close_list()
             title = line[2:]
             title_text, separator, report_date = title.rpartition(" — ")
             if not separator:
                 title_text, report_date = title, ""
-            display_title = html.escape(title_text).replace("Business Pulse", "<br>Business Pulse")
+            display_title = html.escape(title_text).replace("Customer Review", "<br>Customer Review")
             parts.append(
                 '<p style="margin:0 0 30px;font-size:10px;line-height:1.2;letter-spacing:2.2px;'
-                'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Daily pulse</p>'
+                'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Weekly review</p>'
             )
             parts.append(
                 f'<h1 class="pulse-title" style="font-family:Georgia,\'Times New Roman\',serif;font-size:44px;'
@@ -974,6 +1411,7 @@ def markdown_to_email_html(report: str) -> str:
                 style = "margin:0 0 16px;font-size:15px;line-height:1.72;color:#45403b"
             link_color = "#ff8bc6" if current_section == "What to trust" else "#6f3fc8"
             parts.append(f'<p style="{style}">{_inline_markdown(line, link_color=link_color)}</p>')
+        line_index += 1
     close_list()
     if trust_section_open:
         parts.append("</div>")
@@ -984,12 +1422,13 @@ def markdown_to_email_html(report: str) -> str:
         '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         '<style>@media only screen and (max-width:600px){.pulse-outer{padding:0!important}.pulse-shell{border:0!important}'
         '.pulse-content{padding:34px 24px 40px!important}.pulse-trust{padding:30px 24px 34px!important}'
-        '.pulse-title{font-size:38px!important}.story-headline{font-size:24px!important}}</style></head>'
+        '.pulse-title{font-size:38px!important}.story-headline{font-size:24px!important}'
+        '.pulse-matrix{display:block!important;overflow-x:auto!important}}</style></head>'
         '<body style="margin:0;background:#ebe9e4;padding:0">'
         '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ebe9e4">'
         '<tr><td class="pulse-outer" align="center" style="padding:28px 12px">'
-        '<table role="presentation" width="680" cellspacing="0" cellpadding="0" class="pulse-shell" '
-        'style="width:100%;max-width:680px;border-collapse:collapse;background:#f5f2ec;border:1px solid #ddd8cf">'
+        '<table role="presentation" width="820" cellspacing="0" cellpadding="0" class="pulse-shell" '
+        'style="width:100%;max-width:820px;border-collapse:collapse;background:#f5f2ec;border:1px solid #ddd8cf">'
         '<tr><td style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif;'
         f'font-size:15px;line-height:1.7;color:#45403b">{body}</td></tr></table></td></tr></table></body></html>'
     )
@@ -1008,7 +1447,7 @@ def build_email_message(
     subject_prefix = "[DRY RUN] " if dry_run else ""
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
-    message["From"] = f"Daily Agentic Business Pulse <{sender}>"
+    message["From"] = f"Weekly Agentic Customer Review <{sender}>"
     message["To"] = recipient
     message["Message-ID"] = message_id
     message["X-Dialpad-Pulse-Date"] = report_date
@@ -1131,6 +1570,33 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
+    if snapshot.get("schema_version") == 2:
+        comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
+        for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
+            if canonical not in comparison and isinstance(comparison.get(glean_name), str):
+                comparison[canonical] = comparison.pop(glean_name)
+        source_status = _require_mapping(snapshot.get("source_status"), "snapshot.source_status")
+        for source in (*DASHBOARD_REQUIRED_SOURCES, "production_code"):
+            state_value = source_status.get(source)
+            if state_value is None and source == "production_code":
+                continue
+            state = _require_mapping(state_value, f"snapshot.source_status.{source}")
+            if "links" not in state and isinstance(state.get("evidence_links"), list):
+                state["links"] = state.pop("evidence_links")
+            if isinstance(state.get("links"), list):
+                state["links"] = [_unwrap_gmail_redirect(link) for link in state["links"]]
+            status = state.get("status")
+            if isinstance(status, str) and status != "ok":
+                normalized = status.casefold().strip()
+                if normalized.startswith(("complete", "healthy", "refresh", "fresh")):
+                    state["detail"] = status
+                    state["status"] = "ok"
+        customers = _require_list(snapshot.get("customers"), "snapshot.customers")
+        for customer_value in customers:
+            customer = _require_mapping(customer_value, "snapshot.customers[]")
+            if "account_name" not in customer and isinstance(customer.get("name"), str):
+                customer["account_name"] = customer.pop("name")
+        return result
     if isinstance(snapshot.get("changes_since_previous"), dict):
         snapshot["changes_since_previous"] = [snapshot["changes_since_previous"]]
     metrics = _require_mapping(snapshot.get("metrics"), "snapshot.metrics")
@@ -1502,7 +1968,7 @@ def write_run_result(reports_dir: Path, report_date: str, result: dict[str, Any]
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "").strip()
     if summary_path:
         lines = [
-            "## Daily Agentic Business Pulse",
+            "## Weekly Agentic Customer Review",
             "",
             f"- Report date: `{report_date}`",
             f"- Run status: `{result.get('run_status', 'unknown')}`",
@@ -1600,9 +2066,7 @@ def run_pulse(
             "workflow_url": workflow_url,
             "report_path": str(report_path),
             "snapshot_path": str(snapshot_path),
-            "source_freshness": {
-                source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
-            },
+            "source_freshness": _source_freshness(snapshot),
         }
         write_run_result(config.reports_dir, report_date, result)
         return result
@@ -1618,9 +2082,7 @@ def run_pulse(
         "workflow_url": workflow_url,
         "report_path": str(report_path),
         "snapshot_path": str(snapshot_path),
-        "source_freshness": {
-            source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
-        },
+        "source_freshness": _source_freshness(snapshot),
     }
     write_run_result(config.reports_dir, report_date, result)
     return result
@@ -1713,9 +2175,7 @@ def run_pulse_from_glean_draft(
             "workflow_url": workflow_url,
             "report_path": str(report_path),
             "snapshot_path": str(snapshot_path),
-            "source_freshness": {
-                source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
-            },
+            "source_freshness": _source_freshness(snapshot),
             "agent_request_id": agent_result.get("agent_request_id", "not_provided"),
         }
         write_run_result(config.reports_dir, report_date, result)
@@ -1733,9 +2193,7 @@ def run_pulse_from_glean_draft(
         "workflow_url": workflow_url,
         "report_path": str(report_path),
         "snapshot_path": str(snapshot_path),
-        "source_freshness": {
-            source: snapshot["source_status"][source]["queried_at"] for source in REQUIRED_SOURCES
-        },
+        "source_freshness": _source_freshness(snapshot),
         "agent_request_id": agent_result.get("agent_request_id", "not_provided"),
     }
     write_run_result(config.reports_dir, report_date, result)
