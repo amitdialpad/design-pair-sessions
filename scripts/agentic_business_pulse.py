@@ -1239,31 +1239,34 @@ def _render_markdown_table(lines: list[str]) -> str:
     column_count = len(header)
     if any(len(row) != column_count for row in rows):
         raise ValidationError("Customer dashboard table rows must match the header")
-    header_html = "".join(
-        '<th scope="col" style="padding:10px 9px;text-align:left;vertical-align:bottom;'
-        'font-size:10px;line-height:1.35;letter-spacing:.4px;text-transform:uppercase;'
-        f'color:#6d6761;border-bottom:2px solid #b72e79">{_inline_markdown(cell)}</th>'
-        for cell in header
-    )
-    row_html = []
+    row_html: list[str] = []
     for row in rows:
-        row_html.append(
-            "<tr>"
-            + "".join(
-                '<td style="padding:11px 9px;vertical-align:top;font-size:11px;line-height:1.45;'
-                f'color:#332f2b;border-bottom:1px solid #d8d2c9">{_inline_markdown(cell)}</td>'
-                for cell in row
+        detail_rows = []
+        for label, value in zip(header[1:], row[1:]):
+            detail_rows.append(
+                '<tr><td style="padding:18px 22px;border-top:1px solid #d8d2c9">'
+                '<div style="margin:0 0 7px;font-size:13px;line-height:1.4;letter-spacing:.7px;'
+                f'text-transform:uppercase;color:#8a2861;font-weight:700">{_inline_markdown(label)}</div>'
+                '<div style="font-size:17px;line-height:1.6;color:#332f2b">'
+                f'{_inline_markdown(value)}</div></td></tr>'
             )
-            + "</tr>"
+        row_html.append(
+            '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+            'class="pulse-customer-card" style="width:100%;border-collapse:separate;border-spacing:0;'
+            'margin:0 0 20px;background:#fbf9f5;border:1px solid #d8d2c9">'
+            '<tr><td style="padding:20px 22px;background:#24211f">'
+            '<div style="margin:0 0 6px;font-size:13px;line-height:1.4;letter-spacing:.8px;'
+            f'text-transform:uppercase;color:#ff8bc6;font-weight:700">{_inline_markdown(header[0], link_color="#ff8bc6")}</div>'
+            '<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:23px;line-height:1.35;'
+            f'color:#ffffff;font-weight:700">{_inline_markdown(row[0], link_color="#ffb3d9")}</div>'
+            '</td></tr>'
+            + "".join(detail_rows)
+            + "</table>"
         )
     return (
-        '<div class="pulse-matrix" style="width:100%;overflow-x:auto;margin:0 0 22px">'
-        '<table width="100%" cellspacing="0" cellpadding="0" style="min-width:720px;'
-        'border-collapse:collapse;background:#fbf9f5"><thead><tr>'
-        + header_html
-        + "</tr></thead><tbody>"
+        '<div class="pulse-matrix" style="width:100%;margin:0 0 24px">'
         + "".join(row_html)
-        + "</tbody></table></div>"
+        + "</div>"
     )
 
 
@@ -1306,7 +1309,7 @@ def markdown_to_email_html(report: str) -> str:
                 title_text, report_date = title, ""
             display_title = html.escape(title_text).replace("Customer Review", "<br>Customer Review")
             parts.append(
-                '<p style="margin:0 0 30px;font-size:10px;line-height:1.2;letter-spacing:2.2px;'
+                '<p style="margin:0 0 30px;font-size:13px;line-height:1.35;letter-spacing:2px;'
                 'text-transform:uppercase;color:#6d6761;font-weight:700">Agentic / Weekly review</p>'
             )
             parts.append(
@@ -1316,7 +1319,7 @@ def markdown_to_email_html(report: str) -> str:
             parts.append('<div style="width:92px;height:5px;background:#ef5da8;margin:20px 0 20px"></div>')
             if report_date:
                 parts.append(
-                    f'<p style="margin:0 0 8px;font-size:13px;line-height:1.4;color:#6d6761">{html.escape(report_date)}</p>'
+                    f'<p style="margin:0 0 8px;font-size:16px;line-height:1.5;color:#6d6761">{html.escape(report_date)}</p>'
                 )
         elif line.startswith("## "):
             close_list()
@@ -1325,12 +1328,12 @@ def markdown_to_email_html(report: str) -> str:
                 parts.append('</div><div class="pulse-trust" style="background:#191718;padding:34px 46px 38px;color:#f5f0ea">')
                 trust_section_open = True
                 parts.append(
-                    f'<h2 style="font-size:10px;line-height:1.3;letter-spacing:2px;text-transform:uppercase;'
+                    f'<h2 style="font-size:14px;line-height:1.4;letter-spacing:1.6px;text-transform:uppercase;'
                     f'margin:0 0 16px;color:#ff8bc6">{_inline_markdown(current_section, link_color="#ff8bc6")}</h2>'
                 )
             else:
                 parts.append(
-                    f'<h2 style="font-size:10px;line-height:1.3;letter-spacing:2px;text-transform:uppercase;'
+                    f'<h2 style="font-size:14px;line-height:1.4;letter-spacing:1.6px;text-transform:uppercase;'
                     f'margin:42px 0 16px;color:#b72e79">{_inline_markdown(current_section)}</h2>'
                 )
         elif line.startswith("### "):
@@ -1338,7 +1341,7 @@ def markdown_to_email_html(report: str) -> str:
             story_label, separator, story_headline = line[4:].partition(" — ")
             if separator:
                 parts.append(
-                    f'<p style="margin:30px 0 5px;font-size:11px;line-height:1.3;letter-spacing:1.5px;'
+                    f'<p style="margin:30px 0 7px;font-size:13px;line-height:1.4;letter-spacing:1.2px;'
                     f'text-transform:uppercase;color:#b72e79;font-weight:700">{_inline_markdown(story_label)}</p>'
                 )
                 parts.append(
@@ -1363,7 +1366,7 @@ def markdown_to_email_html(report: str) -> str:
                         'style="border-collapse:collapse;border-top:1px solid #d8d2c9"><tr><td style="padding:18px 0 20px">'
                         f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:22px;line-height:1.25;'
                         f'color:#24211f;font-weight:700">{_inline_markdown(metric_name)}</div>'
-                        f'<div style="font-size:13px;line-height:1.55;color:#68625d;margin-top:5px">'
+                        f'<div style="font-size:17px;line-height:1.6;color:#68625d;margin-top:7px">'
                         f'{_inline_markdown(metric_meaning)}</div></td></tr></table>'
                     )
                 else:
@@ -1388,7 +1391,7 @@ def markdown_to_email_html(report: str) -> str:
                     'style="border-collapse:collapse;border-top:1px solid #d8d2c9"><tr>'
                     f'<td valign="top" width="52" style="padding:20px 12px 22px 0;font-family:Georgia,\'Times New Roman\',serif;'
                     f'font-size:24px;line-height:1;color:#ef5da8">{item_number:02d}</td>'
-                    f'<td valign="top" style="padding:18px 0 22px;font-size:15px;line-height:1.65;color:#332f2b">'
+                    f'<td valign="top" style="padding:18px 0 22px;font-size:17px;line-height:1.65;color:#332f2b">'
                     f'{_inline_markdown(item)}</td></tr></table>'
                 )
             else:
@@ -1404,11 +1407,11 @@ def markdown_to_email_html(report: str) -> str:
             if current_section == "TL;DR":
                 style = "font-family:Georgia,'Times New Roman',serif;margin:0 0 18px;font-size:23px;line-height:1.48;letter-spacing:-0.2px;color:#2a2724"
             elif current_section == "What to trust":
-                style = "margin:0;color:#d6d0ca;font-size:13px;line-height:1.65"
+                style = "margin:0;color:#d6d0ca;font-size:16px;line-height:1.7"
             elif not current_section and line.startswith(("_", "*")):
-                style = "margin:0 0 30px;color:#6d6761;font-size:13px;line-height:1.5"
+                style = "margin:0 0 30px;color:#6d6761;font-size:16px;line-height:1.6"
             else:
-                style = "margin:0 0 16px;font-size:15px;line-height:1.72;color:#45403b"
+                style = "margin:0 0 18px;font-size:17px;line-height:1.7;color:#45403b"
             link_color = "#ff8bc6" if current_section == "What to trust" else "#6f3fc8"
             parts.append(f'<p style="{style}">{_inline_markdown(line, link_color=link_color)}</p>')
         line_index += 1
@@ -1422,15 +1425,15 @@ def markdown_to_email_html(report: str) -> str:
         '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         '<style>@media only screen and (max-width:600px){.pulse-outer{padding:0!important}.pulse-shell{border:0!important}'
         '.pulse-content{padding:34px 24px 40px!important}.pulse-trust{padding:30px 24px 34px!important}'
-        '.pulse-title{font-size:38px!important}.story-headline{font-size:24px!important}'
-        '.pulse-matrix{display:block!important;overflow-x:auto!important}}</style></head>'
+        '.pulse-title{font-size:38px!important}.story-headline{font-size:25px!important}'
+        '.pulse-customer-card td{padding-left:18px!important;padding-right:18px!important}}</style></head>'
         '<body style="margin:0;background:#ebe9e4;padding:0">'
         '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ebe9e4">'
         '<tr><td class="pulse-outer" align="center" style="padding:28px 12px">'
         '<table role="presentation" width="820" cellspacing="0" cellpadding="0" class="pulse-shell" '
         'style="width:100%;max-width:820px;border-collapse:collapse;background:#f5f2ec;border:1px solid #ddd8cf">'
         '<tr><td style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif;'
-        f'font-size:15px;line-height:1.7;color:#45403b">{body}</td></tr></table></td></tr></table></body></html>'
+        f'font-size:17px;line-height:1.7;color:#45403b">{body}</td></tr></table></td></tr></table></body></html>'
     )
 
 

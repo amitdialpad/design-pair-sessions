@@ -760,7 +760,7 @@ class PulseValidationTests(unittest.TestCase):
 
         self.assertIn("Communicare IT", report)
 
-    def test_customer_dashboard_html_renders_semantic_matrix(self):
+    def test_customer_dashboard_html_renders_readable_customer_cards(self):
         report, _ = validate_agent_result(
             valid_dashboard_result(),
             report_now=REPORT_NOW,
@@ -769,8 +769,8 @@ class PulseValidationTests(unittest.TestCase):
         )
         rendered = markdown_to_email_html(report)
 
-        self.assertIn('<th scope="col"', rendered)
-        self.assertIn("<tbody><tr>", rendered)
+        self.assertEqual(rendered.count('class="pulse-customer-card"'), 4)
+        self.assertIn("Journey and commercial state", rendered)
         self.assertIn("Batteries Plus", rendered)
         self.assertNotIn("| Customer |", rendered)
 
@@ -938,6 +938,25 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertNotIn("background:#faf9fd", rendered)
         self.assertNotIn("[Verified fact]", rendered)
 
+    def test_customer_dashboard_email_uses_large_stacked_customer_cards(self):
+        report, _ = validate_agent_result(
+            valid_dashboard_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        rendered = markdown_to_email_html(report)
+
+        self.assertEqual(rendered.count('class="pulse-customer-card"'), 4)
+        self.assertIn("font-size:23px;line-height:1.35", rendered)
+        self.assertIn("font-size:17px;line-height:1.6", rendered)
+        self.assertIn("JOURNEY AND COMMERCIAL STATE", rendered.upper())
+        self.assertIn("WHAT CHANGED THIS WEEK", rendered.upper())
+        self.assertIn("RISK AND NEXT WATCH", rendered.upper())
+        self.assertNotIn("min-width:720px", rendered)
+        self.assertNotIn("font-size:11px;line-height:1.45", rendered)
+
     def test_email_contract_rejects_any_non_amit_recipient(self):
         result = valid_result()
         report, snapshot = validate_agent_result(
@@ -1062,7 +1081,8 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         html_body = message.get_body(preferencelist=("html",)).get_content()
         self.assertIn("## Verified customer movement", plain_body)
         self.assertIn("Customer testing exposed an authentication blocker", plain_body)
-        self.assertIn('<th scope="col"', html_body)
+        self.assertEqual(html_body.count('class="pulse-customer-card"'), 4)
+        self.assertIn("font-size:17px;line-height:1.6", html_body)
         self.assertNotIn(GLEAN_MACHINE_START, plain_body)
         snapshot = json.loads((self.reports_dir / f"{REPORT_DATE}.json").read_text())
         self.assertEqual(snapshot["schema_version"], 2)
