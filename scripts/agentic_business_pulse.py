@@ -32,8 +32,8 @@ from zoneinfo import ZoneInfo
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
 DASHBOARD_REQUIRED_SOURCES = ("salesforce", "jira", "glean")
 DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused", "unknown"}
-DASHBOARD_MOVEMENTS = {"failing", "moved", "no_data", "no_change"}
-DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_data": 2, "no_change": 3}
+DASHBOARD_MOVEMENTS = {"failing", "moved", "no_change"}
+DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_change": 2}
 DASHBOARD_SOURCE_LABELS = {
     "salesforce": "Customer and commercial records",
     "jira": "Customer bugs",
@@ -733,18 +733,30 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
         "",
         "## This week",
         "",
-        f"- **{_format_dashboard_measure(summary['movers_7d'], 'customer')} moved** — a verified lifecycle, customer, delivery, or commercial change.",
-        f"- **{_format_dashboard_measure(summary['commercial_moves_7d'], 'commercial record')} changed** — advanced, slipped, won, lost, or changed value.",
-        f"- **{_format_dashboard_measure(summary['customers_with_changed_blockers_7d'], 'customer')} "
-        f"{'needs' if summary['customers_with_changed_blockers_7d'] == 1 else 'need'} attention** — a customer blocker changed this week.",
-        f"- **{_format_dashboard_measure(summary['customers_without_current_data'], 'customer')} "
-        f"{'lacks' if summary['customers_without_current_data'] == 1 else 'lack'} current joined records** — shown explicitly instead of filled with narrative status.",
-        "",
-        "## Customer matrix",
-        "",
-        "| Customer | Journey and commercial state | What changed this week | Risk and next watch |",
-        "|---|---|---|---|",
     ]
+    reported_deployments = summary.get("reported_deployment_count")
+    if reported_deployments is not None:
+        lines.append(
+            f"- **{_format_dashboard_measure(reported_deployments, 'deployment')} reported** — "
+            f"{_format_dashboard_measure(summary['active_customer_count'], 'customer')} had a specific verified signal this week."
+        )
+    else:
+        lines.append(
+            f"- **{_format_dashboard_measure(summary['active_customer_count'], 'customer')} had a verified signal** — only evidence-backed changes and current risks are included."
+        )
+    lines.extend(
+        [
+            f"- **{_format_dashboard_measure(summary['movers_7d'], 'customer')} moved or became blocked** — a verified lifecycle, customer, delivery, or commercial change.",
+            f"- **{_format_dashboard_measure(summary['commercial_moves_7d'], 'commercial record')} changed** — advanced, slipped, won, lost, or changed value.",
+            f"- **{_format_dashboard_measure(summary['customers_with_changed_blockers_7d'], 'customer')} "
+            f"{'needs' if summary['customers_with_changed_blockers_7d'] == 1 else 'need'} attention** — a customer blocker changed this week.",
+            "",
+            "## Verified customer movement",
+            "",
+            "| Customer | Journey and commercial state | What changed this week | Risk and next watch |",
+            "|---|---|---|---|",
+        ]
+    )
     for customer in customers:
         lines.append(
             "| "
@@ -773,7 +785,7 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     else:
         lines.append("- No customer-level change needs interpretation today.")
 
-    lines.extend(["", "## Missing records", ""])
+    lines.extend(["", "## Gaps to resolve", ""])
     unknowns = snapshot["unknowns"]
     if unknowns:
         lines.extend(f"- {item}" for item in unknowns)
@@ -900,17 +912,27 @@ def validate_customer_dashboard_result(
     )
     customers = _require_list(snapshot.get("customers"), "snapshot.customers")
     if not customers:
-        raise ValidationError("snapshot.customers must contain the complete active customer roster")
+        raise ValidationError("snapshot.customers must contain at least one verified customer signal")
     validated_customers = [_validate_dashboard_customer(value, index) for index, value in enumerate(customers)]
     if len({customer["account_name"] for customer in validated_customers}) != len(validated_customers):
         raise ValidationError("snapshot.customers cannot contain duplicate account names")
 
     summary = _require_mapping(snapshot.get("summary"), "snapshot.summary")
+    reported_deployment_count = summary.get("reported_deployment_count")
+    if reported_deployment_count is not None:
+        _dashboard_number(
+            reported_deployment_count,
+            "snapshot.summary.reported_deployment_count",
+        )
+        if reported_deployment_count < len(validated_customers):
+            raise ValidationError(
+                "snapshot.summary.reported_deployment_count cannot be smaller than verified customer rows"
+            )
     expected_summary = {
         "active_customer_count": len(validated_customers),
         "movers_7d": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
         "customers_with_changed_blockers_7d": sum(customer["movement"] == "failing" for customer in validated_customers),
-        "customers_without_current_data": sum(customer["movement"] == "no_data" for customer in validated_customers),
+        "customers_without_current_data": 0,
         "commercial_moves_7d": sum(
             customer["commercial"]["movement_7d"] != "no_change"
             for customer in validated_customers
@@ -930,8 +952,6 @@ def validate_customer_dashboard_result(
         customer = customer_by_name.get(insight.get("account_name"))
         if customer is None:
             raise ValidationError(f"snapshot.insights[{index}] must name a customer row")
-        if customer["movement"] == "no_change":
-            raise ValidationError(f"snapshot.insights[{index}] cannot repeat a no-change customer")
         if not isinstance(insight.get("text"), str) or not insight["text"].strip() or len(insight["text"]) > 320:
             raise ValidationError(f"snapshot.insights[{index}].text must be a short interpretation")
         links = _require_list(insight.get("links"), f"snapshot.insights[{index}].links")

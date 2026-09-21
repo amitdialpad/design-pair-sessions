@@ -181,7 +181,7 @@ def valid_dashboard_result() -> dict:
             "account_name": "Curri",
             "name_permitted": True,
             "lifecycle_stage": "build",
-            "movement": "no_data",
+            "movement": "no_change",
             "agent_or_use_case": "Logistics agent",
             "links": ["https://dialpad.lightning.force.com/lightning/r/Account/curri/view"],
             "integrations": [{"name": "BYO MCP", "status": "building"}],
@@ -264,10 +264,11 @@ def valid_dashboard_result() -> dict:
             },
             "source_status": source_status,
             "summary": {
+                "reported_deployment_count": 30,
                 "active_customer_count": 4,
                 "movers_7d": 3,
                 "customers_with_changed_blockers_7d": 1,
-                "customers_without_current_data": 1,
+                "customers_without_current_data": 0,
                 "commercial_moves_7d": 1,
             },
             "customers": customers,
@@ -632,6 +633,7 @@ class PulseValidationTests(unittest.TestCase):
         self.assertTrue(report.startswith(f"# Weekly Agentic Customer Review — {REPORT_DATE}"))
         self.assertLess(report.index("Batteries Plus"), report.index("Communicare IT"))
         self.assertLess(report.index("Communicare IT"), report.index("Curri"))
+        self.assertIn("30 deployments reported", report)
         self.assertIn("Customer testing exposed an authentication blocker", report)
         self.assertIn("No verified lifecycle or commercial change", report)
         self.assertNotIn("conversation", report.casefold())
@@ -685,7 +687,7 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "change_this_week"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
-    def test_customer_dashboard_accepts_unknown_lifecycle_for_no_data_customer(self):
+    def test_customer_dashboard_accepts_unknown_lifecycle_for_verified_customer_signal(self):
         result = valid_dashboard_result()
         customer = result["snapshot"]["customers"][2]
         customer["lifecycle_stage"] = "unknown"
@@ -706,6 +708,30 @@ class PulseValidationTests(unittest.TestCase):
         self.assertIn("Unknown", report)
         self.assertIn("does not support a safe operating lifecycle mapping", report)
 
+    def test_customer_dashboard_rejects_rows_without_a_verified_weekly_signal(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["customers"][2]["movement"] = "no_data"
+
+        with self.assertRaisesRegex(ValidationError, "movement is invalid"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
+    def test_reported_deployment_count_cannot_be_smaller_than_verified_rows(self):
+        result = valid_dashboard_result()
+        result["snapshot"]["summary"]["reported_deployment_count"] = 3
+
+        with self.assertRaisesRegex(ValidationError, "cannot be smaller"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
     def test_customer_dashboard_requires_a_next_watch(self):
         result = valid_dashboard_result()
         customer = result["snapshot"]["customers"][1]
@@ -721,13 +747,18 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "does not match customer rows"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
-    def test_customer_dashboard_does_not_repeat_no_change_customer_analysis(self):
+    def test_customer_dashboard_allows_analysis_for_verified_no_change_signal(self):
         result = valid_dashboard_result()
         result["snapshot"]["customers"][0]["movement"] = "no_change"
         result["snapshot"]["summary"]["movers_7d"] = 2
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
 
-        with self.assertRaisesRegex(ValidationError, "cannot repeat a no-change customer"):
-            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+        self.assertIn("Communicare IT", report)
 
     def test_customer_dashboard_html_renders_semantic_matrix(self):
         report, _ = validate_agent_result(
@@ -1029,7 +1060,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(list(message.iter_attachments()), [])
         plain_body = message.get_body(preferencelist=("plain",)).get_content()
         html_body = message.get_body(preferencelist=("html",)).get_content()
-        self.assertIn("## Customer matrix", plain_body)
+        self.assertIn("## Verified customer movement", plain_body)
         self.assertIn("Customer testing exposed an authentication blocker", plain_body)
         self.assertIn('<th scope="col"', html_body)
         self.assertNotIn(GLEAN_MACHINE_START, plain_body)

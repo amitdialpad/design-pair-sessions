@@ -1,6 +1,6 @@
 ---
 name: daily-agentic-business-pulse
-description: Produces a weekly, evidence-based Agentic customer review showing the complete active roster, lifecycle movement, systems in use, delivery risks, Jira changes, and commercial movement.
+description: Produces a weekly, evidence-based Agentic customer review showing verified movement, systems in use, delivery risks, Jira changes, commercial movement, and practical ways Amit can help.
 ---
 # Weekly Agentic Customer Review
 
@@ -8,17 +8,17 @@ description: Produces a weekly, evidence-based Agentic customer review showing t
 
 Run every Monday at 08:00 `Asia/Kolkata` so the approved relay can deliver at 09:00. Cover the previous Monday through Sunday and compare with the preceding weekly review.
 
-Answer:
+Answer from specific, current evidence:
 
-- Which customers are active?
-- Where is each customer in `Build → Test → Validate → Publish → Live`?
+- Which named customers visibly moved, remained blocked, or produced another useful operating signal?
+- Where are those customers in `Build → Test → Validate → Publish → Live`, when the source says so?
 - Which agent, use case, connector, skill, or system is involved?
 - What changed during the week?
 - Which customer blockers or Jira issues changed?
 - Which commercial records advanced, slipped, won, lost, or changed value?
-- Which customers have no current or safely joinable record?
+- What can Amit clarify, design, unblock, or follow up on?
 
-Show the full roster every week. Sort failing customers first, then movers, missing-data rows, and no-change customers. Write analysis only for meaningful changes.
+This is a verified-movement review, not a portfolio census. Include only named customers with a specific, current, safely attributable signal. A source-reported aggregate such as `30 deployments` may appear as context, but never claim that the included rows are the complete cohort. Sort failing customers first, then movers, then other useful current signals.
 
 This is a customer operating review, not a design essay. Do not repeat a known product problem unless its affected customer, severity, owner, status, or commercial effect changed this week.
 
@@ -37,7 +37,7 @@ All company-source access is read-only.
 
 Use each current source for the fact it owns and preserve its direct link and query time.
 
-1. **Salesforce** — complete active Agentic customer roster, canonical account identity, customer and commercial stage, Agentic-specific value, and recorded use case.
+1. **Salesforce** — exact-match identity, customer and commercial stage, Agentic-specific value, and recorded use case for named customers already found in current evidence.
 2. **Jira** — customer-impacting bugs, current status, and issues created or materially changed during the weekly window.
 3. **Glean company search, documents, email, and calendar** — current customer context, implementation updates, Helena's weekly Agentic newsletter, meetings, and decisions.
 4. **Production code (optional)** — implementation context only when a changed customer blocker needs explanation. Never use code existence as proof that a customer is live.
@@ -46,11 +46,13 @@ A normal report requires Salesforce, Jira, and Glean to be healthy, fresh, linke
 
 ## Weekly procedure
 
-### 1. Establish the complete roster
+### 1. Establish verified customer signals
 
-Start from Salesforce, not the weekly newsletter. Include every active Agentic early-access, build, test, validation, publishing, live, or paused customer. The newsletter may explain movement but must not define the roster.
+Start with current weekly operating material, Glean documents, email, and meetings. Include a customer only when those sources or an explicitly linked Jira/Salesforce record provide a specific current movement, blocker, milestone, decision, system, or commercial signal.
 
-Join records using the canonical Salesforce account or company identifier. Never guess from a similar name. If a current Jira, document, or implementation record cannot be joined safely, keep the customer in the matrix, use movement `no_data`, and explain the identity gap in `unknowns`.
+Use Salesforce only to enrich an already named customer. Join records using a canonical account/company identifier or an exact, unambiguous name. Never guess from an abbreviation, domain, contact, opportunity title, or similar name. Omit an unsafe enrichment; do not drop an otherwise verified customer signal.
+
+When an authoritative source reports a total deployment count, record it as `summary.reported_deployment_count`. This number is context only and is not derived from the included rows.
 
 ### 2. Assign one journey stage
 
@@ -64,32 +66,31 @@ Use exactly one:
 - `paused`
 - `unknown` — current approved evidence does not support a safe lifecycle mapping.
 
-This is the customer's current journey stage, not a claim about general product readiness. Use `unknown` with movement `no_data` instead of mapping a Salesforce sales stage to an operating lifecycle without explicit evidence.
+This is the customer's current journey stage, not a claim about general product readiness. Use `unknown` rather than mapping a Salesforce sales stage to an operating lifecycle without explicit evidence.
 
 ### 3. Record systems and weekly movement
 
-For every customer:
+For every included customer signal:
 
 - Record the agent or use case.
 - Record each known connector, skill, or system and status: `building`, `testing`, `connected`, `failing`, or `unknown`.
-- Write one short `change_this_week` statement. For unchanged rows write `No verified change this week.`
+- Write one short `change_this_week` statement naming the specific verified signal. Do not add a row merely to say nothing was found.
 - Count Jira issues created or materially changed in the weekly window.
 - Count currently open customer-impacting Jira bugs and retain their keys.
 - Record the Salesforce commercial stage.
 - Record commercial movement as `advanced`, `slipped`, `won`, `lost`, `value_changed`, or `no_change`.
 - Record Agentic-specific contract value only when its governed field exists. Never substitute the total bundled opportunity amount.
-- Write one short `next_watch` describing the next customer proof, blocker decision, or checkpoint. For a stable row, use its next known checkpoint or `No changed risk; continue current plan.`
+- Write one short `next_watch` describing the next customer proof, blocker decision, checkpoint, or concrete way Amit can help.
 
 Assign one row movement:
 
 - `failing` — a changed customer blocker needs attention.
 - `moved` — lifecycle, customer, delivery, or commercial state materially changed.
-- `no_data` — the customer belongs on the roster but current records cannot be retrieved or safely joined.
-- `no_change` — required current records were checked and no material change occurred.
+- `no_change` — a useful current signal confirms an ongoing blocker, hold, risk, or state even though its category did not change.
 
-### 4. Interpret changed rows only
+### 4. Interpret every included signal
 
-Write at most one analysis item for each `failing`, `moved`, or `no_data` customer. Do not analyze `no_change` rows.
+Write at most one analysis item for each included customer when a concise interpretation helps Amit understand the implication or act on it.
 
 Each item must:
 
@@ -171,33 +172,34 @@ Each customer:
 
 `summary` must be calculated exactly from the customer rows:
 
+- `reported_deployment_count` — optional source-reported portfolio total; must be greater than or equal to the included row count.
 - `active_customer_count`
 - `movers_7d`
 - `customers_with_changed_blockers_7d`
-- `customers_without_current_data`
+- `customers_without_current_data` — always `0`; customers without a verified signal are not included as rows.
 - `commercial_moves_7d`
 
-The relay rejects missing customers, duplicate names, mismatched summaries, stale or writable sources, unsafe links, invalid Jira keys, negative or non-finite values, repeated no-change analysis, secrets, raw payloads, transcripts, and unsupported recipients.
+The relay rejects an empty verified-signal set, duplicate names, mismatched summaries, stale or writable sources, unsafe links, invalid Jira keys, negative or non-finite values, secrets, raw payloads, transcripts, and unsupported recipients.
 
 ## Deterministic email format
 
 The relay creates:
 
 1. **This week** — weekly mover, commercial, blocker, and missing-record counts.
-2. **Customer matrix** — the complete active roster with journey/commercial state, weekly change, and risk/next watch.
-3. **Analysis** — short interpretations for changed rows only.
-4. **Missing records** — specific gaps that affect an individual row or conclusion. No generic data disclaimer.
+2. **Verified customer movement** — only customers with specific current evidence, with journey/commercial state, weekly signal, and risk/next watch.
+3. **Analysis** — short customer-by-customer interpretations focused on implications and ways Amit can help.
+4. **Gaps to resolve** — specific missing joins or measurements that materially limit an included insight. No generic data disclaimer.
 5. **Evidence** — one direct link per required source family plus the workflow run.
 
-Keep the final review under 1,600 visible words so the complete roster cannot be dropped to satisfy a prose limit. The matrix is primary; prose is secondary.
+Keep the final review under 1,600 visible words. The matrix is primary; prose is secondary.
 
 ## Failure behavior
 
 Do not create a normal draft when:
 
 - Salesforce, Jira, Glean, or production-code search is missing, unhealthy, stale, or not read-only.
-- The complete active roster cannot be established.
-- Records cannot be joined safely enough to claim a complete roster.
+- No named customer has a specific verified signal in the weekly window.
+- A claimed customer signal cannot be attributed safely enough to include.
 - The report date is not Monday in `Asia/Kolkata`.
 - The weekly window is invalid.
 - A source would require a write or permission/configuration change.
@@ -213,4 +215,4 @@ After every gate passes, create exactly one Gmail draft:
 - No Cc, Bcc, or attachments.
 - Human preview followed by one JSON object between `---BEGIN PULSE MACHINE JSON---` and `---END PULSE MACHINE JSON---`.
 
-Never send the internal draft manually. The approved GitHub relay validates it, removes the machine block, renders the complete matrix as HTML, and sends only the body-only user email with the existing deterministic Message-ID.
+Never send the internal draft manually. The approved GitHub relay validates it, removes the machine block, renders the verified-signal matrix as HTML, and sends only the body-only user email with the existing deterministic Message-ID.
