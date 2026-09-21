@@ -685,6 +685,27 @@ class PulseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValidationError, "change_this_week"):
             validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
 
+    def test_customer_dashboard_accepts_unknown_lifecycle_for_no_data_customer(self):
+        result = valid_dashboard_result()
+        customer = result["snapshot"]["customers"][2]
+        customer["lifecycle_stage"] = "unknown"
+        customer["change_this_week"] = (
+            "Current approved evidence does not support a safe operating lifecycle mapping."
+        )
+        result["snapshot"]["unknowns"] = [
+            "Curri has no safely verified operating lifecycle stage in the current weekly window."
+        ]
+
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIn("Unknown", report)
+        self.assertIn("does not support a safe operating lifecycle mapping", report)
+
     def test_customer_dashboard_requires_a_next_watch(self):
         result = valid_dashboard_result()
         customer = result["snapshot"]["customers"][1]

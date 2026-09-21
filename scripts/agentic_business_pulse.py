@@ -31,7 +31,7 @@ from zoneinfo import ZoneInfo
 
 REQUIRED_SOURCES = ("salesforce", "jira", "glean", "production_code")
 DASHBOARD_REQUIRED_SOURCES = ("salesforce", "jira", "glean")
-DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused"}
+DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused", "unknown"}
 DASHBOARD_MOVEMENTS = {"failing", "moved", "no_data", "no_change"}
 DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_data": 2, "no_change": 3}
 DASHBOARD_SOURCE_LABELS = {

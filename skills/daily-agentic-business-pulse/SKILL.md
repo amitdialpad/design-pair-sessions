@@ -62,8 +62,9 @@ Use exactly one:
 - `publish`
 - `live`
 - `paused`
+- `unknown` — current approved evidence does not support a safe lifecycle mapping.
 
-This is the customer's current journey stage, not a claim about general product readiness.
+This is the customer's current journey stage, not a claim about general product readiness. Use `unknown` with movement `no_data` instead of mapping a Salesforce sales stage to an operating lifecycle without explicit evidence.
 
 ### 3. Record systems and weekly movement
 
