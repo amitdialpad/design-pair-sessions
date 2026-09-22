@@ -1212,5 +1212,5 @@ Financial advisors can now connect Claude to the custodians, portfolio platforms
 
 :::
 
-*Updated September 21, 2026*
+*Updated September 22, 2026*
 <!-- CLAUDE_FEED_END -->
