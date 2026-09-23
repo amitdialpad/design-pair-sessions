@@ -1168,6 +1168,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How to prepare for AI-driven code modernization projects](https://claude.com/blog/how-to-prepare-for-ai-driven-code-modernization-projects)**<br><small>Sep 23, 2026 · Enterprise AI</small>
+
+Agents can finish code modernizations in months, but change management still sets the pace. Six steps to define the target, certificate, and promotion policy.
+
+---
+
+**[What a task costs on Opus 5.5](https://claude.com/blog/what-a-task-costs-on-opus-5-5)**<br><small>Sep 22, 2026 · Claude Code</small>
+
+The same token price can cost very different amounts per task. Learn what Claude Code tasks cost on Opus 5.5 and which settings change the bill.
+
+---
+
 **[Projects redesigned: from folder to conversation](https://claude.com/blog/projects-redesigned)**<br><small>Sep 17, 2026 · Product announcements</small>
 
 A new experience for Claude projects, now available in beta in Claude Code
@@ -1178,7 +1190,7 @@ A new experience for Claude projects, now available in beta in Claude Code
 
 We spoke with BAM's Chief AI Officer about why the firm uses Claude Fable 5 and the role of safeguards in deploying frontier intelligence safely and reliably.
 
----
+:::details View past updates
 
 **[Claude Cowork and chat are now one Claude](https://claude.com/blog/cowork-is-now-claude)**<br><small>Sep 16, 2026</small>
 
@@ -1190,7 +1202,7 @@ Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Ma
 
 In this guide, Anthropic shares how revenue leaders can roll out Claude across a sales organization, including the setup decisions, a three-phase rollout plan, and an ROI measurement framework.
 
-:::details View past updates
+---
 
 **[Bringing Salesforce into Claude](https://claude.com/blog/salesforce-in-claude)**<br><small>Sep 15, 2026 · Enterprise AI</small>
 
@@ -1208,19 +1220,7 @@ We’re releasing new Claude for Small Business workflows and integrations to he
 
 This guide by Anthropic and Accenture shares seven considerations for taking enterprise AI from pilot to production, and the decisions leadership needs to make before the program advances.
 
----
-
-**[How healthcare organizations use Claude Tag](https://claude.com/blog/how-healthcare-organizations-use-claude-tag)**<br><small>Sep 14, 2026 · Enterprise AI</small>
-
-How Insight Health, Tennr, and Medallion are building human-agent teams with Claude Tag.
-
----
-
-**[Claude for Financial Advisors](https://claude.com/blog/claude-for-financial-advisors)**<br><small>Sep 14, 2026 · Product announcements</small>
-
-Financial advisors can now connect Claude to the custodians, portfolio platforms, CRMs, and planning tools they depend on, along with new skills tailored to the daily work of a financial advisor.
-
 :::
 
-*Updated September 22, 2026*
+*Updated September 23, 2026*
 <!-- CLAUDE_FEED_END -->
