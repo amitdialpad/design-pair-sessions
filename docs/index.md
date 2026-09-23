@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:cfdd944021730b3f92266df0e833945c9902aa0d -->
+
+**Add Firebase live access foundation**
+
+Beacon had no isolated way to verify Firebase identity without starting its local demo-data runtime. That made it impossible to test the approved Firebase setup without also opening Beacon data. This PR adds a dedicated ?mode=live authentication screen and a default-deny Firestore membership boundary for the named data-engine-spike database.
+
+<span class="release-meta">[dialpad/design#125](https://github.com/dialpad/design/pull/125) · 22 September 2026</span>
+
+---
+
 <!-- beacon-change:86360d70a6331d5a40b42b459359759bc7a2ca08 -->
 
 **Enable sidebar devtools on dialpad.design production environment**
@@ -76,6 +86,8 @@ The Contact Center section now supports scoped queue views, letting you filter a
 
 ---
 
+:::details View older updates
+
 **Generated call content feature launches end to end**
 
 The system now fully supports generating and displaying call content throughout the workflow. This means designers can test the complete call generation pipeline in Beacon and provide feedback to Josh on how the generated content appears and behaves across different contexts.
@@ -83,8 +95,6 @@ The system now fully supports generating and displaying call content throughout 
 <span class="release-meta">[v2026.8.31](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.31) · 21 August 2026</span>
 
 ---
-
-:::details View older updates
 
 **Call interface components unified and restructured**
 
