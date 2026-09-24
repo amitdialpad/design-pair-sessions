@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:03943189179b846bf762f4b0a55a7defde83ff05 -->
+
+**Add Firestore live message proof**
+
+Beacon needs a way to prove a real, tenant-scoped message exchange without loading its generated-data world or rebuilding IndexedDB. This adds an isolated live-mode proof for that path. **Pre-flight:** $pr-prep is Ready at 36b51fd689ee36bc32093698e8b0da4e9da007ca. corepack pnpm lint, corepack pnpm test (623 files; 5,828 passed; 6 skipped), and corepack pnpm firebase:rules:test (8 passed) succeeded. corepack pnpm build passed before the test-only follow-up commit.
+
+<span class="release-meta">[dialpad/design#127](https://github.com/dialpad/design/pull/127) · 23 September 2026</span>
+
+---
+
 <!-- beacon-change:cfdd944021730b3f92266df0e833945c9902aa0d -->
 
 **Add Firebase live access foundation**
@@ -78,6 +88,8 @@ The Voice Picker Widget and Voice Step now support a larger voice library with a
 
 ---
 
+:::details View older updates
+
 **Contact Center queue filtering by scope**
 
 The Contact Center section now supports scoped queue views, letting you filter and organize queues by specific scope parameters. This gives you more granular control when working with multiple queue configurations in your designs.
@@ -85,8 +97,6 @@ The Contact Center section now supports scoped queue views, letting you filter a
 <span class="release-meta">[v2026.8.34](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.34) · 23 August 2026</span>
 
 ---
-
-:::details View older updates
 
 **Generated call content feature launches end to end**
 
