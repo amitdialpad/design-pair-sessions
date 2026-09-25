@@ -1188,6 +1188,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
+
+Our latest Opus model is priced and trained to optimize costs for how developers code now.
+
+---
+
+**[Claude Tag now supports personal connectors in channels](https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels)**<br><small>Sep 24, 2026 · Product announcements</small>
+
+Claude Tag can now use your connectors for requests you make in a channel. Nobody else can use them, and you're in control of how to present the output.
+
+---
+
 **[Claude Marketplace: one place to discover plugins, agents, and services from our partners](https://claude.com/blog/claude-marketplace)**<br><small>Sep 23, 2026 · Product announcements</small>
 
 The Claude Marketplace brings plugins, connectors, agents, and service partners into one place. Find the tools and services to do more with Claude, or list what you've built to reach teams using Claude.
@@ -1198,7 +1210,7 @@ The Claude Marketplace brings plugins, connectors, agents, and service partners 
 
 Agents can finish code modernizations in months, but change management still sets the pace. Six steps to define the target, certificate, and promotion policy.
 
----
+:::details View past updates
 
 **[How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace](https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace)**<br><small>Sep 23, 2026 · Enterprise AI</small>
 
@@ -1210,7 +1222,7 @@ CodeRabbit expanded its Vercel plan through Claude Marketplace, and Power Digita
 
 The same token price can cost very different amounts per task. Learn what Claude Code tasks cost on Opus 5.5 and which settings change the bill.
 
-:::details View past updates
+---
 
 **[Projects redesigned: from folder to conversation](https://claude.com/blog/projects-redesigned)**<br><small>Sep 17, 2026 · Product announcements</small>
 
@@ -1228,19 +1240,7 @@ We spoke with BAM's Chief AI Officer about why the firm uses Claude Fable 5 and 
 
 Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Max plans. Hand over the task and Claude does the work. You keep the final say.
 
----
-
-**[Building an AI-native revenue organization](https://claude.com/blog/building-an-ai-native-revenue-organization)**<br><small>Sep 15, 2026 · Enterprise AI</small>
-
-In this guide, Anthropic shares how revenue leaders can roll out Claude across a sales organization, including the setup decisions, a three-phase rollout plan, and an ROI measurement framework.
-
----
-
-**[Bringing Salesforce into Claude](https://claude.com/blog/salesforce-in-claude)**<br><small>Sep 15, 2026 · Enterprise AI</small>
-
-Sellers can now research companies, prep for calls, review pipeline, and draft CRM updates with Anthropic's new Salesforce in Claude plugin.
-
 :::
 
-*Updated September 24, 2026*
+*Updated September 25, 2026*
 <!-- CLAUDE_FEED_END -->
