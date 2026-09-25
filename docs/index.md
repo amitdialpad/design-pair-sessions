@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:571ba1f95a40086fd815a090f268cd6f024c691d -->
+
+**Isolate generated world runtime contract**
+
+Beacon currently loads generated company data through browser-runtime imports from the mock engine. That keeps the app tied to generator internals and prevents a neutral data-delivery boundary. This PR moves the browser-facing contract into Beacon and uses @dialpad/world-contract only for generic release semantics.
+
+<span class="release-meta">[dialpad/design#129](https://github.com/dialpad/design/pull/129) · 25 September 2026</span>
+
+---
+
 <!-- beacon-change:03943189179b846bf762f4b0a55a7defde83ff05 -->
 
 **Add Firestore live message proof**
@@ -80,6 +90,8 @@ Active-call keypad entries had no audible feedback, so people could miss whether
 
 ---
 
+:::details View older updates
+
 **Receptionist voice selection expanded to 12 options**
 
 The Voice Picker Widget and Voice Step now support a larger voice library with a show-more interaction pattern. A new Change Voice Modal lets you preview and switch voices across the receptionist setup flow, including the preview panel, settings, tools, routing, appointment, knowledge, and lead capture views.
@@ -87,8 +99,6 @@ The Voice Picker Widget and Voice Step now support a larger voice library with a
 <span class="release-meta">[v2026.8.35](https://github.com/dialpad/beacon-app/releases/tag/v2026.8.35) · 24 August 2026</span>
 
 ---
-
-:::details View older updates
 
 **Contact Center queue filtering by scope**
 
