@@ -10,6 +10,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:6f152821edfda93548784ee45574704df807d931 -->
+
+**Extract portable world core package**
+
+Beacon's portable company-world planning and reviewed corpus lived inside apps/beacon/mock-engine, which tied reusable generation code to Beacon aliases and left package-only changes without their own validation boundary. This PR creates the private @dialpad/world-core workspace package and moves the portable core and corpus into it. Beacon keeps command composition, projection, filesystem, and runtime concerns while consuming the package's supported entry points.
+
+<span class="release-meta">[dialpad/design#134](https://github.com/dialpad/design/pull/134) · 26 September 2026</span>
+
+---
+
+<!-- beacon-change:9f889c243f7620a4c58e7ab826b313c72b9227f1 -->
+
+**Migrate conversation read attention to a shared surface**
+
+Conversation read state was split across Feed, Inbox, sidebar, membership, and notification paths. That let passive navigation mark conversations read, incomplete windows appear as zero unread, and delayed cross-tab events overwrite newer intent. This PR moves those surfaces onto one authoritative read-attention projection backed by durable membership revisions and IndexedDB state.
+
+<span class="release-meta">[dialpad/design#130](https://github.com/dialpad/design/pull/130) · 25 September 2026</span>
+
+---
+
+<!-- beacon-change:4c02756f3f7a239de675ce6c6faa761610569daf -->
+
+**Publish versioned world releases**
+
+Generated company-world data currently grows alongside the Beacon source tree, increasing repository and bootstrap costs. This PR adds a verified immutable-release path so Beacon can load a selected remote world while retaining static data until deployment configuration is complete.
+
+<span class="release-meta">[dialpad/design#131](https://github.com/dialpad/design/pull/131) · 25 September 2026</span>
+
+---
+
 <!-- beacon-change:571ba1f95a40086fd815a090f268cd6f024c691d -->
 
 **Isolate generated world runtime contract**
@@ -60,6 +90,8 @@ Migrates Beacon PR #907 (DP-203387) into the Design monorepo without product cha
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:1b671d4c38bb45d7936e89ab130e22e086a8a30e -->
 
 **Converge read attention across tabs**
@@ -89,8 +121,6 @@ Active-call keypad entries had no audible feedback, so people could miss whether
 <span class="release-meta">[dialpad/design#106](https://github.com/dialpad/design/pull/106) · 2 September 2026</span>
 
 ---
-
-:::details View older updates
 
 **Receptionist voice selection expanded to 12 options**
 
