@@ -1218,6 +1218,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
+
+Submit plugins to the Claude directory through a new directory submission portal. Package MCP connectors and Agent Skills, track your plugin through review, and see how it's used and found once it's live
+
+---
+
 **[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
 
 Our latest Opus model is priced and trained to optimize costs for how developers code now.
@@ -1234,23 +1240,17 @@ Claude Tag can now use your connectors for requests you make in a channel. Nobod
 
 The Claude Marketplace brings plugins, connectors, agents, and service partners into one place. Find the tools and services to do more with Claude, or list what you've built to reach teams using Claude.
 
----
+:::details View past updates
 
 **[How to prepare for AI-driven code modernization projects](https://claude.com/blog/how-to-prepare-for-ai-driven-code-modernization-projects)**<br><small>Sep 23, 2026 · Enterprise AI</small>
 
 Agents can finish code modernizations in months, but change management still sets the pace. Six steps to define the target, certificate, and promotion policy.
 
-:::details View past updates
+---
 
 **[How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace](https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace)**<br><small>Sep 23, 2026 · Enterprise AI</small>
 
 CodeRabbit expanded its Vercel plan through Claude Marketplace, and Power Digital and ThoughtSpot put their Snowflake spend on their Anthropic commitment. See how companies building on Claude use budget they've already committed to pay for the tools they run on.
-
----
-
-**[What a task costs on Opus 5.5](https://claude.com/blog/what-a-task-costs-on-opus-5-5)**<br><small>Sep 22, 2026 · Claude Code</small>
-
-The same token price can cost very different amounts per task. Learn what Claude Code tasks cost on Opus 5.5 and which settings change the bill.
 
 ---
 
@@ -1272,5 +1272,5 @@ Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Ma
 
 :::
 
-*Updated September 25, 2026*
+*Updated September 26, 2026*
 <!-- CLAUDE_FEED_END -->
