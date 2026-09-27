@@ -1272,5 +1272,5 @@ Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Ma
 
 :::
 
-*Updated September 26, 2026*
+*Updated September 27, 2026*
 <!-- CLAUDE_FEED_END -->
