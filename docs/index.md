@@ -218,6 +218,47 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 21–27 Sep 2026
+
+6 changes merged into Beacon this week: Extract portable world core package; Migrate conversation read attention to a shared surface; Publish versioned world releases; Isolate generated world runtime contract; Add Firestore live message proof; Add Firebase live access foundation. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Extract portable world core package](https://github.com/dialpad/design/pull/134)** (dialpad/design#134). Beacon's portable company-world planning and reviewed corpus lived inside apps/beacon/mock-engine, which tied reusable generation code to Beacon aliases and left package-only changes without their own validation boundary. This PR creates the private @dialpad/world-core workspace package and moves the portable core and corpus into it. Beacon keeps command composition, projection, filesystem, and runtime concerns while consuming the package's supported entry points.
+- **[Migrate conversation read attention to a shared surface](https://github.com/dialpad/design/pull/130)** (dialpad/design#130). Conversation read state was split across Feed, Inbox, sidebar, membership, and notification paths. That let passive navigation mark conversations read, incomplete windows appear as zero unread, and delayed cross-tab events overwrite newer intent. This PR moves those surfaces onto one authoritative read-attention projection backed by durable membership revisions and IndexedDB state.
+- **[Publish versioned world releases](https://github.com/dialpad/design/pull/131)** (dialpad/design#131). Generated company-world data currently grows alongside the Beacon source tree, increasing repository and bootstrap costs. This PR adds a verified immutable-release path so Beacon can load a selected remote world while retaining static data until deployment configuration is complete.
+- **[Isolate generated world runtime contract](https://github.com/dialpad/design/pull/129)** (dialpad/design#129). Beacon currently loads generated company data through browser-runtime imports from the mock engine. That keeps the app tied to generator internals and prevents a neutral data-delivery boundary. This PR moves the browser-facing contract into Beacon and uses @dialpad/world-contract only for generic release semantics.
+- **[Add Firestore live message proof](https://github.com/dialpad/design/pull/127)** (dialpad/design#127). Beacon needs a way to prove a real, tenant-scoped message exchange without loading its generated-data world or rebuilding IndexedDB. This adds an isolated live-mode proof for that path. **Pre-flight:** $pr-prep is Ready at 36b51fd689ee36bc32093698e8b0da4e9da007ca. corepack pnpm lint, corepack pnpm test (623 files; 5,828 passed; 6 skipped), and corepack pnpm firebase:rules:test (8 passed) succeeded. corepack pnpm build passed before the test-only follow-up commit.
+- **[Add Firebase live access foundation](https://github.com/dialpad/design/pull/125)** (dialpad/design#125). Beacon had no isolated way to verify Firebase identity without starting its local demo-data runtime. That made it impossible to test the approved Firebase setup without also opening Beacon data. This PR adds a dedicated ?mode=live authentication screen and a default-deny Firestore membership boundary for the named data-engine-spike database.
+
+#### The bigger shift
+
+This was a focused week with 6 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+After merge, configure the four Beacon world-release deployment variables and validate the first GCS/CDN publication. After production deployment, complete the documented GCP runbook: confirm the named database, deploy the reviewed rules, provision two existing Firebase UIDs, verify cross-profile delivery and reload persistence, then verify a different tenant is denied. - After approval, deploy the reviewed rules with `pnpm firebase:rules:deploy:data-engine-spike`. - Provision active membership documents through protected server-side tooling before granting future Beacon data access.
+
+#### Try this
+
+Run `pnpm --filter @dialpad/world-core lint`, `pnpm --filter @dialpad/world-core type-check`, and `pnpm --filter @dialpad/world-core test`; verify all package gates pass.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Extract portable world core package, Migrate conversation read attention to a shared surface, Publish versioned world releases, Isolate generated world runtime contract, Add Firestore live message proof, Add Firebase live access foundation.
+
+---
+
 ### Week of 14–20 Sep 2026
 
 2 changes merged into Beacon this week: Enable sidebar devtools on dialpad.design production environment; AI Receptionist analytics overview. The details below come directly from the merged monorepo PRs.
@@ -331,7 +372,7 @@ If you're building a receptionist flow, test the new hours editor in an Appointm
 
 More configurable doesn't always mean clearer—test your receptionist and contact center designs with real availability windows and queue settings to catch friction early.
 
----
+:::details View August 2026
 
 ### Week of 24–30 Aug 2026
 
@@ -1170,6 +1211,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
