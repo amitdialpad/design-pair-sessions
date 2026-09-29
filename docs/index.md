@@ -1261,6 +1261,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Agents you can coach: how Asana builds human-agent teams with Claude](https://claude.com/blog/agents-you-can-coach-how-asana-builds-human-agent-teams-with-claude)**<br><small>Sep 29, 2026 · Agents</small>
+
+Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI agents as teammates with scoped roles, shared memory, and work that everyone can see.
+
+---
+
+**[Giving companies more control over their AI agents, with NVIDIA](https://claude.com/blog/giving-companies-more-control-over-their-ai-agents-with-nvidia)**<br><small>Sep 28, 2026 · Agents</small>
+
+Anthropic has collaborated with NVIDIA to bring additional layers of security and control to the agent stack of its Open Agent Safety Platform.
+
+---
+
 **[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
 
 Submit plugins to the Claude directory through a new directory submission portal. Package MCP connectors and Agent Skills, track your plugin through review, and see how it's used and found once it's live
@@ -1271,7 +1283,7 @@ Submit plugins to the Claude directory through a new directory submission portal
 
 Our latest Opus model is priced and trained to optimize costs for how developers code now.
 
----
+:::details View past updates
 
 **[Claude Tag now supports personal connectors in channels](https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels)**<br><small>Sep 24, 2026 · Product announcements</small>
 
@@ -1283,7 +1295,7 @@ Claude Tag can now use your connectors for requests you make in a channel. Nobod
 
 The Claude Marketplace brings plugins, connectors, agents, and service partners into one place. Find the tools and services to do more with Claude, or list what you've built to reach teams using Claude.
 
-:::details View past updates
+---
 
 **[How to prepare for AI-driven code modernization projects](https://claude.com/blog/how-to-prepare-for-ai-driven-code-modernization-projects)**<br><small>Sep 23, 2026 · Enterprise AI</small>
 
@@ -1301,19 +1313,7 @@ CodeRabbit expanded its Vercel plan through Claude Marketplace, and Power Digita
 
 A new experience for Claude projects, now available in beta in Claude Code
 
----
-
-**[Working at the frontier: How Balyasny Asset Management evaluates and governs Claude Fable 5](https://claude.com/blog/working-at-the-frontier-how-balyasny-asset-management-evaluates-and-governs-claude-fable-5)**<br><small>Sep 17, 2026 · Enterprise AI</small>
-
-We spoke with BAM's Chief AI Officer about why the firm uses Claude Fable 5 and the role of safeguards in deploying frontier intelligence safely and reliably.
-
----
-
-**[Claude Cowork and chat are now one Claude](https://claude.com/blog/cowork-is-now-claude)**<br><small>Sep 16, 2026</small>
-
-Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Max plans. Hand over the task and Claude does the work. You keep the final say.
-
 :::
 
-*Updated September 28, 2026*
+*Updated September 29, 2026*
 <!-- CLAUDE_FEED_END -->
