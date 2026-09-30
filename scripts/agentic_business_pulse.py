@@ -135,7 +135,8 @@ EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNO
 REPORT_SUBJECT_PREFIX = "Weekly Agentic Customer Review"
 GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review"
 GLEAN_DRAFT_SEARCH_PHRASE = "Weekly Agentic Customer Review"
-ONLY_ALLOWED_RECIPIENT = "amit.ayre@dialpad.com"
+INTERNAL_RELAY_RECIPIENT = "amit.ayre@dialpad.com"
+EXPECTED_REPORT_RECIPIENT_COUNT = 3
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
 CORE_REVENUE_FIELDS = (
@@ -178,25 +179,40 @@ def parse_bool(value: str | bool | None, default: bool = False) -> bool:
     raise PulseError(f"Invalid boolean value: {value!r}")
 
 
-def enforce_only_allowed_recipient(recipient: str) -> str:
-    normalized = recipient.strip().casefold()
-    if normalized != ONLY_ALLOWED_RECIPIENT:
+def approved_report_recipients(recipients: str) -> tuple[str, ...]:
+    addresses = [address.casefold() for _, address in getaddresses([recipients]) if address]
+    if (
+        len(addresses) != EXPECTED_REPORT_RECIPIENT_COUNT
+        or len(set(addresses)) != EXPECTED_REPORT_RECIPIENT_COUNT
+        or INTERNAL_RELAY_RECIPIENT not in addresses
+        or any(not address.endswith("@dialpad.com") for address in addresses)
+    ):
         raise ValidationError(
-            f"Pulse delivery is locked to {ONLY_ALLOWED_RECIPIENT}; refusing any other recipient"
+            "Pulse delivery requires exactly three unique Dialpad recipients, including Amit; "
+            "the protected recipient configuration is invalid"
         )
-    return ONLY_ALLOWED_RECIPIENT
+    return tuple(addresses)
 
 
-def enforce_message_recipient_contract(message: Message) -> None:
+def enforce_only_allowed_recipients(recipients: str) -> str:
+    return ", ".join(approved_report_recipients(recipients))
+
+
+def enforce_message_recipient_contract(
+    message: Message,
+    *,
+    expected_recipients: tuple[str, ...],
+) -> None:
     recipient_headers = (
         message.get_all("To", [])
         + message.get_all("Cc", [])
         + message.get_all("Bcc", [])
     )
     addresses = [address.casefold() for _, address in getaddresses(recipient_headers) if address]
-    if addresses != [ONLY_ALLOWED_RECIPIENT]:
+    if addresses != list(expected_recipients):
         raise ValidationError(
-            f"Pulse message must contain exactly one recipient: {ONLY_ALLOWED_RECIPIENT}"
+            "Pulse message recipients must exactly match the approved recipient contract: "
+            + ", ".join(expected_recipients)
         )
     if any(
         part.get_content_disposition() == "attachment" or part.get_filename()
@@ -237,8 +253,10 @@ class PulseConfig:
         if not isinstance(source_context_value, list) or not all(isinstance(item, str) for item in source_context_value):
             raise PulseError("PULSE_SOURCE_CONTEXT_JSON must be a JSON array of HTTPS links")
         return cls(
-            recipient=enforce_only_allowed_recipient(
-                os.environ.get("PULSE_RECIPIENT", ONLY_ALLOWED_RECIPIENT)
+            recipient=enforce_only_allowed_recipients(
+                os.environ.get(
+                    "PULSE_RECIPIENTS", os.environ.get("PULSE_RECIPIENT", "")
+                )
             ),
             timezone_name=os.environ.get("PULSE_TIMEZONE", "Asia/Kolkata").strip(),
             agent_url=os.environ.get("PULSE_AGENT_URL", "").strip(),
@@ -1446,7 +1464,8 @@ def build_email_message(
     message_id: str,
     dry_run: bool,
 ) -> EmailMessage:
-    recipient = enforce_only_allowed_recipient(recipient)
+    expected_recipients = approved_report_recipients(recipient)
+    recipient = ", ".join(expected_recipients)
     subject_prefix = "[DRY RUN] " if dry_run else ""
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
@@ -1457,7 +1476,7 @@ def build_email_message(
     message["X-Dialpad-Pulse-Mode"] = "dry-run" if dry_run else "live"
     message.set_content(report)
     message.add_alternative(markdown_to_email_html(report), subtype="html")
-    enforce_message_recipient_contract(message)
+    enforce_message_recipient_contract(message, expected_recipients=expected_recipients)
     return message
 
 
@@ -1527,7 +1546,9 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
     expected_subject = f"{GLEAN_DRAFT_SUBJECT_PREFIX} — {report_date}"
     if str(message.get("Subject", "")).strip() != expected_subject:
         raise ValidationError(f"Glean Gmail draft subject must be {expected_subject!r}")
-    enforce_message_recipient_contract(message)
+    enforce_message_recipient_contract(
+        message, expected_recipients=(INTERNAL_RELAY_RECIPIENT,)
+    )
 
     body = message_body_text(message)
     if body.count(GLEAN_MACHINE_START) != 1 or body.count(GLEAN_MACHINE_END) != 1:
@@ -1808,7 +1829,9 @@ class GmailArchive:
                 if str(message.get("Subject", "")).strip() != expected_subject:
                     continue
                 try:
-                    enforce_message_recipient_contract(message)
+                    enforce_message_recipient_contract(
+                        message, expected_recipients=(INTERNAL_RELAY_RECIPIENT,)
+                    )
                 except ValidationError:
                     continue
                 matches.append((uid.decode("ascii"), message))
@@ -1922,8 +1945,8 @@ class GmailArchive:
 
 
 def send_gmail(message: EmailMessage, config: PulseConfig) -> dict[str, Any]:
-    enforce_only_allowed_recipient(config.recipient)
-    enforce_message_recipient_contract(message)
+    expected_recipients = approved_report_recipients(config.recipient)
+    enforce_message_recipient_contract(message, expected_recipients=expected_recipients)
     if not config.gmail_user or not config.gmail_password:
         raise IntegrationError("GMAIL_USER and GMAIL_APP_PASSWORD are required")
     try:
@@ -1992,7 +2015,7 @@ def run_pulse(
     archive: GmailArchive | None = None,
     sender: Callable[[EmailMessage, PulseConfig], dict[str, Any]] = send_gmail,
 ) -> dict[str, Any]:
-    enforce_only_allowed_recipient(config.recipient)
+    enforce_only_allowed_recipients(config.recipient)
     report_now = now_in_timezone(config.timezone_name, current_time)
     report_date = report_now.date().isoformat()
     workflow_url = workflow_url_from_env()
@@ -2101,7 +2124,7 @@ def run_pulse_from_glean_draft(
 ) -> dict[str, Any]:
     """Validate and deliver the output of a native scheduled Glean Agent run."""
 
-    enforce_only_allowed_recipient(config.recipient)
+    enforce_only_allowed_recipients(config.recipient)
     report_now = wait_until_local_delivery_time(
         config.timezone_name,
         config.not_before_local_time,

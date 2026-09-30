@@ -62,7 +62,7 @@ jobs:
       - name: Generate, validate, persist, and deliver pulse
         id: pulse
         env:
-          PULSE_RECIPIENT: amit.ayre@dialpad.com
+          PULSE_RECIPIENTS: ${{ secrets.PULSE_RECIPIENTS }}
           PULSE_TIMEZONE: Asia/Kolkata
           PULSE_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
           PULSE_INPUT_MODE: glean_gmail_draft
