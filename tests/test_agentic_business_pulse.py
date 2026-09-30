@@ -40,6 +40,9 @@ from agentic_business_pulse import (  # noqa: E402
 REPORT_DATE = "2026-09-21"
 REPORT_NOW = datetime(2026, 9, 21, 9, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
 WORKFLOW_URL = "https://github.com/amitdialpad/design-pair-sessions/actions/runs/123"
+TEST_REPORT_RECIPIENTS = (
+    "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com"
+)
 SOURCE_LINKS = {
     "salesforce": "https://dialpad.lightning.force.com/lightning/o/Opportunity/list",
     "jira": "https://dialpad.atlassian.net/browse/DP-200000",
@@ -781,7 +784,7 @@ class PulseDeliveryTests(unittest.TestCase):
         self.addCleanup(self.temp_dir.cleanup)
         self.reports_dir = Path(self.temp_dir.name) / "reports"
         self.config = PulseConfig(
-            recipient="amit.ayre@dialpad.com",
+            recipient=TEST_REPORT_RECIPIENTS,
             timezone_name="Asia/Kolkata",
             agent_url="https://company-agent.example/run",
             agent_token="not-used-by-fake",
@@ -892,7 +895,7 @@ class PulseDeliveryTests(unittest.TestCase):
             )
         self.assertFalse(calls)
 
-    def test_email_contract_has_exact_recipient_subject_and_no_attachments(self):
+    def test_email_contract_has_exact_recipients_subject_and_no_attachments(self):
         result = valid_result()
         report, snapshot = validate_agent_result(
             result,
@@ -904,11 +907,11 @@ class PulseDeliveryTests(unittest.TestCase):
             report_date=REPORT_DATE,
             report=report,
             sender="amit.ayre@dialpad.com",
-            recipient="amit.ayre@dialpad.com",
+            recipient=TEST_REPORT_RECIPIENTS,
             message_id=deterministic_message_id(REPORT_DATE),
             dry_run=False,
         )
-        self.assertEqual(message["To"], "amit.ayre@dialpad.com")
+        self.assertEqual(message["To"], TEST_REPORT_RECIPIENTS)
         self.assertEqual(message["Subject"], f"Weekly Agentic Customer Review — {REPORT_DATE}")
         self.assertEqual(list(message.iter_attachments()), [])
         plain_body = message.get_body(preferencelist=("plain",)).get_content()
@@ -957,7 +960,7 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertNotIn("min-width:720px", rendered)
         self.assertNotIn("font-size:11px;line-height:1.45", rendered)
 
-    def test_email_contract_rejects_any_non_amit_recipient(self):
+    def test_email_contract_rejects_any_unapproved_recipient_list(self):
         result = valid_result()
         report, snapshot = validate_agent_result(
             result,
@@ -965,17 +968,25 @@ class PulseDeliveryTests(unittest.TestCase):
             source_max_age_hours=12,
             workflow_url=WORKFLOW_URL,
         )
-        with self.assertRaisesRegex(ValidationError, "locked to amit.ayre@dialpad.com"):
-            build_email_message(
-                report_date=REPORT_DATE,
-                report=report,
-                sender="amit.ayre@dialpad.com",
-                recipient="someone-else@dialpad.com",
-                message_id=deterministic_message_id(REPORT_DATE),
-                dry_run=False,
-            )
+        unapproved_lists = (
+            "amit.ayre@dialpad.com, report.one@dialpad.com",
+            TEST_REPORT_RECIPIENTS + ", report.three@dialpad.com",
+            "amit.ayre@dialpad.com, report.one@dialpad.com, external@example.com",
+            "amit.ayre@dialpad.com, report.one@dialpad.com, report.one@dialpad.com",
+        )
+        for recipients in unapproved_lists:
+            with self.subTest(recipients=recipients):
+                with self.assertRaisesRegex(ValidationError, "three unique Dialpad recipients"):
+                    build_email_message(
+                        report_date=REPORT_DATE,
+                        report=report,
+                        sender="amit.ayre@dialpad.com",
+                        recipient=recipients,
+                        message_id=deterministic_message_id(REPORT_DATE),
+                        dry_run=False,
+                    )
 
-    def test_run_rejects_non_amit_recipient_before_agent_or_archive(self):
+    def test_run_rejects_unapproved_recipient_list_before_agent_or_archive(self):
         config = PulseConfig(**{**self.config.__dict__, "recipient": "someone-else@dialpad.com"})
         calls = []
 
@@ -983,7 +994,7 @@ class PulseDeliveryTests(unittest.TestCase):
             calls.append(args)
             return valid_result()
 
-        with self.assertRaisesRegex(ValidationError, "locked to amit.ayre@dialpad.com"):
+        with self.assertRaisesRegex(ValidationError, "three unique Dialpad recipients"):
             run_pulse(
                 config,
                 current_time=REPORT_NOW,
@@ -1094,7 +1105,7 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         self.assertEqual(parsed["snapshot"]["report_date"], REPORT_DATE)
         self.assertIn(WORKFLOW_URL, parsed["report_markdown"])
 
-        with self.assertRaisesRegex(ValidationError, "exactly one recipient"):
+        with self.assertRaisesRegex(ValidationError, "approved recipient contract"):
             parse_glean_draft(
                 glean_source_draft(recipient="someone-else@dialpad.com"),
                 report_date=REPORT_DATE,
