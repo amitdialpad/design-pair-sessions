@@ -41,7 +41,8 @@ REPORT_DATE = "2026-09-21"
 REPORT_NOW = datetime(2026, 9, 21, 9, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
 WORKFLOW_URL = "https://github.com/amitdialpad/design-pair-sessions/actions/runs/123"
 TEST_REPORT_RECIPIENTS = (
-    "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com"
+    "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com, "
+    "report.three@dialpad.com, report.four@dialpad.com"
 )
 SOURCE_LINKS = {
     "salesforce": "https://dialpad.lightning.force.com/lightning/o/Opportunity/list",
@@ -969,14 +970,14 @@ class PulseDeliveryTests(unittest.TestCase):
             workflow_url=WORKFLOW_URL,
         )
         unapproved_lists = (
-            "amit.ayre@dialpad.com, report.one@dialpad.com",
-            TEST_REPORT_RECIPIENTS + ", report.three@dialpad.com",
-            "amit.ayre@dialpad.com, report.one@dialpad.com, external@example.com",
-            "amit.ayre@dialpad.com, report.one@dialpad.com, report.one@dialpad.com",
+            "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com, report.three@dialpad.com",
+            TEST_REPORT_RECIPIENTS + ", report.five@dialpad.com",
+            "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com, report.three@dialpad.com, external@example.com",
+            "amit.ayre@dialpad.com, report.one@dialpad.com, report.two@dialpad.com, report.three@dialpad.com, report.three@dialpad.com",
         )
         for recipients in unapproved_lists:
             with self.subTest(recipients=recipients):
-                with self.assertRaisesRegex(ValidationError, "three unique Dialpad recipients"):
+                with self.assertRaisesRegex(ValidationError, "five unique Dialpad recipients"):
                     build_email_message(
                         report_date=REPORT_DATE,
                         report=report,
@@ -994,7 +995,7 @@ class PulseDeliveryTests(unittest.TestCase):
             calls.append(args)
             return valid_result()
 
-        with self.assertRaisesRegex(ValidationError, "three unique Dialpad recipients"):
+        with self.assertRaisesRegex(ValidationError, "five unique Dialpad recipients"):
             run_pulse(
                 config,
                 current_time=REPORT_NOW,
