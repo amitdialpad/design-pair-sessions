@@ -10,6 +10,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:0ea13173c14a4d71227875d839ba3078c9e24df6 -->
+
+**Add generated-company publication contract and recording target**
+
+Generated company data has no defined path into a database. The mock world engine produces records, but nothing states what a publishable record looks like, which references must resolve, or how a run is replaced or undone. The planned Firestore writer would otherwise have to invent those rules, and a bad run could replace a good one. This PR adds that contract to @dialpad/world-engine and an in-memory target in Beacon that follows it. No Firebase SDK, emulator, or IndexedDB code is involved, and no Beacon runtime uses the target yet.
+
+<span class="release-meta">[dialpad/design#137](https://github.com/dialpad/design/pull/137) · 30 September 2026</span>
+
+---
+
+<!-- beacon-change:79dccd353e3406d5674a6460477b903c3da9ccfd -->
+
+**Consolidate world-contract and world-core as @dialpad/world-engine**
+
+The mock world engine was split across two workspace packages: @dialpad/world-contract, which held two release-contract modules and one test suite, and @dialpad/world-core, which held the deterministic planner, corpus, CLI support, and about 440 files in total. Beacon and Studio had to understand two package identities, each with its own manifest, config, and CI workflow. DDT-1894 is about to add a Firestore publication contract and source adapters on top of that boundary, so the split needed to go first. This PR merges both into one package, @dialpad/world-engine, with contract, core, corpus, cli, and testing areas and a single CI workflow.
+
+<span class="release-meta">[dialpad/design#136](https://github.com/dialpad/design/pull/136) · 30 September 2026</span>
+
+---
+
 <!-- beacon-change:6f152821edfda93548784ee45574704df807d931 -->
 
 **Extract portable world core package**
@@ -70,6 +90,8 @@ Beacon had no isolated way to verify Firebase identity without starting its loca
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:86360d70a6331d5a40b42b459359759bc7a2ca08 -->
 
 **Enable sidebar devtools on dialpad.design production environment**
@@ -89,8 +111,6 @@ Migrates Beacon PR #907 (DP-203387) into the Design monorepo without product cha
 <span class="release-meta">[dialpad/design#107](https://github.com/dialpad/design/pull/107) · 14 September 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:1b671d4c38bb45d7936e89ab130e22e086a8a30e -->
 
