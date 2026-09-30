@@ -136,7 +136,7 @@ REPORT_SUBJECT_PREFIX = "Weekly Agentic Customer Review"
 GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review"
 GLEAN_DRAFT_SEARCH_PHRASE = "Weekly Agentic Customer Review"
 INTERNAL_RELAY_RECIPIENT = "amit.ayre@dialpad.com"
-EXPECTED_REPORT_RECIPIENT_COUNT = 3
+EXPECTED_REPORT_RECIPIENT_COUNT = 5
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
 CORE_REVENUE_FIELDS = (
@@ -188,7 +188,7 @@ def approved_report_recipients(recipients: str) -> tuple[str, ...]:
         or any(not address.endswith("@dialpad.com") for address in addresses)
     ):
         raise ValidationError(
-            "Pulse delivery requires exactly three unique Dialpad recipients, including Amit; "
+            "Pulse delivery requires exactly five unique Dialpad recipients, including Amit; "
             "the protected recipient configuration is invalid"
         )
     return tuple(addresses)
