@@ -1287,6 +1287,12 @@ How a Claude-powered buying agent now answers most inbound customers, and how th
 
 ---
 
+**[Claude for Government is now generally available](https://claude.com/blog/claude-for-government-is-now-generally-available)**<br><small>Sep 30, 2026 · Product announcements</small>
+
+Claude Code CLI and Claude for Microsoft 365 also now available in early access.
+
+---
+
 **[Agents you can coach: how Asana builds human-agent teams with Claude](https://claude.com/blog/agents-you-can-coach-how-asana-builds-human-agent-teams-with-claude)**<br><small>Sep 29, 2026 · Agents</small>
 
 Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI agents as teammates with scoped roles, shared memory, and work that everyone can see.
@@ -1297,13 +1303,13 @@ Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI 
 
 Anthropic has collaborated with NVIDIA to bring additional layers of security and control to the agent stack of its Open Agent Safety Platform.
 
----
+:::details View past updates
 
 **[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
 
 Submit plugins to the Claude directory through a new directory submission portal. Package MCP connectors and Agent Skills, track your plugin through review, and see how it's used and found once it's live
 
-:::details View past updates
+---
 
 **[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
 
@@ -1327,13 +1333,7 @@ The Claude Marketplace brings plugins, connectors, agents, and service partners 
 
 Agents can finish code modernizations in months, but change management still sets the pace. Six steps to define the target, certificate, and promotion policy.
 
----
-
-**[How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace](https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace)**<br><small>Sep 23, 2026 · Enterprise AI</small>
-
-CodeRabbit expanded its Vercel plan through Claude Marketplace, and Power Digital and ThoughtSpot put their Snowflake spend on their Anthropic commitment. See how companies building on Claude use budget they've already committed to pay for the tools they run on.
-
 :::
 
-*Updated September 30, 2026*
+*Updated October 1, 2026*
 <!-- CLAUDE_FEED_END -->
