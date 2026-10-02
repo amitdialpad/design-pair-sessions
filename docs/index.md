@@ -1311,6 +1311,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Customize Claude Code with mods](https://claude.com/blog/claude-code-mods)**<br><small>Oct 1, 2026 · Product announcements</small>
+
+Mods are small TypeScript functions that change how Claude Code works. Rewrite prompts, block risky commands, add custom UI, or replace built-in features. Write one yourself or ask Claude Code to write it, then share it as a plugin.
+
+---
+
 **[How Anthropic's sales team rebuilt inbound with Claude Managed Agents](https://claude.com/blog/how-anthropics-sales-team-rebuilt-inbound-with-claude-managed-agents)**<br><small>Sep 30, 2026 · Enterprise AI</small>
 
 How a Claude-powered buying agent now answers most inbound customers, and how that changed the way our sales team works
@@ -1327,13 +1333,13 @@ Claude Code CLI and Claude for Microsoft 365 also now available in early access.
 
 Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI agents as teammates with scoped roles, shared memory, and work that everyone can see.
 
----
+:::details View past updates
 
 **[Giving companies more control over their AI agents, with NVIDIA](https://claude.com/blog/giving-companies-more-control-over-their-ai-agents-with-nvidia)**<br><small>Sep 28, 2026 · Agents</small>
 
 Anthropic has collaborated with NVIDIA to bring additional layers of security and control to the agent stack of its Open Agent Safety Platform.
 
-:::details View past updates
+---
 
 **[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
 
@@ -1357,13 +1363,7 @@ Claude Tag can now use your connectors for requests you make in a channel. Nobod
 
 The Claude Marketplace brings plugins, connectors, agents, and service partners into one place. Find the tools and services to do more with Claude, or list what you've built to reach teams using Claude.
 
----
-
-**[How to prepare for AI-driven code modernization projects](https://claude.com/blog/how-to-prepare-for-ai-driven-code-modernization-projects)**<br><small>Sep 23, 2026 · Enterprise AI</small>
-
-Agents can finish code modernizations in months, but change management still sets the pace. Six steps to define the target, certificate, and promotion policy.
-
 :::
 
-*Updated October 1, 2026*
+*Updated October 2, 2026*
 <!-- CLAUDE_FEED_END -->
