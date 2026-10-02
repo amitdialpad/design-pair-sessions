@@ -10,6 +10,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:fe4f4d1e109df8d0f8cf4648e77844f8b11967ef -->
+
+**Stage generated companies in the Firestore emulator**
+
+Beacon, Studio and any other apps/* need one shared place to read a generated company's data, and the publication contract from gates 1 and 2 had no target to write it to. Without one, nothing can show that a publication survives a partial write, a repeat run or a bad record before the data is promoted for readers. This PR adds that target for the emulator. A new sibling package, @dialpad/world-firestore, owns the Firestore document model and an emulator-only staging target. Beacon gets three commands to provision, publish and discard a generated company. Staging never activates anything: reference records go under the run's own snapshot, history is written once in place, and the company...
+
+<span class="release-meta">[dialpad/design#145](https://github.com/dialpad/design/pull/145) · 2 October 2026</span>
+
+---
+
+<!-- beacon-change:abdc3ebe6304363d875279911ddc72fd8954a154 -->
+
+**Add durable per-user thread read state**
+
+Thread read state followed the conversation's read watermark, so a thread had no position of its own. Reading a channel marked every thread in it read, the Threads Unread filter had nothing per-thread to project from, and an Inbox thread row could only show zero or one unread reply. This PR gives each user a durable cursor per thread and makes Global Threads and the Inbox read from the same projection. Marking a thread read or unread now moves only that thread, and the screen updates before the write finishes.
+
+<span class="release-meta">[dialpad/design#140](https://github.com/dialpad/design/pull/140) · 2 October 2026</span>
+
+---
+
+<!-- beacon-change:c4810121b56bdc939173bada360eaf2baf1011a7 -->
+
+**Add the Aerolabs source adapter and publication preview**
+
+Gate 1 defined the generated-company publication contract, but nothing turned a real company into those records. The contract had never met real data, so there was no way to see what a publish would lose, duplicate, or expose. This PR adds an Aerolabs adapter under apps/beacon/mock-engine that reads the published bundle and builds canonical records for every source family except companies, which waits for the Firestore target. pnpm mock:publication:preview reports each family, the records built from it, the fields dropped and why, and a 77-record proof slice. On the real bundle it builds 34,865 records with no issues, and both the slice and the full build validate against the contract.
+
+<span class="release-meta">[dialpad/design#139](https://github.com/dialpad/design/pull/139) · 1 October 2026</span>
+
+---
+
 <!-- beacon-change:0ea13173c14a4d71227875d839ba3078c9e24df6 -->
 
 **Add generated-company publication contract and recording target**
@@ -60,6 +90,8 @@ Generated company-world data currently grows alongside the Beacon source tree, i
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:571ba1f95a40086fd815a090f268cd6f024c691d -->
 
 **Isolate generated world runtime contract**
@@ -89,8 +121,6 @@ Beacon had no isolated way to verify Firebase identity without starting its loca
 <span class="release-meta">[dialpad/design#125](https://github.com/dialpad/design/pull/125) · 22 September 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:86360d70a6331d5a40b42b459359759bc7a2ca08 -->
 
