@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:ee491b5ad0b1100a980762caa77147beced25072 -->
+
+**Promote generated companies and read them through a browser gateway**
+
+#145 stages and validates a generated company in the Firestore emulator, but nothing can make a run active, undo it, or read it back. Until something does, there is no evidence that the model serves a company with bounded reads instead of downloading the whole corpus. This PR adds the missing half. A validated run becomes active in one transaction, the browser gateway reads a promoted company with bounded queries, and a member can write a sandbox message as a persona that a second member then sees. Everything runs against the emulator only.
+
+<span class="release-meta">[dialpad/design#149](https://github.com/dialpad/design/pull/149) · 2 October 2026</span>
+
+---
+
 <!-- beacon-change:fe4f4d1e109df8d0f8cf4648e77844f8b11967ef -->
 
 **Stage generated companies in the Firestore emulator**
@@ -80,6 +90,8 @@ Conversation read state was split across Feed, Inbox, sidebar, membership, and n
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:4c02756f3f7a239de675ce6c6faa761610569daf -->
 
 **Publish versioned world releases**
@@ -89,8 +101,6 @@ Generated company-world data currently grows alongside the Beacon source tree, i
 <span class="release-meta">[dialpad/design#131](https://github.com/dialpad/design/pull/131) · 25 September 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:571ba1f95a40086fd815a090f268cd6f024c691d -->
 
