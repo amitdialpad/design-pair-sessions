@@ -10,6 +10,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:aeb7dea5f4a44403e695e980347e50ac5f7c3cb7 -->
+
+**Secure generated companies with Firestore rules and a sharing policy**
+
+#149 reads a promoted generated company through a browser gateway, but the emulator runs with open rules. Company isolation, who may read a person's own interactions, and who a sandbox message is attributed to were claims the proof made about itself. Until a rules file enforces them, the model is not shown to be safe for more than one reader. This PR adds Security Rules for the companies/ tree and specs that run against them. A member sees what their person may see, an admin tester can act as a person in a generated company, and the gateway and the proof run unchanged under the rules. The rules live in Beacon's firebase/firestore.data-engine-spike.rules, next to the tenants/ rules, becaus...
+
+<span class="release-meta">[dialpad/design#151](https://github.com/dialpad/design/pull/151) · 4 October 2026</span>
+
+---
+
+<!-- beacon-change:e15de4acc86aa9eadbf2160d0c53d6e582a27c66 -->
+
+**Open threads at the first unread reply**
+
+Long threads opened without centering the first unread reply, so people could land at the wrong point and lose the boundary between read and unread replies. This PR uses the durable thread read cursor to load and position a bounded reply window without treating panel mount as a read action.
+
+<span class="release-meta">[dialpad/design#150](https://github.com/dialpad/design/pull/150) · 3 October 2026</span>
+
+---
+
 <!-- beacon-change:ee491b5ad0b1100a980762caa77147beced25072 -->
 
 **Promote generated companies and read them through a browser gateway**
@@ -70,6 +90,8 @@ The mock world engine was split across two workspace packages: @dialpad/world-co
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:6f152821edfda93548784ee45574704df807d931 -->
 
 **Extract portable world core package**
@@ -89,8 +111,6 @@ Conversation read state was split across Feed, Inbox, sidebar, membership, and n
 <span class="release-meta">[dialpad/design#130](https://github.com/dialpad/design/pull/130) · 25 September 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:4c02756f3f7a239de675ce6c6faa761610569daf -->
 
