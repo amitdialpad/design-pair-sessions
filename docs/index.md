@@ -1406,6 +1406,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How Cresta turned CX expertise into an agent builder on the Claude Agent SDK](https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk)**<br><small>Oct 5, 2026</small>
+
+See how Cresta built Conductor, an agent that builds other agents, on the Claude Agent SDK, and how the team evaluates it with every new Claude model.
+
+---
+
 **[Customize Claude Code with mods](https://claude.com/blog/claude-code-mods)**<br><small>Oct 1, 2026 · Product announcements</small>
 
 Mods are small TypeScript functions that change how Claude Code works. Rewrite prompts, block risky commands, add custom UI, or replace built-in features. Write one yourself or ask Claude Code to write it, then share it as a plugin.
@@ -1422,13 +1428,13 @@ How a Claude-powered buying agent now answers most inbound customers, and how th
 
 Claude Code CLI and Claude for Microsoft 365 also now available in early access.
 
----
+:::details View past updates
 
 **[Agents you can coach: how Asana builds human-agent teams with Claude](https://claude.com/blog/agents-you-can-coach-how-asana-builds-human-agent-teams-with-claude)**<br><small>Sep 29, 2026 · Agents</small>
 
 Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI agents as teammates with scoped roles, shared memory, and work that everyone can see.
 
-:::details View past updates
+---
 
 **[Giving companies more control over their AI agents, with NVIDIA](https://claude.com/blog/giving-companies-more-control-over-their-ai-agents-with-nvidia)**<br><small>Sep 28, 2026 · Agents</small>
 
@@ -1442,23 +1448,17 @@ Submit plugins to the Claude directory through a new directory submission portal
 
 ---
 
-**[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
-
-Our latest Opus model is priced and trained to optimize costs for how developers code now.
-
----
-
 **[Claude Tag now supports personal connectors in channels](https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels)**<br><small>Sep 24, 2026 · Product announcements</small>
 
 Claude Tag can now use your connectors for requests you make in a channel. Nobody else can use them, and you're in control of how to present the output.
 
 ---
 
-**[Claude Marketplace: one place to discover plugins, agents, and services from our partners](https://claude.com/blog/claude-marketplace)**<br><small>Sep 23, 2026 · Product announcements</small>
+**[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
 
-The Claude Marketplace brings plugins, connectors, agents, and service partners into one place. Find the tools and services to do more with Claude, or list what you've built to reach teams using Claude.
+Our latest Opus model is priced and trained to optimize costs for how developers code now.
 
 :::
 
-*Updated October 4, 2026*
+*Updated October 5, 2026*
 <!-- CLAUDE_FEED_END -->
