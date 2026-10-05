@@ -10,6 +10,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:e758a3e6c00f12224713f3a80a7a41893224d135 -->
+
+**Measure generated companies on a real database and deploy their indexes**
+
+#151 proves the access rules in the emulator, but the emulator does not enforce composite indexes, bill the reads rules make, or show real latency. Until something runs against a real database, DDT-1899 cannot be told which indexes the gateway needs, what opening the app costs, or whether the model holds on Firestore. This PR measures the model in the emulator and on the real data-engine-spike database, derives the composite indexes from the gateway's own queries, and deploys them. The real run published all of Aerolabs, read 72 people through the deployed rules and indexes with no failed read, and was erased afterward.
+
+<span class="release-meta">[dialpad/design#154](https://github.com/dialpad/design/pull/154) · 5 October 2026</span>
+
+---
+
+<!-- beacon-change:59ccf7bd840dd441092ee11c51e7a3805eabf8c2 -->
+
+**Preserve live replies and read progression**
+
+Two edge cases remained after #150: This follow-up stages failed direct transforms behind the existing pending-reply recovery path. It also resumes read advancement only when classification coverage proves the cursor is known, preserving fail-closed behavior across unclassified gaps.
+
+<span class="release-meta">[dialpad/design#152](https://github.com/dialpad/design/pull/152) · 5 October 2026</span>
+
+---
+
 <!-- beacon-change:aeb7dea5f4a44403e695e980347e50ac5f7c3cb7 -->
 
 **Secure generated companies with Firestore rules and a sharing policy**
@@ -70,6 +90,8 @@ Gate 1 defined the generated-company publication contract, but nothing turned a 
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:0ea13173c14a4d71227875d839ba3078c9e24df6 -->
 
 **Add generated-company publication contract and recording target**
@@ -89,8 +111,6 @@ The mock world engine was split across two workspace packages: @dialpad/world-co
 <span class="release-meta">[dialpad/design#136](https://github.com/dialpad/design/pull/136) · 30 September 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:6f152821edfda93548784ee45574704df807d931 -->
 
