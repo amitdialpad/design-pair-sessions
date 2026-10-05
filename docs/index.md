@@ -298,6 +298,49 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 28 Sep–4 Oct 2026
+
+8 changes merged into Beacon this week: Secure generated companies with Firestore rules and a sharing policy; Open threads at the first unread reply; Promote generated companies and read them through a browser gateway; Stage generated companies in the Firestore emulator; Add durable per-user thread read state; Add the Aerolabs source adapter and publication preview; Add generated-company publication contract and recording target; Consolidate world-contract and world-core as @dialpad/world-engine. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Secure generated companies with Firestore rules and a sharing policy](https://github.com/dialpad/design/pull/151)** (dialpad/design#151). #149 reads a promoted generated company through a browser gateway, but the emulator runs with open rules. Company isolation, who may read a person's own interactions, and who a sandbox message is attributed to were claims the proof made about itself. Until a rules file enforces them, the model is not shown to be safe for more than one reader. This PR adds Security Rules for the companies/ tree and specs that run against them. A member sees what their person may see, an admin tester can act as a person in a generated company, and the gateway and the proof run unchanged under the rules. The rules live in Beacon's firebase/firestore.data-engine-spike.rules, next to the tenants/ rules, because a database has one rules file.
+- **[Open threads at the first unread reply](https://github.com/dialpad/design/pull/150)** (dialpad/design#150). Long threads opened without centering the first unread reply, so people could land at the wrong point and lose the boundary between read and unread replies. This PR uses the durable thread read cursor to load and position a bounded reply window without treating panel mount as a read action.
+- **[Promote generated companies and read them through a browser gateway](https://github.com/dialpad/design/pull/149)** (dialpad/design#149). #145 stages and validates a generated company in the Firestore emulator, but nothing can make a run active, undo it, or read it back. Until something does, there is no evidence that the model serves a company with bounded reads instead of downloading the whole corpus. This PR adds the missing half. A validated run becomes active in one transaction, the browser gateway reads a promoted company with bounded queries, and a member can write a sandbox message as a persona that a second member then sees. Everything runs against the emulator only.
+- **[Stage generated companies in the Firestore emulator](https://github.com/dialpad/design/pull/145)** (dialpad/design#145). Beacon, Studio and any other apps/* need one shared place to read a generated company's data, and the publication contract from gates 1 and 2 had no target to write it to. Without one, nothing can show that a publication survives a partial write, a repeat run or a bad record before the data is promoted for readers. This PR adds that target for the emulator. A new sibling package, @dialpad/world-firestore, owns the Firestore document model and an emulator-only staging target. Beacon gets three commands to provision, publish and discard a generated company. Staging never activates anything: reference records go under the run's own snapshot, history is written once in place, and the company control document is never changed. Promotion, rollback and the client gateway are gate 4.
+- **[Add durable per-user thread read state](https://github.com/dialpad/design/pull/140)** (dialpad/design#140). Thread read state followed the conversation's read watermark, so a thread had no position of its own. Reading a channel marked every thread in it read, the Threads Unread filter had nothing per-thread to project from, and an Inbox thread row could only show zero or one unread reply. This PR gives each user a durable cursor per thread and makes Global Threads and the Inbox read from the same projection. Marking a thread read or unread now moves only that thread, and the screen updates before the write finishes.
+- **[Add the Aerolabs source adapter and publication preview](https://github.com/dialpad/design/pull/139)** (dialpad/design#139). Gate 1 defined the generated-company publication contract, but nothing turned a real company into those records. The contract had never met real data, so there was no way to see what a publish would lose, duplicate, or expose. This PR adds an Aerolabs adapter under apps/beacon/mock-engine that reads the published bundle and builds canonical records for every source family except companies, which waits for the Firestore target. pnpm mock:publication:preview reports each family, the records built from it, the fields dropped and why, and a 77-record proof slice. On the real bundle it builds 34,865 records with no issues, and both the slice and the full build validate against the contract.
+- **[Add generated-company publication contract and recording target](https://github.com/dialpad/design/pull/137)** (dialpad/design#137). Generated company data has no defined path into a database. The mock world engine produces records, but nothing states what a publishable record looks like, which references must resolve, or how a run is replaced or undone. The planned Firestore writer would otherwise have to invent those rules, and a bad run could replace a good one. This PR adds that contract to @dialpad/world-engine and an in-memory target in Beacon that follows it. No Firebase SDK, emulator, or IndexedDB code is involved, and no Beacon runtime uses the target yet.
+- **[Consolidate world-contract and world-core as @dialpad/world-engine](https://github.com/dialpad/design/pull/136)** (dialpad/design#136). The mock world engine was split across two workspace packages: @dialpad/world-contract, which held two release-contract modules and one test suite, and @dialpad/world-core, which held the deterministic planner, corpus, CLI support, and about 440 files in total. Beacon and Studio had to understand two package identities, each with its own manifest, config, and CI workflow. DDT-1894 is about to add a Firestore publication contract and source adapters on top of that boundary, so the split needed to go first. This PR merges both into one package, @dialpad/world-engine, with contract, core, corpus, cli, and testing areas and a single CI workflow.
+
+#### The bigger shift
+
+This was a focused week with 8 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+No follow-on work was explicitly announced in this week's merged Beacon changes.
+
+#### Try this
+
+From `apps/beacon`, run `pnpm firebase:rules:test` (needs Java 21) and expect 8 files and 102 passing tests.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Secure generated companies with Firestore rules and a sharing policy, Open threads at the first unread reply, Promote generated companies and read them through a browser gateway, Stage generated companies in the Firestore emulator, Add durable per-user thread read state, Add the Aerolabs source adapter and publication preview, Add generated-company publication contract and recording target, Consolidate world-contract and world-core as @dialpad/world-engine.
+
+---
+
 ### Week of 21–27 Sep 2026
 
 6 changes merged into Beacon this week: Extract portable world core package; Migrate conversation read attention to a shared surface; Publish versioned world releases; Isolate generated world runtime contract; Add Firestore live message proof; Add Firebase live access foundation. The details below come directly from the merged monorepo PRs.
@@ -410,7 +453,7 @@ Open the same user and company in two browser tabs. In one tab, mark a conversat
 
 Read and unread state now converges across same-browser Beacon tabs for the same user and company.
 
----
+:::details View September 2026
 
 ### Week of 31 Aug–6 Sep 2026
 
@@ -1291,6 +1334,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
