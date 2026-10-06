@@ -1438,13 +1438,9 @@ Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI 
 
 **[Giving companies more control over their AI agents, with NVIDIA](https://claude.com/blog/giving-companies-more-control-over-their-ai-agents-with-nvidia)**<br><small>Sep 28, 2026 · Agents</small>
 
-Anthropic has collaborated with NVIDIA to bring additional layers of security and control to the agent stack of its Open Agent Safety Platform.
-
 ---
 
 **[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
-
-Submit plugins to the Claude directory through a new directory submission portal. Package MCP connectors and Agent Skills, track your plugin through review, and see how it's used and found once it's live
 
 ---
 
@@ -1460,5 +1456,5 @@ Our latest Opus model is priced and trained to optimize costs for how developers
 
 :::
 
-*Updated October 5, 2026*
+*Updated October 6, 2026*
 <!-- CLAUDE_FEED_END -->
