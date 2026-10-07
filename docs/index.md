@@ -1416,55 +1416,59 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[How Cresta turned CX expertise into an agent builder on the Claude Agent SDK](https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk)**<br><small>Oct 5, 2026</small>
+**[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**<br><small>Oct 7, 2026 · Best practices</small>
+
+Principles for designing evals and hillclimbing against them without fooling yourself, and how the claude-api skill's build-eval and hillclimb commands put them to work.
+
+---
+
+**[Expanding the Cyber Verification Program](https://www.anthropic.com/news/cyber-verification-program)**<br><small>Oct 6, 2026 · Product announcements</small>
+
+We’re launching a new, expanded version of our Cyber Verification Program (CVP), which makes advanced cyber capabilities and reduced blocking classifiers available to qualifying security professionals.
+
+---
+
+**[Claude Code in the cloud: a field guide to cloud sessions](https://claude.dev/blog/claude-code-in-the-cloud/)**<br><small>Oct 6, 2026 · Best practices</small>
+
+Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, seven workflows that suit them, and how to connect GitHub without getting stuck.
+
+---
+
+**[We’re expanding the Claude Startups program to help founders build](https://claude.com/resources/articles/were-expanding-the-claude-startups-program-to-help-founders-build)**<br><small>Oct 6, 2026 · Product announcements</small>
+
+A year of the Claude Team plan, API credits, special offers on tools that help with running an AI-native company, and more.
+
+:::details View past updates
+
+**[How Comcast and Booz Allen use Claude Mythos to find exploit chains and secure their codebases](https://claude.com/resources/articles/how-comcast-booz-allen-use-claude-mythos-to-secure-their-codebases)**<br><small>Oct 6, 2026 · Perspectives</small>
+
+Security teams at Comcast and Booz Allen used Claude Mythos-class models through Project Glasswing to find, validate, and fix vulnerabilities their existing scanners missed.
+
+---
+
+**[Claude now works with Google Docs, Sheets, and Slides](https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides)**<br><small>Oct 6, 2026 · Product announcements</small>
+
+With our new Claude for Google Workspace add-on and connectors (in beta), bring Claude into your Google files or work on your files directly from Claude.
+
+---
+
+**[How Cresta turned CX expertise into an agent builder on the Claude Agent SDK](https://claude.com/resources/articles/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk)**<br><small>Oct 5, 2026 · Best practices</small>
 
 See how Cresta built Conductor, an agent that builds other agents, on the Claude Agent SDK, and how the team evaluates it with every new Claude model.
 
 ---
 
-**[Customize Claude Code with mods](https://claude.com/blog/claude-code-mods)**<br><small>Oct 1, 2026 · Product announcements</small>
+**[Getting started with Claude Code mods](https://claude.dev/blog/getting-started-with-claude-code-mods/)**<br><small>Oct 1, 2026 · Best practices</small>
+
+Mods are hooks that ship inside plugins and run inside your Claude Code session. Build one from an empty folder, then tour two larger mods.
+
+---
+
+**[Customize Claude Code with mods](https://claude.com/resources/articles/claude-code-mods)**<br><small>Oct 1, 2026 · Product announcements</small>
 
 Mods are small TypeScript functions that change how Claude Code works. Rewrite prompts, block risky commands, add custom UI, or replace built-in features. Write one yourself or ask Claude Code to write it, then share it as a plugin.
 
----
-
-**[How Anthropic's sales team rebuilt inbound with Claude Managed Agents](https://claude.com/blog/how-anthropics-sales-team-rebuilt-inbound-with-claude-managed-agents)**<br><small>Sep 30, 2026 · Enterprise AI</small>
-
-How a Claude-powered buying agent now answers most inbound customers, and how that changed the way our sales team works
-
----
-
-**[Claude for Government is now generally available](https://claude.com/blog/claude-for-government-is-now-generally-available)**<br><small>Sep 30, 2026 · Product announcements</small>
-
-Claude Code CLI and Claude for Microsoft 365 also now available in early access.
-
-:::details View past updates
-
-**[Agents you can coach: how Asana builds human-agent teams with Claude](https://claude.com/blog/agents-you-can-coach-how-asana-builds-human-agent-teams-with-claude)**<br><small>Sep 29, 2026 · Agents</small>
-
-Arnab Bose, Chief Product Officer at Asana, on how Asana runs Claude-powered AI agents as teammates with scoped roles, shared memory, and work that everyone can see.
-
----
-
-**[Giving companies more control over their AI agents, with NVIDIA](https://claude.com/blog/giving-companies-more-control-over-their-ai-agents-with-nvidia)**<br><small>Sep 28, 2026 · Agents</small>
-
----
-
-**[Build plugins for Claude](https://claude.com/blog/build-plugins-for-claude)**<br><small>Sep 25, 2026 · Product announcements</small>
-
----
-
-**[Claude Tag now supports personal connectors in channels](https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels)**<br><small>Sep 24, 2026 · Product announcements</small>
-
-Claude Tag can now use your connectors for requests you make in a channel. Nobody else can use them, and you're in control of how to present the output.
-
----
-
-**[Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.](https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context)**<br><small>Sep 24, 2026 · Claude Code</small>
-
-Our latest Opus model is priced and trained to optimize costs for how developers code now.
-
 :::
 
-*Updated October 6, 2026*
+*Updated October 7, 2026*
 <!-- CLAUDE_FEED_END -->
