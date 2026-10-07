@@ -10,6 +10,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:300c18537d3adaf894065602d2e796e93132d1a0 -->
+
+**Publish generated companies to the generated-companies database with one idempotent run**
+
+After #151 and #154, publishing a generated company to Firestore meant running provision, publish and promote by hand. Nothing checked that the composite indexes existed before a run became active. The run id was typed, so a retry could publish twice. No record said who ran it or how it went. A publish that stopped part-way could exit with code 0. The only real database was data-engine-spike, which is not meant to be the final home of this data. This PR adds pnpm firebase:generated:run, which publishes a company as one run and refuses to promote it unless every check passes. It also moves the generated-company tooling to a new generated-companies database. The first real publish to that d...
+
+<span class="release-meta">[dialpad/design#160](https://github.com/dialpad/design/pull/160) · 6 October 2026</span>
+
+---
+
 <!-- beacon-change:e758a3e6c00f12224713f3a80a7a41893224d135 -->
 
 **Measure generated companies on a real database and deploy their indexes**
@@ -80,6 +90,8 @@ Thread read state followed the conversation's read watermark, so a thread had no
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:c4810121b56bdc939173bada360eaf2baf1011a7 -->
 
 **Add the Aerolabs source adapter and publication preview**
@@ -89,8 +101,6 @@ Gate 1 defined the generated-company publication contract, but nothing turned a 
 <span class="release-meta">[dialpad/design#139](https://github.com/dialpad/design/pull/139) · 1 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:0ea13173c14a4d71227875d839ba3078c9e24df6 -->
 
