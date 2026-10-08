@@ -1456,6 +1456,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
+
+Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume work like summarization, subagents, and browser use.
+
+---
+
 **[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**<br><small>Oct 7, 2026 · Best practices</small>
 
 Principles for designing evals and hillclimbing against them without fooling yourself, and how the claude-api skill's build-eval and hillclimb commands put them to work.
@@ -1472,13 +1478,13 @@ We’re launching a new, expanded version of our Cyber Verification Program (CVP
 
 Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, seven workflows that suit them, and how to connect GitHub without getting stuck.
 
----
+:::details View past updates
 
 **[We’re expanding the Claude Startups program to help founders build](https://claude.com/resources/articles/were-expanding-the-claude-startups-program-to-help-founders-build)**<br><small>Oct 6, 2026 · Product announcements</small>
 
 A year of the Claude Team plan, API credits, special offers on tools that help with running an AI-native company, and more.
 
-:::details View past updates
+---
 
 **[How Comcast and Booz Allen use Claude Mythos to find exploit chains and secure their codebases](https://claude.com/resources/articles/how-comcast-booz-allen-use-claude-mythos-to-secure-their-codebases)**<br><small>Oct 6, 2026 · Perspectives</small>
 
@@ -1502,13 +1508,7 @@ See how Cresta built Conductor, an agent that builds other agents, on the Claude
 
 Mods are hooks that ship inside plugins and run inside your Claude Code session. Build one from an empty folder, then tour two larger mods.
 
----
-
-**[Customize Claude Code with mods](https://claude.com/resources/articles/claude-code-mods)**<br><small>Oct 1, 2026 · Product announcements</small>
-
-Mods are small TypeScript functions that change how Claude Code works. Rewrite prompts, block risky commands, add custom UI, or replace built-in features. Write one yourself or ask Claude Code to write it, then share it as a plugin.
-
 :::
 
-*Updated October 7, 2026*
+*Updated October 8, 2026*
 <!-- CLAUDE_FEED_END -->
