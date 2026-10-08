@@ -10,6 +10,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:8e2aa6fa390847ad5045a73cfd84ab858d065c8c -->
+
+**Refuse to overwrite existing messages when days are appended to a generated company**
+
+pnpm mock:world generate can silently overwrite messages that are already in a stored bundle. A message id is derived from its interaction and a run id. An append re-plans a trailing window using only the sessions before it, so in a continuing conversation it can regenerate an id that an existing message holds, with different text, sender and time. The merge replaces rows by id, so the old message is gone and anything that pointed at it (notifications, read states, thread parents) now points at the wrong one. On the synthetic company-one fixture, 6 of the 133 original messages were changed or lost after two appends on the commit before DDT-2237. The bundle audit added in DDT-2237 only not...
+
+<span class="release-meta">[dialpad/design#171](https://github.com/dialpad/design/pull/171) · 8 October 2026</span>
+
+---
+
+<!-- beacon-change:6fae6a0292f311e8f6193cae9b447722c91dd83f -->
+
+**Recount read-state unread counts from the merged messages when days are appended**
+
+Since DDT-2237 added the bundle audit, a second pnpm mock:world generate on a stored bundle fails with read state unread_count N disagrees with last_read_at (expected M). A read state's unread_count is the number of main-feed messages from other people after its last_read_at. Each append plans only its own window, so a count it carried was partial, and a read state whose last_read_at lies before the window was not carried at all and kept the count from before the append. Counts ended up off by one in both directions. This PR recounts every read state from the merged messages after each interval is merged, using the same counting helper the audit uses.
+
+<span class="release-meta">[dialpad/design#170](https://github.com/dialpad/design/pull/170) · 7 October 2026</span>
+
+---
+
+<!-- beacon-change:b29b5d63d4147f992ff0c5d3029a53630c236ce7 -->
+
+**Publish only what is new in later generated-company runs and refuse drift in older history**
+
+After #160, every pnpm firebase:generated:run staged the whole company and compared every stored history document, about 30,800 reads to add one day, growing with the history. The run also had no way to tell that the history it was not resending had changed since it was published. This PR makes a run send only what is new since the company's generated-through cutoff, and refuses to run when the older history in the bundle is not the history that was published. The first run still sends everything.
+
+<span class="release-meta">[dialpad/design#163](https://github.com/dialpad/design/pull/163) · 7 October 2026</span>
+
+---
+
+<!-- beacon-change:3e8ea72a2b35217e07b474c427e93f9ead49fe7d -->
+
+**Move Beacon read state to the unified read-attention model**
+
+Beacon tracked read state twice. Conversations kept the legacy last_read_message_id / last_read_timestamp fields on memberships, while threads, the Inbox and notifications each derived unread state their own way. The views disagreed: - Rows flashed read and then unread on load. - The Inbox badge read 99+ while rows showed a handful of unread messages. - Thread replies notified people who didn't follow the thread. - Every plain channel message created a notification. This PR removes the legacy fields and compatibility code and makes one cursor model the only source of truth: - Each conversation membership has read_through_index_item_id. - Threads have independent read states and an explici...
+
+<span class="release-meta">[dialpad/design#166](https://github.com/dialpad/design/pull/166) · 7 October 2026</span>
+
+---
+
 <!-- beacon-change:300c18537d3adaf894065602d2e796e93132d1a0 -->
 
 **Publish generated companies to the generated-companies database with one idempotent run**
@@ -50,6 +90,8 @@ Two edge cases remained after #150: This follow-up stages failed direct transfor
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:e15de4acc86aa9eadbf2160d0c53d6e582a27c66 -->
 
 **Open threads at the first unread reply**
@@ -89,8 +131,6 @@ Thread read state followed the conversation's read watermark, so a thread had no
 <span class="release-meta">[dialpad/design#140](https://github.com/dialpad/design/pull/140) · 2 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:c4810121b56bdc939173bada360eaf2baf1011a7 -->
 
