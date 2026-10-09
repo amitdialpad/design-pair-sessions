@@ -10,6 +10,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:f96f27d8b7e9bfcddd5c9a033d6d697a346e0781 -->
+
+**Add mark all as read to Threads**
+
+Threads had no way to clear the complete subscribed-thread set. People had to handle unread threads individually, and acting only on the loaded page would miss threads hidden by filters, pagination, or mute state. This PR adds a thread-only **Mark all as read** action to the /threads header. It updates the current view immediately, commits every eligible subscribed thread in one transaction, and converges Inbox, badges, and other open contexts without changing ordinary conversation read state.
+
+<span class="release-meta">[dialpad/design#182](https://github.com/dialpad/design/pull/182) · 9 October 2026</span>
+
+---
+
+<!-- beacon-change:3ae8599a3f16189ec34c5f40913ec8ec97f8e2a8 -->
+
+**Keep thread replies, notifications, and read state in sync**
+
+Thread behavior in Beacon was inconsistent in five ways: - A user could not control whether they follow a thread. - A thread mute and a channel mute silenced a thread together, so a thread set to "all replies" could not override a muted channel. - A reply appeared only after its write finished. - A reply synced from another tab reloaded the open thread, which dropped pending replies and the scroll position. - A deleted reply still counted and came back after a reload. This PR makes 👀 the subscription switch, resolves notification settings most-specific first, and applies replies, edits and deletes in place.
+
+<span class="release-meta">[dialpad/design#179](https://github.com/dialpad/design/pull/179) · 8 October 2026</span>
+
+---
+
 <!-- beacon-change:8e2aa6fa390847ad5045a73cfd84ab858d065c8c -->
 
 **Refuse to overwrite existing messages when days are appended to a generated company**
@@ -70,6 +90,8 @@ After #151 and #154, publishing a generated company to Firestore meant running p
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:59ccf7bd840dd441092ee11c51e7a3805eabf8c2 -->
 
 **Preserve live replies and read progression**
@@ -89,8 +111,6 @@ Two edge cases remained after #150: This follow-up stages failed direct transfor
 <span class="release-meta">[dialpad/design#151](https://github.com/dialpad/design/pull/151) · 4 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:e15de4acc86aa9eadbf2160d0c53d6e582a27c66 -->
 
