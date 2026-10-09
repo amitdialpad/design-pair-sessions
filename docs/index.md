@@ -1476,11 +1476,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**<br><small>Oct 8, 2026 · Best practices</small>
+
+A reference implementation walkthrough with common failure modes
+
+---
+
+**[How Block orchestrates Claude Fable across thousands of pull requests](https://claude.com/resources/articles/how-block-orchestrates-claude-fable-across-thousands-of-pull-requests)**<br><small>Oct 8, 2026 · Perspectives</small>
+
+Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical part of deploying frontier intelligence responsibly.
+
+---
+
+**[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
+
+Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
+
+---
+
 **[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
 
 Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume work like summarization, subagents, and browser use.
 
----
+:::details View past updates
 
 **[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**<br><small>Oct 7, 2026 · Best practices</small>
 
@@ -1498,7 +1516,7 @@ We’re launching a new, expanded version of our Cyber Verification Program (CVP
 
 Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, seven workflows that suit them, and how to connect GitHub without getting stuck.
 
-:::details View past updates
+---
 
 **[We’re expanding the Claude Startups program to help founders build](https://claude.com/resources/articles/were-expanding-the-claude-startups-program-to-help-founders-build)**<br><small>Oct 6, 2026 · Product announcements</small>
 
@@ -1510,25 +1528,7 @@ A year of the Claude Team plan, API credits, special offers on tools that help w
 
 Security teams at Comcast and Booz Allen used Claude Mythos-class models through Project Glasswing to find, validate, and fix vulnerabilities their existing scanners missed.
 
----
-
-**[Claude now works with Google Docs, Sheets, and Slides](https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides)**<br><small>Oct 6, 2026 · Product announcements</small>
-
-With our new Claude for Google Workspace add-on and connectors (in beta), bring Claude into your Google files or work on your files directly from Claude.
-
----
-
-**[How Cresta turned CX expertise into an agent builder on the Claude Agent SDK](https://claude.com/resources/articles/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk)**<br><small>Oct 5, 2026 · Best practices</small>
-
-See how Cresta built Conductor, an agent that builds other agents, on the Claude Agent SDK, and how the team evaluates it with every new Claude model.
-
----
-
-**[Getting started with Claude Code mods](https://claude.dev/blog/getting-started-with-claude-code-mods/)**<br><small>Oct 1, 2026 · Best practices</small>
-
-Mods are hooks that ship inside plugins and run inside your Claude Code session. Build one from an empty folder, then tour two larger mods.
-
 :::
 
-*Updated October 8, 2026*
+*Updated October 9, 2026*
 <!-- CLAUDE_FEED_END -->
