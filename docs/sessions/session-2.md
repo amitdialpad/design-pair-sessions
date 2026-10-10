@@ -1,5 +1,7 @@
 # Session 2: Pair build
 
+Optional guided session from the original pairing program. You can also follow [Start here](/start-here) independently. [All pair sessions](/resources#pair-sessions).
+
 **Format:** You work on a real task together. Both of you thinking throughout. One at the keyboard at a time.
 
 **Duration:** 60 min

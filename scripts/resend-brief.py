@@ -2,7 +2,7 @@
 """
 Resend the most recent Beacon Brief to the current recipients list.
 
-Reads the latest brief from docs/index.md (BEACON_BRIEF_START/END section),
+Reads the latest brief from docs/updates.md (BEACON_BRIEF_START/END section),
 extracts only the most recent issue (up to the first --- separator),
 and sends it via Gmail using the same template as generate-brief.py.
 
@@ -23,7 +23,7 @@ from email.mime.text import MIMEText
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).parent.parent
-INDEX       = PROJECT_DIR / "docs" / "index.md"
+INDEX       = PROJECT_DIR / "docs" / "updates.md"
 RECIPIENTS  = PROJECT_DIR / "scripts" / "brief-recipients.json"
 
 MARKER_START = "<!-- BEACON_BRIEF_START -->"
@@ -215,7 +215,7 @@ def build_html_email(issue: str) -> str:
             <p style="margin:0;font-family:Arial,Helvetica,sans-serif;
                       font-size:12px;color:#999999;line-height:1.6">
               Beacon Brief &mdash; weekly digest for Dialpad designers.&nbsp;
-              <a href="https://amitdialpad.github.io/design-pair-sessions/"
+              <a href="https://amitdialpad.github.io/design-pair-sessions/updates.html#beacon-brief"
                  style="color:#c4922a;text-decoration:none">
                 View on the site
               </a>

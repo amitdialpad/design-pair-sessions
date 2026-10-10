@@ -23,7 +23,7 @@ from beacon_changes import (
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_DIR = SCRIPT_DIR.parent
 STATE_FILE = SCRIPT_DIR / "last-beacon-change.json"
-WHATS_NEW = PROJECT_DIR / "docs" / "index.md"
+WHATS_NEW = PROJECT_DIR / "docs" / "updates.md"
 MARKER_START = "<!-- BEACON_RELEASES_START -->"
 MARKER_END = "<!-- BEACON_RELEASES_END -->"
 VISIBLE_COUNT = 8
@@ -96,7 +96,7 @@ def read_existing_entries() -> list[str]:
     start = content.find(MARKER_START)
     end = content.find(MARKER_END)
     if start == -1 or end == -1:
-        raise GitHubError("Beacon change markers are missing from docs/index.md")
+        raise GitHubError("Beacon change markers are missing from docs/updates.md")
     inner = content[start + len(MARKER_START) : end].strip()
     inner = re.sub(r":::details View older (?:releases|updates)\s*", "", inner, count=1)
     inner = re.sub(r"\s*:::\s*$", "", inner)

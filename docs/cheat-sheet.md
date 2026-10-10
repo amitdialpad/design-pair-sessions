@@ -1,6 +1,6 @@
-# Getting started
+# Quick reference
 
-Quick reference. Print it, bookmark it, come back to it.
+Already set up? Use this as a reminder. New to the workflow? Begin with [Start here](/start-here).
 
 ## Opening Claude Code or Codex
 

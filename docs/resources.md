@@ -1,8 +1,8 @@
 # Resources
 
-Everything referenced across this site, plus useful links for working in Beacon.
+References for building and evaluating prototypes in Studio and Beacon. Start with the [four-step guide](/start-here) when you are new.
 
-## Required reading
+## Further reading
 
 | What | Why |
 |------|-----|
@@ -18,7 +18,7 @@ Everything referenced across this site, plus useful links for working in Beacon.
 | [Rauno Freiberg (Vercel)](https://rauno.me) | Disposable code during exploration. Share tiny videos and demos immediately. Iterate to greatness. |
 | [The Craft Crisis](https://doc.cc/articles/craft-crisis) | Strategic literacy. Evaluate AI output. Participate in technical decisions. The philosophical backbone. |
 
-## Beacon documentation
+## Design repo documentation
 
 These live in the [Design monorepo](https://github.com/dialpad/design). Ask your agent to read the current file for your target app; shared workflows and app-specific guidance now live in different places.
 
@@ -36,7 +36,7 @@ Use `skill-search` for the live inventory, and [Prototyping in Beacon and Studio
 
 | Tool | What it does |
 |------|-------------|
-| [Claude Code](https://claude.com/claude-code) | AI pair partner. Describe what you want, it builds. The primary tool for everything. |
+| [Claude Code](https://claude.com/claude-code) | AI pair partner. Describe what you want, it builds. Works with the Design repo's shared skills. |
 | [Dialtone](https://dialtone.dialpad.com) | Dialpad's design system. Components, tokens, icons, utilities, content guidelines. |
 | Dialtone MCP | Search components, icons, and tokens from within Claude. Claude knows the design system. |
 | [Figma MCP](https://www.figma.com/community/plugin/Claude-MCP) | Point Claude at a Figma frame URL, get a code starting point. Bridge between Figma and code. |
@@ -82,12 +82,21 @@ Install integrations first, then daily commands. The install prompt asks which i
 | [Pinia with TypeScript](https://pinia.vuejs.org/core-concepts/#typescript) | State management in Beacon. Again, not required, Claude handles it. |
 | [WCAG 2.1 Quick Reference](https://www.w3.org/WAI/WCAG21/quickref/) | Accessibility standards. Useful for understanding what `/pr-prep` checks. |
 
+## Pair sessions
+
+The original guided sessions are still here if you want to work through the process with someone. They are optional; you can follow the main guide independently.
+
+- [Session 1: My turn](/sessions/session-1), watch a facilitator frame a real task.
+- [Session 2: Pair build](/sessions/session-2), build and evaluate together.
+- [Session 3: Your turn](/sessions/session-3), drive while someone helps when needed.
+
 ## Internal links
 
 - [The process](/process) for the design workflow
 - [The toolkit](/toolkit) for every command explained for designers
-- [Getting started](/cheat-sheet) for quick reference
+- [Quick reference](/cheat-sheet) for skill syntax and common prompts
 - [Project IRL](/story) for the full arc
-- [What's new](/) for Beacon toolkit changes
+- [Updates](/updates) for Beacon changes and weekly briefs
+- [Toolkit changes](/whats-new) for detected skill and agent changes
 - #ai-coding on Dialpad
-- Your facilitator, DM anytime
+- Ask the team for help with setup, prototype behavior, or a specific blocker

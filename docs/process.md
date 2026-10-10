@@ -1,6 +1,14 @@
-# The process
+# Design judgment and process
 
 You're always designing. Sometimes designing means typing a slash command. Sometimes it means going back to Figma. Sometimes it means pushing a prototype to a PR preview and asking someone "does this feel right?"
+
+The practical path is [Start here](/start-here) → [Build a prototype](/prototyping) → [Evaluate and iterate](/evaluate) → [Share your work](/share). This page explains the design thinking behind it.
+
+## Agency and short loops
+
+Use your design judgment to spot a need and act on it. Pick something you can make tangible today, get feedback, and let the next iteration reflect what you learn. Agents give you more ways to reach an outcome; keep asking which approach will answer the useful question soonest.
+
+Make the work visible as it develops: what you tried, what changed, what is blocked, and where you need another perspective. Short loops help the team stay aligned and discover a better way together. Check in before committing customer-facing changes or changes another team depends on.
 
 ## The rhythm
 
@@ -32,7 +40,7 @@ Research and exploration are flexible. Go where the work takes you. For a new pr
 
 Research isn't step 1 that you finish and move on from. It runs alongside everything.
 
-**PRD analysis.** Push the PRD into Claude. Don't read it yourself first. Let Claude study it and ask: what are the user stories? What behaviors does this introduce? What edge cases aren't addressed? You'll catch things buried on page 7 that you'd skim past.
+**PRD analysis.** Read the PRD with your agent and ask: what are the user stories? What behaviors does this introduce? What edge cases aren't addressed? You'll catch things buried on page 7 that you'd skim past.
 
 **Jira context.** Not just the current ticket. Past tickets, related work, what's been tried before, what got blocked. Jira MCP or CLI pulls this into your Claude conversation. Understanding history prevents rebuilding what failed before.
 
@@ -84,7 +92,7 @@ In practice, this means:
 
 **Use Figma MCP** to bridge the two. Point Claude at a Figma frame (just give it the URL) and it reads the design and generates a code starting point. Going the other direction: capture your prototype and bring it back into Figma for reviews.
 
-The prototype is the source of truth for how the design works. Figma is the source of truth for how it looks. They inform each other throughout the project.
+Use the prototype to evaluate behavior and Figma to explore or refine visual decisions. Keep the agreed design and the working prototype aligned as you iterate.
 
 ## The design doc
 

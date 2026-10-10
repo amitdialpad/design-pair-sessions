@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Generate a Beacon Brief newsletter issue and prepend it to docs/index.md.
+Generate a Beacon Brief newsletter issue and prepend it to docs/updates.md.
 
 Reads:
   - Beacon commits and pull requests merged to dialpad/design during the prior week
   - scripts/weekly-notes.md (if present — updated Wednesday by Amit)
 
 Builds the newsletter directly from those source records, then:
-  1. Prepends to the BEACON_BRIEF_START/END section in docs/index.md
+  1. Prepends to the BEACON_BRIEF_START/END section in docs/updates.md
   2. Runs archive-briefs.py to rebalance visible/archived issues
 
 Exit codes:
@@ -34,7 +34,7 @@ from urllib.request import Request, urlopen
 from beacon_changes import GitHubError, clean_source_markdown, enrich_commit, fetch_commits, is_designer_facing
 
 PROJECT_DIR    = Path(__file__).parent.parent
-INDEX          = PROJECT_DIR / "docs" / "index.md"
+INDEX          = PROJECT_DIR / "docs" / "updates.md"
 WEEKLY_NOTES   = PROJECT_DIR / "scripts" / "weekly-notes.md"
 ARCHIVE_SCRIPT = PROJECT_DIR / "scripts" / "archive-briefs.py"
 RECIPIENTS     = PROJECT_DIR / "scripts" / "brief-recipients.json"
@@ -411,7 +411,7 @@ def build_html_email(issue: str) -> str:
             <p style="margin:0;font-family:Arial,Helvetica,sans-serif;
                       font-size:12px;color:#999999;line-height:1.6">
               Beacon Brief &mdash; weekly digest for Dialpad designers.&nbsp;
-              <a href="https://amitdialpad.github.io/design-pair-sessions/"
+              <a href="https://amitdialpad.github.io/design-pair-sessions/updates.html#beacon-brief"
                  style="color:#c4922a;text-decoration:none">
                 View on the site
               </a>
@@ -486,7 +486,7 @@ def send_dialpad_dms(week_range: str, contact_keys: list[str]) -> bool:
         print("[warn] No DM recipients configured — skipping", file=sys.stderr)
         return False
 
-    site_url = "https://amitdialpad.github.io/design-pair-sessions/"
+    site_url = "https://amitdialpad.github.io/design-pair-sessions/updates.html#beacon-brief"
     text = f"Beacon Brief: week of {week_range} is out. {site_url}"
 
     headers = {
@@ -594,7 +594,7 @@ def main():
         print(f"  HTML bytes: {len(html.encode())}")
         sys.exit(0)
 
-    print("  Writing to docs/index.md...")
+    print("  Writing to docs/updates.md...")
     content     = INDEX.read_text()
     new_content = prepend_to_brief(content, issue)
     if new_content == content:

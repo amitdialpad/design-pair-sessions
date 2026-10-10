@@ -1,5 +1,7 @@
 # Session 1: My turn
 
+Optional guided session from the original pairing program. You can also follow [Start here](/start-here) independently. [All pair sessions](/resources#pair-sessions).
+
 **Format:** Your facilitator drives. You watch, ask questions, interrupt anytime.
 
 **Duration:** 45-60 min

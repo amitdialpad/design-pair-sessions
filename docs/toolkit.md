@@ -1,4 +1,4 @@
-# The Beacon toolkit
+# Skills and tools
 
 The Design repo's shared skills and app-specific tools, explained for designers. Shared definitions live in `.agents/`; Claude has adapters in `.claude/`. Beacon and Studio add their own app-specific guidance.
 
@@ -6,7 +6,7 @@ The Design repo's shared skills and app-specific tools, explained for designers.
 
 You don't need to memorize this. Claude knows all of it. But knowing what exists helps you ask for the right thing at the right time.
 
-> Just want quick prompts to try? See [Getting started](/cheat-sheet).
+> New to this workflow? Start with [Start here](/start-here). Already working? Use [Quick reference](/cheat-sheet).
 
 ## Workflows
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Rebalance the Beacon Brief section in docs/index.md.
+Rebalance the Beacon Brief section in docs/updates.md.
 
 After a new issue is prepended between the BEACON_BRIEF markers, this script:
   1. Parses all issues from the section
@@ -23,7 +23,7 @@ from datetime import datetime
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).parent.parent
-INDEX = PROJECT_DIR / "docs" / "index.md"
+INDEX = PROJECT_DIR / "docs" / "updates.md"
 MARKER_START = "<!-- BEACON_BRIEF_START -->"
 MARKER_END = "<!-- BEACON_BRIEF_END -->"
 VISIBLE_COUNT = 4

@@ -1,8 +1,10 @@
-# Prototyping in Beacon and Studio
+# Build a prototype
 
 Bring the problem, the source material, and the decisions you want to test. `prototype-builder` helps turn them into a plan and a working prototype. Your job is to decide whether the result helps you learn what you need to learn.
 
 This guide combines Josh Hynes's team updates with the Design repo's merged changes, checked on **10 October 2026**. Features described below apply to the current template and tooling; an older prototype may keep its earlier shell and dependencies.
+
+[← Start here](/start-here) · Step 2 of 4 · [Next: Evaluate and iterate →](/evaluate)
 
 ## Choose where to build
 
@@ -112,3 +114,7 @@ These are Josh's announced directions, **not a promise that they are ready to us
 About, resizable inspectors, appearance controls, and versioning have moved beyond that earlier announcement. Use the current repository and `skill-search` to check availability before planning around the remaining items.
 
 Josh credits Josh Everhart's groundwork for enabling these additions. Bring questions and suggestions back to the team with a concrete example of what you wanted to test and what got in the way.
+
+## Next: evaluate what you built
+
+[Evaluate and iterate](/evaluate): work through the prototype as a user, test the requested states, and turn your feedback into specific changes.

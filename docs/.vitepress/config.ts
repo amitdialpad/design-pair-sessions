@@ -2,56 +2,43 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/design-pair-sessions/',
-  title: 'Design with Beacon',
-  description: 'A living guide to building with AI at Dialpad',
+  title: 'Design with AI',
+  description: 'Build and test prototypes with Studio and Beacon at Dialpad',
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'The process', link: '/process' },
-      { text: 'Beacon toolkit', link: '/toolkit' },
-      { text: 'Prototyping', link: '/prototyping' },
-      {
-        text: 'Pair sessions',
-        items: [
-          { text: '1. My turn', link: '/sessions/session-1' },
-          { text: '2. Pair build', link: '/sessions/session-2' },
-          { text: '3. Your turn', link: '/sessions/session-3' },
-        ],
-      },
-      {
-        text: 'More',
-        items: [
-          { text: 'Getting started', link: '/cheat-sheet' },
-          { text: 'Project IRL', link: '/story' },
-          { text: 'Resources', link: '/resources' },
-          { text: 'Toolkit changes', link: '/whats-new' },
-        ],
-      },
+      { text: 'Start here', link: '/start-here' },
+      { text: 'Build', link: '/prototyping' },
+      { text: 'Evaluate', link: '/evaluate' },
+      { text: 'Share', link: '/share' },
+      { text: 'Resources', link: '/resources' },
     ],
     sidebar: [
       {
-        text: '',
+        text: 'Design with AI',
         items: [
-          { text: 'Home', link: '/' },
-          { text: 'The process', link: '/process' },
-          { text: 'Beacon toolkit', link: '/toolkit' },
-          { text: 'Prototyping', link: '/prototyping' },
+          { text: 'Overview', link: '/' },
+          { text: '1. Start here', link: '/start-here' },
+          { text: '2. Build a prototype', link: '/prototyping' },
+          { text: '3. Evaluate and iterate', link: '/evaluate' },
+          { text: '4. Share your work', link: '/share' },
         ],
       },
       {
-        text: 'Pair sessions',
+        text: 'Resources',
+        collapsed: true,
         items: [
-          { text: '1. My turn', link: '/sessions/session-1' },
-          { text: '2. Pair build', link: '/sessions/session-2' },
-          { text: '3. Your turn', link: '/sessions/session-3' },
-        ],
-      },
-      {
-        text: 'Reference',
-        items: [
-          { text: 'Getting started', link: '/cheat-sheet' },
+          { text: 'Skills and tools', link: '/toolkit' },
+          { text: 'Quick reference', link: '/cheat-sheet' },
+          { text: 'Design judgment and process', link: '/process' },
           { text: 'Project IRL', link: '/story' },
-          { text: 'Resources', link: '/resources' },
+          { text: 'Links and pair sessions', link: '/resources' },
+        ],
+      },
+      {
+        text: 'Keep up',
+        collapsed: true,
+        items: [
+          { text: 'Updates and Beacon Brief', link: '/updates' },
           { text: 'Toolkit changes', link: '/whats-new' },
         ],
       },

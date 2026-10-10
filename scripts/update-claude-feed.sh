@@ -1,11 +1,11 @@
 #!/bin/bash
 # Fetches the latest 5 items from feed_claude.xml, pulls og:description from
-# each post, and updates the <!-- CLAUDE_FEED_START/END --> block in whats-new.md
+# each post, and updates the <!-- CLAUDE_FEED_START/END --> block in updates.md
 
 set -e
 
 FEED_URL="https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_claude.xml"
-TARGET="docs/index.md"
+TARGET="docs/updates.md"
 FEED_TMP=$(mktemp)
 
 # Download feed
