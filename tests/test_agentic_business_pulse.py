@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import smtplib
 import sys
 import tempfile
 import unittest
@@ -31,6 +32,7 @@ from agentic_business_pulse import (  # noqa: E402
     now_in_timezone,
     parse_glean_draft,
     run_pulse,
+    send_gmail,
     run_pulse_from_glean_draft,
     validate_agent_result,
     wait_until_local_delivery_time,
@@ -912,7 +914,9 @@ class PulseDeliveryTests(unittest.TestCase):
             message_id=deterministic_message_id(REPORT_DATE),
             dry_run=False,
         )
-        self.assertEqual(message["To"], TEST_REPORT_RECIPIENTS)
+        self.assertEqual(message["To"], "undisclosed-recipients:;")
+        self.assertEqual(message["Bcc"], TEST_REPORT_RECIPIENTS)
+        self.assertIsNone(message["Cc"])
         self.assertEqual(message["Subject"], f"Weekly Agentic Customer Review — {REPORT_DATE}")
         self.assertEqual(list(message.iter_attachments()), [])
         plain_body = message.get_body(preferencelist=("plain",)).get_content()
@@ -921,6 +925,50 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertIn("<!doctype html>", html_body)
         self.assertNotIn(GLEAN_MACHINE_START, plain_body)
         self.assertNotIn(GLEAN_MACHINE_START, html_body)
+
+    def final_message(self):
+        return build_email_message(
+            report_date=REPORT_DATE,
+            report="Weekly customer review",
+            sender=self.config.gmail_user,
+            recipient=TEST_REPORT_RECIPIENTS,
+            message_id=deterministic_message_id(REPORT_DATE),
+            dry_run=False,
+        )
+
+    def test_smtp_delivers_to_all_bcc_recipients_without_exposing_headers(self):
+        message = self.final_message()
+        smtp_send_message = smtplib.SMTP.send_message
+        with patch("agentic_business_pulse.smtplib.SMTP") as smtp:
+            server = smtp.return_value.__enter__.return_value
+            server.send_message.side_effect = lambda msg, **kwargs: smtp_send_message(server, msg, **kwargs)
+            server.sendmail.return_value = {}
+            self.assertEqual(send_gmail(message, self.config)["status"], "accepted")
+            sender, recipients, wire_message, *_ = server.sendmail.call_args.args
+        self.assertEqual(sender, self.config.gmail_user)
+        self.assertEqual(list(recipients), TEST_REPORT_RECIPIENTS.split(", "))
+        headers = wire_message.split(b"\r\n\r\n", 1)[0]
+        self.assertNotIn(b"Bcc:", headers)
+        for address in recipients:
+            self.assertNotIn(address.encode(), headers.split(b"To:", 1)[1])
+        self.assertIn(b"To: undisclosed-recipients:;", headers)
+
+    def test_smtp_rejects_visible_or_extra_recipients_before_connecting(self):
+        for header, value in (
+            ("To", TEST_REPORT_RECIPIENTS),
+            ("Cc", "report.extra@dialpad.com"),
+            ("Bcc", TEST_REPORT_RECIPIENTS + ", report.extra@dialpad.com"),
+        ):
+            with self.subTest(header=header):
+                message = self.final_message()
+                if header in message:
+                    message.replace_header(header, value)
+                else:
+                    message[header] = value
+                with patch("agentic_business_pulse.smtplib.SMTP") as smtp:
+                    with self.assertRaises(ValidationError):
+                        send_gmail(message, self.config)
+                    smtp.assert_not_called()
 
     def test_email_html_prioritizes_bottom_line_metrics_and_insights(self):
         report, _ = validate_agent_result(
