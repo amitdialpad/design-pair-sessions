@@ -20,7 +20,7 @@ You'll see:
 - **Problem framing:** interrogating the source docs, discarding outdated requirements, and defining a tight v0 slice before touching implementation.
 - **Starting the build:** `/project-start` to create a Jira ticket and branch.
 - **Shaping:** `/shaping` to formalize requirements and cap scope deliberately. This is where you say what's in and what's out.
-- **Breadboarding:** `/breadboarding` to translate the defined workflow into interface structure.
+- **Breadboarding:** `/breadboard` to translate the defined workflow into interface structure.
 
 This is where the session ends. Building, design judgment, accessibility, and sharing are Session 2.
 

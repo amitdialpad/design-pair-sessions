@@ -1,4 +1,4 @@
-name: Sync Beacon Toolkit
+name: Sync Design Toolkit
 
 on:
   schedule:
@@ -16,25 +16,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check for Beacon .claude/ changes
+      - name: Check for Design skills and agent changes
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.BEACON_PAT }}
         run: |
           bash scripts/sync-check.sh
-        continue-on-error: true
         id: sync
 
       - name: Commit and push if changes found
-        if: steps.sync.outcome == 'success'
+        if: steps.sync.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.md scripts/manifest.json
-          git diff --cached --quiet || git commit -m "sync: beacon toolkit changes detected $(date -u +%Y-%m-%d)"
+          git add docs/whats-new.md scripts/manifest.json
+          git diff --cached --quiet || git commit -m "sync: design toolkit changes detected $(date -u +%Y-%m-%d)"
           git pull --rebase && git push
 
       - name: Trigger site deploy
-        if: steps.sync.outcome == 'success'
+        if: steps.sync.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions

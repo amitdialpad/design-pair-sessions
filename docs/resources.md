@@ -20,20 +20,17 @@ Everything referenced across this site, plus useful links for working in Beacon.
 
 ## Beacon documentation
 
-These live in the [beacon-app repo](https://github.com/dialpad/beacon-app). Claude can read all of them and explain them to you.
+These live in the [Design monorepo](https://github.com/dialpad/design). Ask your agent to read the current file for your target app; shared workflows and app-specific guidance now live in different places.
 
-| Doc | What's in it |
-|-----|-------------|
-| [README.md](https://github.com/dialpad/beacon-app/blob/main/README.md) | Getting started, setup, how we work, further reading |
-| [CONTRIBUTING.md](https://github.com/dialpad/beacon-app/blob/main/CONTRIBUTING.md) | Branch naming, slash commands, pre-commit hooks, feature flags, troubleshooting |
-| [AGENTS.md](https://github.com/dialpad/beacon-app/blob/main/AGENTS.md) | The developer operating manual. 555 lines. Architecture, data layer, TypeScript patterns, components, AI features. |
-| [CLAUDE.md](https://github.com/dialpad/beacon-app/blob/main/CLAUDE.md) | Quick reference. Architecture, critical rules, key files, performance targets. |
-| [docs/development/getting-started.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/getting-started.md) | Full walkthrough from first ticket to merged PR |
-| [docs/development/claude-code-guide.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/claude-code-guide.md) | Complete reference for all commands, agents, skills, rules, and workflows |
-| [docs/development/engineering-guide-for-designers.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/engineering-guide-for-designers.md) | How Beacon's codebase is organized and why. Code structure, Vue patterns, data storage, Git, PR hygiene. Read it once. |
-| [docs/development/adding-data-to-beacon.md](https://github.com/dialpad/beacon-app/blob/main/docs/development/adding-data-to-beacon.md) | Beacon's data layer: schema design, the controller pattern, mock data pipeline. Read before adding any new entity type. |
+| Document | What you'll find |
+|----------|-----------------|
+| [Root AGENTS.md](https://github.com/dialpad/design/blob/main/AGENTS.md) | Repository conventions and shared tooling |
+| [Beacon AGENTS.md](https://github.com/dialpad/design/blob/main/apps/beacon/AGENTS.md) | Beacon's architecture and app-specific guidance |
+| [Studio README](https://github.com/dialpad/design/blob/main/apps/studio/README.md) | Prototype creation, settings, local development, and sharing |
+| [Shared skills](https://github.com/dialpad/design/tree/main/.agents/skills) | Current skill definitions for Claude and Codex |
+| [Studio-kit release policy](https://github.com/dialpad/design/blob/main/packages/studio-kit/RELEASES.md) | Version pins, explicit upgrades, and compatibility |
 
-Josh wrote this for designers working in Beacon. It covers how the code is organized, why things work the way they do, and what to expect when reviewing Claude's output. Read it once. Keep it open whenever something in the code surprises you.
+Use `skill-search` for the live inventory, and [Prototyping in Beacon and Studio](/prototyping) for the designer workflow.
 
 ## Tools
 
@@ -80,7 +77,7 @@ Install integrations first, then daily commands. The install prompt asks which i
 
 | Resource | What it is |
 |----------|-----------|
-| [Shape Up](https://basecamp.com/shapeup) | The methodology behind `/shaping` and `/breadboarding`. Free book. |
+| [Shape Up](https://basecamp.com/shapeup) | The methodology behind `/shaping` and `/breadboard`. Free book. |
 | [Vue 3 + TypeScript Guide](https://vuejs.org/guide/typescript/overview.html) | If you want to understand what Claude is writing. Not required. |
 | [Pinia with TypeScript](https://pinia.vuejs.org/core-concepts/#typescript) | State management in Beacon. Again, not required, Claude handles it. |
 | [WCAG 2.1 Quick Reference](https://www.w3.org/WAI/WCAG21/quickref/) | Accessibility standards. Useful for understanding what `/pr-prep` checks. |

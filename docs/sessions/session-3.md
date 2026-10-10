@@ -32,7 +32,7 @@ This isn't a test. There's no grade. You'll get stuck. That's normal. Getting st
 
 **Evaluate.** Does it look right? Feel right? Work for edge cases? Is it accessible? Ask Claude to check.
 
-**Share.** Run `/pr-create` to get a preview link, or open a draft PR for an early direction check. Send the link in Dialpad.
+**Share.** Run `/pr-prep`, then `/pr-create` to get a preview link, or open a draft PR for an early direction check. Send the link in Dialpad.
 
 ## When you get stuck
 

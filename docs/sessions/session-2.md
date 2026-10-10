@@ -8,7 +8,7 @@ You're coming in with a breadboard from Session 1. This session is the build. Yo
 
 ## Part 1: Facilitator builds the first ticket (20 min)
 
-Your facilitator picks up the first ticket from the breadboard and runs `/feature-team`. You're not watching. You're in it: calling things out, questioning decisions, catching what looks off.
+Your facilitator picks up the first ticket from the breadboard and asks the agent to build that slice from the approved plan. You're not watching. You're in it: calling things out, questioning decisions, catching what looks off.
 
 Watch specifically for:
 - How they describe what they want to Claude. Plain language, not technical spec.
@@ -20,7 +20,7 @@ Watch specifically for:
 
 You take the next ticket. Your facilitator navigates.
 
-When you run `/feature-team`, it runs a pipeline: research, plan, implement, test, review. You'll see phases completing and a review gate between each one. Nothing moves forward without your approval. It takes a few minutes. That's normal.
+For a prototype, use `/prototype-builder` in Claude or `$prototype-builder` in Codex. State Beacon or Studio, provide the breadboard and ticket, and review the plan before the build starts. For a smaller slice, ask the agent to follow the approved plan; `skill-search` can help find the right supporting tool.
 
 The loop:
 
@@ -38,7 +38,7 @@ Plain language means describing what you see and what you want, not how to build
 
 Repeat until it's right. Then check accessibility before you move on.
 
-When you're done: run `/pr-create` to get a preview link and send it in Dialpad. If the work isn't finished, `/pr-create make it a draft PR` opens a draft so you can share early for a direction check. That's the full loop.
+When you're done: run `/pr-prep`, then `/pr-create` to get a preview link and send it in Dialpad. If the work isn't finished, `/pr-create make it a draft PR` opens a draft so you can share early for a direction check. That's the full loop.
 
 **If you're not sure where to start:**
 - Ask Claude what the ticket needs. It has the breadboard context.

@@ -6,7 +6,9 @@ You're always designing. Sometimes designing means typing a slash command. Somet
 
 You don't switch between "design mode" and "engineering mode." You move fluidly between tools depending on what the work needs.
 
-Always open Claude Code from inside the Beacon folder: `cd ~/beacon-app` → `claude`. The Beacon commands only work from there. Each project gets its own isolated workspace. `/project-start` handles the ticket, branch, and setup for you.
+Open Claude Code or Codex in your Design repo checkout. Shared skills such as `prototype-builder` work from the repo root. Choose Beacon for an experience inside the product, or Studio for a standalone experiment. For Beacon, run `project-start` first to create the ticket and branch. Studio setup is handled by `prototype-builder` after you approve its plan. App-specific tools may still need a session inside `apps/beacon` or `apps/studio`.
+
+Examples below use Claude's `/skill-name` syntax. In Codex, use `$skill-name`. See [Prototyping in Beacon and Studio](/prototyping) for a complete starting prompt.
 
 | What you're doing | Where you are |
 |---|---|
@@ -15,15 +17,16 @@ Always open Claude Code from inside the Beacon folder: `cd ~/beacon-app` → `cl
 | Exploring layouts, trying visual directions | Sketching, Figma, or Claude in terminal |
 | Formalizing requirements after you understand the problem | `/shaping` in Beacon |
 | Mapping how all the pieces connect | `/breadboard` in Beacon |
-| Slicing the breadboard into Jira tickets | `/jira-create` in Beacon |
-| Building each piece of your design into working UI | `/feature-team` in Beacon |
+| Slicing the breadboard into Jira tickets | Ask the agent to use the shared `jira` skill |
+| Building a prototype from a brief or design | `/prototype-builder` in Beacon or Studio |
+| Finding the right tool for a specific build task | `/skill-search` |
 | Checking your UI against Dialpad's design principles | Ask Claude: *"Run the dialpad-design agent"* |
 | Getting early directional feedback | Loom, or open a draft PR and share the preview link in Dialpad |
 | Checking if the code is ready to share | `/pr-prep` in Beacon |
 | Creating the PR and sharing the preview link | `/pr-create` in Beacon → send link in Dialpad |
 | Pushing a frame into Figma for refinement | Figma MCP |
 
-Research and exploration are flexible. Go where the work takes you. Once you're in Beacon, the pipeline flows in order: start → shape → breadboard → ticket → build → prep → ship.
+Research and exploration are flexible. Go where the work takes you. For a new prototype, start → choose Beacon or Studio → review the prototype-builder plan → build → evaluate → prep → share. Use shaping and breadboarding when the problem or approach needs more work first.
 
 ## Research (ongoing, not a phase)
 
@@ -108,7 +111,7 @@ Push for specifics when you get feedback. Different people catch different thing
 
 The loop is tight: feedback, prompt, change, evaluate, share. What used to be a multi-day cycle (get feedback, open Figma, redesign, re-spec, hand to engineer, wait for build, review) compresses into minutes.
 
-When you run `/pr-create`, two independent AI reviewers run automatically on the PR: GPT-4.1 and Claude Sonnet 4.6. They post findings as inline comments on the code. The full review takes around 7-10 minutes. Once it's done, run `/pr-comments` to pull the feedback into Claude and triage what to fix.
+Run `/pr-prep` before `/pr-create`. PR prep now includes adversarial review with focused reviewers selected from the changed files: UI and accessibility, Dialtone adherence, test value, data and state, and other relevant risks. `/skeptic-review` runs the focused read-only review separately. Use `/pr-comments` to triage feedback after sharing. [See the review lenses](/toolkit#skeptic-review).
 
 ## Staying clean while exploring
 
@@ -140,7 +143,7 @@ Claude writes code. You decide if it's good. "Good" for a designer means somethi
 
 ## Testing what you built
 
-After `/feature-team` finishes, before moving to `/pr-prep`, ask:
+After the build finishes, before moving to `/pr-prep`, ask:
 
 ```
 How do I test this?
@@ -184,9 +187,10 @@ You don't need to memorize a pipeline. Just recognize the moment.
 | "I have raw source material to turn into a problem frame" | `/framing-doc` |
 | "I know enough about this problem to write it down" | `/shaping` |
 | "I've picked a direction, let me map the pieces" | `/breadboard` |
-| "This slice is ready to build properly" | `/feature-team` |
-| "I've got my breadboard, time to create tickets" | `/jira-create` |
-| "I need a new component scaffolded" | `/component-create` |
+| "I want to build a prototype from my source material" | `/prototype-builder` |
+| "Which skill should I use?" | `/skill-search` |
+| "I've got my breadboard, time to create tickets" | Ask the agent to use the shared `jira` skill |
+| "I need a new component" | Describe it; the agent uses `component-work` |
 | "Let me clean up what I just built" | `/simplify` |
 | "Is this ready for review?" | `/pr-prep` |
 | "Time to open the PR" | `/pr-create` |
@@ -202,6 +206,6 @@ For what each command, agent, skill, rule, and hook actually does, see [The Beac
 
 ## What the commands don't do
 
-`/shaping` can list requirements. It can't tell you which ones matter most to users. `/breadboard` can map affordances. It can't tell you if the flow feels right. `/pr-prep` can catch accessibility violations. It can't tell you if the empty state is inviting or just blank. `/feature-team` can build what you describe. It can't tell you what to describe.
+`/shaping` can list requirements. It can't tell you which ones matter most to users. `/breadboard` can map affordances. It can't tell you if the flow feels right. `/pr-prep` can catch accessibility violations. It can't tell you if the empty state is inviting or just blank. `/prototype-builder` can build what you describe. It can't tell you what to describe.
 
 Your eye for spacing, typography, interaction quality, user empathy, edge cases, and the full user journey: that's what makes the output good. The commands make you fast. Your design training makes the result worth shipping.

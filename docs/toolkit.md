@@ -1,14 +1,34 @@
 # The Beacon toolkit
 
-Everything Josh built into Beacon's `.claude/` directory, explained for designers. This is the same tooling engineers use, but described in terms of what it does for you, not how it works internally.
+The Design repo's shared skills and app-specific tools, explained for designers. Shared definitions live in `.agents/`; Claude has adapters in `.claude/`. Beacon and Studio add their own app-specific guidance.
+
+**Updated 10 October 2026.** Start with [Prototyping in Beacon and Studio](/prototyping). For the live inventory, use `/skill-search` in Claude or `$skill-search` in Codex. The menu shows the workflows people start; the agent loads supporting skills when needed.
 
 You don't need to memorize this. Claude knows all of it. But knowing what exists helps you ask for the right thing at the right time.
 
 > Just want quick prompts to try? See [Getting started](/cheat-sheet).
 
-## Commands
+## Workflows
 
-Commands are slash commands you type in Claude Code. They trigger specific workflows. Think of them like Figma plugins: you invoke them when you need them.
+Examples below use `/skill-name` in Claude Code. In Codex, use `$skill-name`. These are entry points you invoke by name. They trigger specific workflows. Think of them like Figma plugins: you invoke them when you need them.
+
+### Find a tool or build a prototype
+
+#### `/skill-search`
+
+Finds current skills, agents, and rules for your task. With no task, it lists what is available. Shared tools work across the Design repo; app-specific tools carry Beacon or Studio guidance.
+
+Try: `$skill-search do we have a skill for building a settings prototype?`
+
+#### `/prototype-builder`
+
+Turns a brief, PRD, FigJam board, Figma design, or description into a working prototype in Beacon or Studio. It works from the repo root, asks for the target when it is unclear, reads your inputs, and presents a plan before building. After approval, it sets up, builds, and checks the result.
+
+For Beacon, run `project-start` first. For Studio, it calls `prototype-create` for setup. Specify the settings and variants you want rather than leaving them to the agent. [Full guide and prompt](/prototyping).
+
+#### `/prototype-create` (Studio only)
+
+Creates a blank Studio prototype or forks an existing merged one. Start the agent inside `apps/studio` to invoke this app-specific skill directly. It gathers the title, description, purpose, tags, settings, and variants, then uses scripts for setup and validation. You can keep iterating locally before opening a PR.
 
 ### Starting a project
 
@@ -127,32 +147,16 @@ Slices follow a consistent order:
 
 **How slices ship:** One branch per slice, merged directly into main. No parent feature branch. Put the feature behind a Feature Flag until all slices are done. That way each slice ships safely without exposing unfinished work.
 
-**Where the documents go:** Claude saves your shaping and breadboarding documents to `/docs/plans/` while you work. When you run `/pr-prep`, it copies those documents into the PR so reviewers can read through your plan. When the branch merges, the folder is deleted. Move anything worth keeping (requirements, fit check, slice definitions) to the Jira ticket before you merge.
+**Where the documents go:** Keep working plans in session notes or the target app's `docs/plans/` folder. Planning files must stay out of commits and PR history. PR prep checks this boundary. Preserve the useful decisions in the Jira ticket or another durable reference before removing working plans.
 
 **Use when:** You've picked a direction in `/shaping` and need to plan how to build it.
 
 
 ### Building
 
-#### `/feature-team`
+#### Building from an approved plan
 
-The main build command. Hands your work to the `feature-team` agent, which orchestrates multiple specialized agents through a pipeline: research, plan, implement, test, pattern review, quality.
-
-It's smart about what you give it:
-- **Shaped slice** (has a Jira ticket, demo statement, or breadboard reference): skips research and planning, starts building
-- **Vague description**: runs the full pipeline from scratch. Checks if a feature flag is needed before starting.
-
-You have review gates between every phase. Nothing proceeds without your approval. This isn't autonomous. You're directing the work.
-
-**Use when:** A slice is defined enough to build. You have a clear picture of what the result should be.
-
-#### `/component-create`
-
-Scaffolds a single Vue 3 component with TypeScript and co-located tests. Checks Dialtone first to see if a component already exists that covers what you need (so you don't rebuild something that's already there).
-
-Takes a name and type: `ui`, `feature`, or `layout`. Creates the file structure in the right directory.
-
-**Use when:** You need a new component and want it set up correctly from the start.
+For a prototype, use `prototype-builder`. For a smaller component or implementation task, describe what you need and let the agent choose supporting skills such as `component-work`. Use `skill-search` when you want to see the available options first. The old `feature-team` and `component-create` names are no longer in the current skill inventory.
 
 #### `/test-create`
 
@@ -180,26 +184,37 @@ Fixes lint errors, type errors, import issues, and formatting problems. The mech
 
 #### `/pr-prep`
 
-The quality gate before you open a PR. Runs 6 waves of automated checks:
+Prepares your work for review. It captures what changed, runs adversarial and relevant specialist reviews, assesses findings, resolves authorized issues, then runs the final checks for the affected apps. Review happens before the final gate suite, so defects found by reviewers are fixed before validation.
 
-1. **Mechanical** (parallel): lint, type-check, formatting, build, tests
-2. **Gate decision**: stops you if the build or types are broken
-3. **Scope analysis**: classifies what changed, cleans up AI attribution in commit messages
-4. **Team review** (parallel agents): code reviewer, pattern reviewer, test analyzer, silent failure hunter, comment analyzer, type design analyzer. Each runs independently and reports back.
-5. **Static analysis**: accessibility audit (catches clickable divs, missing alt text, broken tab order), documentation audit, Dialtone compliance check, design review (layout, typography, color, voice & tone, interaction patterns), breadboard-reflection audit (verifies the breadboard against what was actually built)
-6. **Code simplifier**: optional cleanup if nothing is blocking
+The report distinguishes ready work, fixes still needed, and decisions still needed. It does not create the PR.
 
-Output: a single report telling you what's blocking, what's a warning, what's a suggestion, and what's done well. Does not create the PR.
+**Use when:** You think the work is ready to share.
 
-**Use when:** You think the code is ready. This tells you if it actually is.
+#### `/skeptic-review`
+
+Runs the read-only adversarial route through PR prep. A general reviewer looks at the diff, then focused reviewers are selected from what changed:
+
+| Lens | What it checks |
+|---|---|
+| Data, state, and concurrency | Schemas, shared state, races, and delayed updates |
+| Test value | Whether generated tests provide useful evidence |
+| UI, interaction, and accessibility | Behavior, keyboard access, and regressions |
+| Dialtone adherence and gaps | Correct component choices against the installed version; whether a claimed gap is real |
+| Security, privacy, and permissions | Access boundaries and exposure |
+| Workflow and mutation safety | GitHub Actions, scripts, and safe writes |
+| Contracts, validation, and compatibility | APIs, schemas, packages, CLI, and routes |
+| Performance and scalability | Costs that grow with data or usage |
+| Scope and simplicity | Unnecessary complexity and changes outside the task |
+
+Studio work often needs fewer lenses than Beacon work, but file types and risk decide. A focused skeptic review does not replace the full PR readiness checks.
 
 #### `/pr-create`
 
-Creates the PR. Writes a human-friendly description (for stakeholders, not just engineers), pushes the code, opens it on GitHub. Picks a contextual GIF because Josh believes PRs should have personality.
+Creates or updates the PR after PR prep. Titles now use area-scoped Conventional Commits, for example `feat(beacon): add a new interaction` or `feat(repo, beacon, design, studio): update shared tooling`. The scope identifies the affected areas. Let the skill format the title.
 
-Add `skip review` to skip the AI review step (good for docs, skill updates, small changes). Add `new gif` if you want a different GIF. Add `make it a draft PR` to open it as a draft. Useful for early direction checks before it's ready for full review.
+Include the verified Dialtone gaps from the final report in the PR description, separating gaps in the prototype from gaps in its settings controls. Ask for a draft PR when you want an early direction check.
 
-**Use when:** `/pr-prep` is clean and you're ready to share. Or use draft mode to share a preview link before the work is finished.
+**Use when:** PR prep is complete and you are ready to share.
 
 #### `/pr-complete`
 
@@ -217,7 +232,7 @@ Pulls automated review comments from your PR and helps you triage them: which on
 
 #### `/breadboard-reflection`
 
-Two-phase audit for verifying a breadboard against the actual code. First phase looks at what's there (SEE). Second phase checks if it's right (REFLECT). Includes a naming test — affordances should use single-verb names — and a design smells catalog. Also runs automatically as part of `/pr-prep` Wave 5.
+Two-phase audit for verifying a breadboard against the actual code. First phase looks at what's there (SEE). Second phase checks if it's right (REFLECT). Includes a naming test — affordances should use single-verb names — and a design smells catalog. PR prep can also use it when the change has a breadboard.
 
 **Use when:** You want to verify your breadboard reflects what was actually built, not just what was planned.
 
@@ -239,23 +254,9 @@ Analyzes components for performance issues: unnecessary re-renders, missing memo
 
 **Use when:** Your feature touches rendering or data loading and you want to make sure it's smooth.
 
-#### `/jira-create`
+#### Jira updates
 
-Creates Jira tickets for new work or things you discovered while building. Sets a story point estimate automatically. Useful when you find a bug or a needed improvement that isn't your current scope.
-
-**Use when:** You found something that needs a ticket but shouldn't derail your current work.
-
-#### `/jira-done`
-
-Transitions a Jira ticket to Done. Pass the ticket key: `/jira-done DDT-1402`. If you don't pass one, it reads the ticket from your current branch name.
-
-**Use when:** Closing out a ticket after a PR merges.
-
-#### `/team-cleanup`
-
-Shuts down any currently active agent team and cleans up leftover teammates. Use this if a command fails with "Already leading team" — it means a previous workflow left an agent running.
-
-**Use when:** Something went wrong mid-build and the next command refuses to start.
+Ask the agent to create or update a ticket using the shared `jira` skill. `project-start` handles the ticket and branch at the start; `pr-complete` closes the loop after merge.
 
 #### `/debug-trace`
 
@@ -295,74 +296,25 @@ Orchestrates the same change across many files in parallel. Each unit gets its o
 
 Runs a prompt on a recurring interval within your session. For watching a deploy or monitoring a process. Session-scoped: exits when you close the terminal.
 
-## Agents
+## Agents and supporting skills
 
-Agents are specialized workers that commands delegate to. You usually don't invoke them directly. They get called by the commands that need them. But knowing they exist helps you understand what's happening when a command takes a few minutes.
+Some skills are entry points you start yourself; others are building blocks the agent loads when the task needs them. A shorter menu does not mean the knowledge disappeared.
 
-| Agent | What it does | Called by |
-|---|---|---|
-| `feature-team` | Orchestrates the full build pipeline: research, plan, implement, test, review, quality | `/feature-team` |
-| `prototype-analyzer` | Inventories a prototype and maps it against Beacon | `/prototype-migrate` |
-| `codebase-pattern-reviewer` | Reads adjacent code to catch semantic duplication and architectural drift | `/pr-prep` (Wave 3) |
-| `dialpad-design` | Reviews UI against Dialpad's 7 Design Tenets, covering layout, voice & tone, interaction, animation, motion, typography, and color | Automatically on UI work, as part of `/pr-prep`, or ask directly |
-| `documentation-architect` | Ensures docs exist and are accurate | `/pr-prep` (Wave 4) |
-| `error-resolver` | Diagnoses and fixes errors | When something breaks |
-| `web-research-specialist` | Researches external libraries and patterns | `/shaping` spikes |
-| `code-refactor-master` | Handles complex multi-file refactors | When refactoring is needed |
-| `refactor-swarm-orchestrator` | Coordinates parallel refactoring agents | Large refactors |
-| `webrtc-debugger` | Debugs meeting/call related issues | Meeting feature work |
+`prototype-builder` delegates the approved plan to a prototype implementer and reviews the result. PR prep selects focused reviewers for the changed files. Use `skill-search` to discover current agent profiles rather than relying on an old list.
 
-The **`dialpad-design` agent** is the one designers should know about. It reviews against 7 tenets:
+Supporting skills include `dialtone-usage`, `component-work`, `code-quality`, `unit-testing`, `jira`, and `delegate`. Beacon also has `frontend-patterns`, `feature-flags`, `permission-patterns`, `mock-engine`, and `dialpad-design`. Studio has its own prototype-creation workflow.
 
-1. **Design systems, not surfaces**: Is the feature available where users need it, or isolated in one place?
-2. **Opt into complexity**: Are too many options visible upfront? Are power features in the baseline?
-3. **Transparency is non-negotiable**: Are disabled states explained? Is system state clear?
-4. **Anticipation over reaction**: Does the user have to hunt for next steps?
-5. **Friction is deliberate**: Are destructive actions too easy? Is there unnecessary friction on common actions?
-6. **Customize to lock in**: Can users save preferences?
-7. **Capability without clarity**: Is the feature's purpose clear?
+**Dialtone:** `dialtone-usage` checks the installed version and the available app components before custom UI. Ask the agent to verify a missing component or token against those sources before calling it a gap. A mismatch in the source Figma file may call for snapping to existing Dialtone typography rather than adding a new component. [How to report gaps](/prototyping#dialtone-and-verified-gaps).
 
-Ask it: *"Review the UI I just built for the settings feature."* It gives you specific feedback with file/line references and recommendations. It's not a rubber stamp. It pushes back.
-
-## Skills
-
-Skills are knowledge that Claude loads when relevant. You don't invoke them. They activate based on what you're working on. Think of them like design system documentation that Claude has internalized.
-
-| Skill | What Claude knows because of it |
-|---|---|
-| `shaping` | How to run a shaping session: requirements, shapes, fit checks, documents |
-| `breadboarding` | How to map affordances, places, wiring, and slice into vertical increments |
-| `accessibility-patterns` | WCAG 2.1 AA compliance: ARIA, keyboard nav, focus management, semantic HTML |
-| `frontend-patterns` | Vue 3/TypeScript patterns, MVC architecture, component conventions |
-| `data-architecture-enforcer` | Beacon's cache-first controller pattern, IndexedDB, cross-tab sync |
-| `type-design` | Typography hierarchy, vertical rhythm, tone-as-architecture, density-aware sizing. Activates when building components with text content or making type decisions |
-| `motion-design` | Whether to animate, easing curves, timing, entry/exit patterns, reduced-motion. Activates when adding transitions, animations, or hover effects |
-| `interaction-design` | Keyboard contracts, focus management, action placement, touch patterns, ARIA. Builds accessibility into design decisions rather than auditing after the fact |
-| `code-quality` | Max complexity 8, no unused variables, files under 500 lines, no `any` types |
-| `permission-patterns` | How to gate features by admin role |
-| `mock-data-generator` | How to generate realistic test data |
-| `meeting-component-guide` | Meeting UI component hierarchy and patterns |
-| `logging-standards` | When and how to add debug logging |
-| `project-planning` | How to create standardized plan documents |
-| `step-by-step-execution` | How to break complex tasks into incremental changes |
-| `swarm-orchestration` | How to coordinate multiple agents in parallel |
-| `unit-testing` | Vitest patterns, mock typing, component stubs |
-| `workflow-edit` | Safe editing of GitHub Actions workflows |
-| `media-device-enforcer` | WebRTC device patterns for meetings |
-| `feature-flags` | How to create feature flags consistently in Beacon |
-| `jira-management` | Lets Claude create and update Jira tickets naturally. Say "update the Jira" or "create a ticket" and it handles it. Different from `/jira-create`, which is a user command you invoke manually. |
-
-The ones that matter most for designers: `shaping`, `breadboarding`, `accessibility-patterns`, `frontend-patterns`, and the three design advisory skills — `type-design`, `motion-design`, and `interaction-design`. These three replaced the old `dialtone-typography-enforcer` skill. Instead of enforcing CSS migration rules, they teach Claude design thinking: typography hierarchy, when to animate, and how interactive elements should behave. They load automatically when relevant.
-
-**Want to build your own skills?** The [Skill Creator plugin](https://claude.com/plugins/skill-creator) in Claude's Plugin Marketplace now lets you create, test, and improve skills without writing code. You can run a skill against test prompts, grade outputs against expectations, and do A/B comparisons between versions. Install it in Claude by typing `/plugin` and finding `skill-creator` under `claude-plugins-official`.
+**Design judgment:** ask for a review of hierarchy, interaction, motion, accessibility, and edge states. The agent helps identify problems; you still evaluate the prototype in the browser.
 
 ## Rules
 
 Rules auto-load based on what file you're editing. When you're working in `./src/`, Claude automatically follows these.
 
-**6 root rules** covering code guidelines, commit messages, Dialtone usage, frontend style, and Vue/TypeScript conventions.
+**Root rules** cover code guidelines, commit messages, Dialtone usage, frontend style, and Vue/TypeScript conventions.
 
-**53 Dialtone component rules**, one per component. Each documents: required props, correct import pattern (`import { DtButton } from "@dialpad/dialtone/vue3"`), usage examples, and what NOT to do. Claude won't suggest `<button>` when `<DtButton>` exists. It won't use Tailwind. It won't use inline styles.
+**Dialtone guidance** documents: required props, correct import pattern (`import { DtButton } from "@dialpad/dialtone/vue3"`), usage examples, and what NOT to do. The agent should use supported Dialtone components and tokens before custom equivalents. Check the actual output; a rule is guidance, not a guarantee.
 
 You don't need to know what's in these files. Claude reads them automatically. But if Claude suggests a component and you're not sure about it, ask: *"Show me the Dialtone rules for DtModal."* It'll read the rule file and explain the component's proper usage.
 

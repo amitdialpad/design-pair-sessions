@@ -26,7 +26,7 @@ What happened:
 
 Four wrong assumptions discovered in one day. All by building and then learning from the result.
 
-**Where commands would have helped:** After this pivot, the problem is finally clear. `/shaping` here would formalize the real requirements (shared wallet pools, company vs. office views, usage history as primary view) so the next round of building has boundaries. `/breadboarding` would map how wallet cards, plan usage, and usage history connect before building them.
+**Where commands would have helped:** After this pivot, the problem is finally clear. `/shaping` here would formalize the real requirements (shared wallet pools, company vs. office views, usage history as primary view) so the next round of building has boundaries. `/breadboard` would map how wallet cards, plan usage, and usage history connect before building them.
 
 ## Building with direction
 
@@ -92,4 +92,4 @@ The resume trigger was explicitly tied to the prototype: finish the prototype, t
 
 **Nothing was linear.** Analytics built twice. A feature lived 23 days then died. Export went through 4 iterations. The wallet model was fundamentally wrong until the pivot.
 
-**Commands would have helped at specific moments.** Not as a replacement for the messy design process, but as formalization points: writing down what you know after a pivot (`/shaping`), mapping the pieces before building them (`/breadboarding`), quality-checking before sharing (`/pr-prep`).
+**Commands would have helped at specific moments.** Not as a replacement for the messy design process, but as formalization points: writing down what you know after a pivot (`/shaping`), mapping the pieces before building them (`/breadboard`), quality-checking before sharing (`/pr-prep`).

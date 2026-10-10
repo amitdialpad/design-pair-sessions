@@ -4,6 +4,8 @@ A living guide to building with AI at Dialpad. The workflow, the toolkit, and wh
 
 New here? Start with [The process](/process), then explore the [Beacon toolkit](/toolkit). The [Pair sessions](/sessions/session-1) are there when you're ready to work through it with someone.
 
+**New: prototype in Beacon or Studio.** [Start with prototype-builder](/prototyping) from the Design repo root in Claude or Codex. Bring your source material, specify the settings you want, and review the plan before the build. The guide also covers the new Studio shell, versioning, and focused PR reviewers.
+
 ## What's new in Beacon
 
 Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/design` monorepo](https://github.com/dialpad/design/tree/main/apps/beacon).

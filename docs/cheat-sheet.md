@@ -2,21 +2,24 @@
 
 Quick reference. Print it, bookmark it, come back to it.
 
-## Opening Claude Code
+## Opening Claude Code or Codex
 
-1. Open Terminal (Cmd + Space, type "Terminal", Enter)
-2. Go to your project: `cd ~/beacon-app`
-3. Type `claude` and hit Enter
-4. Talk to it like a person
+1. Open your local Design repo checkout in the desktop app, or open Terminal and go to that checkout.
+2. Start Claude Code with `claude`, or Codex with `codex`.
+3. Shared skills work from the repo root. Use `/prototype-builder` in Claude or `$prototype-builder` in Codex.
+4. State whether you want Beacon or Studio, and provide your files, links, settings, and variants.
 
-## Opening Beacon
+**Beacon:** run `project-start` first. **Studio:** prototype-builder handles new-prototype setup after plan approval. See [the starting prompt and Studio controls](/prototyping).
+
+## Opening the apps
+
+From your Design repo root:
 
 ```bash
-cd ~/beacon-app
-pnpm dev
+pnpm dev:beacon
 ```
 
-Open `http://localhost:3000` in your browser. Dev tools: Ctrl/Cmd + D.
+For the Studio gallery, use `pnpm dev:studio`. To work on a specific Studio prototype, use the prototype directory and `pnpm dev` command returned by the agent. The gallery server does not serve each prototype's development view.
 
 ## Five prompts to start with
 
@@ -43,18 +46,22 @@ Create a simple card component using DtCard with a title, description,
 and a primary action button. Use Dialtone components and tokens.
 ```
 
-## The commands you'll use most
+## The skills you'll use most
+
+These examples use Claude syntax. Replace `/` with `$` in Codex.
 
 | You're thinking... | Type this |
 |---|---|
 | I need a ticket and branch | `/project-start` |
 | I know enough to formalize the problem | `/shaping` |
-| I've picked a direction, map the pieces | `/breadboarding` |
-| This slice is ready to build | `/feature-team` |
+| I've picked a direction, map the pieces | `/breadboard` |
+| Build a prototype from my brief or design | `/prototype-builder` |
+| Find a skill or agent for this task | `/skill-search` |
+| Run a focused adversarial review | `/skeptic-review` |
 | Clean up what I just built | `/simplify` |
 | Is this ready for review? | `/pr-prep` |
 | Time to open the PR | `/pr-create` |
-| Does the UI follow our design tenets? | Ask the `dialpad-design` agent |
+| Does the UI follow our design tenets? | Ask for a design review; in Beacon, use `dialpad-design` |
 | Lint/type errors need fixing | `/fix-quick` |
 
 Full list on the [toolkit page](/toolkit).
@@ -81,7 +88,7 @@ Full list on the [toolkit page](/toolkit).
 | Merge | Moving approved work into the main project |
 | Commit | Saving a snapshot with a note attached |
 | Deploy | Making your work visible to others |
-| MCP | A plug that connects Claude to tools (Figma, Dialtone, Jira) |
+| MCP | A plug that connects your agent to tools (Figma, Dialtone, Jira) |
 | TypeScript | The language Beacon uses. Claude writes it. You review the UI. |
 | Pinia | Where UI state lives. Claude knows how to use it. |
 | IndexedDB | Where data lives. Claude handles it through controllers. |
