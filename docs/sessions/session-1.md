@@ -56,4 +56,3 @@ Your facilitator will check these are in place before starting. If they're not, 
 - [Why AI is Exposing Design's Craft Crisis](https://doc.cc/articles/craft-crisis)
 - [The process](/process)
 - [The toolkit](/toolkit)
-- [Project IRL](/story) (if you want to see the full arc of a real design project)

@@ -1,7 +1,5 @@
 # Share your work
 
-[← Evaluate and iterate](/evaluate) · Step 4 of 4
-
 Give people a working experience and a clear question. Share while their feedback can still change the direction. A short exploration shown today can reveal a misunderstanding before it costs the team days.
 
 You can share a recording, a local walkthrough, or your findings while a hosted preview is being prepared. Choose the simplest form that lets people give useful feedback.
@@ -48,4 +46,4 @@ Merging depends on the app's current review policy and your team's approval. Sha
 
 ## Keep learning
 
-[Skills and tools](/toolkit) explains the workflows behind these steps. [Design judgment and process](/process) goes deeper into the decisions. The optional [pair sessions](/resources#pair-sessions) are available when learning together would help.
+[Skills](/skills) explains the workflows behind these steps. [Design judgment and process](/process) goes deeper into the decisions. The optional [pair sessions](/resources#pair-sessions) are available when learning together would help.

@@ -60,7 +60,7 @@ jobs:
         if: steps.brief.outcome == 'success' && env.BRIEF_DRY_RUN != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions
+        run: gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY"
 
       - name: Notify on failure
         if: failure()

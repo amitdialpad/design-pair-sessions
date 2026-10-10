@@ -1,7 +1,5 @@
 # Start here
 
-Step 1 of 4 · [Next: Build a prototype →](/prototyping)
-
 Start with a question about an experience. What do you need to understand by using it? A prototype might help you compare layouts, test a flow, or see whether an idea handles realistic data.
 
 ## Choose Studio or Beacon

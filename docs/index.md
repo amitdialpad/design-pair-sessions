@@ -2,7 +2,7 @@
 outline: false
 ---
 
-# Design with AI
+# Designing with AI
 
 <p class="home-subtitle">Build and test prototypes with Studio and Beacon</p>
 
@@ -34,7 +34,7 @@ For work customers will see or another team depends on, check in with those peop
 
 ## Already working on something?
 
-Use [Skills and tools](/toolkit) to find a workflow, or [Quick reference](/cheat-sheet) for a prompt. [Design judgment and process](/process) goes deeper into framing, exploration, and evaluating agent output.
+Use [Skills](/skills) to find a workflow, [Tools](/tools) to understand the available apps and connectors, or [Quick reference](/cheat-sheet) for a prompt. [Design judgment and process](/process) goes deeper into framing, exploration, and evaluating agent output.
 
 <span id="what-s-new-in-beacon"></span>
 <span id="beacon-brief"></span>

@@ -2,6 +2,14 @@
 
 References for building and evaluating prototypes in Studio and Beacon. Start with the [four-step guide](/start-here) when you are new.
 
+## Find a reference
+
+- [Skills](/skills): workflows, when to use them, and what they produce.
+- [Tools](/tools): apps, connectors, and lookup tools.
+- [Quick reference](/cheat-sheet): syntax and common prompts.
+- [Studio controls and releases](/studio): the shell, version pins, and announced additions.
+- [Design judgment and process](/process): framing, exploration, and evaluation.
+
 ## Further reading
 
 | What | Why |
@@ -20,7 +28,7 @@ References for building and evaluating prototypes in Studio and Beacon. Start wi
 
 ## Design repo documentation
 
-These live in the [Design monorepo](https://github.com/dialpad/design). Ask your agent to read the current file for your target app; shared workflows and app-specific guidance now live in different places.
+These live in the [Design monorepo](https://github.com/dialpad/design). These links require access to Dialpad’s GitHub organization. Ask your agent to read the current file for your target app; shared workflows and app-specific guidance now live in different places.
 
 | Document | What you'll find |
 |----------|-----------------|
@@ -39,11 +47,11 @@ Use `skill-search` for the live inventory, and [Prototyping in Beacon and Studio
 | [Claude Code](https://claude.com/claude-code) | AI pair partner. Describe what you want, it builds. Works with the Design repo's shared skills. |
 | [Dialtone](https://dialtone.dialpad.com) | Dialpad's design system. Components, tokens, icons, utilities, content guidelines. |
 | Dialtone MCP | Search components, icons, and tokens from within Claude. Claude knows the design system. |
-| [Figma MCP](https://www.figma.com/community/plugin/Claude-MCP) | Point Claude at a Figma frame URL, get a code starting point. Bridge between Figma and code. |
+| [Figma MCP](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server) | Point Claude at a Figma frame URL, get a code starting point. Bridge between Figma and code. |
 | Jira MCP / CLI | Pull ticket context, related tickets, acceptance criteria into Claude. [Jira CLI setup](https://github.com/ankitpokhrel/jira-cli). |
 | Amplitude MCP | User behavior data, funnels, drop-offs directly in Claude conversations. |
 | [GitHub CLI](https://cli.github.com) | Create PRs, manage branches from the terminal. Used by Beacon's `/pr-create` command. |
-| [Skill Creator](https://claude.com/plugins/skill-creator) | Build, test, and compare Claude skills without code. Install via `/plugin` in Claude, find `skill-creator` under `claude-plugins-official`. |
+| [Skill Creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) | Anthropic’s skill for creating, testing, and improving skills. See the repository for current setup instructions. |
 
 ## Dialtone references
 
@@ -52,7 +60,7 @@ Use `skill-search` for the live inventory, and [Prototyping in Beacon and Studio
 | Components | [dialtone.dialpad.com/components](https://dialtone.dialpad.com/components/) |
 | Utility CSS | [dialtone.dialpad.com/utilities](https://dialtone.dialpad.com/utilities/) |
 | Design tokens | [dialtone.dialpad.com/tokens](https://dialtone.dialpad.com/tokens/) |
-| Icons | [dialtone.dialpad.com/icons](https://dialtone.dialpad.com/icons/) |
+| Icons | [Icon component and usage](https://dialtone.dialpad.com/components/icon.html) |
 | Content guidelines | [dialtone.dialpad.com/guides/content](https://dialtone.dialpad.com/guides/content/) |
 
 
@@ -95,7 +103,6 @@ The original guided sessions are still here if you want to work through the proc
 - [The process](/process) for the design workflow
 - [The toolkit](/toolkit) for every command explained for designers
 - [Quick reference](/cheat-sheet) for skill syntax and common prompts
-- [Project IRL](/story) for the full arc
 - [Updates](/updates) for Beacon changes and weekly briefs
 - [Toolkit changes](/whats-new) for detected skill and agent changes
 - #ai-coding on Dialpad

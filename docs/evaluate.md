@@ -1,7 +1,5 @@
 # Evaluate and iterate
 
-[← Build a prototype](/prototyping) · Step 3 of 4 · [Next: Share your work →](/share)
-
 An agent saying “done” is your cue to use the prototype. Walk through the experience as the person it is designed for, starting from where they would actually enter.
 
 ## Check the question you started with
@@ -34,6 +32,10 @@ at a narrow viewport too.
 ```
 
 Fixes can also reveal a design decision. If the agent proposes a different interaction, evaluate that choice before letting it spread across the prototype.
+
+## Make decisions easier to review
+
+When there are several options, ask the agent for a reviewable artifact: a side-by-side comparison, a list with toggles, or a plan with a place to comment. Use it to make specific decisions, then have the agent record those decisions in the source plan so they survive the session.
 
 ## Repeat the loop
 

@@ -36,7 +36,7 @@ jobs:
         if: steps.sync.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run deploy.yml --repo amitdialpad/design-pair-sessions
+        run: gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY"
 
       - name: Notify on failure
         if: failure()
