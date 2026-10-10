@@ -50,7 +50,7 @@ Schema version 2 requires:
 
 ## Delivery protection
 
-The final report recipient list is stored in the protected `PULSE_RECIPIENTS` repository secret rather than exposed in this public repository. It must contain exactly five unique `@dialpad.com` addresses, including `amit.ayre@dialpad.com`. Any missing, additional, duplicate, non-Dialpad, Cc, or Bcc recipient fails before SMTP. The internal Glean relay draft remains addressed only to `amit.ayre@dialpad.com`.
+The final report recipient list is stored in the protected `PULSE_RECIPIENTS` repository secret rather than exposed in this public repository. It must contain exactly five unique `@dialpad.com` addresses, including `amit.ayre@dialpad.com`. All five recipients, including Amit, are placed in Bcc; To contains only `undisclosed-recipients:;` and Cc is absent. SMTP removes the Bcc header from the transmitted message while delivering to the protected list. Any missing, additional, duplicate, non-Dialpad, or visible final recipient fails before SMTP. The internal Glean relay draft remains addressed only to `amit.ayre@dialpad.com`.
 
 The live email and failure notification use deterministic IST-date Message-IDs. Gmail Sent is checked before delivery, so retries and fallback schedules cannot send duplicates. The email contains no attachments or machine JSON.
 
@@ -84,9 +84,9 @@ Expected application failures use the existing once-per-IST-date failure alert. 
 3. Preview the Agent and confirm a complete schema-v2 snapshot with no source writes.
 4. Publish only after the preview validates.
 5. Run GitHub with `dry_run=true`.
-6. Confirm one private body-only draft, no SMTP call, exactly the three approved final recipients, no attachments, no machine JSON, and a readable verified-signal matrix.
+6. Confirm one private body-only draft, no SMTP call, exactly the five approved final recipients in Bcc, no attachments, no machine JSON, and a readable verified-signal matrix.
 7. Only then run live once.
-8. Confirm Gmail accepts one email addressed simultaneously to the five recipients in the protected allowlist.
+8. Confirm Gmail accepts one email delivered simultaneously to the five recipients in the protected allowlist without exposing their addresses.
 9. Re-run live and confirm `duplicate_skipped`.
 
 Fixtures prove structure only. They never prove real customer facts.

@@ -217,4 +217,4 @@ After every gate passes, create exactly one Gmail draft:
 
 Never send the internal draft manually. The approved GitHub relay validates it, removes the machine block, renders the verified-signal matrix as HTML, and sends only the body-only user email with the existing deterministic Message-ID.
 
-The final user-facing email is addressed simultaneously to exactly five approved Dialpad recipients stored in the protected workflow configuration, including Amit. The private internal relay draft remains addressed only to Amit.
+The final user-facing email is addressed simultaneously to exactly five approved Dialpad recipients stored in the protected workflow configuration, including Amit, all in Bcc. To contains only `undisclosed-recipients:;` and Cc is absent. Recipient addresses are removed from the transmitted headers. The private internal relay draft remains addressed only to Amit.

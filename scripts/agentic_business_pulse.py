@@ -202,7 +202,13 @@ def enforce_message_recipient_contract(
     message: Message,
     *,
     expected_recipients: tuple[str, ...],
+    bcc_only: bool = False,
 ) -> None:
+    if bcc_only:
+        if message.get_all("To", []) != ["undisclosed-recipients:;"] or message.get_all("Cc", []):
+            raise ValidationError("Final Pulse recipients must be hidden in Bcc")
+    elif message.get_all("Cc", []) or message.get_all("Bcc", []):
+        raise ValidationError("Internal relay drafts must use To only")
     recipient_headers = (
         message.get_all("To", [])
         + message.get_all("Cc", [])
@@ -1470,13 +1476,14 @@ def build_email_message(
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
     message["From"] = f"Weekly Agentic Customer Review <{sender}>"
-    message["To"] = recipient
+    message["To"] = "undisclosed-recipients:;"
+    message["Bcc"] = recipient
     message["Message-ID"] = message_id
     message["X-Dialpad-Pulse-Date"] = report_date
     message["X-Dialpad-Pulse-Mode"] = "dry-run" if dry_run else "live"
     message.set_content(report)
     message.add_alternative(markdown_to_email_html(report), subtype="html")
-    enforce_message_recipient_contract(message, expected_recipients=expected_recipients)
+    enforce_message_recipient_contract(message, expected_recipients=expected_recipients, bcc_only=True)
     return message
 
 
@@ -1946,14 +1953,14 @@ class GmailArchive:
 
 def send_gmail(message: EmailMessage, config: PulseConfig) -> dict[str, Any]:
     expected_recipients = approved_report_recipients(config.recipient)
-    enforce_message_recipient_contract(message, expected_recipients=expected_recipients)
+    enforce_message_recipient_contract(message, expected_recipients=expected_recipients, bcc_only=True)
     if not config.gmail_user or not config.gmail_password:
         raise IntegrationError("GMAIL_USER and GMAIL_APP_PASSWORD are required")
     try:
         with smtplib.SMTP(config.smtp_host, 587, timeout=60) as server:
             server.starttls(context=ssl.create_default_context())
             server.login(config.gmail_user, config.gmail_password)
-            refused = server.send_message(message)
+            refused = server.send_message(message, to_addrs=expected_recipients)
     except (smtplib.SMTPException, OSError) as error:
         raise IntegrationError(f"Gmail send failed: {error}") from error
     if refused:
