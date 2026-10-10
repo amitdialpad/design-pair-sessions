@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-10T03:00:41.344188+00:00",
+  "generated": "2026-10-10T14:53:02.076901+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -8,11 +8,11 @@
     },
     {
       "path": ".agents/skills/breadboard-reflection/SKILL.md",
-      "sha": "c4945ca4bd5b8ccb39450388518af6686e383486"
+      "sha": "85be56affc7b4e2e38f7681ec48f8ee1f07f13e8"
     },
     {
       "path": ".agents/skills/breadboard/SKILL.md",
-      "sha": "777ed51580fc78babd015f08808544cb83590e8e"
+      "sha": "3efc29ddbb05957af4e3929ec6f3fc64fc3d52ef"
     },
     {
       "path": ".agents/skills/bug-hunt/SKILL.md",
@@ -51,6 +51,10 @@
       "sha": "8369ad0ec9c0b3fff1a08855dd1a626eaa758763"
     },
     {
+      "path": ".agents/skills/design-spec/SKILL.md",
+      "sha": "f88a385502203fdcb90c0489bd7fae6b45eee4b0"
+    },
+    {
       "path": ".agents/skills/dialtone-usage/SKILL.md",
       "sha": "48e09fa0c2653d90a2b83ae903bf7884abb98625"
     },
@@ -64,7 +68,7 @@
     },
     {
       "path": ".agents/skills/framing-doc/SKILL.md",
-      "sha": "8dbe3718f2645b21b362690a2ae9919dde71e9a3"
+      "sha": "26ad213cd14402e92cfd94ce457daea3ad938d9d"
     },
     {
       "path": ".agents/skills/jira/SKILL.md",
@@ -72,7 +76,7 @@
     },
     {
       "path": ".agents/skills/kickoff-doc/SKILL.md",
-      "sha": "173618443d96b02f53e8f8959030735627851983"
+      "sha": "05373df24cd4a4baf5da877f1fcae7b4b362c102"
     },
     {
       "path": ".agents/skills/migrate-vue-component/SKILL.md",
@@ -104,7 +108,7 @@
     },
     {
       "path": ".agents/skills/pr-reviewer/SKILL.md",
-      "sha": "b0aea346a615f336968ef2bdd86fbf7e087e9075"
+      "sha": "900c075bfea43f0f7711e3137b05082decdd84c5"
     },
     {
       "path": ".agents/skills/pr-stack/SKILL.md",
@@ -120,15 +124,15 @@
     },
     {
       "path": ".agents/skills/prompt-creator/SKILL.md",
-      "sha": "24feb5853b01a528a6bf8ff505075cef4794caa3"
+      "sha": "3d50761af7f0646696c2ac64e3b21a0dba17ff52"
     },
     {
       "path": ".agents/skills/prototype-builder/SKILL.md",
-      "sha": "37cd53485ef058b6cdba7a16a679f6383cd1ae41"
+      "sha": "3e55627f0e15d5868ab6b45be0e2f639235bbdf3"
     },
     {
       "path": ".agents/skills/shaping/SKILL.md",
-      "sha": "c38ea675a99744630d82d6f0d97bb2cde4c094f8"
+      "sha": "d338d1b629d23d64cebb6115b0ab3d997f38b342"
     },
     {
       "path": ".agents/skills/skeptic-review/SKILL.md",
@@ -140,7 +144,7 @@
     },
     {
       "path": ".agents/skills/skill-search/SKILL.md",
-      "sha": "f9ed9d5ad7ce7417caa474c7720db8fe7b39be03"
+      "sha": "3d12f18b5e988961bfe218f1a005375a19a6ffe1"
     },
     {
       "path": ".agents/skills/step-by-step-execution/SKILL.md",
@@ -175,12 +179,20 @@
       "sha": "c0c7d68c9753b2a68bf4e8cb68640f4b9881131e"
     },
     {
+      "path": ".claude/agents/spec-reviewer.md",
+      "sha": "a8fd194f5099144e2301ac396ccf11c39abdc00c"
+    },
+    {
       "path": ".codex/agents/prototype-implementer.toml",
       "sha": "154bf480b2e851e67618db72d94620026970f4c8"
     },
     {
       "path": ".codex/agents/skeptic-reviewer.toml",
       "sha": "b623c3533cbc9a726797b9381958d5a7b514a2cf"
+    },
+    {
+      "path": ".codex/agents/spec-reviewer.toml",
+      "sha": "0ba437de6ca22604dfae5b3aa7f33a1012d1a46e"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/README.md",
@@ -288,11 +300,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/breadboard-reflection.local.md",
-      "sha": "6a3dbbdc7668cef96552ff33fc56b294eacf199a"
+      "sha": "3a425ae29edf04f72e594c0b0aba9faef1ecc4e4"
     },
     {
       "path": "apps/beacon/.agents/skills/breadboard.local.md",
-      "sha": "7898dff32d65266ea0a332d33b00484c1aca9a45"
+      "sha": "d62809118d4527c39642d5522b3f4a2f2860ca89"
     },
     {
       "path": "apps/beacon/.agents/skills/bug-hunt.local.md",
@@ -304,7 +316,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/comment-audit.local.md",
-      "sha": "6ff117b64dd6bcc6a96540d1ae0d2942c48f63f1"
+      "sha": "d3d5b7c19393f51dc739a3f953cf6c7fe7020567"
     },
     {
       "path": "apps/beacon/.agents/skills/component-work.local.md",
@@ -336,7 +348,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/docs-audit.local.md",
-      "sha": "0f8e46d768bdfb18529f75b2fe26b525ead6c6f3"
+      "sha": "e926435350d7d6b069ccc2feadaf97f86b70b3df"
     },
     {
       "path": "apps/beacon/.agents/skills/feature-flags/SKILL.md",
@@ -348,7 +360,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/framing-doc.local.md",
-      "sha": "e6faaa969c534d9e6d9453387caca67ff287a9df"
+      "sha": "d268b7e4930eed5aebccbdb452cf7e40adeba3ee"
     },
     {
       "path": "apps/beacon/.agents/skills/frontend-patterns/SKILL.md",
@@ -360,7 +372,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/kickoff-doc.local.md",
-      "sha": "3e63c2316fecd129aef93ceb585e6e8302da025f"
+      "sha": "81f356146d386b501261f1ef0e994ceb4c8aaec2"
     },
     {
       "path": "apps/beacon/.agents/skills/meeting/SKILL.md",
@@ -392,11 +404,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/pr-prep.local.md",
-      "sha": "30685e0aea24e287bea26b529a495d88904e45bd"
+      "sha": "98bda5870a0a0b81216f2d212e22cf1f4ddbbc93"
     },
     {
       "path": "apps/beacon/.agents/skills/pr-reviewer.local.md",
-      "sha": "0af72c29c8d45f73bc123cb196c5d7bbe763d53e"
+      "sha": "89da9fe243b8e933a344baff92dec052c4111e28"
     },
     {
       "path": "apps/beacon/.agents/skills/project-start.local.md",
@@ -404,11 +416,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/prompt-creator.local.md",
-      "sha": "b0447ad8fb90326fb3517b0a7f469c728f767d64"
+      "sha": "1601b871e718dd5942fedadd956b11ace672871e"
     },
     {
       "path": "apps/beacon/.agents/skills/prototype-builder.local.md",
-      "sha": "6fd66e6bc04e5be9528686bca2360e3d3255be9f"
+      "sha": "4970c9c6fb6e9f762dd7f61a1f9be6c24e0c87b3"
     },
     {
       "path": "apps/beacon/.agents/skills/prototype-migrate/SKILL.md",
@@ -416,7 +428,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/shaping.local.md",
-      "sha": "1155e3b5dfba809660426dec5b6b636ff90a4fff"
+      "sha": "fa4f5783e4d9d6e1be7ae5c1f6d9d76b22a750f5"
     },
     {
       "path": "apps/beacon/.agents/skills/skill-rename.local.md",
@@ -424,11 +436,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/step-by-step-execution.local.md",
-      "sha": "01d58e9bc12bc5f60e569d1d91e6ed78600bc0c3"
+      "sha": "95afbe0c53ae6608b89628f6ea1cbb782c60163f"
     },
     {
       "path": "apps/beacon/.agents/skills/test-audit.local.md",
-      "sha": "2d55773314224474c3707664437bdf7858970cc6"
+      "sha": "0e8d742a2b3a7a98af3501b74160cf8592890384"
     },
     {
       "path": "apps/beacon/.agents/skills/test-create.local.md",
@@ -676,11 +688,11 @@
     },
     {
       "path": "apps/design/.agents/skills/framing-doc.local.md",
-      "sha": "82b55b4cb53eb0b4038938707dac07652d161c39"
+      "sha": "289c083cd04f23658b8c0ec5941956ea353c2fe0"
     },
     {
       "path": "apps/design/.agents/skills/kickoff-doc.local.md",
-      "sha": "30f2135aa74712141d1cdba71c039ec9ffde6fc5"
+      "sha": "7415a90b451f808b5e829b9605fe67e0bba372e0"
     },
     {
       "path": "apps/design/.agents/skills/pr-prep.local.md",
@@ -688,7 +700,7 @@
     },
     {
       "path": "apps/design/.agents/skills/shaping.local.md",
-      "sha": "fa37c10a72852a64457d75889e83ac8c8ff64399"
+      "sha": "d339bbfb623cc3632a9b2c5f27fc923deac56fc7"
     },
     {
       "path": "apps/studio/.agents/skills/dialtone-usage.local.md",
@@ -700,11 +712,11 @@
     },
     {
       "path": "apps/studio/.agents/skills/prototype-builder.local.md",
-      "sha": "18d74bcb2b6e5008f1bb86e920e69ed0bebecf89"
+      "sha": "42f209db578aedecf28c13b376c36e47df29a472"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-create/SKILL.md",
-      "sha": "2f00c2332ce38ad5cb8d4eff30f60a28af476be7"
+      "sha": "b53a7995501919c40c68d7af4b32d4b230dca60a"
     },
     {
       "path": "apps/studio/.agents/skills/shaping.local.md",
