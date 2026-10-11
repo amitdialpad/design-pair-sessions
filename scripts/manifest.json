@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-10T14:53:02.076901+00:00",
+  "generated": "2026-10-11T15:10:06.866139+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -100,11 +100,11 @@
     },
     {
       "path": ".agents/skills/pr-create/SKILL.md",
-      "sha": "7ce70289d752c4b156487d12c1ccebc4923cef26"
+      "sha": "4731294089bbcad5d72b118032d707db7ff02f83"
     },
     {
       "path": ".agents/skills/pr-prep/SKILL.md",
-      "sha": "99b8c97608d83c2ce3d84490dcfb6d766c9ed3b9"
+      "sha": "d264ee51b2da1214cee886b266d8af5fdd379eed"
     },
     {
       "path": ".agents/skills/pr-reviewer/SKILL.md",
@@ -120,7 +120,7 @@
     },
     {
       "path": ".agents/skills/project-start/SKILL.md",
-      "sha": "f9ced9064726356dd9a6ac1af1294ca3c01e58dd"
+      "sha": "e9e4b8811ca67a93052092498b3d2f7e35763464"
     },
     {
       "path": ".agents/skills/prompt-creator/SKILL.md",
@@ -128,7 +128,7 @@
     },
     {
       "path": ".agents/skills/prototype-builder/SKILL.md",
-      "sha": "3e55627f0e15d5868ab6b45be0e2f639235bbdf3"
+      "sha": "ac704b75f209a31c5c91bac64cd46ddf2a175b28"
     },
     {
       "path": ".agents/skills/shaping/SKILL.md",
@@ -404,7 +404,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/pr-prep.local.md",
-      "sha": "98bda5870a0a0b81216f2d212e22cf1f4ddbbc93"
+      "sha": "a1c5bedd4a4d05ae913972f16d94a3b8b1a04033"
     },
     {
       "path": "apps/beacon/.agents/skills/pr-reviewer.local.md",
@@ -696,7 +696,7 @@
     },
     {
       "path": "apps/design/.agents/skills/pr-prep.local.md",
-      "sha": "8262747b864acc41f35e9078570fa50bdeb0faa3"
+      "sha": "71e46c4809f6a79faf562029bf5758415f3442f4"
     },
     {
       "path": "apps/design/.agents/skills/shaping.local.md",
@@ -708,15 +708,15 @@
     },
     {
       "path": "apps/studio/.agents/skills/pr-prep.local.md",
-      "sha": "63dde692e6402217bedae2980e76039eea1371a7"
+      "sha": "76e21360f8a65bb07f9c4e1856ca25f00fc64656"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-builder.local.md",
-      "sha": "42f209db578aedecf28c13b376c36e47df29a472"
+      "sha": "8e46c837f5674846360b6f3063adb8db26df74c7"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-create/SKILL.md",
-      "sha": "b53a7995501919c40c68d7af4b32d4b230dca60a"
+      "sha": "62c7d303b9e41155e5ae83601d3bf6fbb2a84cd5"
     },
     {
       "path": "apps/studio/.agents/skills/shaping.local.md",
