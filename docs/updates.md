@@ -1488,8 +1488,6 @@ Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical
 
 **[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
 
-Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
-
 ---
 
 **[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
@@ -1528,5 +1526,5 @@ Security teams at Comcast and Booz Allen used Claude Mythos-class models through
 
 :::
 
-*Updated October 10, 2026*
+*Updated October 11, 2026*
 <!-- CLAUDE_FEED_END -->
