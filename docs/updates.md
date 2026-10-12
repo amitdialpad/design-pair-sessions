@@ -386,6 +386,50 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 5–11 Oct 2026
+
+9 changes merged into Beacon this week: Add mark all as read to Threads; Keep thread replies, notifications, and read state in sync; Refuse to overwrite existing messages when days are appended to a generated company; Recount read-state unread counts from the merged messages when days are appended; Publish only what is new in later generated-company runs and refuse drift in older history; Move Beacon read state to the unified read-attention model; Publish generated companies to the generated-companies database with one idempotent run; Measure generated companies on a real database and deploy their indexes; Preserve live replies and read progression. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Add mark all as read to Threads](https://github.com/dialpad/design/pull/182)** (dialpad/design#182). Threads had no way to clear the complete subscribed-thread set. People had to handle unread threads individually, and acting only on the loaded page would miss threads hidden by filters, pagination, or mute state. This PR adds a thread-only **Mark all as read** action to the /threads header. It updates the current view immediately, commits every eligible subscribed thread in one transaction, and converges Inbox, badges, and other open contexts without changing ordinary conversation read state.
+- **[Keep thread replies, notifications, and read state in sync](https://github.com/dialpad/design/pull/179)** (dialpad/design#179). Thread behavior in Beacon was inconsistent in five ways: - A user could not control whether they follow a thread. - A thread mute and a channel mute silenced a thread together, so a thread set to "all replies" could not override a muted channel. - A reply appeared only after its write finished. - A reply synced from another tab reloaded the open thread, which dropped pending replies and the scroll position. - A deleted reply still counted and came back after a reload. This PR makes 👀 the subscription switch, resolves notification settings most-specific first, and applies replies, edits and deletes in place.
+- **[Refuse to overwrite existing messages when days are appended to a generated company](https://github.com/dialpad/design/pull/171)** (dialpad/design#171). pnpm mock:world generate can silently overwrite messages that are already in a stored bundle. A message id is derived from its interaction and a run id. An append re-plans a trailing window using only the sessions before it, so in a continuing conversation it can regenerate an id that an existing message holds, with different text, sender and time. The merge replaces rows by id, so the old message is gone and anything that pointed at it (notifications, read states, thread parents) now points at the wrong one. On the synthetic company-one fixture, 6 of the 133 original messages were changed or lost after two appends on the commit before DDT-2237. The bundle audit added in DDT-2237 only notices when a notification is left pointing at a replaced message ("resolves 0 index sources"), so most of it passed.
+- **[Recount read-state unread counts from the merged messages when days are appended](https://github.com/dialpad/design/pull/170)** (dialpad/design#170). Since DDT-2237 added the bundle audit, a second pnpm mock:world generate on a stored bundle fails with read state unread_count N disagrees with last_read_at (expected M). A read state's unread_count is the number of main-feed messages from other people after its last_read_at. Each append plans only its own window, so a count it carried was partial, and a read state whose last_read_at lies before the window was not carried at all and kept the count from before the append. Counts ended up off by one in both directions. This PR recounts every read state from the merged messages after each interval is merged, using the same counting helper the audit uses.
+- **[Publish only what is new in later generated-company runs and refuse drift in older history](https://github.com/dialpad/design/pull/163)** (dialpad/design#163). After #160, every pnpm firebase:generated:run staged the whole company and compared every stored history document, about 30,800 reads to add one day, growing with the history. The run also had no way to tell that the history it was not resending had changed since it was published. This PR makes a run send only what is new since the company's generated-through cutoff, and refuses to run when the older history in the bundle is not the history that was published. The first run still sends everything.
+- **[Move Beacon read state to the unified read-attention model](https://github.com/dialpad/design/pull/166)** (dialpad/design#166). Beacon tracked read state twice. Conversations kept the legacy last_read_message_id / last_read_timestamp fields on memberships, while threads, the Inbox and notifications each derived unread state their own way. The views disagreed: - Rows flashed read and then unread on load. - The Inbox badge read 99+ while rows showed a handful of unread messages. - Thread replies notified people who didn't follow the thread. - Every plain channel message created a notification. This PR removes the legacy fields and compatibility code and makes one cursor model the only source of truth: - Each conversation membership has read_through_index_item_id. - Threads have independent read states and an explicit subscription. - One shared attention summary is primed before first paint and drives every count surface.
+- **[Publish generated companies to the generated-companies database with one idempotent run](https://github.com/dialpad/design/pull/160)** (dialpad/design#160). After #151 and #154, publishing a generated company to Firestore meant running provision, publish and promote by hand. Nothing checked that the composite indexes existed before a run became active. The run id was typed, so a retry could publish twice. No record said who ran it or how it went. A publish that stopped part-way could exit with code 0. The only real database was data-engine-spike, which is not meant to be the final home of this data. This PR adds pnpm firebase:generated:run, which publishes a company as one run and refuses to promote it unless every check passes. It also moves the generated-company tooling to a new generated-companies database. The first real publish to that database is below.
+- **[Measure generated companies on a real database and deploy their indexes](https://github.com/dialpad/design/pull/154)** (dialpad/design#154). #151 proves the access rules in the emulator, but the emulator does not enforce composite indexes, bill the reads rules make, or show real latency. Until something runs against a real database, DDT-1899 cannot be told which indexes the gateway needs, what opening the app costs, or whether the model holds on Firestore. This PR measures the model in the emulator and on the real data-engine-spike database, derives the composite indexes from the gateway's own queries, and deploys them. The real run published all of Aerolabs, read 72 people through the deployed rules and indexes with no failed read, and was erased afterward.
+- **[Preserve live replies and read progression](https://github.com/dialpad/design/pull/152)** (dialpad/design#152). Two edge cases remained after #150: This follow-up stages failed direct transforms behind the existing pending-reply recovery path. It also resumes read advancement only when classification coverage proves the cursor is known, preserving fail-closed behavior across unclassified gaps.
+
+#### The bigger shift
+
+This was a focused week with 9 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+No follow-on work was explicitly announced in this week's merged Beacon changes.
+
+#### Try this
+
+Open `/threads` with unread subscribed threads, click **Mark all as read**, and verify the label stays visible while the double-check icon becomes a loader, then the unread rows and badges clear.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Add mark all as read to Threads, Keep thread replies, notifications, and read state in sync, Refuse to overwrite existing messages when days are appended to a generated company, Recount read-state unread counts from the merged messages when days are appended, Publish only what is new in later generated-company runs and refuse drift in older history, Move Beacon read state to the unified read-attention model, Publish generated companies to the generated-companies database with one idempotent run, Measure generated companies on a real database and deploy their indexes, Preserve live replies and read progression.
+
+---
+
 ### Week of 28 Sep–4 Oct 2026
 
 8 changes merged into Beacon this week: Secure generated companies with Firestore rules and a sharing policy; Open threads at the first unread reply; Promote generated companies and read them through a browser gateway; Stage generated companies in the Firestore emulator; Add durable per-user thread read state; Add the Aerolabs source adapter and publication preview; Add generated-company publication contract and recording target; Consolidate world-contract and world-core as @dialpad/world-engine. The details below come directly from the merged monorepo PRs.
@@ -505,7 +549,7 @@ Open a receptionist with all three skills configured and confirm the metric card
 
 The week's Beacon record is Enable sidebar devtools on dialpad.design production environment, AI Receptionist analytics overview.
 
----
+:::details View September 2026
 
 ### Week of 7–13 Sep 2026
 
@@ -1422,6 +1466,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
