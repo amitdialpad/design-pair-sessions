@@ -6,6 +6,23 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-12
+
+### Modified
+
+- `.agents/skills/test-create/SKILL.md`
+- `apps/beacon/.agents/resources/rules/testing.md`
+- `apps/beacon/.agents/skills/step-by-step-execution.local.md`
+- `apps/beacon/.agents/skills/test-audit.local.md`
+- `apps/beacon/.agents/skills/test-create.local.md`
+- `apps/studio/.agents/skills/prototype-create/SKILL.md`
+
+### Removed
+
+- `.agents/skills/unit-testing/SKILL.md`
+
+---
+
 ## 2026-10-11
 
 ### Modified

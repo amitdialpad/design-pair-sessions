@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-11T15:10:06.866139+00:00",
+  "generated": "2026-10-12T18:18:55.326000+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -156,11 +156,7 @@
     },
     {
       "path": ".agents/skills/test-create/SKILL.md",
-      "sha": "bbec59a1ec616e3714bc9b5165801aff7ae67940"
-    },
-    {
-      "path": ".agents/skills/unit-testing/SKILL.md",
-      "sha": "95a2b3f754c329ec3344509ff66bd53370c96a2a"
+      "sha": "68cad96ad568a3261204fc0edec081d7c556c04f"
     },
     {
       "path": ".agents/skills/workflow-edit/SKILL.md",
@@ -276,7 +272,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/testing.md",
-      "sha": "580f500222ab9a526b6af7aa9399487ff6005650"
+      "sha": "772f1715c9a6f30b2a797afd841393a3656f23fe"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/theme.md",
@@ -436,15 +432,15 @@
     },
     {
       "path": "apps/beacon/.agents/skills/step-by-step-execution.local.md",
-      "sha": "95afbe0c53ae6608b89628f6ea1cbb782c60163f"
+      "sha": "9ab3df576b7f911d9af0c024cbc4325a73c0ddee"
     },
     {
       "path": "apps/beacon/.agents/skills/test-audit.local.md",
-      "sha": "0e8d742a2b3a7a98af3501b74160cf8592890384"
+      "sha": "7508d43cce1f502a6c8e488c330927a9570641f2"
     },
     {
       "path": "apps/beacon/.agents/skills/test-create.local.md",
-      "sha": "b070f858100c24836d5a681f71274784f3ec51de"
+      "sha": "fc42b5892301f88763020b683dbe095deadea87b"
     },
     {
       "path": "apps/beacon/.claude/agents/code-refactor-master.md",
@@ -716,7 +712,7 @@
     },
     {
       "path": "apps/studio/.agents/skills/prototype-create/SKILL.md",
-      "sha": "62c7d303b9e41155e5ae83601d3bf6fbb2a84cd5"
+      "sha": "f8e75006142848e4b8acf4c093af0af4888fd3ac"
     },
     {
       "path": "apps/studio/.agents/skills/shaping.local.md",
