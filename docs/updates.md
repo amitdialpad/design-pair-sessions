@@ -8,6 +8,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:528470ced4c3cb85b77b3621b8861afc0812f76f -->
+
+**Re-project the support rows after an append instead of merging them by date**
+
+Once appends stopped reusing stored message ids (DDT-2402), a full mock:world append on the synthetic fixture still failed the bundle audit. The merge keeps a candidate row when its date falls inside the new interval, but the per-user support rows (conversation subscriptions, read states, thread read states, notifications, sidebar groups) are functions of the whole merged history. Thread read states carry no date, so the merge kept every row of the re-planned window: after a 46-day append, 109 of 115 rows pointed at thread parents the merge had dropped. Notifications and read cursors drifted for the same reason, and the audit did not judge them. This PR re-projects the support rows from t...
+
+<span class="release-meta">[dialpad/design#215](https://github.com/dialpad/design/pull/215) · 13 October 2026</span>
+
+---
+
+<!-- beacon-change:18d97404b031a79f8b3170662a9c24f4c71345f6 -->
+
+**Show shared thread links as a read-only preview, never an access grant**
+
+Opening a shared thread link loaded the thread for anyone who had the link. It worked the same way for a private channel, a group or someone else's DM. A non-member of a public channel got the full panel, including reply, reactions and edit. Opening a private channel's feed by slug showed its title, Join notice and sidebar entry, so a visitor could tell it existed. Each thread scope now gets one access decision, and every thread view and the feed route share the same access rules: - A public-channel non-member sees a read-only preview. - A private conversation shows nothing and is handled exactly like a slug that does not exist. - Losing access while viewing replaces the content in place.
+
+<span class="release-meta">[dialpad/design#209](https://github.com/dialpad/design/pull/209) · 13 October 2026</span>
+
+---
+
+<!-- beacon-change:b7e4498fbe01121017f49be1aaa8fa2744a373c6 -->
+
+**Continue the planner's ids when appending days to a generated company**
+
+Appending days to a generated company (pnpm mock:world --company <key> --through <day>) failed at the overwrite guard. generate re-plans the trailing 30 days and restarts the planner's per-family id counters, so the new messages reuse the ids of stored ones. The guard from DDT-2366 correctly refuses, which is why a one-day append to the committed Aerolabs bundle stopped with "would overwrite 111 existing messages by reusing their ids". This PR stores the planner's ending counters, its Contact transitions and a planner version in the manifest history (history.planningHistory) and feeds them back to the planner on the next append. New ids continue the stored ones, so no stored message is re...
+
+<span class="release-meta">[dialpad/design#210](https://github.com/dialpad/design/pull/210) · 13 October 2026</span>
+
+---
+
 <!-- beacon-change:f96f27d8b7e9bfcddd5c9a033d6d697a346e0781 -->
 
 **Add mark all as read to Threads**
@@ -58,6 +88,8 @@ After #160, every pnpm firebase:generated:run staged the whole company and compa
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:3e8ea72a2b35217e07b474c427e93f9ead49fe7d -->
 
 **Move Beacon read state to the unified read-attention model**
@@ -87,8 +119,6 @@ After #151 and #154, publishing a generated company to Firestore meant running p
 <span class="release-meta">[dialpad/design#154](https://github.com/dialpad/design/pull/154) · 5 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:59ccf7bd840dd441092ee11c51e7a3805eabf8c2 -->
 
