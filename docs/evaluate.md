@@ -20,6 +20,8 @@ Can you now evaluate the layout, interaction, or flow you wanted to test? Look f
 
 In Beacon, also check the relevant roles, permissions, and feature-flag states. In Studio, test every setting and variant you requested: the controls should change the experience in a useful way.
 
+Check what each control actually changes. A background switch may affect the page when you intended it to affect a notification. For counts and responsive layouts, test intermediate values as well as the smallest and largest cases: a few preset examples can hide a layout problem. A close visual match to Figma is a starting point; use the prototype to evaluate the behavior and missing-content states too.
+
 ## Give feedback the agent can act on
 
 Describe what you did, what happened, what you expected, and why it matters.

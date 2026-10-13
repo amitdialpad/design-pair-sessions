@@ -31,6 +31,7 @@ export default defineConfig({
           { text: 'Quick reference', link: '/cheat-sheet' },
           { text: 'Design judgment and process', link: '/process' },
           { text: 'Reference links', link: '/resources' },
+          { text: 'Agent starter download', link: '/agent-starter' },
           { text: 'Studio controls and releases', link: '/studio' },
         ],
       },

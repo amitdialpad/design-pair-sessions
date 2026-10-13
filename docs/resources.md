@@ -5,6 +5,7 @@ References for building and evaluating prototypes in Studio and Beacon. Start wi
 ## Find a reference
 
 - [Skills](/skills): workflows, when to use them, and what they produce.
+- [Agent starter](/agent-starter): downloadable Markdown guidance to use with Claude or Codex.
 - [Tools](/tools): apps, connectors, and lookup tools.
 - [Quick reference](/cheat-sheet): syntax and common prompts.
 - [Studio controls and releases](/studio): the shell, version pins, and announced additions.

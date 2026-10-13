@@ -4,14 +4,16 @@ Bring the problem, the source material, and the decisions you want to test. `pro
 
 ## Start a build
 
-Open your agent in the Design repo root and state whether you want Studio or Beacon. Use `/prototype-builder` in Claude Code or `$prototype-builder` in Codex. For Beacon, run `project-start` first for a ticket and branch. For Studio, the builder handles setup after plan approval.
+Open your agent in the Design repo root and describe what you want to build, stating whether you want Studio or Beacon. In a configured repo, Claude or Codex can select the relevant skill from a normal request. You do not need to remember its name. For Beacon, start with `project-start` for a ticket and branch. For Studio, the builder handles setup after plan approval.
+
+If the agent misses the intended workflow, use `/prototype-builder` in Claude Code or `$prototype-builder` in Codex. Use `skill-search` to find what is available in your checkout.
 
 If you are still choosing a target or setting up access, use [Start here](/start-here). You can return to any part of this guide as your question changes.
 
 ## Give it a useful starting prompt
 
 ```text
-$prototype-builder Build this in Studio.
+Build a Studio prototype from the inputs below.
 
 Purpose: Help us evaluate how people compare two plan options.
 Inputs: [PRD link], [Figma frame link], and the attached research notes.
@@ -31,11 +33,24 @@ separating the prototype UI from the settings controls.
 Show me the plan before building.
 ```
 
-In Claude, change the first line to `/prototype-builder`. For Beacon, run `project-start` first, say where the experience belongs, and point to the closest existing screen to follow.
+The same normal request works in Claude or Codex. For Beacon, start with `project-start`, say where the experience belongs, and point to the closest existing screen to follow.
 
 Give the agent as much relevant context as you can: PRDs, research notes, screenshots, Figma or FigJam links, and Google Docs, Sheets, or Slides. If it cannot read a source, resolve access or provide its contents before treating the plan as source-grounded. Josh found connector authorization easiest in the desktop apps; the CLI can then pick up the configured access.
 
 Be explicit about what settings should help you test. Extra knobs are not automatically useful. Name their defaults, the states they reveal, and the comparisons you want to make.
+
+## Make the important details explicit
+
+Josh's incoming-call and meetings examples showed how a useful first pass can still miss part of the intent. Make these details clear in the prompt and check them in the plan:
+
+| Detail | Example instruction |
+|---|---|
+| Which surface changes | “Apply the background variants to the notification itself. Keep the page behind it unchanged.” |
+| The full range of states | “Let me test every participant count from 1 through 20, plus a larger group.” |
+| A useful control | “Use a participant-count stepper so I can see the layout change as each person joins.” |
+| Missing content | “Include both an avatar image and a no-image state so we can evaluate whether the avatar should remain.” |
+
+Choose fidelity around the question. Detailed Figma frames give the agent a reference for visual reproduction; still check behavior and states that the frames do not show. For a low-fidelity FigJam exploration, explain the layout rules, interactions, and placeholders. Low fidelity should still use supported Dialtone building blocks. If the installed guidance does not cover the wireframe treatment you need, ask the agent to identify the gap and show its proposed approach before building.
 
 ## Review the plan, then build
 

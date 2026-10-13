@@ -6,6 +6,8 @@ Describe what you want to accomplish. Skills give the agent a repeatable way to 
 
 New here? Follow [Start here](/start-here). Looking for a connector or an app? See [Tools](/tools).
 
+[Download the agent starter](/agent-starter) to give Claude or Codex this guide's practical instructions. It uses the team's existing skills; it does not install a new skill or provide access to the repo.
+
 ## Pick the outcome you need
 
 | When you need to… | Skill | What it gives you |
@@ -67,6 +69,8 @@ PR prep can examine interaction and accessibility, Dialtone adherence, state and
 You evaluate the experience in the browser. A readiness report should distinguish verified behavior, remaining issues, and decisions it needs from you. Selecting a skill does not grant permission to push, publish, merge, or send messages.
 
 ## Find the current source
+
+Read the [Agents README](https://github.com/dialpad/design/blob/main/.agents/README.md) for the shared skill structure and the [Claude README](https://github.com/dialpad/design/blob/main/.claude/README.md) for Claude-specific setup and discovery. The team already supports selecting skills from natural requests; you can name one explicitly when you want a particular workflow.
 
 The [Design repo skill inventory](https://github.com/dialpad/design/tree/main/.agents/skills) and [designer entry points](https://github.com/dialpad/design/blob/main/.agents/skills/skill-search/references/entry-points.md) are the source of truth. These links require Dialpad GitHub access. App-specific skills may live under the app.
 

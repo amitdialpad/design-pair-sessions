@@ -18,6 +18,8 @@ You need access to the [Design repo](https://github.com/dialpad/design), Claude 
 
 Open the agent in your local Design repo checkout. Shared skills work from the repo root.
 
+Want your agent to bring this guide into the conversation? [Download the Markdown starter](/agent-starter), attach it, and describe your project. It points to the existing team workflows and includes the practical checks in this guide.
+
 - **Claude Code:** invoke skills with `/`, such as `/prototype-builder`.
 - **Codex:** invoke skills with `$`, such as `$prototype-builder`.
 - **Beacon:** run `project-start` first to create a ticket and branch.
