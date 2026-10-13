@@ -1604,5 +1604,5 @@ Security teams at Comcast and Booz Allen used Claude Mythos-class models through
 
 :::
 
-*Updated October 12, 2026*
+*Updated October 13, 2026*
 <!-- CLAUDE_FEED_END -->
