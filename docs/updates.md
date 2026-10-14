@@ -1550,6 +1550,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
+
+The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
+
+---
+
 **[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**<br><small>Oct 8, 2026 · Best practices</small>
 
 A reference implementation walkthrough with common failure modes
@@ -1566,13 +1572,13 @@ Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical
 
 Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
 
----
+:::details View past updates
 
 **[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
 
 Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume work like summarization, subagents, and browser use.
 
-:::details View past updates
+---
 
 **[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**<br><small>Oct 7, 2026 · Best practices</small>
 
@@ -1596,13 +1602,7 @@ Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, 
 
 A year of the Claude Team plan, API credits, special offers on tools that help with running an AI-native company, and more.
 
----
-
-**[How Comcast and Booz Allen use Claude Mythos to find exploit chains and secure their codebases](https://claude.com/resources/articles/how-comcast-booz-allen-use-claude-mythos-to-secure-their-codebases)**<br><small>Oct 6, 2026 · Perspectives</small>
-
-Security teams at Comcast and Booz Allen used Claude Mythos-class models through Project Glasswing to find, validate, and fix vulnerabilities their existing scanners missed.
-
 :::
 
-*Updated October 13, 2026*
+*Updated October 14, 2026*
 <!-- CLAUDE_FEED_END -->
