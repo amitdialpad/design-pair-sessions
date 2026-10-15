@@ -1580,6 +1580,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
+
+Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, and Claude SDKs on the Claude Platform.
+
+---
+
 **[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
 
 The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
@@ -1596,13 +1602,11 @@ A reference implementation walkthrough with common failure modes
 
 Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical part of deploying frontier intelligence responsibly.
 
----
+:::details View past updates
 
 **[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
 
-Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
-
-:::details View past updates
+---
 
 **[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
 
@@ -1626,13 +1630,7 @@ We’re launching a new, expanded version of our Cyber Verification Program (CVP
 
 Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, seven workflows that suit them, and how to connect GitHub without getting stuck.
 
----
-
-**[We’re expanding the Claude Startups program to help founders build](https://claude.com/resources/articles/were-expanding-the-claude-startups-program-to-help-founders-build)**<br><small>Oct 6, 2026 · Product announcements</small>
-
-A year of the Claude Team plan, API credits, special offers on tools that help with running an AI-native company, and more.
-
 :::
 
-*Updated October 14, 2026*
+*Updated October 15, 2026*
 <!-- CLAUDE_FEED_END -->
