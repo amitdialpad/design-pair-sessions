@@ -4,3 +4,5 @@ node_modules/
 **/__pycache__/
 .claude/settings.local.json
 reports/agentic_business_pulse/
+reports/customer_integrations_pulse/
+gha-creds-*.json

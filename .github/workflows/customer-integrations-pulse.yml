@@ -1,0 +1,80 @@
+name: Customer Integrations Pulse
+
+on:
+  schedule:
+    # 09:00 Asia/Kolkata. Monday sends the seven-day edition; other days
+    # compare the prior complete day with the same weekday one week earlier.
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+    inputs:
+      send:
+        description: Send the owner-only email after reviewing the dry run
+        required: false
+        default: false
+        type: boolean
+  pull_request:
+    paths:
+      - '.github/workflows/customer-integrations-pulse.yml'
+      - 'scripts/customer_integrations_pulse.py'
+      - 'tests/test_customer_integrations_pulse.py'
+      - 'operations/customer-integrations-pulse.md'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+  pulse:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'schedule' && vars.CUSTOMER_INTEGRATIONS_PULSE_ENABLED == 'true')
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: customer-integrations-pulse
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.CUSTOMER_PULSE_WIF_PROVIDER }}
+          service_account: ${{ vars.CUSTOMER_PULSE_SERVICE_ACCOUNT }}
+      - run: python3 -m pip install google-cloud-bigquery==3.46.1
+      - name: Generate owner-only report
+        env:
+          PULSE_BQ_BILLING_PROJECT: uv-beta
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SEND_REPORT: ${{ github.event_name == 'schedule' || inputs.send }}
+        run: |
+          if [ "$SEND_REPORT" = 'true' ]; then
+            python3 scripts/customer_integrations_pulse.py --quiet --send
+          else
+            python3 scripts/customer_integrations_pulse.py --quiet
+          fi
+      - name: Alert owner when report fails
+        if: failure()
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          WORKFLOW_NAME: Customer Integrations Pulse
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          FAILURE_SUBJECT_PREFIX: Customer Integrations Pulse needs attention
+          FAILURE_DESCRIPTION: The confirmed call-logging report could not be generated or delivered. No normal report was sent.
+          FAILURE_COMMON_FIXES: Check the runner's BigQuery access, source freshness, and Gmail delivery in the workflow run.
+        run: python3 scripts/notify-failure.py
