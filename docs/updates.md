@@ -8,6 +8,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:42f5e3d7292415bf7e1d207cea7770a8b8c0f39d -->
+
+**Keep stored conversations when appending Aerolabs history**
+
+An append to the Aerolabs bundle rewrote conversations that were already published. The real-database incremental run then refused the new bundle: "the history in this bundle up to 2026-10-13T18:47:47.584Z is not the history that was published". mergeCompanyHistoryInterval replaced a stored conversation row with the candidate's row, and the candidate is rebuilt from the planning window. Eight continuing conversations (six direct, two channel) came back with a different created_at and source_episode_ids, which changes the history digest the run checks. This PR keeps a stored conversation exactly as it was and adds only conversations the bundle did not hold. The same append (2026-10-13T18:4...
+
+<span class="release-meta">[dialpad/design#222](https://github.com/dialpad/design/pull/222) · 14 October 2026</span>
+
+---
+
+<!-- beacon-change:c51658f4aafe7bfef9fd417becd513e748387f06 -->
+
+**Show copy result in devtools flags tooltip**
+
+The "Copy all flags link" button in the DevTools Feature Flags panel is icon-only, so its tooltip is the only place the copy result shows. The tooltip only checked for success, so when the clipboard write failed it still read "Copy URL with all enabled flags" and the failure was invisible. Screen readers heard nothing in either case. This PR gives the tooltip a text for each state, announces the result to screen readers, and keeps each result up for its full time.
+
+<span class="release-meta">[dialpad/design#180](https://github.com/dialpad/design/pull/180) · 13 October 2026</span>
+
+---
+
+<!-- beacon-change:d161577cdaf185242810852c23e32f833deb4883 -->
+
+**Support relative world release URLs**
+
+beacon.dialpad.design could not load remote company data because the deployed release root pointed at beacon-test.dialpad.design. That turned IAP-protected reads into cross-origin requests and stopped Beacon during bootstrap. This change allows /world-releases/ to resolve against the active page origin, so both Beacon hostnames use their own browser authorization boundary.
+
+<span class="release-meta">[dialpad/design#216](https://github.com/dialpad/design/pull/216) · 13 October 2026</span>
+
+---
+
 <!-- beacon-change:528470ced4c3cb85b77b3621b8861afc0812f76f -->
 
 **Re-project the support rows after an append instead of merging them by date**
@@ -58,6 +88,8 @@ Thread behavior in Beacon was inconsistent in five ways: - A user could not cont
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:8e2aa6fa390847ad5045a73cfd84ab858d065c8c -->
 
 **Refuse to overwrite existing messages when days are appended to a generated company**
@@ -87,8 +119,6 @@ After #160, every pnpm firebase:generated:run staged the whole company and compa
 <span class="release-meta">[dialpad/design#163](https://github.com/dialpad/design/pull/163) · 7 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:3e8ea72a2b35217e07b474c427e93f9ead49fe7d -->
 
