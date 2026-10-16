@@ -1580,6 +1580,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How an Anthropic Japan BDR runs his day with a fleet of Claude agents](https://claude.com/resources/articles/how-an-anthropic-japan-business-development-representative-runs-his-day)**<br><small>Oct 16, 2026 · Best practices</small>
+
+How one business development representative clears his inbound queue and drafts bilingual customer emails with Claude Managed Agents and Claude Tag.
+
+---
+
+**[Code Review is now generally available](https://claude.com/resources/articles/code-review-is-now-generally-available)**<br><small>Oct 15, 2026 · Product announcements</small>
+
+Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
+
+---
+
 **[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
 
 Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, and Claude SDKs on the Claude Platform.
@@ -1588,9 +1600,7 @@ Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, an
 
 **[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
 
-The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
-
----
+:::details View past updates
 
 **[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**<br><small>Oct 8, 2026 · Best practices</small>
 
@@ -1602,9 +1612,11 @@ A reference implementation walkthrough with common failure modes
 
 Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical part of deploying frontier intelligence responsibly.
 
-:::details View past updates
+---
 
 **[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
+
+Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
 
 ---
 
@@ -1618,19 +1630,7 @@ Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume
 
 Principles for designing evals and hillclimbing against them without fooling yourself, and how the claude-api skill's build-eval and hillclimb commands put them to work.
 
----
-
-**[Expanding the Cyber Verification Program](https://www.anthropic.com/news/cyber-verification-program)**<br><small>Oct 6, 2026 · Product announcements</small>
-
-We’re launching a new, expanded version of our Cyber Verification Program (CVP), which makes advanced cyber capabilities and reduced blocking classifiers available to qualifying security professionals.
-
----
-
-**[Claude Code in the cloud: a field guide to cloud sessions](https://claude.dev/blog/claude-code-in-the-cloud/)**<br><small>Oct 6, 2026 · Best practices</small>
-
-Cloud sessions run Claude Code on a fresh VM for each task. Four real sessions, seven workflows that suit them, and how to connect GitHub without getting stuck.
-
 :::
 
-*Updated October 15, 2026*
+*Updated October 16, 2026*
 <!-- CLAUDE_FEED_END -->
