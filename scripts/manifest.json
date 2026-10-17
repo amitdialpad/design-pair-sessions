@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-12T18:18:55.326000+00:00",
+  "generated": "2026-10-17T12:32:06.931185+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -137,6 +137,10 @@
     {
       "path": ".agents/skills/skeptic-review/SKILL.md",
       "sha": "d57c0abfb2aec842db9a4a3faa16e6ea2034e3f1"
+    },
+    {
+      "path": ".agents/skills/skill-create/SKILL.md",
+      "sha": "26d9909dad6bd270a1b87b6652275d0ce18247f9"
     },
     {
       "path": ".agents/skills/skill-rename/SKILL.md",
@@ -425,6 +429,10 @@
     {
       "path": "apps/beacon/.agents/skills/shaping.local.md",
       "sha": "fa4f5783e4d9d6e1be7ae5c1f6d9d76b22a750f5"
+    },
+    {
+      "path": "apps/beacon/.agents/skills/skill-create.local.md",
+      "sha": "ace6ba3d5224e782601d0886deabbb92a53a22fe"
     },
     {
       "path": "apps/beacon/.agents/skills/skill-rename.local.md",
