@@ -1580,6 +1580,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**<br><small>Oct 16, 2026 · Best practices</small>
+
+How do you review code at the volume agents produce it? On the Claude Code team, once we had high coverage and deep reviews, we started optimizing for the minimum amount of human review time that doesn't raise reverts or incidents.
+
+---
+
 **[How an Anthropic Japan BDR runs his day with a fleet of Claude agents](https://claude.com/resources/articles/how-an-anthropic-japan-business-development-representative-runs-his-day)**<br><small>Oct 16, 2026 · Best practices</small>
 
 How one business development representative clears his inbound queue and drafts bilingual customer emails with Claude Managed Agents and Claude Tag.
@@ -1596,11 +1602,13 @@ Catch more bugs before they reach production. Code Review is generally available
 
 Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, and Claude SDKs on the Claude Platform.
 
----
+:::details View past updates
 
 **[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
 
-:::details View past updates
+The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
+
+---
 
 **[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**<br><small>Oct 8, 2026 · Best practices</small>
 
@@ -1624,13 +1632,7 @@ Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are no
 
 Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume work like summarization, subagents, and browser use.
 
----
-
-**[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**<br><small>Oct 7, 2026 · Best practices</small>
-
-Principles for designing evals and hillclimbing against them without fooling yourself, and how the claude-api skill's build-eval and hillclimb commands put them to work.
-
 :::
 
-*Updated October 16, 2026*
+*Updated October 17, 2026*
 <!-- CLAUDE_FEED_END -->
