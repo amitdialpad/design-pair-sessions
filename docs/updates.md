@@ -1586,7 +1586,7 @@ How do you review code at the volume agents produce it? On the Claude Code team,
 
 ---
 
-**[How an Anthropic Japan BDR runs his day with a fleet of Claude agents](https://claude.com/resources/articles/how-an-anthropic-japan-business-development-representative-runs-his-day)**<br><small>Oct 16, 2026 · Best practices</small>
+**[How an Anthropic BDR in Japan runs his day with Claude Managed Agents](https://claude.com/resources/articles/how-an-anthropic-japan-business-development-representative-runs-his-day)**<br><small>Oct 16, 2026 · Best practices</small>
 
 How one business development representative clears his inbound queue and drafts bilingual customer emails with Claude Managed Agents and Claude Tag.
 
@@ -1634,5 +1634,5 @@ Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume
 
 :::
 
-*Updated October 17, 2026*
+*Updated October 18, 2026*
 <!-- CLAUDE_FEED_END -->
