@@ -54,6 +54,40 @@ class BeaconChangesTests(unittest.TestCase):
         }
         self.assertTrue(beacon_changes.is_designer_facing(change))
 
+    def test_large_pr_diff_uses_beacon_trees(self):
+        commit = {"sha": "merge", "commit": {"message": "feat: update Beacon (#220)"}}
+        pr = {
+            "title": "feat: update Beacon",
+            "body": "Source description",
+            "base": {"sha": "base"},
+            "head": {"sha": "head"},
+        }
+
+        def api(endpoint):
+            if endpoint.endswith("/pulls/220"):
+                return pr
+            raise beacon_changes.GitHubError(
+                "gh: Server Error: Sorry, this diff is taking too long to generate. (HTTP 422)"
+            )
+
+        with patch.object(beacon_changes, "gh_api", side_effect=api), patch.object(
+            beacon_changes, "beacon_tree_files", side_effect=[
+                {"apps/beacon/src/old.ts": ("old", "100644")},
+                {"apps/beacon/src/old.ts": ("new", "100644"), "apps/beacon/src/new.ts": ("new", "100644")},
+            ]
+        ):
+            change = beacon_changes.enrich_commit(commit)
+        self.assertEqual(change["files"], ["apps/beacon/src/new.ts", "apps/beacon/src/old.ts"])
+        self.assertTrue(beacon_changes.is_designer_facing(change))
+
+    def test_other_pr_file_errors_still_fail_closed(self):
+        commit = {"sha": "merge", "commit": {"message": "feat: update Beacon (#220)"}}
+        with patch.object(beacon_changes, "gh_api", side_effect=[
+            {"base": {"sha": "base"}, "head": {"sha": "head"}},
+            beacon_changes.GitHubError("gh: HTTP 403 rate limit"),
+        ]), self.assertRaises(beacon_changes.GitHubError):
+            beacon_changes.enrich_commit(commit)
+
 
 class BeaconBriefTests(unittest.TestCase):
     def test_week_label_handles_month_boundary(self):
