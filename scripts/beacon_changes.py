@@ -68,6 +68,38 @@ def pull_request_number(commit: dict) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def beacon_tree_files(commit_sha: str) -> dict[str, tuple[str, str]]:
+    """Read Beacon file identities without asking GitHub to generate a diff."""
+    tree_sha = commit_sha
+    for component in BEACON_PATH.split("/"):
+        tree = gh_api(f"repos/{REPO}/git/trees/{tree_sha}")
+        if not isinstance(tree, dict) or not isinstance(tree.get("tree"), list):
+            raise GitHubError(f"Unexpected Git tree response for {tree_sha}")
+        child = next(
+            (item for item in tree["tree"] if item.get("path") == component and item.get("type") == "tree"),
+            None,
+        )
+        if child is None:
+            return {}
+        tree_sha = child["sha"]
+
+    tree = gh_api(f"repos/{REPO}/git/trees/{tree_sha}?recursive=1")
+    if not isinstance(tree, dict) or not isinstance(tree.get("tree"), list) or tree.get("truncated"):
+        raise GitHubError(f"Beacon Git tree was incomplete for {commit_sha}")
+    return {
+        f"{BEACON_PATH}/{item['path']}": (item["sha"], item["mode"])
+        for item in tree["tree"]
+        if item.get("type") != "tree"
+    }
+
+
+def changed_beacon_files(base_sha: str, head_sha: str) -> list[str]:
+    """Compare Beacon tree entries when GitHub cannot render a large PR diff."""
+    before = beacon_tree_files(base_sha)
+    after = beacon_tree_files(head_sha)
+    return sorted(path for path in before.keys() | after.keys() if before.get(path) != after.get(path))
+
+
 def enrich_commit(commit: dict) -> dict:
     """Add PR copy and changed files to a GitHub commit payload."""
     sha = commit.get("sha", "")
@@ -79,14 +111,26 @@ def enrich_commit(commit: dict) -> dict:
 
     if pr_number is not None:
         pr = gh_api(f"repos/{REPO}/pulls/{pr_number}")
-        files = gh_api(f"repos/{REPO}/pulls/{pr_number}/files?per_page=100")
-        if not isinstance(pr, dict) or not isinstance(files, list):
+        if not isinstance(pr, dict):
             raise GitHubError(f"Unexpected PR response for #{pr_number}")
+        try:
+            files = gh_api(f"repos/{REPO}/pulls/{pr_number}/files?per_page=100")
+        except GitHubError as error:
+            if "HTTP 422" not in str(error) or "diff is taking too long" not in str(error):
+                raise
+            base_sha = pr.get("base", {}).get("sha")
+            head_sha = pr.get("head", {}).get("sha")
+            if not base_sha or not head_sha:
+                raise GitHubError(f"Missing base or head commit for #{pr_number}") from error
+            filenames = changed_beacon_files(base_sha, head_sha)
+        else:
+            if not isinstance(files, list):
+                raise GitHubError(f"Unexpected PR files response for #{pr_number}")
+            filenames = [item.get("filename", "") for item in files if isinstance(item, dict)]
         title = pr.get("title") or title
         body = pr.get("body") or ""
         published_at = pr.get("merged_at") or published_at
         link = pr.get("html_url") or f"https://github.com/{REPO}/pull/{pr_number}"
-        filenames = [item.get("filename", "") for item in files if isinstance(item, dict)]
     else:
         detail = gh_api(f"repos/{REPO}/commits/{sha}")
         if not isinstance(detail, dict):
