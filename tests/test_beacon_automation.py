@@ -23,8 +23,23 @@ assert archive_spec and archive_spec.loader
 archive_briefs = importlib.util.module_from_spec(archive_spec)
 archive_spec.loader.exec_module(archive_briefs)
 
+sync_spec = importlib.util.spec_from_file_location("sync_releases", ROOT / "scripts" / "sync-releases.py")
+assert sync_spec and sync_spec.loader
+sync_releases = importlib.util.module_from_spec(sync_spec)
+sync_spec.loader.exec_module(sync_releases)
+
 
 class BeaconChangesTests(unittest.TestCase):
+    def test_release_summary_escapes_command_placeholders_for_vitepress(self):
+        change = {
+            "title": "feat: support <key> (#123)",
+            "body": "## Summary\n\nRun `pnpm mock:world --company <key>` to update it.",
+            "files": ["apps/beacon/src/example.ts"],
+        }
+        headline, body = sync_releases.summarize_change(change)
+        self.assertIn("&lt;key&gt;", headline)
+        self.assertIn("&lt;key&gt;", body)
+
     def test_extracts_squash_merge_pull_request_number(self):
         commit = {"commit": {"message": "feat: add a thing (#123)"}}
         self.assertEqual(beacon_changes.pull_request_number(commit), 123)
@@ -90,6 +105,11 @@ class BeaconChangesTests(unittest.TestCase):
 
 
 class BeaconBriefTests(unittest.TestCase):
+    def test_brief_page_escapes_command_placeholders(self):
+        content = "<!-- BEACON_BRIEF_START -->\n\n<!-- BEACON_BRIEF_END -->"
+        result = generate_brief.prepend_to_brief(content, "### Week of 12–18 Oct 2026\n\nUse <key>.")
+        self.assertIn("Use &lt;key&gt;.", result)
+
     def test_week_label_handles_month_boundary(self):
         monday, sunday, label = generate_brief.get_week_context(
             datetime(2026, 9, 7, 4, 30, tzinfo=timezone.utc)

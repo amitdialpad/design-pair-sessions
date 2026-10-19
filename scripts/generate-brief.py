@@ -213,7 +213,9 @@ def prepend_to_brief(content: str, issue: str) -> str:
         print("[error] BEACON_BRIEF markers not found in index.md", file=sys.stderr)
         return content
     existing = content[start + len(MARKER_START):end].strip()
-    new_inner = issue + ("\n\n---\n\n" + existing if existing else "")
+    # PR prose can contain placeholders such as <key>, which Vue parses as tags.
+    page_issue = issue.replace("<", "&lt;").replace(">", "&gt;")
+    new_inner = page_issue + ("\n\n---\n\n" + existing if existing else "")
     return (
         content[:start]
         + MARKER_START + "\n\n"
