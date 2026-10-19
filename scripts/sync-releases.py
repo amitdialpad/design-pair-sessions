@@ -7,6 +7,7 @@ import json
 import re
 import sys
 from datetime import datetime, timezone
+from html import escape
 from pathlib import Path
 
 from beacon_changes import (
@@ -55,7 +56,7 @@ def summarize_change(change: dict) -> tuple[str, str] | None:
     body = re.sub(r"\s+", " ", body).strip()
     if len(body) > 700:
         body = body[:697].rstrip() + "..."
-    return headline, body
+    return escape(headline, quote=False), escape(body, quote=False)
 
 
 def load_state() -> dict:
