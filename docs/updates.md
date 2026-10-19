@@ -1623,6 +1623,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Redesigning source control at Anthropic](https://www.anthropic.com/engineering/redesigning-source-control)**<br><small>Oct 19, 2026 · Best practices</small>
+
+As our merges per day grew more than tenfold, source control became our biggest development bottleneck. Here, we share how we migrated to an in-house version control system in five months.
+
+---
+
 **[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**<br><small>Oct 16, 2026 · Best practices</small>
 
 How do you review code at the volume agents produce it? On the Claude Code team, once we had high coverage and deep reviews, we started optimizing for the minimum amount of human review time that doesn't raise reverts or incidents.
@@ -1637,15 +1643,13 @@ How one business development representative clears his inbound queue and drafts 
 
 **[Code Review is now generally available](https://claude.com/resources/articles/code-review-is-now-generally-available)**<br><small>Oct 15, 2026 · Product announcements</small>
 
-Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
-
----
+:::details View past updates
 
 **[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
 
 Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, and Claude SDKs on the Claude Platform.
 
-:::details View past updates
+---
 
 **[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
 
@@ -1667,15 +1671,7 @@ Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical
 
 **[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
 
-Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
-
----
-
-**[Claude Haiku 5.5](https://www.anthropic.com/claude-haiku-5-5)**<br><small>Oct 7, 2026 · Product announcements</small>
-
-Claude Haiku 5.5 is our fastest, most capable small model. Built for high-volume work like summarization, subagents, and browser use.
-
 :::
 
-*Updated October 18, 2026*
+*Updated October 19, 2026*
 <!-- CLAUDE_FEED_END -->
