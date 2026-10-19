@@ -446,6 +446,47 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 12–18 Oct 2026
+
+6 changes merged into Beacon this week: Keep stored conversations when appending Aerolabs history; Show copy result in devtools flags tooltip; Support relative world release URLs; Re-project the support rows after an append instead of merging them by date; Show shared thread links as a read-only preview, never an access grant; Continue the planner's ids when appending days to a generated company. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Keep stored conversations when appending Aerolabs history](https://github.com/dialpad/design/pull/222)** (dialpad/design#222). An append to the Aerolabs bundle rewrote conversations that were already published. The real-database incremental run then refused the new bundle: "the history in this bundle up to 2026-10-13T18:47:47.584Z is not the history that was published". mergeCompanyHistoryInterval replaced a stored conversation row with the candidate's row, and the candidate is rebuilt from the planning window. Eight continuing conversations (six direct, two channel) came back with a different created_at and source_episode_ids, which changes the history digest the run checks. This PR keeps a stored conversation exactly as it was and adds only conversations the bundle did not hold. The same append (2026-10-13T18:47Z to 2026-10-14T03:40Z) then published incrementally.
+- **[Show copy result in devtools flags tooltip](https://github.com/dialpad/design/pull/180)** (dialpad/design#180). The "Copy all flags link" button in the DevTools Feature Flags panel is icon-only, so its tooltip is the only place the copy result shows. The tooltip only checked for success, so when the clipboard write failed it still read "Copy URL with all enabled flags" and the failure was invisible. Screen readers heard nothing in either case. This PR gives the tooltip a text for each state, announces the result to screen readers, and keeps each result up for its full time.
+- **[Support relative world release URLs](https://github.com/dialpad/design/pull/216)** (dialpad/design#216). beacon.dialpad.design could not load remote company data because the deployed release root pointed at beacon-test.dialpad.design. That turned IAP-protected reads into cross-origin requests and stopped Beacon during bootstrap. This change allows /world-releases/ to resolve against the active page origin, so both Beacon hostnames use their own browser authorization boundary.
+- **[Re-project the support rows after an append instead of merging them by date](https://github.com/dialpad/design/pull/215)** (dialpad/design#215). Once appends stopped reusing stored message ids (DDT-2402), a full mock:world append on the synthetic fixture still failed the bundle audit. The merge keeps a candidate row when its date falls inside the new interval, but the per-user support rows (conversation subscriptions, read states, thread read states, notifications, sidebar groups) are functions of the whole merged history. Thread read states carry no date, so the merge kept every row of the re-planned window: after a 46-day append, 109 of 115 rows pointed at thread parents the merge had dropped. Notifications and read cursors drifted for the same reason, and the audit did not judge them. This PR re-projects the support rows from the merged messages, conversations, contacts and calls after each interval, with the projection a build uses, instead of merging them by date. Re-projecting the committed Aerolabs (76 documents) and Ca...
+- **[Show shared thread links as a read-only preview, never an access grant](https://github.com/dialpad/design/pull/209)** (dialpad/design#209). Opening a shared thread link loaded the thread for anyone who had the link. It worked the same way for a private channel, a group or someone else's DM. A non-member of a public channel got the full panel, including reply, reactions and edit. Opening a private channel's feed by slug showed its title, Join notice and sidebar entry, so a visitor could tell it existed. Each thread scope now gets one access decision, and every thread view and the feed route share the same access rules: - A public-channel non-member sees a read-only preview. - A private conversation shows nothing and is handled exactly like a slug that does not exist. - Losing access while viewing replaces the content in place.
+- **[Continue the planner's ids when appending days to a generated company](https://github.com/dialpad/design/pull/210)** (dialpad/design#210). Appending days to a generated company (pnpm mock:world --company <key> --through <day>) failed at the overwrite guard. generate re-plans the trailing 30 days and restarts the planner's per-family id counters, so the new messages reuse the ids of stored ones. The guard from DDT-2366 correctly refuses, which is why a one-day append to the committed Aerolabs bundle stopped with "would overwrite 111 existing messages by reusing their ids". This PR stores the planner's ending counters, its Contact transitions and a planner version in the manifest history (history.planningHistory) and feeds them back to the planner on the next append. New ids continue the stored ones, so no stored message is rewritten.
+
+#### The bigger shift
+
+This was a focused week with 6 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+- After merge, set the GitHub Actions repository variable `VITE_WORLD_RELEASE_ROOT_URL` to `/world-releases/` and redeploy Beacon. - Smoke-test remote company-world startup through both production aliases. A normal PR preview does not exercise the remote-release configuration.
+
+#### Try this
+
+From `apps/beacon`, run `pnpm exec vitest run --project node mock-engine/cli/companyWorldHistory.node.spec.ts`. All tests pass, including "never replaces a stored conversation with the candidate rebuilt from the planning window".
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Keep stored conversations when appending Aerolabs history, Show copy result in devtools flags tooltip, Support relative world release URLs, Re-project the support rows after an append instead of merging them by date, Show shared thread links as a read-only preview, never an access grant, Continue the planner's ids when appending days to a generated company.
+
+---
+
 ### Week of 5–11 Oct 2026
 
 9 changes merged into Beacon this week: Add mark all as read to Threads; Keep thread replies, notifications, and read state in sync; Refuse to overwrite existing messages when days are appended to a generated company; Recount read-state unread counts from the merged messages when days are appended; Publish only what is new in later generated-company runs and refuse drift in older history; Move Beacon read state to the unified read-attention model; Publish generated companies to the generated-companies database with one idempotent run; Measure generated companies on a real database and deploy their indexes; Preserve live replies and read progression. The details below come directly from the merged monorepo PRs.
@@ -572,7 +613,7 @@ Run `pnpm --filter @dialpad/world-core lint`, `pnpm --filter @dialpad/world-core
 
 The week's Beacon record is Extract portable world core package, Migrate conversation read attention to a shared surface, Publish versioned world releases, Isolate generated world runtime contract, Add Firestore live message proof, Add Firebase live access foundation.
 
----
+:::details View September 2026
 
 ### Week of 14–20 Sep 2026
 
@@ -1526,6 +1567,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
