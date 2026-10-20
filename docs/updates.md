@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:8d7b9adc894c434fb2fed3213d04a29871bafcdd -->
+
+**Connect a real GitHub app and sync its events into Beacon**
+
+Apps in Beacon only existed as seeded data, so nothing a real service did could reach a user. This PR connects a real one end to end: a user connects GitHub from Beacon, and GitHub activity from the repositories they choose shows up as messages in that app's conversation. It stacks on the apps entity and read-only app conversations from DDT-2427.
+
+<span class="release-meta">[dialpad/design#243](https://github.com/dialpad/design/pull/243) · 20 October 2026</span>
+
+---
+
+<!-- beacon-change:d67b9a1dfe612ecfd43cb146c532fc3756204faa -->
+
+**Add the apps entity, read-only app conversations, and a protected Agents &amp; apps sidebar group**
+
+Beacon had no model for an app (an agent or integration) that talks to a user. Anything an app produced would have had to pose as a person's message in a channel or DM, with no way to stop a user from replying into it or to find it in one place. This PR adds apps as a first-class entity and gives each one a conversation only that app can write to. Users see these conversations in a protected "Agents &amp; apps" sidebar group and as App rows in the Inbox.
+
+<span class="release-meta">[dialpad/design#242](https://github.com/dialpad/design/pull/242) · 20 October 2026</span>
+
+---
+
+<!-- beacon-change:2261a8ab40642cbaef152a58dab1869bba1e026c -->
+
+**Plan each append day from its own local day**
+
+An append planned every missing local day over a re-planned 30-day trailing window and kept only the new interval's rows. On Aerolabs that cost about 15 minutes per interval. The two-day append through 2026-10-14 took about 31 minutes and then failed with message thread parent references unknown id, so no further append worked from the published bundle. Each day is now planned over its own local day, from the counters, group sessions and content usage the earlier days left. The same two-interval preview takes 53 s and passes the bundle audit. A six-day run takes 127 s. No stored message changes.
+
+<span class="release-meta">[dialpad/design#246](https://github.com/dialpad/design/pull/246) · 20 October 2026</span>
+
+---
+
+<!-- beacon-change:4e082cddfbb2ce8d32169d215bda53d47cfcd4da -->
+
+**Select append intervals as [start, end)**
+
+An append selected each interval's rows with (start, end], but the planner plans [start, end). A row stamped exactly at local midnight belongs to the day it starts, so the previous day's candidate never holds it and the append skipped it. Seven day-only Aerolabs windows held seven such messages, and the stored build has twelve. A reply to a skipped message is left pointing at a parent that is not in the bundle. This PR selects [start, end). The Firestore incremental publisher has to agree, or the fix moves the failure: after a run that stops at local midnight (--through), the next bundle holds the row at that instant, but the publisher sent a row only when effectiveAt &gt; cutoff and digeste...
+
+<span class="release-meta">[dialpad/design#239](https://github.com/dialpad/design/pull/239) · 19 October 2026</span>
+
+---
+
 <!-- beacon-change:42f5e3d7292415bf7e1d207cea7770a8b8c0f39d -->
 
 **Keep stored conversations when appending Aerolabs history**
@@ -48,6 +88,8 @@ Once appends stopped reusing stored message ids (DDT-2402), a full mock:world ap
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:18d97404b031a79f8b3170662a9c24f4c71345f6 -->
 
 **Show shared thread links as a read-only preview, never an access grant**
@@ -87,8 +129,6 @@ Thread behavior in Beacon was inconsistent in five ways: - A user could not cont
 <span class="release-meta">[dialpad/design#179](https://github.com/dialpad/design/pull/179) · 8 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:8e2aa6fa390847ad5045a73cfd84ab858d065c8c -->
 
