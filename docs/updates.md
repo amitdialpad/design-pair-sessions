@@ -1683,6 +1683,8 @@ How one business development representative clears his inbound queue and drafts 
 
 **[Code Review is now generally available](https://claude.com/resources/articles/code-review-is-now-generally-available)**<br><small>Oct 15, 2026 · Product announcements</small>
 
+Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
+
 :::details View past updates
 
 **[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
@@ -1711,7 +1713,9 @@ Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical
 
 **[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
 
+Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
+
 :::
 
-*Updated October 19, 2026*
+*Updated October 20, 2026*
 <!-- CLAUDE_FEED_END -->
