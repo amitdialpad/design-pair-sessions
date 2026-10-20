@@ -6,6 +6,24 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-20
+
+### Added
+
+- `apps/beacon/.agents/skills/dev-tools/SKILL.md`
+
+### Modified
+
+- `.agents/skills/project-start/SKILL.md`
+- `.agents/skills/skill-search/SKILL.md`
+- `apps/beacon/.agents/resources/rules/dev-tools.md`
+- `apps/beacon/.agents/resources/rules/variants.md`
+- `apps/beacon/.agents/skills/breadboard.local.md`
+- `apps/beacon/.agents/skills/feature-flags/SKILL.md`
+- `apps/beacon/.agents/skills/shaping.local.md`
+
+---
+
 ## 2026-10-17
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-17T12:32:06.931185+00:00",
+  "generated": "2026-10-20T13:55:56.250604+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -120,7 +120,7 @@
     },
     {
       "path": ".agents/skills/project-start/SKILL.md",
-      "sha": "e9e4b8811ca67a93052092498b3d2f7e35763464"
+      "sha": "c653e583a5bed1fcc3a2f5af65f85bbb65135c29"
     },
     {
       "path": ".agents/skills/prompt-creator/SKILL.md",
@@ -148,7 +148,7 @@
     },
     {
       "path": ".agents/skills/skill-search/SKILL.md",
-      "sha": "3d12f18b5e988961bfe218f1a005375a19a6ffe1"
+      "sha": "c787f43752b9b1c70922e36de5dd046183ae6628"
     },
     {
       "path": ".agents/skills/step-by-step-execution/SKILL.md",
@@ -208,7 +208,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/dev-tools.md",
-      "sha": "e9350d995dd6a2ec9363e42d7f70416b1a7e10c9"
+      "sha": "7510a13d59879bf4a6e08611c819e8fdbb2ef24c"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/dialtone-cli.md",
@@ -288,7 +288,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/variants.md",
-      "sha": "6cd0e5ad8779f28e5bcec41626bc9235184f4038"
+      "sha": "e935fe99013d269fc33e452438100e35d9b66fc0"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/vue-components.md",
@@ -304,7 +304,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/breadboard.local.md",
-      "sha": "d62809118d4527c39642d5522b3f4a2f2860ca89"
+      "sha": "9d79e9f038c4ced278211a4c3ab03371a59dba1b"
     },
     {
       "path": "apps/beacon/.agents/skills/bug-hunt.local.md",
@@ -339,6 +339,10 @@
       "sha": "1fe499f1626c9bb57fbaeb956ee2e6b9e262642e"
     },
     {
+      "path": "apps/beacon/.agents/skills/dev-tools/SKILL.md",
+      "sha": "c9f9d38982a502c402d5a8774a38ee124fc6ab7a"
+    },
+    {
       "path": "apps/beacon/.agents/skills/dialpad-design/SKILL.md",
       "sha": "3cf5fa15446e72549cfd570e00d3d2623a981b3a"
     },
@@ -352,7 +356,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/feature-flags/SKILL.md",
-      "sha": "f5f1e1d094138c5d984775171a9837d8ea7c8166"
+      "sha": "867fb953fd99f07119db9344c861384bcb4933af"
     },
     {
       "path": "apps/beacon/.agents/skills/fix-quick.local.md",
@@ -428,7 +432,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/shaping.local.md",
-      "sha": "fa4f5783e4d9d6e1be7ae5c1f6d9d76b22a750f5"
+      "sha": "418c6cab6147c461382f54e427762d2b5d799f7e"
     },
     {
       "path": "apps/beacon/.agents/skills/skill-create.local.md",
