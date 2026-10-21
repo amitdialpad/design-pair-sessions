@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:deb19abedadd750d135cd11a0a7200f0a1f3761a -->
+
+**Make the generated-company data root configurable**
+
+The generated company bundles live in apps/beacon/data, and every tool that reads or writes them assumes that folder. That blocks moving the bundles out of git, which this PR starts to prepare for. BEACON_WORLD_DATA_ROOT now names the folder. Unset or empty, nothing changes. When set, the variable moves the generator (mock:world), the Firestore and publication commands, mock:world:release, the Vite dev server, the pnpm build copy and the corpus specs to that folder. One plain-JavaScript rule, mock-engine/cli/worldDataRoot.js, decides the folder, so the native Node scripts and the TypeScript code agree. The data stays in git; this PR does not move it.
+
+<span class="release-meta">[dialpad/design#254](https://github.com/dialpad/design/pull/254) · 21 October 2026</span>
+
+---
+
+<!-- beacon-change:660f43ad894b3ba023190ca165db8ed5cccba961 -->
+
+**Keep the build run date when appending company history**
+
+Appending days to a generated company gave the world a new run date (asOf) every time, the end of the day being added. Rows stamped with that date then came out different from what the build stored. The relationship affinity edges have no timestamp key for the merge to filter on, so all 1,909 Aerolabs edges were rewritten on every append. The other rows stamped with the run date stayed the same only because of how the interval boundary works. The append now uses the bundle's stored history.bootstrapEnd as the run date. The communication window still moves with each appended day, so the days are planned as before. A build is unchanged.
+
+<span class="release-meta">[dialpad/design#252](https://github.com/dialpad/design/pull/252) · 21 October 2026</span>
+
+---
+
 <!-- beacon-change:8d7b9adc894c434fb2fed3213d04a29871bafcdd -->
 
 **Connect a real GitHub app and sync its events into Beacon**
@@ -68,6 +88,8 @@ The "Copy all flags link" button in the DevTools Feature Flags panel is icon-onl
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:d161577cdaf185242810852c23e32f833deb4883 -->
 
 **Support relative world release URLs**
@@ -87,8 +109,6 @@ Once appends stopped reusing stored message ids (DDT-2402), a full mock:world ap
 <span class="release-meta">[dialpad/design#215](https://github.com/dialpad/design/pull/215) · 13 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:18d97404b031a79f8b3170662a9c24f4c71345f6 -->
 
