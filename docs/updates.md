@@ -1737,5 +1737,5 @@ Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are no
 
 :::
 
-*Updated October 20, 2026*
+*Updated October 21, 2026*
 <!-- CLAUDE_FEED_END -->
