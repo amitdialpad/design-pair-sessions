@@ -6,6 +6,26 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-21
+
+### Added
+
+- `.agents/skills/writing-help/SKILL.md`
+
+### Modified
+
+- `.agents/skills/pr-create/SKILL.md`
+- `apps/beacon/.agents/resources/rules/typescript.md`
+- `apps/beacon/.agents/skills/prompt-creator.local.md`
+- `apps/studio/.agents/skills/prototype-builder.local.md`
+- `apps/studio/.agents/skills/prototype-create/SKILL.md`
+
+### Removed
+
+- `.agents/skills/no-ai-slop/SKILL.md`
+
+---
+
 ## 2026-10-20
 
 ### Added

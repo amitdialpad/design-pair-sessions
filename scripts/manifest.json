@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-20T13:55:56.250604+00:00",
+  "generated": "2026-10-21T14:11:51.554598+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -83,10 +83,6 @@
       "sha": "1c6b49d281e24c3e4a7739df2bb6750c49e4b32e"
     },
     {
-      "path": ".agents/skills/no-ai-slop/SKILL.md",
-      "sha": "c3d370b868c9157d57f6e9f223e961a501d2abc4"
-    },
-    {
       "path": ".agents/skills/perf-check/SKILL.md",
       "sha": "50fe319fc994ca5aad620a5cbc10413518a9c8d7"
     },
@@ -100,7 +96,7 @@
     },
     {
       "path": ".agents/skills/pr-create/SKILL.md",
-      "sha": "4731294089bbcad5d72b118032d707db7ff02f83"
+      "sha": "d2cd771aca77da2316e1b0eaa5aa80002b01149c"
     },
     {
       "path": ".agents/skills/pr-prep/SKILL.md",
@@ -165,6 +161,10 @@
     {
       "path": ".agents/skills/workflow-edit/SKILL.md",
       "sha": "a754b1b1352cbb6e50be4634454f9814f5ce22a3"
+    },
+    {
+      "path": ".agents/skills/writing-help/SKILL.md",
+      "sha": "69a1c71bfdbfda16b8203ada75cbf2802807085e"
     },
     {
       "path": ".claude/agents/README.md",
@@ -284,7 +284,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/typescript.md",
-      "sha": "9c4d43577b0c7c6711d3458d518d133eb50090ab"
+      "sha": "16cd8b0192049cbf8534db18f0c704232b8cda38"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/variants.md",
@@ -420,7 +420,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/prompt-creator.local.md",
-      "sha": "1601b871e718dd5942fedadd956b11ace672871e"
+      "sha": "b8398bf08cdb5c7772d98359e8c46a47e8192615"
     },
     {
       "path": "apps/beacon/.agents/skills/prototype-builder.local.md",
@@ -720,11 +720,11 @@
     },
     {
       "path": "apps/studio/.agents/skills/prototype-builder.local.md",
-      "sha": "8e46c837f5674846360b6f3063adb8db26df74c7"
+      "sha": "d17938b32c7ef7dac69566ff0098747e606c0a59"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-create/SKILL.md",
-      "sha": "f8e75006142848e4b8acf4c093af0af4888fd3ac"
+      "sha": "2676afd6c62f79d0d547683a7f751d90d1ec2d90"
     },
     {
       "path": "apps/studio/.agents/skills/shaping.local.md",
