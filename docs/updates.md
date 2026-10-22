@@ -1713,11 +1713,29 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[HCLTech joins the Claude Partner Network as a Global Premier partner](https://claude.com/resources/articles/hcltech-joins-claude-partner-network)**<br><small>Oct 21, 2026 · Product announcements</small>
+
+HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT systems it runs for banks, hospitals, telecoms, and manufacturers
+
+---
+
+**[Claude Security now scans continuously and tracks fixes](https://claude.com/resources/articles/claude-security-now-scans-continuously-and-tracks-fixes)**<br><small>Oct 21, 2026 · Product announcements</small>
+
+Claude Security now watches your repositories as code changes, tracks findings until they’re fixed, learns from the context your team adds, and connects to your tools through an API and MCP. Available in public beta for Claude Enterprise customers.
+
+---
+
+**[Introducing Claude Duet](https://claude.com/resources/articles/claude-duet)**<br><small>Oct 21, 2026 · Product announcements</small>
+
+Claude Duet is a new app where Claude works as a proactive agent. The research preview opens by waitlist today for Pro and Max subscribers in the US.
+
+---
+
 **[Redesigning source control at Anthropic](https://www.anthropic.com/engineering/redesigning-source-control)**<br><small>Oct 19, 2026 · Best practices</small>
 
 As our merges per day grew more than tenfold, source control became our biggest development bottleneck. Here, we share how we migrated to an in-house version control system in five months.
 
----
+:::details View past updates
 
 **[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**<br><small>Oct 16, 2026 · Best practices</small>
 
@@ -1735,7 +1753,7 @@ How one business development representative clears his inbound queue and drafts 
 
 Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
 
-:::details View past updates
+---
 
 **[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
 
@@ -1747,25 +1765,7 @@ Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, an
 
 The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
 
----
-
-**[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**<br><small>Oct 8, 2026 · Best practices</small>
-
-A reference implementation walkthrough with common failure modes
-
----
-
-**[How Block orchestrates Claude Fable across thousands of pull requests](https://claude.com/resources/articles/how-block-orchestrates-claude-fable-across-thousands-of-pull-requests)**<br><small>Oct 8, 2026 · Perspectives</small>
-
-Bradley Axen, Head of AI Capabilities at Block, on why safeguards are a critical part of deploying frontier intelligence responsibly.
-
----
-
-**[Build live dashboards and animate explainers with Claude](https://claude.com/resources/articles/dashboards-and-motion)**<br><small>Oct 8, 2026 · Product announcements</small>
-
-Claude Dashboards and Claude Motion are in beta. Docs, Slides, and Design are now on every plan, including Free.
-
 :::
 
-*Updated October 21, 2026*
+*Updated October 22, 2026*
 <!-- CLAUDE_FEED_END -->
