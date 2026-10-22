@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-21T14:11:51.554598+00:00",
+  "generated": "2026-10-22T14:10:28.085135+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -196,11 +196,11 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/README.md",
-      "sha": "990f133ef8516ad1675a1ad6d8170be4dec48b09"
+      "sha": "96e829f4afe051472fa334d5660ea364dd9376fd"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/ai-prompts.md",
-      "sha": "fe5b63360ace7aa47b950664bbf7b7d0d79e7809"
+      "sha": "132ac2ef25bf7748625e1b2a59dc30f7820af280"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/data-layer.md",
@@ -208,23 +208,23 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/dev-tools.md",
-      "sha": "7510a13d59879bf4a6e08611c819e8fdbb2ef24c"
+      "sha": "38bca576ae526eabddcfae1237d098afa12033ab"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/dialtone-cli.md",
-      "sha": "09a0f84a731d83c0b4ed5b6cb7c609d0029afc44"
+      "sha": "2159aa941198b88a0b3c9559dc3e59108f69743a"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/dialtone.md",
-      "sha": "5ec24ba1042103ce08c426ff92cd8cce30da477f"
+      "sha": "cfccc3640c522cec1fe05e069da10c54f775a2b3"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/documentation.md",
-      "sha": "ba0f3f3730fa6f8811614f7a5e76768262de8152"
+      "sha": "edee92f2583fe249f9482fde1ab016d6f45d1291"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/electron.md",
-      "sha": "b672880eb176eac8028486c310b449c1a79f1daa"
+      "sha": "c884e4731508d555f8c4fe0253d7649cdebfd556"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/entity-ids.md",
@@ -232,7 +232,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/feature-flags.md",
-      "sha": "071bc69c3f72159999a8181409043981f6fb99a7"
+      "sha": "addb206a63979138cbd43f28b3dee438a6158e2e"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/layout.md",
@@ -240,31 +240,35 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/logging.md",
-      "sha": "1b7e02aaf7087f46b93af6526ed67e8ef416885b"
+      "sha": "8243b83e920fd578732ad237ebc6f745d6f20c25"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/meeting-orchestration.md",
-      "sha": "779f26371bf8a01781b59ae8a7e0ea7bdad4a2c9"
+      "sha": "d46b2dda5ea3093fa59f91b0c8c507e87264e525"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/meeting-system.md",
-      "sha": "430b7137b02a4aab029b67c8126fec3f89e0a1d0"
+      "sha": "35fd47e64c353e7f5a7cd53698f09bd6989fe1f5"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/navigation.md",
-      "sha": "036d587d34a765aeb6237aeda5974a64b02b05d3"
+      "sha": "8a1a08a30339875e3b2832da62514b31b99e75f9"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/pagination.md",
-      "sha": "230962c23566d55707d1deaff45c17ab761129dd"
+      "sha": "44733f5b0ce926e34c9b9ed76659a68b46dae71b"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/permissions.md",
       "sha": "9536be90ef4d3d6346261bbe83b15271f3d0e182"
     },
     {
+      "path": "apps/beacon/.agents/resources/rules/primitive-triad.md",
+      "sha": "24fc20a0af35360fa3477babb078935ca2740d5a"
+    },
+    {
       "path": "apps/beacon/.agents/resources/rules/reactivity.md",
-      "sha": "e325bcc9120fecc7823aba7674084aaf6287a828"
+      "sha": "f460e26915c58cfcbfbdb5c0bf71e131a03b9821"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/schema-design.md",
@@ -272,27 +276,27 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/sound-system.md",
-      "sha": "464ded1b1727bd5bd9c1e717679d461e5506c364"
+      "sha": "8a80d806997e3c1b8eb8928610a4e2837240db4c"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/testing.md",
-      "sha": "772f1715c9a6f30b2a797afd841393a3656f23fe"
+      "sha": "e5d37c507a5ec1d40a62cef097ded80fa5d7940a"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/theme.md",
-      "sha": "0c5a0e40bcaa3f9f2edcf439173d6c6c2f432fb9"
+      "sha": "dda6ae3fef40f4acc7ea2523e778375705886d5a"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/typescript.md",
-      "sha": "16cd8b0192049cbf8534db18f0c704232b8cda38"
+      "sha": "8e2cc7f4c890062c2238dd5057fe5fc6e672dcf3"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/variants.md",
-      "sha": "e935fe99013d269fc33e452438100e35d9b66fc0"
+      "sha": "bb0497ccd4eba40566b1c5b429375b14f2cb725b"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/vue-components.md",
-      "sha": "072efe08a6060e67553ae4054439d06a28377627"
+      "sha": "2aa013a07a4180e58dfc7bdf6aec4dacaf00fce7"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/workflow-security.md",
@@ -320,7 +324,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/component-work.local.md",
-      "sha": "535e2f61fb66c9a9cee7ad831209774e055f1137"
+      "sha": "e3a90413c57c4166014ed851c0e41ac885846e36"
     },
     {
       "path": "apps/beacon/.agents/skills/data-trace.local.md",
@@ -336,7 +340,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/design-review.local.md",
-      "sha": "1fe499f1626c9bb57fbaeb956ee2e6b9e262642e"
+      "sha": "a241e9d481977d25f4d81d2422bfbdbf1a0125f1"
     },
     {
       "path": "apps/beacon/.agents/skills/dev-tools/SKILL.md",
@@ -356,7 +360,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/feature-flags/SKILL.md",
-      "sha": "867fb953fd99f07119db9344c861384bcb4933af"
+      "sha": "c4b0e03eb6f930a95a4cc0543e17fcefeac01335"
     },
     {
       "path": "apps/beacon/.agents/skills/fix-quick.local.md",
@@ -368,7 +372,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/frontend-patterns/SKILL.md",
-      "sha": "6535bdd0b3a80695c5e615f0c77dc9bcd4250c68"
+      "sha": "295d6ef98c41bb05374566221664f9e1ffa2dfa8"
     },
     {
       "path": "apps/beacon/.agents/skills/jira.local.md",
@@ -384,7 +388,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/migrate-vue-component.local.md",
-      "sha": "471082ea49f1f93f78a74ccdb55937cb1e2fbc5f"
+      "sha": "8848b0158ae3b4126b45fd264fc76bf2e7791fff"
     },
     {
       "path": "apps/beacon/.agents/skills/mock-engine/SKILL.md",
@@ -716,15 +720,19 @@
     },
     {
       "path": "apps/studio/.agents/skills/pr-prep.local.md",
-      "sha": "76e21360f8a65bb07f9c4e1856ca25f00fc64656"
+      "sha": "046721a4f094fcda79b89246ae7e93bc7e10042b"
+    },
+    {
+      "path": "apps/studio/.agents/skills/prompt-creator.local.md",
+      "sha": "f89949f2f5bb6e68490381701efb29bc227b046d"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-builder.local.md",
-      "sha": "d17938b32c7ef7dac69566ff0098747e606c0a59"
+      "sha": "5c5896372df028f3f4e13045acd8d5238a5a26be"
     },
     {
       "path": "apps/studio/.agents/skills/prototype-create/SKILL.md",
-      "sha": "2676afd6c62f79d0d547683a7f751d90d1ec2d90"
+      "sha": "d3c8052d1098c8eb1877cf59b915c0804bf81e12"
     },
     {
       "path": "apps/studio/.agents/skills/shaping.local.md",

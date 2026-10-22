@@ -6,6 +6,46 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-22
+
+### Added
+
+- `apps/beacon/.agents/resources/rules/primitive-triad.md`
+- `apps/studio/.agents/skills/prompt-creator.local.md`
+
+### Modified
+
+- `apps/beacon/.agents/resources/rules/README.md`
+- `apps/beacon/.agents/resources/rules/ai-prompts.md`
+- `apps/beacon/.agents/resources/rules/dev-tools.md`
+- `apps/beacon/.agents/resources/rules/dialtone-cli.md`
+- `apps/beacon/.agents/resources/rules/dialtone.md`
+- `apps/beacon/.agents/resources/rules/documentation.md`
+- `apps/beacon/.agents/resources/rules/electron.md`
+- `apps/beacon/.agents/resources/rules/feature-flags.md`
+- `apps/beacon/.agents/resources/rules/logging.md`
+- `apps/beacon/.agents/resources/rules/meeting-orchestration.md`
+- `apps/beacon/.agents/resources/rules/meeting-system.md`
+- `apps/beacon/.agents/resources/rules/navigation.md`
+- `apps/beacon/.agents/resources/rules/pagination.md`
+- `apps/beacon/.agents/resources/rules/reactivity.md`
+- `apps/beacon/.agents/resources/rules/sound-system.md`
+- `apps/beacon/.agents/resources/rules/testing.md`
+- `apps/beacon/.agents/resources/rules/theme.md`
+- `apps/beacon/.agents/resources/rules/typescript.md`
+- `apps/beacon/.agents/resources/rules/variants.md`
+- `apps/beacon/.agents/resources/rules/vue-components.md`
+- `apps/beacon/.agents/skills/component-work.local.md`
+- `apps/beacon/.agents/skills/design-review.local.md`
+- `apps/beacon/.agents/skills/feature-flags/SKILL.md`
+- `apps/beacon/.agents/skills/frontend-patterns/SKILL.md`
+- `apps/beacon/.agents/skills/migrate-vue-component.local.md`
+- `apps/studio/.agents/skills/pr-prep.local.md`
+- `apps/studio/.agents/skills/prototype-builder.local.md`
+- `apps/studio/.agents/skills/prototype-create/SKILL.md`
+
+---
+
 ## 2026-10-21
 
 ### Added
