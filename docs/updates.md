@@ -8,6 +8,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:01841aa5ffb53a5dc5b4d3dab837ff971297cddc -->
+
+**Show normalized direct profile details**
+
+Direct-contact profiles only read the Contact record, so employee profiles omitted company-owned titles, offices, timezones, and assigned phone numbers. Populated profiles appeared incomplete even though Beacon already had the information. This PR composes the existing normalized records without copying fields back onto Contact.
+
+<span class="release-meta">[dialpad/design#264](https://github.com/dialpad/design/pull/264) · 22 October 2026</span>
+
+---
+
+<!-- beacon-change:665d442fcbd5117a0af449ac7cdefbf5107e9969 -->
+
+**Model the conversation list, message paging and generator store in Firestore**
+
+The generated company bundles are 160 MB of JSON in git, and the Firestore model that will replace them could not yet serve what Beacon reads. A conversation list cost one conversation read per row and carried no title, route or preview inputs. Messages could not be paged back through equal timestamps. The generator had nowhere to keep its own copy of a bundle. The publication also dropped call and contact fields Beacon reads, and left customer ids in the participants of customer conversations. This PR extends the existing @dialpad/world-firestore model so Beacon can list conversations with one query, page a conversation's history, and keep the generator's bundle server-only. It writes to...
+
+<span class="release-meta">[dialpad/design#263](https://github.com/dialpad/design/pull/263) · 21 October 2026</span>
+
+---
+
+<!-- beacon-change:058194f2f602869e526d7d6b01b82a8382609445 -->
+
+**Add the Dialpad Copilot entry point and panel behind a flag**
+
+Dialpad Copilot has no place in Beacon yet, so the V1 designs (entry point, empty state, conversation content types, composer states, @mention) can't be reviewed in the real product shell. This adds them behind the new dialpadCopilot experiment flag (off by default) with mocked responses, so design and PM can try the flow in Beacon before any backend exists.
+
+<span class="release-meta">[dialpad/design#234](https://github.com/dialpad/design/pull/234) · 21 October 2026</span>
+
+---
+
 <!-- beacon-change:deb19abedadd750d135cd11a0a7200f0a1f3761a -->
 
 **Make the generated-company data root configurable**
@@ -58,6 +88,8 @@ An append planned every missing local day over a re-planned 30-day trailing wind
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:4e082cddfbb2ce8d32169d215bda53d47cfcd4da -->
 
 **Select append intervals as [start, end)**
@@ -87,8 +119,6 @@ The "Copy all flags link" button in the DevTools Feature Flags panel is icon-onl
 <span class="release-meta">[dialpad/design#180](https://github.com/dialpad/design/pull/180) · 13 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:d161577cdaf185242810852c23e32f833deb4883 -->
 
