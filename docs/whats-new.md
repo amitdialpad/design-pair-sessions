@@ -6,6 +6,14 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-23
+
+### Modified
+
+- `.agents/skills/jira/SKILL.md`
+
+---
+
 ## 2026-10-22
 
 ### Added
