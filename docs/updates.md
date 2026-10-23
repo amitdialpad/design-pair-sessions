@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:72405028feef9ca3f5886d2a4b4534f601ed959e -->
+
+**Write each run's company bundle to Firestore and pull it back to generate**
+
+Generating more days of a company starts from the previous bundle, and that bundle is 160 MB of JSON tracked in git under apps/beacon/data. Moving it out of git needs somewhere the generator can read it from. The Firestore model already had a codec for a stored bundle, but nothing wrote one, read one or said which one was current. This PR makes each published run keep its bundle in Firestore and adds a command that turns the active run's bundle back into a folder the generator can append to. It writes to the emulator only. Beacon does not read any of it, and data/ stays the source until it is untracked.
+
+<span class="release-meta">[dialpad/design#267](https://github.com/dialpad/design/pull/267) · 22 October 2026</span>
+
+---
+
 <!-- beacon-change:01841aa5ffb53a5dc5b4d3dab837ff971297cddc -->
 
 **Show normalized direct profile details**
@@ -78,6 +88,8 @@ Beacon had no model for an app (an agent or integration) that talks to a user. A
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:2261a8ab40642cbaef152a58dab1869bba1e026c -->
 
 **Plan each append day from its own local day**
@@ -87,8 +99,6 @@ An append planned every missing local day over a re-planned 30-day trailing wind
 <span class="release-meta">[dialpad/design#246](https://github.com/dialpad/design/pull/246) · 20 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:4e082cddfbb2ce8d32169d215bda53d47cfcd4da -->
 
