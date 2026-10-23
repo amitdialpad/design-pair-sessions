@@ -1,0 +1,1049 @@
+@layer dialtone.base {/**
+ * Do not edit directly, this file was auto-generated.
+ */:root {
+  color-scheme: light;
+  --dt-radio-size-radius: 50%;
+  --dt-avatar-color-background-000: oklch(0.9067 0 0); /* Neutral gray fallback (manual assignment only) */
+  --dt-avatar-color-background-1800: oklch(0.8984 0.0527 78.31);
+  --dt-avatar-color-background-1700: oklch(0.8872 0.16 92.49);
+  --dt-avatar-color-background-1600: oklch(0.8407 0.1532 79.67);
+  --dt-avatar-color-background-1500: oklch(0.7857 0.103 56.37);
+  --dt-avatar-color-background-1400: oklch(0.7318 0.1496 21.4);
+  --dt-avatar-color-background-1300: oklch(0.7295 0.205 347.95);
+  --dt-avatar-color-background-1200: oklch(0.7241 0.1644 345.13);
+  --dt-avatar-color-background-1100: oklch(0.8471 0.0921 331.77);
+  --dt-avatar-color-background-1000: oklch(0.8523 0.0726 263.33);
+  --dt-avatar-color-background-900: oklch(0.6991 0.159 254.31);
+  --dt-avatar-color-background-800: oklch(0.8856 0.0833 219.27);
+  --dt-avatar-color-background-700: oklch(0.8281 0.1207 222.29);
+  --dt-avatar-color-background-600: oklch(0.8436 0.0978 207.01);
+  --dt-avatar-color-background-500: oklch(0.8654 0.1263 164.33);
+  --dt-avatar-color-background-400: oklch(0.8566 0.146 155.37);
+  --dt-avatar-color-background-300: oklch(0.8732 0.1422 134.52);
+  --dt-avatar-color-background-200: oklch(0.9187 0.1785 136.65);
+  --dt-avatar-color-background-100: oklch(0.6262 0.1776 147.03);
+  --dt-avatar-hue-offset-12: 330; /* Family 12 hue offset (Pink/Rose) */
+  --dt-avatar-hue-offset-11: 300; /* Family 11 hue offset (Magenta) */
+  --dt-avatar-hue-offset-10: 270; /* Family 10 hue offset (Purple) */
+  --dt-avatar-hue-offset-9: 240; /* Family 9 hue offset (Indigo) */
+  --dt-avatar-hue-offset-8: 210; /* Family 8 hue offset (Blue) */
+  --dt-avatar-hue-offset-7: 180; /* Family 7 hue offset (Cyan) */
+  --dt-avatar-hue-offset-6: 150; /* Family 6 hue offset (Teal) */
+  --dt-avatar-hue-offset-5: 120; /* Family 5 hue offset (Green) */
+  --dt-avatar-hue-offset-4: 90; /* Family 4 hue offset (Yellow-Green) */
+  --dt-avatar-hue-offset-3: 60; /* Family 3 hue offset (Amber/Gold) */
+  --dt-avatar-hue-offset-2: 30; /* Family 2 hue offset (Orange) */
+  --dt-avatar-hue-offset-1: 0; /* Family 1 hue offset from anchor (Red) */
+  --dt-avatar-chroma-9: 0.08;
+  --dt-avatar-chroma-8: 0.10;
+  --dt-avatar-chroma-7: 0.12;
+  --dt-avatar-chroma-6: 0.15;
+  --dt-avatar-chroma-5: 0.17;
+  --dt-avatar-chroma-4: 0.18;
+  --dt-avatar-chroma-3: 0.17;
+  --dt-avatar-chroma-2: 0.15;
+  --dt-avatar-chroma-1: 0.12;
+  --dt-avatar-chroma-0: 0.08; /* OKLCH chroma - bell curve pattern */
+  --dt-avatar-lightness-9: 0.85; /* OKLCH lightness for variant 9 (lightest) */
+  --dt-avatar-lightness-8: 0.82;
+  --dt-avatar-lightness-7: 0.78;
+  --dt-avatar-lightness-6: 0.74;
+  --dt-avatar-lightness-5: 0.69;
+  --dt-avatar-lightness-4: 0.64;
+  --dt-avatar-lightness-3: 0.59;
+  --dt-avatar-lightness-2: 0.54;
+  --dt-avatar-lightness-1: 0.49;
+  --dt-avatar-lightness-0: 0.45; /* OKLCH lightness for variant 0 (darkest) */
+  --dt-action-color-border-positive-default: transparent;
+  --dt-action-color-border-muted-default: transparent;
+  --dt-action-color-border-inverted-default: transparent;
+  --dt-action-color-border-critical-default: transparent;
+  --dt-action-color-border-base-default: transparent;
+  --dt-radio-color-foreground-default: var(--dt-color-neutral-transparent);
+  --dt-radio-size-width: var(--dt-size-500);
+  --dt-presence-color-busy: var(--dt-color-gold-500);
+  --dt-presence-color-unavailable: var(--dt-color-red-600);
+  --dt-presence-color-available: var(--dt-color-green-700);
+  --dt-icon-size-border-100: var(--dt-size-border-100);
+  --dt-icon-size-800: calc(var(--dt-size-base) * 6);
+  --dt-icon-size-700: calc(var(--dt-size-base) * 4.75);
+  --dt-icon-size-600: calc(var(--dt-size-base) * 4);
+  --dt-icon-size-500: calc(var(--dt-size-base) * 3);
+  --dt-icon-size-400: calc(var(--dt-size-base) * 2.5);
+  --dt-icon-size-300: calc(var(--dt-size-base) * 2.25);
+  --dt-icon-size-200: calc(var(--dt-size-base) * 1.75);
+  --dt-icon-size-100: calc(var(--dt-size-base) * 1.5);
+  --dt-checkbox-color-foreground-default: var(--dt-color-neutral-transparent);
+  --dt-checkbox-size-width: var(--dt-size-500);
+  --dt-button-size-radius-xl: var(--dt-size-radius-500); /* Border radius for extra large button. */
+  --dt-button-size-radius-lg: var(--dt-size-radius-450); /* Border radius for large button. */
+  --dt-button-size-radius-md: var(--dt-size-radius-400); /* Border radius for medium button. */
+  --dt-button-size-radius-sm: var(--dt-size-radius-350); /* Border radius for small button */
+  --dt-button-size-radius-xs: var(--dt-size-radius-300); /* Border radius for extra small button */
+  --dt-button-line-height-xl: var(--dt-font-line-height-200); /* Line-height for XL button */
+  --dt-button-line-height-lg: var(--dt-font-line-height-200); /* Line-height for LG button */
+  --dt-button-line-height-md: var(--dt-font-line-height-200); /* Line-height for MD button */
+  --dt-button-line-height-sm: var(--dt-font-line-height-300); /* Line-height for SM button */
+  --dt-button-line-height-xs: var(--dt-font-line-height-200); /* Line-height for XS button */
+  --dt-button-font-weight-xl: var(--dt-font-weight-normal); /* Font weight for XL button */
+  --dt-button-font-weight-lg: var(--dt-font-weight-medium); /* Font weight for LG button */
+  --dt-button-font-weight-md: var(--dt-font-weight-medium); /* Font weight for MD button */
+  --dt-button-font-weight-sm: var(--dt-font-weight-semi-bold); /* Font weight for SM button */
+  --dt-button-font-weight-xs: var(--dt-font-weight-semi-bold); /* Font weight for XS button */
+  --dt-badge-color-border-bulletin-subtle: oklch(0.58 0.24 287 / 0.5);
+  --dt-badge-color-foreground-ai: var(--dt-color-neutral-white);
+  --dt-badge-color-foreground-bulletin-subtle: var(--dt-color-purple-900);
+  --dt-badge-color-foreground-success: var(--dt-color-green-1000);
+  --dt-badge-color-background-ai: var(--dt-color-gradient-gold-red-magenta-purple);
+  --dt-badge-color-background-bulletin-subtle: var(--dt-color-purple-200);
+  --dt-badge-color-background-critical: var(--dt-color-red-200);
+  --dt-badge-color-background-warning: var(--dt-color-gold-200);
+  --dt-badge-color-background-positive: var(--dt-color-green-200);
+  --dt-badge-color-background-info: var(--dt-color-blue-200);
+  --dt-avatar-color-foreground-dark: var(--dt-color-neutral-black); /* Text color for light avatar backgrounds (variants 6-9) */
+  --dt-avatar-color-foreground-light: var(--dt-color-neutral-white); /* Text color for dark avatar backgrounds (variants 0-5) */
+  --dt-shell-logo-color-wordmark: var(--dt-color-purple-1000);
+  --dt-theme-mention-color-background-strong: var(--dt-color-purple-900);
+  --dt-action-color-background-positive-primary-active: var(--dt-color-green-800);
+  --dt-action-color-background-positive-primary-hover: var(--dt-color-green-700);
+  --dt-action-color-background-positive-primary-default: var(--dt-color-green-600); /* Postive, accepting, or success actions. */
+  --dt-action-color-background-positive-default: var(--dt-color-neutral-transparent);
+  --dt-action-color-background-muted-default: var(--dt-color-neutral-transparent);
+  --dt-action-color-background-inverted-primary-active: var(--dt-color-purple-200);
+  --dt-action-color-background-inverted-default: var(--dt-color-neutral-transparent);
+  --dt-action-color-background-critical-primary-active: var(--dt-color-red-700);
+  --dt-action-color-background-critical-primary-hover: var(--dt-color-red-600);
+  --dt-action-color-background-critical-primary-default: var(--dt-color-red-500);
+  --dt-action-color-background-critical-default: var(--dt-color-neutral-transparent);
+  --dt-action-color-background-base-primary-active: var(--dt-color-purple-700);
+  --dt-action-color-background-base-primary-hover: var(--dt-color-purple-600);
+  --dt-action-color-background-base-primary-default: var(--dt-color-purple-500);
+  --dt-action-color-background-base-default: var(--dt-color-neutral-transparent);
+  --dt-inputs-color-border-disabled: var(--dt-color-neutral-transparent);
+  --dt-inputs-font-weight-xl: var(--dt-font-weight-normal); /* Font weight for extra large inputs (e.g. input and textarea) */
+  --dt-inputs-font-weight-lg: var(--dt-font-weight-normal); /* Font weight for large inputs (e.g. input and textarea) */
+  --dt-inputs-font-weight-md: var(--dt-font-weight-normal); /* Font weight for medium inputs (e.g. input and textarea) */
+  --dt-inputs-font-weight-sm: var(--dt-font-weight-normal); /* Font weight for small inputs (e.g. input and textarea) */
+  --dt-inputs-font-weight-xs: var(--dt-font-weight-normal); /* Font weight for extra small inputs (e.g. input and textarea) */
+  --dt-inputs-line-height-xl: var(--dt-font-line-height-200); /* Line height for extra large inputs (e.g. input and textarea) */
+  --dt-inputs-line-height-lg: var(--dt-font-line-height-200); /* Line height for large inputs (e.g. input and textarea) */
+  --dt-inputs-line-height-md: var(--dt-font-line-height-200); /* Line height for medium inputs (e.g. input and textarea) */
+  --dt-inputs-line-height-sm: var(--dt-font-line-height-300); /* Line height for small inputs (e.g. input and textarea) */
+  --dt-inputs-line-height-xs: var(--dt-font-line-height-200); /* Line height for extra small inputs (e.g. input and textarea) */
+  --dt-inputs-size-radius-xl: var(--dt-size-radius-500);
+  --dt-inputs-size-radius-lg: var(--dt-size-radius-450);
+  --dt-inputs-size-radius-md: var(--dt-size-radius-400);
+  --dt-inputs-size-radius-sm: var(--dt-size-radius-350);
+  --dt-inputs-size-radius-xs: var(--dt-size-radius-300);
+  --dt-inputs-size-border-status: var(--dt-size-border-200);
+  --dt-inputs-size-border-default: var(--dt-size-border-150);
+  --dt-text-code-xs-line-height: var(--dt-font-line-height-200); /* Extra small code style */
+  --dt-text-code-xs-font-weight: var(--dt-font-weight-normal); /* Extra small code style */
+  --dt-text-code-xs-font-family: var(--dt-font-family-mono); /* Extra small code style */
+  --dt-text-code-sm-line-height: var(--dt-font-line-height-200); /* Small code style */
+  --dt-text-code-sm-font-weight: var(--dt-font-weight-normal); /* Small code style */
+  --dt-text-code-sm-font-family: var(--dt-font-family-mono); /* Small code style */
+  --dt-text-code-md-line-height: var(--dt-font-line-height-200); /* Medium (default) code style */
+  --dt-text-code-md-font-weight: var(--dt-font-weight-normal); /* Medium (default) code style */
+  --dt-text-code-md-font-family: var(--dt-font-family-mono); /* Medium (default) code style */
+  --dt-text-code-lg-line-height: var(--dt-font-line-height-200); /* Large code style */
+  --dt-text-code-lg-font-weight: var(--dt-font-weight-normal); /* Large code style */
+  --dt-text-code-lg-font-family: var(--dt-font-family-mono); /* Large code style */
+  --dt-text-label-xs-line-height: var(--dt-font-line-height-300); /* Extra small label style */
+  --dt-text-label-xs-font-weight: var(--dt-font-weight-semi-bold); /* Extra small label style */
+  --dt-text-label-xs-font-family: var(--dt-font-family-body); /* Extra small label style */
+  --dt-text-label-sm-line-height: var(--dt-font-line-height-400); /* Small label style */
+  --dt-text-label-sm-font-weight: var(--dt-font-weight-semi-bold); /* Small label style */
+  --dt-text-label-sm-font-family: var(--dt-font-family-body); /* Small label style */
+  --dt-text-label-md-line-height: var(--dt-font-line-height-400); /* Medium (default) label style */
+  --dt-text-label-md-font-weight: var(--dt-font-weight-semi-bold); /* Medium (default) label style */
+  --dt-text-label-md-font-family: var(--dt-font-family-body); /* Medium (default) label style */
+  --dt-text-label-lg-line-height: var(--dt-font-line-height-300); /* Large label style */
+  --dt-text-label-lg-font-weight: var(--dt-font-weight-semi-bold); /* Large label style */
+  --dt-text-label-lg-font-family: var(--dt-font-family-body); /* Large label style */
+  --dt-text-body-xs-line-height: var(--dt-font-line-height-300); /* Extra small body style */
+  --dt-text-body-xs-font-weight: var(--dt-font-weight-normal); /* Extra small body style */
+  --dt-text-body-xs-font-family: var(--dt-font-family-body); /* Extra small body style */
+  --dt-text-body-sm-line-height: var(--dt-font-line-height-300); /* Small body style */
+  --dt-text-body-sm-font-weight: var(--dt-font-weight-normal); /* Small body style */
+  --dt-text-body-sm-font-family: var(--dt-font-family-body); /* Small body style */
+  --dt-text-body-md-line-height: var(--dt-font-line-height-400); /* Medium (default) body style */
+  --dt-text-body-md-font-weight: var(--dt-font-weight-normal); /* Medium (default) body style */
+  --dt-text-body-md-font-family: var(--dt-font-family-body); /* Medium (default) body style */
+  --dt-text-body-lg-line-height: var(--dt-font-line-height-400); /* Large body style */
+  --dt-text-body-lg-font-weight: var(--dt-font-weight-normal); /* Large body style */
+  --dt-text-body-lg-font-family: var(--dt-font-family-body); /* Large body style */
+  --dt-text-headline-xs-line-height: var(--dt-font-line-height-300); /* Extra small headline style */
+  --dt-text-headline-xs-font-weight: var(--dt-font-weight-bold); /* Extra small headline style */
+  --dt-text-headline-xs-font-family: var(--dt-font-family-body); /* Extra small headline style */
+  --dt-text-headline-sm-line-height: var(--dt-font-line-height-300); /* Small headline style */
+  --dt-text-headline-sm-font-weight: var(--dt-font-weight-bold); /* Small headline style */
+  --dt-text-headline-sm-font-family: var(--dt-font-family-body); /* Small headline style */
+  --dt-text-headline-md-line-height: var(--dt-font-line-height-400); /* Medium headline style */
+  --dt-text-headline-md-font-weight: var(--dt-font-weight-bold); /* Medium headline style */
+  --dt-text-headline-md-font-family: var(--dt-font-family-body); /* Medium headline style */
+  --dt-text-headline-lg-line-height: var(--dt-font-line-height-300); /* Large headline style */
+  --dt-text-headline-lg-font-weight: var(--dt-font-weight-bold); /* Large headline style */
+  --dt-text-headline-lg-font-family: var(--dt-font-family-body); /* Large headline style */
+  --dt-text-headline-xl-line-height: var(--dt-font-line-height-400); /* XL headline style */
+  --dt-text-headline-xl-font-weight: var(--dt-font-weight-bold); /* XL headline style */
+  --dt-text-headline-xl-font-family: var(--dt-font-family-body); /* XL headline style */
+  --dt-text-headline-2xl-line-height: var(--dt-font-line-height-200); /* XXL headline style */
+  --dt-text-headline-2xl-font-weight: var(--dt-font-weight-bold); /* XXL headline style */
+  --dt-text-headline-2xl-font-family: var(--dt-font-family-body); /* XXL headline style */
+  --dt-text-headline-3xl-line-height: var(--dt-font-line-height-200); /* XXXL headline style */
+  --dt-text-headline-3xl-font-weight: var(--dt-font-weight-bold); /* XXXL headline style */
+  --dt-text-headline-3xl-font-family: var(--dt-font-family-body); /* XXXL headline style */
+  --dt-typography-button-xl-font-family: var(--dt-font-family-body); /* Text style for extra large button */
+  --dt-typography-button-lg-font-family: var(--dt-font-family-body); /* Text style for large button */
+  --dt-typography-button-md-font-family: var(--dt-font-family-body); /* Text style for medium button */
+  --dt-typography-button-sm-font-family: var(--dt-font-family-body); /* Text style for small button */
+  --dt-typography-button-xs-font-family: var(--dt-font-family-body); /* Text style for extra small button */
+  --dt-typography-inputs-xl-font-family: var(--dt-font-family-body); /* Text style for extra large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-lg-font-family: var(--dt-font-family-body); /* Text style for large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-md-font-family: var(--dt-font-family-body); /* Text style for medium inputs (e.g. input and textarea) */
+  --dt-typography-inputs-sm-font-family: var(--dt-font-family-body); /* Text style for small inputs (e.g. input and textarea) */
+  --dt-typography-inputs-xs-font-family: var(--dt-font-family-body); /* Text style for extra small inputs (e.g. input and textarea) */
+  --dt-typography-code-sm-text-case: var(--dt-font-text-case-none); /* Smaller text size for monospace code, suitable for inline references or less prominent code examples. */
+  --dt-typography-code-sm-line-height: var(--dt-font-line-height-200); /* Smaller text size for monospace code, suitable for inline references or less prominent code examples. */
+  --dt-typography-code-sm-font-weight: var(--dt-font-weight-normal); /* Smaller text size for monospace code, suitable for inline references or less prominent code examples. */
+  --dt-typography-code-sm-font-family: var(--dt-font-family-mono); /* Smaller text size for monospace code, suitable for inline references or less prominent code examples. */
+  --dt-typography-code-md-text-case: var(--dt-font-text-case-none); /* Base default medium-sized text style for monospace code snippets of technical content. */
+  --dt-typography-code-md-line-height: var(--dt-font-line-height-200); /* Base default medium-sized text style for monospace code snippets of technical content. */
+  --dt-typography-code-md-font-weight: var(--dt-font-weight-normal); /* Base default medium-sized text style for monospace code snippets of technical content. */
+  --dt-typography-code-md-font-family: var(--dt-font-family-mono); /* Base default medium-sized text style for monospace code snippets of technical content. */
+  --dt-typography-helper-sm-text-case: var(--dt-font-text-case-none); /* Smaller text size for subtle guidance or additional context, minimizing visual disruption. */
+  --dt-typography-helper-sm-line-height: var(--dt-font-line-height-200); /* Smaller text size for subtle guidance or additional context, minimizing visual disruption. */
+  --dt-typography-helper-sm-font-weight: var(--dt-font-weight-normal); /* Smaller text size for subtle guidance or additional context, minimizing visual disruption. */
+  --dt-typography-helper-sm-font-family: var(--dt-font-family-body); /* Smaller text size for subtle guidance or additional context, minimizing visual disruption. */
+  --dt-typography-helper-md-text-case: var(--dt-font-text-case-none); /* Base default medium-sized text style for supplementary contextual information. */
+  --dt-typography-helper-md-line-height: var(--dt-font-line-height-300); /* Base default medium-sized text style for supplementary contextual information. */
+  --dt-typography-helper-md-font-weight: var(--dt-font-weight-normal); /* Base default medium-sized text style for supplementary contextual information. */
+  --dt-typography-helper-md-font-family: var(--dt-font-family-body); /* Base default medium-sized text style for supplementary contextual information. */
+  --dt-typography-label-sm-plain-compact-text-case: var(--dt-font-text-case-none); /* A non-bolded, tighter-spaced version of small label style. */
+  --dt-typography-label-sm-plain-compact-line-height: var(--dt-font-line-height-200); /* A non-bolded, tighter-spaced version of small label style. */
+  --dt-typography-label-sm-plain-compact-font-weight: var(--dt-font-weight-normal); /* A non-bolded, tighter-spaced version of small label style. */
+  --dt-typography-label-sm-plain-compact-font-family: var(--dt-font-family-body); /* A non-bolded, tighter-spaced version of small label style. */
+  --dt-typography-label-sm-plain-text-case: var(--dt-font-text-case-none); /* A non-bold version of small label style. */
+  --dt-typography-label-sm-plain-line-height: var(--dt-font-line-height-300); /* A non-bold version of small label style. */
+  --dt-typography-label-sm-plain-font-weight: var(--dt-font-weight-normal); /* A non-bold version of small label style. */
+  --dt-typography-label-sm-plain-font-family: var(--dt-font-family-body); /* A non-bold version of small label style. */
+  --dt-typography-label-sm-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of small label style. */
+  --dt-typography-label-sm-compact-line-height: var(--dt-font-line-height-200); /* A tighter-spaced version of small label style. */
+  --dt-typography-label-sm-compact-font-weight: var(--dt-font-weight-semi-bold); /* A tighter-spaced version of small label style. */
+  --dt-typography-label-sm-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of small label style. */
+  --dt-typography-label-sm-text-case: var(--dt-font-text-case-none); /* Smaller text style for labels when space is limited or for secondary information or to convey a slightly lower hierachy. */
+  --dt-typography-label-sm-line-height: var(--dt-font-line-height-300); /* Smaller text style for labels when space is limited or for secondary information or to convey a slightly lower hierachy. */
+  --dt-typography-label-sm-font-weight: var(--dt-font-weight-semi-bold); /* Smaller text style for labels when space is limited or for secondary information or to convey a slightly lower hierachy. */
+  --dt-typography-label-sm-font-family: var(--dt-font-family-body); /* Smaller text style for labels when space is limited or for secondary information or to convey a slightly lower hierachy. */
+  --dt-typography-label-md-plain-compact-text-case: var(--dt-font-text-case-none); /* A non-bolded, tighter-spaced version of medium label style. */
+  --dt-typography-label-md-plain-compact-line-height: var(--dt-font-line-height-300); /* A non-bolded, tighter-spaced version of medium label style. */
+  --dt-typography-label-md-plain-compact-font-weight: var(--dt-font-weight-normal); /* A non-bolded, tighter-spaced version of medium label style. */
+  --dt-typography-label-md-plain-compact-font-family: var(--dt-font-family-body); /* A non-bolded, tighter-spaced version of medium label style. */
+  --dt-typography-label-md-plain-text-case: var(--dt-font-text-case-none); /* A non-bold version of medium label style. */
+  --dt-typography-label-md-plain-line-height: var(--dt-font-line-height-400); /* A non-bold version of medium label style. */
+  --dt-typography-label-md-plain-font-weight: var(--dt-font-weight-normal); /* A non-bold version of medium label style. */
+  --dt-typography-label-md-plain-font-family: var(--dt-font-family-body); /* A non-bold version of medium label style. */
+  --dt-typography-label-md-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of medium label style. */
+  --dt-typography-label-md-compact-line-height: var(--dt-font-line-height-300); /* A tighter-spaced version of medium label style. */
+  --dt-typography-label-md-compact-font-weight: var(--dt-font-weight-semi-bold); /* A tighter-spaced version of medium label style. */
+  --dt-typography-label-md-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of medium label style. */
+  --dt-typography-label-md-text-case: var(--dt-font-text-case-none); /* Base default medium-sized text style for labels, providing clear identification and categorization. */
+  --dt-typography-label-md-line-height: var(--dt-font-line-height-400); /* Base default medium-sized text style for labels, providing clear identification and categorization. */
+  --dt-typography-label-md-font-weight: var(--dt-font-weight-semi-bold); /* Base default medium-sized text style for labels, providing clear identification and categorization. */
+  --dt-typography-label-md-font-family: var(--dt-font-family-body); /* Base default medium-sized text style for labels, providing clear identification and categorization. */
+  --dt-typography-headline-xxl-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of extra extra large headline style. */
+  --dt-typography-headline-xxl-compact-line-height: var(--dt-font-line-height-200); /* A tighter-spaced version of extra extra large headline style. */
+  --dt-typography-headline-xxl-compact-font-weight: var(--dt-font-weight-bold); /* A tighter-spaced version of extra extra large headline style. */
+  --dt-typography-headline-xxl-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of extra extra large headline style. */
+  --dt-typography-headline-xxl-text-case: var(--dt-font-text-case-none); /* Largest text style for extra extra large content. */
+  --dt-typography-headline-xxl-line-height: var(--dt-font-line-height-200); /* Largest text style for extra extra large content. */
+  --dt-typography-headline-xxl-font-weight: var(--dt-font-weight-bold); /* Largest text style for extra extra large content. */
+  --dt-typography-headline-xxl-font-family: var(--dt-font-family-body); /* Largest text style for extra extra large content. */
+  --dt-typography-headline-xl-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of extra large headline style. */
+  --dt-typography-headline-xl-compact-line-height: var(--dt-font-line-height-100); /* A tighter-spaced version of extra large headline style. */
+  --dt-typography-headline-xl-compact-font-weight: var(--dt-font-weight-bold); /* A tighter-spaced version of extra large headline style. */
+  --dt-typography-headline-xl-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of extra large headline style. */
+  --dt-typography-headline-xl-text-case: var(--dt-font-text-case-none); /* Extra large text style for high importance headlines. */
+  --dt-typography-headline-xl-line-height: var(--dt-font-line-height-200); /* Extra large text style for high importance headlines. */
+  --dt-typography-headline-xl-font-weight: var(--dt-font-weight-bold); /* Extra large text style for high importance headlines. */
+  --dt-typography-headline-xl-font-family: var(--dt-font-family-body); /* Extra large text style for high importance headlines. */
+  --dt-typography-headline-lg-soft-compact-text-case: var(--dt-font-text-case-none); /* A softer font weight, tighter spaced version of large headline style. */
+  --dt-typography-headline-lg-soft-compact-line-height: var(--dt-font-line-height-200); /* A softer font weight, tighter spaced version of large headline style. */
+  --dt-typography-headline-lg-soft-compact-font-weight: var(--dt-font-weight-medium); /* A softer font weight, tighter spaced version of large headline style. */
+  --dt-typography-headline-lg-soft-compact-font-family: var(--dt-font-family-body); /* A softer font weight, tighter spaced version of large headline style. */
+  --dt-typography-headline-lg-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of large body style. */
+  --dt-typography-headline-lg-compact-line-height: var(--dt-font-line-height-200); /* A tighter-spaced version of large body style. */
+  --dt-typography-headline-lg-compact-font-weight: var(--dt-font-weight-bold); /* A tighter-spaced version of large body style. */
+  --dt-typography-headline-lg-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of large body style. */
+  --dt-typography-headline-lg-soft-text-case: var(--dt-font-text-case-none); /* A softer font weight version of large headline style. */
+  --dt-typography-headline-lg-soft-line-height: var(--dt-font-line-height-400); /* A softer font weight version of large headline style. */
+  --dt-typography-headline-lg-soft-font-weight: var(--dt-font-weight-medium); /* A softer font weight version of large headline style. */
+  --dt-typography-headline-lg-soft-font-family: var(--dt-font-family-body); /* A softer font weight version of large headline style. */
+  --dt-typography-headline-lg-text-case: var(--dt-font-text-case-none); /* Large text style for headlines to attract attention. */
+  --dt-typography-headline-lg-line-height: var(--dt-font-line-height-400); /* Large text style for headlines to attract attention. */
+  --dt-typography-headline-lg-font-weight: var(--dt-font-weight-bold); /* Large text style for headlines to attract attention. */
+  --dt-typography-headline-lg-font-family: var(--dt-font-family-body); /* Large text style for headlines to attract attention. */
+  --dt-typography-headline-md-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of medium headline style. */
+  --dt-typography-headline-md-compact-line-height: var(--dt-font-line-height-300); /* A tighter-spaced version of medium headline style. */
+  --dt-typography-headline-md-compact-font-weight: var(--dt-font-weight-bold); /* A tighter-spaced version of medium headline style. */
+  --dt-typography-headline-md-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of medium headline style. */
+  --dt-typography-headline-md-text-case: var(--dt-font-text-case-none); /* Medium-sized base text style for headlines. */
+  --dt-typography-headline-md-line-height: var(--dt-font-line-height-400); /* Medium-sized base text style for headlines. */
+  --dt-typography-headline-md-font-weight: var(--dt-font-weight-bold); /* Medium-sized base text style for headlines. */
+  --dt-typography-headline-md-font-family: var(--dt-font-family-body); /* Medium-sized base text style for headlines. */
+  --dt-typography-headline-sm-soft-compact-text-case: var(--dt-font-text-case-none); /* A softer font weight, tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-soft-compact-line-height: var(--dt-font-line-height-200); /* A softer font weight, tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-soft-compact-font-weight: var(--dt-font-weight-medium); /* A softer font weight, tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-soft-compact-font-family: var(--dt-font-family-body); /* A softer font weight, tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-soft-text-case: var(--dt-font-text-case-none); /* A softer font weight version of small headline style. */
+  --dt-typography-headline-sm-soft-line-height: var(--dt-font-line-height-300); /* A softer font weight version of small headline style. */
+  --dt-typography-headline-sm-soft-font-weight: var(--dt-font-weight-medium); /* A softer font weight version of small headline style. */
+  --dt-typography-headline-sm-soft-font-family: var(--dt-font-family-body); /* A softer font weight version of small headline style. */
+  --dt-typography-headline-sm-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-compact-line-height: var(--dt-font-line-height-200); /* A tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-compact-font-weight: var(--dt-font-weight-bold); /* A tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-text-case: var(--dt-font-text-case-none); /* Smaller text size for secondary information or subheadings. */
+  --dt-typography-headline-sm-line-height: var(--dt-font-line-height-300); /* Smaller text size for secondary information or subheadings. */
+  --dt-typography-headline-sm-font-weight: var(--dt-font-weight-bold); /* Smaller text size for secondary information or subheadings. */
+  --dt-typography-headline-sm-font-family: var(--dt-font-family-body); /* Smaller text size for secondary information or subheadings. */
+  --dt-typography-headline-eyebrow-text-case: var(--dt-font-text-case-uppercase); /* Visually concise and uppercase title text used above a paired headline. Also known as a kicker or overline. */
+  --dt-typography-headline-eyebrow-line-height: var(--dt-font-line-height-300); /* Visually concise and uppercase title text used above a paired headline. Also known as a kicker or overline. */
+  --dt-typography-headline-eyebrow-font-weight: var(--dt-font-weight-normal); /* Visually concise and uppercase title text used above a paired headline. Also known as a kicker or overline. */
+  --dt-typography-headline-eyebrow-font-family: var(--dt-font-family-body); /* Visually concise and uppercase title text used above a paired headline. Also known as a kicker or overline. */
+  --dt-typography-body-sm-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of small body style. */
+  --dt-typography-body-sm-compact-line-height: var(--dt-font-line-height-200); /* A tighter-spaced version of small body style. */
+  --dt-typography-body-sm-compact-font-weight: var(--dt-font-weight-normal); /* A tighter-spaced version of small body style. */
+  --dt-typography-body-sm-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of small body style. */
+  --dt-typography-body-sm-text-case: var(--dt-font-text-case-none); /* Reduced small text style for less prominent or adjacent content. */
+  --dt-typography-body-sm-line-height: var(--dt-font-line-height-300); /* Reduced small text style for less prominent or adjacent content. */
+  --dt-typography-body-sm-font-weight: var(--dt-font-weight-normal); /* Reduced small text style for less prominent or adjacent content. */
+  --dt-typography-body-sm-font-family: var(--dt-font-family-body); /* Reduced small text style for less prominent or adjacent content. */
+  --dt-typography-body-md-compact-text-case: var(--dt-font-text-case-none); /* A tighter-spaced version of medium body style. */
+  --dt-typography-body-md-compact-line-height: var(--dt-font-line-height-300); /* A tighter-spaced version of medium body style. */
+  --dt-typography-body-md-compact-font-weight: var(--dt-font-weight-normal); /* A tighter-spaced version of medium body style. */
+  --dt-typography-body-md-compact-font-family: var(--dt-font-family-body); /* A tighter-spaced version of medium body style. */
+  --dt-typography-body-md-text-case: var(--dt-font-text-case-none); /* Base default medium text style for main content. */
+  --dt-typography-body-md-line-height: var(--dt-font-line-height-400); /* Base default medium text style for main content. */
+  --dt-typography-body-md-font-weight: var(--dt-font-weight-normal); /* Base default medium text style for main content. */
+  --dt-typography-body-md-font-family: var(--dt-font-family-body); /* Base default medium text style for main content. */
+  --dt-color-chart-sequential-range-10-end: var(--dt-color-teal-900); /* End color for tenth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-10-start: var(--dt-color-teal-100); /* Start color for tenth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-09-end: var(--dt-color-red-900); /* End color for ninth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-09-start: var(--dt-color-red-100); /* Start color for ninth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-08-end: var(--dt-color-olive-900); /* End color for eighth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-08-start: var(--dt-color-olive-100); /* Start color for eighth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-07-end: var(--dt-color-coral-900); /* End color for seventh sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-07-start: var(--dt-color-coral-100); /* Start color for seventh sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-06-end: var(--dt-color-berry-900); /* End color for sixth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-06-start: var(--dt-color-berry-100); /* Start color for sixth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-05-end: var(--dt-color-green-900); /* End color for fifth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-05-start: var(--dt-color-green-100); /* Start color for fifth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-04-end: var(--dt-color-gold-800); /* End color for fourth sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-04-start: var(--dt-color-gold-50); /* Start color for fourth sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-03-end: var(--dt-color-blue-900); /* End color for third sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-03-start: var(--dt-color-blue-100); /* Start color for third sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-02-end: var(--dt-color-magenta-900); /* End color for second sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-02-start: var(--dt-color-magenta-100); /* Start color for second sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-range-01-end: var(--dt-color-purple-900); /* Ending color for first sequential range. Use to create a dynamically generated sequential series, must be paired with an start color. */
+  --dt-color-chart-sequential-range-01-start: var(--dt-color-purple-100); /* Start color value for first sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-01: var(--dt-color-indigo-100); /* First color in sequential chart series. */
+  --dt-color-chart-sequential-10: var(--dt-color-indigo-900); /* Tenth color in sequential chart series. */
+  --dt-color-chart-info-selected: var(--dt-color-blue-800); /* Selected state for info chart elements. */
+  --dt-color-chart-info-hover: var(--dt-color-blue-600); /* Hover state for info chart elements. */
+  --dt-color-chart-info: var(--dt-color-blue-500); /* Used for informational or neutral data points in charts. */
+  --dt-color-chart-warning-selected: var(--dt-color-gold-800); /* Selected state for warning chart elements. */
+  --dt-color-chart-warning: var(--dt-color-gold-500); /* Used for cautionary or warning indicators in charts. */
+  --dt-color-chart-warning-hover: var(--dt-color-gold-700); /* Hover state for warning chart elements. */
+  --dt-color-chart-critical-selected: var(--dt-color-red-800); /* Selected state for critical chart elements, aka danger. */
+  --dt-color-chart-critical-hover: var(--dt-color-red-600); /* Hover state for critical chart elements, aka danger. */
+  --dt-color-chart-critical: var(--dt-color-red-500); /* Used for negative values, errors, or critical indicators in charts, aka danger. */
+  --dt-color-chart-positive-selected: var(--dt-color-green-900); /* Selected state for positive chart elements, aka success. */
+  --dt-color-chart-positive-hover: var(--dt-color-green-700); /* Hover state for positive chart elements, aka success. */
+  --dt-color-chart-positive: var(--dt-color-green-600); /* Used for positive values, growth, or success indicators in charts, aka success. */
+  --dt-color-chart-accent-selected: var(--dt-color-indigo-800); /* Selected state for accent chart elements. */
+  --dt-color-chart-accent-hover: var(--dt-color-indigo-600); /* Hover state for accent chart elements. */
+  --dt-color-chart-accent: var(--dt-color-indigo-500); /* Main accent color for highlighting important chart elements or primary data series. */
+  --dt-color-chart-neutral-selected: var(--dt-color-tan-600); /* Selected state for neutral chart elements. */
+  --dt-color-chart-neutral-hover: var(--dt-color-tan-400); /* Hover state for neutral chart elements. */
+  --dt-color-chart-neutral: var(--dt-color-tan-300); /* Used for neutral or background elements in charts where no specific meaning is implied. */
+  --dt-color-chart-categorical-10-selected: var(--dt-color-teal-900);
+  --dt-color-chart-categorical-10-hover: var(--dt-color-teal-700);
+  --dt-color-chart-categorical-09-selected: var(--dt-color-red-800);
+  --dt-color-chart-categorical-09-hover: var(--dt-color-red-500);
+  --dt-color-chart-categorical-09: var(--dt-color-red-400);
+  --dt-color-chart-categorical-08-selected: var(--dt-color-olive-800);
+  --dt-color-chart-categorical-08-hover: var(--dt-color-olive-600);
+  --dt-color-chart-categorical-08: var(--dt-color-olive-500);
+  --dt-color-chart-categorical-07-selected: var(--dt-color-coral-700);
+  --dt-color-chart-categorical-07-hover: var(--dt-color-coral-500);
+  --dt-color-chart-categorical-07: var(--dt-color-coral-400);
+  --dt-color-chart-categorical-06-selected: var(--dt-color-berry-600);
+  --dt-color-chart-categorical-06-hover: var(--dt-color-berry-400);
+  --dt-color-chart-categorical-06: var(--dt-color-berry-300);
+  --dt-color-chart-categorical-05-selected: var(--dt-color-green-900);
+  --dt-color-chart-categorical-05-hover: var(--dt-color-green-700);
+  --dt-color-chart-categorical-05: var(--dt-color-green-600);
+  --dt-color-chart-categorical-04-selected: var(--dt-color-gold-800);
+  --dt-color-chart-categorical-04-hover: var(--dt-color-gold-600);
+  --dt-color-chart-categorical-04: var(--dt-color-gold-500);
+  --dt-color-chart-categorical-03-selected: var(--dt-color-blue-800);
+  --dt-color-chart-categorical-03-hover: var(--dt-color-blue-600);
+  --dt-color-chart-categorical-03: var(--dt-color-blue-500);
+  --dt-color-chart-categorical-02-selected: var(--dt-color-magenta-700);
+  --dt-color-chart-categorical-02-hover: var(--dt-color-magenta-500);
+  --dt-color-chart-categorical-02: var(--dt-color-magenta-400);
+  --dt-color-chart-categorical-01-selected: var(--dt-color-purple-800);
+  --dt-color-chart-categorical-01-hover: var(--dt-color-purple-600);
+  --dt-color-chart-categorical-01: var(--dt-color-purple-500);
+  --dt-color-chart-categorical-11: var(--dt-color-tan-300);
+  --dt-color-chart-categorical-10: var(--dt-color-teal-600);
+  --dt-color-border-accent: var(--dt-color-brand-magenta);
+  --dt-color-border-ai: var(--dt-color-gradient-gold-red-magenta-purple);
+  --dt-color-border-focus: var(--dt-color-blue-500);
+  --dt-color-border-brand-strong-inverted: var(--dt-color-purple-200);
+  --dt-color-border-info-strong-inverted: var(--dt-color-blue-200);
+  --dt-color-border-warning-strong-inverted: var(--dt-color-gold-300);
+  --dt-color-border-positive-strong-inverted: var(--dt-color-green-500);
+  --dt-color-border-critical-strong-inverted: var(--dt-color-red-200);
+  --dt-color-border-brand-subtle-inverted: var(--dt-color-purple-600);
+  --dt-color-border-info-subtle-inverted: var(--dt-color-blue-900);
+  --dt-color-border-warning-subtle-inverted: var(--dt-color-gold-800);
+  --dt-color-border-positive-subtle-inverted: var(--dt-color-green-900);
+  --dt-color-border-critical-subtle-inverted: var(--dt-color-red-900);
+  --dt-color-border-brand-inverted: var(--dt-color-purple-400);
+  --dt-color-border-info-inverted: var(--dt-color-blue-300);
+  --dt-color-border-warning-inverted: var(--dt-color-gold-500);
+  --dt-color-border-positive-inverted: var(--dt-color-green-500);
+  --dt-color-border-critical-inverted: var(--dt-color-red-300);
+  --dt-color-border-bold-inverted: oklch(1 0 0 / 0.5);
+  --dt-color-border-moderate-inverted: oklch(1 0 0 / 0.35);
+  --dt-color-border-default-inverted: oklch(1 0 0 / 0.2);
+  --dt-color-border-subtle-inverted: oklch(1 0 0 / 0.12);
+  --dt-color-border-brand-strong: var(--dt-color-purple-800);
+  --dt-color-border-info-strong: var(--dt-color-blue-800);
+  --dt-color-border-warning-strong: var(--dt-color-gold-700);
+  --dt-color-border-positive-strong: var(--dt-color-green-900);
+  --dt-color-border-critical-strong: var(--dt-color-red-800);
+  --dt-color-border-brand-subtle: var(--dt-color-purple-300);
+  --dt-color-border-info-subtle: var(--dt-color-blue-300);
+  --dt-color-border-warning-subtle: var(--dt-color-gold-300);
+  --dt-color-border-positive-subtle: var(--dt-color-green-300);
+  --dt-color-border-critical-subtle: var(--dt-color-red-300);
+  --dt-color-border-brand: var(--dt-color-brand-purple);
+  --dt-color-border-info: var(--dt-color-blue-600);
+  --dt-color-border-warning: var(--dt-color-gold-500);
+  --dt-color-border-positive: var(--dt-color-green-700);
+  --dt-color-border-critical: var(--dt-color-red-600);
+  --dt-color-surface-ai: var(--dt-color-gradient-gold-red-magenta-purple);
+  --dt-color-surface-backdrop: oklch(0 0 0 / 0.65); /* Background color for a modal-like backdrop. */
+  --dt-color-surface-brand-subtle-opaque-inverted: oklch(0.15 0.09 291 / 0.66); /* Info surface as opaque background color. */
+  --dt-color-surface-info-subtle-opaque-inverted: oklch(0.16 0.05 252 / 0.66); /* Info surface as opaque background color. */
+  --dt-color-surface-positive-subtle-opaque-inverted: oklch(0.21 0.05 162 / 0.66); /* Positive subtle surface as opaque background color. */
+  --dt-color-surface-warning-subtle-opaque-inverted: oklch(0.18 0.04 77.5 / 0.3); /* Warning subtle surface as opaque background color */
+  --dt-color-surface-critical-subtle-opaque-inverted: oklch(0.17 0.07 8 / 0.6); /* Critical subtle surface as opaque background color. */
+  --dt-color-surface-brand-opaque-inverted: oklch(0.22 0.13 285 / 0.8); /* Info surface as opaque background color. */
+  --dt-color-surface-info-opaque-inverted: oklch(0.26 0.09 258 / 0.6); /* Info surface as opaque background color. */
+  --dt-color-surface-positive-opaque-inverted: oklch(0.34 0.08 157 / 0.3); /* Positive surface as opaque background color. */
+  --dt-color-surface-warning-opaque-inverted: oklch(0.32 0.07 64.8 / 0.35); /* Warning surface as opaque background color */
+  --dt-color-surface-critical-opaque-inverted: oklch(0.31 0.13 14.7 / 0.5); /* Critical surface as opaque background color. */
+  --dt-color-surface-brand-strong-inverted: var(--dt-color-purple-200); /* A contrasting informational surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-info-strong-inverted: var(--dt-color-blue-400); /* A contrasting informational surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-positive-strong-inverted: var(--dt-color-green-950); /* A contrasting positive state surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-warning-strong-inverted: var(--dt-color-gold-300); /* A contrasting warning surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-critical-strong-inverted: var(--dt-color-red-300); /* A contrasting critical surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-brand-subtle-inverted: var(--dt-color-purple-1000); /* A softer version of the default informational surface. */
+  --dt-color-surface-info-subtle-inverted: var(--dt-color-blue-1000); /* A softer version of the default informational surface. */
+  --dt-color-surface-positive-subtle-inverted: var(--dt-color-green-1000); /* A softer version of the default positive surface. */
+  --dt-color-surface-warning-subtle-inverted: var(--dt-color-gold-1000); /* A softer version of the default warning surface. */
+  --dt-color-surface-critical-subtle-inverted: var(--dt-color-red-1000); /* A softer version of the Critical surface. */
+  --dt-color-surface-brand-inverted: var(--dt-color-purple-950); /* Background surface color containing messaging or elements communicated as generally informational. */
+  --dt-color-surface-info-inverted: var(--dt-color-blue-950); /* Background surface color containing messaging or elements communicated as generally informational. */
+  --dt-color-surface-positive-inverted: var(--dt-color-green-900); /* Background surface color containing messaging or elements expressing a positive or successful state. */
+  --dt-color-surface-warning-inverted: var(--dt-color-gold-950); /* Background surface color highlighting messaging or elements that may require user's attention. */
+  --dt-color-surface-critical-inverted: var(--dt-color-red-950); /* Background surface color containing error, danger, or otherwise critical messaging or elements. */
+  --dt-color-surface-warning-subtle-opaque: oklch(0.94 0.05 77.3 / 0.3); /* Warning subtle surface as opaque background color */
+  --dt-color-surface-critical-subtle-opaque: oklch(0.88 0.07 17.3 / 0.5); /* Critical subtle surface as opaque background color. */
+  --dt-color-surface-brand-opaque: oklch(0.85 0.09 301 / 0.66); /* Info surface as opaque background color. */
+  --dt-color-surface-info-opaque: oklch(0.84 0.08 257 / 0.6); /* Info surface as opaque background color. */
+  --dt-color-surface-positive-opaque: oklch(0.91 0.09 165 / 0.45); /* Positive surface as opaque background color. */
+  --dt-color-surface-warning-opaque: oklch(0.9 0.09 77.6 / 0.52); /* Warning surface as opaque background color */
+  --dt-color-surface-critical-opaque: oklch(0.82 0.1 12.7 / 0.67); /* Critical surface as opaque background color. */
+  --dt-color-surface-brand-strong: var(--dt-color-purple-500); /* A contrasting informational surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-info-strong: var(--dt-color-blue-600); /* A contrasting informational surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-positive-strong: var(--dt-color-green-600); /* A contrasting positive state surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-warning-strong: var(--dt-color-gold-500); /* A contrasting warning surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-critical-strong: var(--dt-color-red-600); /* A contrasting critical surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-brand-subtle: var(--dt-color-purple-50); /* A softer version of the default informational surface. */
+  --dt-color-surface-info-subtle: var(--dt-color-blue-50); /* A softer version of the default informational surface. */
+  --dt-color-surface-positive-subtle: var(--dt-color-green-50); /* A softer version of the default positive surface. */
+  --dt-color-surface-warning-subtle: var(--dt-color-gold-50); /* A softer version of the default warning surface. */
+  --dt-color-surface-critical-subtle: var(--dt-color-red-50); /* A softer version of the Critical surface. */
+  --dt-color-surface-brand: var(--dt-color-purple-100); /* Background surface color containing messaging or elements communicated as generally informational. */
+  --dt-color-surface-info: var(--dt-color-blue-100); /* Background surface color containing messaging or elements communicated as generally informational. */
+  --dt-color-surface-positive: var(--dt-color-green-100); /* Background surface color containing messaging or elements expressing a positive or successful state. */
+  --dt-color-surface-warning: var(--dt-color-gold-100); /* Background surface color highlighting messaging or elements that may require user's attention. */
+  --dt-color-surface-critical: var(--dt-color-red-100); /* Background surface color containing error, danger, or otherwise critical messaging or elements. */
+  --dt-color-link-warning-inverted-hover: var(--dt-color-gold-300);
+  --dt-color-link-primary-inverted-hover: var(--dt-color-purple-200);
+  --dt-color-link-primary-inverted: var(--dt-color-purple-200);
+  --dt-color-link-info-hover: var(--dt-color-blue-700);
+  --dt-color-link-info: var(--dt-color-blue-600);
+  --dt-color-link-warning-hover: var(--dt-color-gold-900);
+  --dt-color-link-primary-hover: var(--dt-color-purple-700);
+  --dt-color-link-primary: var(--dt-color-purple-500);
+  --dt-color-foreground-info-strong-inverted: var(--dt-color-blue-200); /* Info strong text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-info-inverted: var(--dt-color-blue-300); /* Info text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-warning-inverted: var(--dt-color-gold-500); /* Warning text that sits on high-contrast surfaces or backgrounds */
+  --dt-color-foreground-positive-strong-inverted: var(--dt-color-green-50); /* Positive strong text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-positive-inverted: var(--dt-color-green-200); /* Positive text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-critical-strong-inverted: var(--dt-color-red-200); /* Critical strong text that sits on high-contrast surfaces or backgrounds */
+  --dt-color-foreground-critical-inverted: var(--dt-color-red-300); /* Critical text that sits on high-contrast surfaces or backgrounds */
+  --dt-color-foreground-info-strong: var(--dt-color-blue-800); /* Indicates a generally informational state on surfaces that require a stronger contrast. */
+  --dt-color-foreground-info: var(--dt-color-blue-700); /* Indicates a generally informational state. */
+  --dt-color-foreground-warning-strong: var(--dt-color-gold-800); /* Indicates a strong warning state on surfaces that require a stronger contrast. */
+  --dt-color-foreground-warning: var(--dt-color-gold-700); /* Indicates a warning state. */
+  --dt-color-foreground-positive-strong: var(--dt-color-green-800); /* Indicates a strong positive state on surfaces that require a stronger contrast. */
+  --dt-color-foreground-positive: var(--dt-color-green-700); /* Indicates a positive state. */
+  --dt-color-foreground-critical-strong: var(--dt-color-red-700); /* Expresses an error, danger, or otherwise critical state on surfaces that require a stronger contrast. */
+  --dt-color-foreground-critical: var(--dt-color-red-600); /* Expresses an error, danger, or otherwise critical state. */
+  --dt-size-border-focus: calc(var(--dt-size-border-200) + var(--dt-size-border-100));
+  --dt-radio-color-background-checked: var(--dt-color-surface-brand-strong);
+  --dt-radio-color-border-checked: var(--dt-color-border-brand);
+  --dt-radio-size-height: var(--dt-radio-size-width);
+  --dt-presence-color-offline: var(--dt-color-black-500);
+  --dt-icon-size-border-800: calc(var(--dt-icon-size-border-100) * 3.5);
+  --dt-icon-size-border-700: calc(var(--dt-icon-size-border-100) * 2.75);
+  --dt-icon-size-border-600: calc(var(--dt-icon-size-border-100) * 2.5);
+  --dt-icon-size-border-400: calc(var(--dt-icon-size-border-100) * 1.75);
+  --dt-icon-size-border-300: calc(var(--dt-icon-size-border-100) * 1.5);
+  --dt-icon-size-border-200: calc(var(--dt-icon-size-border-100) * 1.25);
+  --dt-checkbox-color-background-checked: var(--dt-color-surface-brand-strong);
+  --dt-checkbox-color-border-checked: var(--dt-color-border-brand);
+  --dt-checkbox-size-radius: var(--dt-inputs-size-radius-xs);
+  --dt-checkbox-size-height: var(--dt-checkbox-size-width);
+  --dt-button-font-size-xl: var(--dt-font-size-350); /* Extra large Button text size */
+  --dt-button-font-size-lg: var(--dt-font-size-300); /* Large Button text size */
+  --dt-button-font-size-md: var(--dt-font-size-200); /* Medium Button text size */
+  --dt-button-font-size-sm: var(--dt-font-size-125); /* Small Button text size */
+  --dt-button-font-size-xs: var(--dt-font-size-100); /* Extra small Button text size */
+  --dt-badge-color-foreground-bulletin: var(--dt-color-black-50);
+  --dt-badge-color-foreground-default: var(--dt-color-black-1000);
+  --dt-badge-color-background-bulletin: var(--dt-color-surface-brand-strong);
+  --dt-badge-color-background-success: var(--dt-badge-color-background-positive);
+  --dt-shell-presence-color-busy: var(--dt-presence-color-busy);
+  --dt-shell-presence-color-unavailable: var(--dt-presence-color-unavailable);
+  --dt-shell-presence-color-available: var(--dt-presence-color-available);
+  --dt-shell-logo-color-star: var(--dt-color-surface-brand-strong);
+  --dt-shell-mention-color-foreground-secondary: var(--dt-color-black-100);
+  --dt-shell-mention-color-foreground-primary: var(--dt-color-black-50);
+  --dt-shell-base-color-status-away: var(--dt-color-black-500);
+  --dt-shell-base-color-status-warning: var(--dt-color-foreground-warning);
+  --dt-shell-base-color-status-critical: var(--dt-color-foreground-critical);
+  --dt-shell-base-color-status-positive: var(--dt-color-foreground-positive);
+  --dt-shell-base-color-action: var(--dt-color-black-800);
+  --dt-shell-base-color-border: var(--dt-color-black-900);
+  --dt-shell-base-color-foreground: var(--dt-color-black-900);
+  --dt-theme-mention-color-background: var(--dt-color-surface-brand-strong);
+  --dt-theme-mention-color-foreground: var(--dt-color-black-50);
+  --dt-theme-presence-color-background-busy: var(--dt-presence-color-busy);
+  --dt-theme-presence-color-background-busy-unavailable: var(--dt-presence-color-unavailable);
+  --dt-theme-presence-color-background-available: var(--dt-presence-color-available);
+  --dt-theme-color-base: var(--dt-color-black-900);
+  --dt-action-color-border-positive-outlined-default: var(--dt-color-border-positive);
+  --dt-action-color-border-inverted-outlined-default: var(--dt-color-border-default-inverted);
+  --dt-action-color-border-critical-outlined-default: var(--dt-color-border-critical);
+  --dt-action-color-border-base-outlined-default: var(--dt-color-border-brand);
+  --dt-action-color-background-positive-hover: var(--dt-color-surface-positive-opaque);
+  --dt-action-color-background-inverted-primary-hover: var(--dt-color-surface-brand);
+  --dt-action-color-background-inverted-primary-default: var(--dt-color-black-100);
+  --dt-action-color-background-critical-hover: var(--dt-color-surface-critical-subtle-opaque);
+  --dt-action-color-foreground-positive-primary-default: var(--dt-color-black-50);
+  --dt-action-color-foreground-inverted-primary-hover: var(--dt-color-link-primary-hover);
+  --dt-action-color-foreground-inverted-primary-default: var(--dt-color-link-primary);
+  --dt-action-color-foreground-critical-primary-default: var(--dt-color-black-50);
+  --dt-action-color-foreground-base-primary-default: var(--dt-color-black-50);
+  --dt-action-color-foreground-base-hover: var(--dt-color-link-primary-hover);
+  --dt-action-color-foreground-base-default: var(--dt-color-link-primary);
+  --dt-inputs-color-background-focus: var(--dt-color-black-100);
+  --dt-inputs-color-border-warning: var(--dt-color-border-warning);
+  --dt-inputs-color-border-positive: var(--dt-color-border-positive);
+  --dt-inputs-color-border-critical: var(--dt-color-border-critical);
+  --dt-inputs-color-border-focus: var(--dt-color-border-focus);
+  --dt-inputs-font-size-xl: var(--dt-font-size-350); /* Font size for extra large inputs (e.g. input and textarea) */
+  --dt-inputs-font-size-lg: var(--dt-font-size-300); /* Font size for large inputs (e.g. input and textarea) */
+  --dt-inputs-font-size-md: var(--dt-font-size-200); /* Font size for medium inputs (e.g. input and textarea) */
+  --dt-inputs-font-size-sm: var(--dt-font-size-125); /* Font size for small inputs (e.g. input and textarea) */
+  --dt-inputs-font-size-xs: var(--dt-font-size-100); /* Font size for extra small inputs (e.g. input and textarea) */
+  --dt-text-code-xs-font-size: var(--dt-font-size-100); /* Extra small code style */
+  --dt-text-code-sm-font-size: var(--dt-font-size-150); /* Small code style */
+  --dt-text-code-md-font-size: var(--dt-font-size-200); /* Medium (default) code style */
+  --dt-text-code-lg-font-size: var(--dt-font-size-250); /* Large code style */
+  --dt-text-label-xs-font-size: var(--dt-font-size-100); /* Extra small label style */
+  --dt-text-label-sm-font-size: var(--dt-font-size-150); /* Small label style */
+  --dt-text-label-md-font-size: var(--dt-font-size-200); /* Medium (default) label style */
+  --dt-text-label-lg-font-size: var(--dt-font-size-250); /* Large label style */
+  --dt-text-body-xs-font-size: var(--dt-font-size-100); /* Extra small body style */
+  --dt-text-body-sm-font-size: var(--dt-font-size-150); /* Small body style */
+  --dt-text-body-md-font-size: var(--dt-font-size-200); /* Medium (default) body style */
+  --dt-text-body-lg-font-size: var(--dt-font-size-250); /* Large body style */
+  --dt-text-headline-xs-font-size: var(--dt-font-size-100); /* Extra small headline style */
+  --dt-text-headline-sm-font-size: var(--dt-font-size-150); /* Small headline style */
+  --dt-text-headline-md-font-size: var(--dt-font-size-200); /* Medium headline style */
+  --dt-text-headline-lg-font-size: var(--dt-font-size-250); /* Large headline style */
+  --dt-text-headline-xl-font-size: var(--dt-font-size-300); /* XL headline style */
+  --dt-text-headline-2xl-font-size: var(--dt-font-size-400); /* XXL headline style */
+  --dt-text-headline-3xl-font-size: var(--dt-font-size-500);
+  --dt-text-headline-3xl: var(--dt-text-headline-3xl-font-weight) var(--dt-text-headline-3xl-font-size)/var(--dt-text-headline-3xl-line-height) var(--dt-text-headline-3xl-font-family);
+  --dt-text-headline-2xl: var(--dt-text-headline-2xl-font-weight) var(--dt-text-headline-2xl-font-size)/var(--dt-text-headline-2xl-line-height) var(--dt-text-headline-2xl-font-family);
+  --dt-text-headline-xl: var(--dt-text-headline-xl-font-weight) var(--dt-text-headline-xl-font-size)/var(--dt-text-headline-xl-line-height) var(--dt-text-headline-xl-font-family);
+  --dt-text-headline-lg: var(--dt-text-headline-lg-font-weight) var(--dt-text-headline-lg-font-size)/var(--dt-text-headline-lg-line-height) var(--dt-text-headline-lg-font-family);
+  --dt-text-headline-md: var(--dt-text-headline-md-font-weight) var(--dt-text-headline-md-font-size)/var(--dt-text-headline-md-line-height) var(--dt-text-headline-md-font-family);
+  --dt-text-headline-sm: var(--dt-text-headline-sm-font-weight) var(--dt-text-headline-sm-font-size)/var(--dt-text-headline-sm-line-height) var(--dt-text-headline-sm-font-family);
+  --dt-text-headline-xs: var(--dt-text-headline-xs-font-weight) var(--dt-text-headline-xs-font-size)/var(--dt-text-headline-xs-line-height) var(--dt-text-headline-xs-font-family);
+  --dt-text-body-lg: var(--dt-text-body-lg-font-weight) var(--dt-text-body-lg-font-size)/var(--dt-text-body-lg-line-height) var(--dt-text-body-lg-font-family);
+  --dt-text-body-md: var(--dt-text-body-md-font-weight) var(--dt-text-body-md-font-size)/var(--dt-text-body-md-line-height) var(--dt-text-body-md-font-family);
+  --dt-text-body-sm: var(--dt-text-body-sm-font-weight) var(--dt-text-body-sm-font-size)/var(--dt-text-body-sm-line-height) var(--dt-text-body-sm-font-family);
+  --dt-text-body-xs: var(--dt-text-body-xs-font-weight) var(--dt-text-body-xs-font-size)/var(--dt-text-body-xs-line-height) var(--dt-text-body-xs-font-family);
+  --dt-text-label-lg: var(--dt-text-label-lg-font-weight) var(--dt-text-label-lg-font-size)/var(--dt-text-label-lg-line-height) var(--dt-text-label-lg-font-family);
+  --dt-text-label-md: var(--dt-text-label-md-font-weight) var(--dt-text-label-md-font-size)/var(--dt-text-label-md-line-height) var(--dt-text-label-md-font-family);
+  --dt-text-label-sm: var(--dt-text-label-sm-font-weight) var(--dt-text-label-sm-font-size)/var(--dt-text-label-sm-line-height) var(--dt-text-label-sm-font-family);
+  --dt-text-label-xs: var(--dt-text-label-xs-font-weight) var(--dt-text-label-xs-font-size)/var(--dt-text-label-xs-line-height) var(--dt-text-label-xs-font-family);
+  --dt-text-code-lg: var(--dt-text-code-lg-font-weight) var(--dt-text-code-lg-font-size)/var(--dt-text-code-lg-line-height) var(--dt-text-code-lg-font-family);
+  --dt-text-code-md: var(--dt-text-code-md-font-weight) var(--dt-text-code-md-font-size)/var(--dt-text-code-md-line-height) var(--dt-text-code-md-font-family);
+  --dt-text-code-sm: var(--dt-text-code-sm-font-weight) var(--dt-text-code-sm-font-size)/var(--dt-text-code-sm-line-height) var(--dt-text-code-sm-font-family);
+  --dt-text-code-xs: var(--dt-text-code-xs-font-weight) var(--dt-text-code-xs-font-size)/var(--dt-text-code-xs-line-height) var(--dt-text-code-xs-font-family); /* XXXL headline style */
+  --dt-typography-button-xl-line-height: var(--dt-button-line-height-xl); /* Text style for extra large button */
+  --dt-typography-button-xl-font-weight: var(--dt-button-font-weight-xl); /* Text style for extra large button */
+  --dt-typography-button-lg-line-height: var(--dt-button-line-height-lg); /* Text style for large button */
+  --dt-typography-button-lg-font-weight: var(--dt-button-font-weight-lg); /* Text style for large button */
+  --dt-typography-button-md-line-height: var(--dt-button-line-height-md); /* Text style for medium button */
+  --dt-typography-button-md-font-weight: var(--dt-button-font-weight-md); /* Text style for medium button */
+  --dt-typography-button-sm-line-height: var(--dt-button-line-height-sm); /* Text style for small button */
+  --dt-typography-button-sm-font-weight: var(--dt-button-font-weight-sm); /* Text style for small button */
+  --dt-typography-button-xs-line-height: var(--dt-button-line-height-xs); /* Text style for extra small button */
+  --dt-typography-button-xs-font-weight: var(--dt-button-font-weight-xs); /* Text style for extra small button */
+  --dt-typography-inputs-xl-line-height: var(--dt-inputs-line-height-xl); /* Text style for extra large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-xl-font-weight: var(--dt-inputs-font-weight-xl); /* Text style for extra large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-lg-line-height: var(--dt-inputs-line-height-lg); /* Text style for large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-lg-font-weight: var(--dt-inputs-font-weight-lg); /* Text style for large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-md-line-height: var(--dt-inputs-line-height-md); /* Text style for medium inputs (e.g. input and textarea) */
+  --dt-typography-inputs-md-font-weight: var(--dt-inputs-font-weight-md); /* Text style for medium inputs (e.g. input and textarea) */
+  --dt-typography-inputs-sm-line-height: var(--dt-inputs-line-height-sm); /* Text style for small inputs (e.g. input and textarea) */
+  --dt-typography-inputs-sm-font-weight: var(--dt-inputs-font-weight-sm); /* Text style for small inputs (e.g. input and textarea) */
+  --dt-typography-inputs-xs-line-height: var(--dt-inputs-line-height-xs); /* Text style for extra small inputs (e.g. input and textarea) */
+  --dt-typography-inputs-xs-font-weight: var(--dt-inputs-font-weight-xs); /* Text style for extra small inputs (e.g. input and textarea) */
+  --dt-typography-code-sm-font-size: var(--dt-font-size-75); /* Smaller text size for monospace code, suitable for inline references or less prominent code examples. */
+  --dt-typography-code-md-font-size: var(--dt-font-size-150); /* Base default medium-sized text style for monospace code snippets of technical content. */
+  --dt-typography-helper-sm-font-size: var(--dt-font-size-100); /* Smaller text size for subtle guidance or additional context, minimizing visual disruption. */
+  --dt-typography-helper-md-font-size: var(--dt-font-size-200); /* Base default medium-sized text style for supplementary contextual information. */
+  --dt-typography-label-sm-plain-compact-font-size: var(--dt-font-size-100); /* A non-bolded, tighter-spaced version of small label style. */
+  --dt-typography-label-sm-plain-font-size: var(--dt-font-size-100); /* A non-bold version of small label style. */
+  --dt-typography-label-sm-compact-font-size: var(--dt-font-size-100); /* A tighter-spaced version of small label style. */
+  --dt-typography-label-sm-font-size: var(--dt-font-size-100); /* Smaller text style for labels when space is limited or for secondary information or to convey a slightly lower hierachy. */
+  --dt-typography-label-md-plain-compact-font-size: var(--dt-font-size-200); /* A non-bolded, tighter-spaced version of medium label style. */
+  --dt-typography-label-md-plain-font-size: var(--dt-font-size-200); /* A non-bold version of medium label style. */
+  --dt-typography-label-md-compact-font-size: var(--dt-font-size-200); /* A tighter-spaced version of medium label style. */
+  --dt-typography-label-md-font-size: var(--dt-font-size-200); /* Base default medium-sized text style for labels, providing clear identification and categorization. */
+  --dt-typography-headline-xxl-compact-font-size: var(--dt-font-size-500); /* A tighter-spaced version of extra extra large headline style. */
+  --dt-typography-headline-xxl-font-size: var(--dt-font-size-500); /* Largest text style for extra extra large content. */
+  --dt-typography-headline-xl-compact-font-size: var(--dt-font-size-400); /* A tighter-spaced version of extra large headline style. */
+  --dt-typography-headline-xl-font-size: var(--dt-font-size-400); /* Extra large text style for high importance headlines. */
+  --dt-typography-headline-lg-soft-compact-font-size: var(--dt-font-size-300); /* A softer font weight, tighter spaced version of large headline style. */
+  --dt-typography-headline-lg-compact-font-size: var(--dt-font-size-300); /* A tighter-spaced version of large body style. */
+  --dt-typography-headline-lg-soft-font-size: var(--dt-font-size-300); /* A softer font weight version of large headline style. */
+  --dt-typography-headline-lg-font-size: var(--dt-font-size-300); /* Large text style for headlines to attract attention. */
+  --dt-typography-headline-md-compact-font-size: var(--dt-font-size-200); /* A tighter-spaced version of medium headline style. */
+  --dt-typography-headline-md-font-size: var(--dt-font-size-200); /* Medium-sized base text style for headlines. */
+  --dt-typography-headline-sm-soft-compact-font-size: var(--dt-font-size-100); /* A softer font weight, tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-soft-font-size: var(--dt-font-size-100); /* A softer font weight version of small headline style. */
+  --dt-typography-headline-sm-compact-font-size: var(--dt-font-size-100); /* A tighter-spaced version of small headline style. */
+  --dt-typography-headline-sm-font-size: var(--dt-font-size-100); /* Smaller text size for secondary information or subheadings. */
+  --dt-typography-headline-eyebrow-font-size: var(--dt-font-size-100); /* Visually concise and uppercase title text used above a paired headline. Also known as a kicker or overline. */
+  --dt-typography-body-sm-compact-font-size: var(--dt-font-size-100); /* A tighter-spaced version of small body style. */
+  --dt-typography-body-sm-font-size: var(--dt-font-size-100); /* Reduced small text style for less prominent or adjacent content. */
+  --dt-typography-body-md-compact-font-size: var(--dt-font-size-200); /* A tighter-spaced version of medium body style. */
+  --dt-typography-body-md-font-size: var(--dt-font-size-200); /* Base default medium text style for main content. */
+  --dt-color-chart-sequential-range-00-end: var(--dt-color-chart-sequential-10); /* Start color value for default sequential range. Use to create a dynamically generated sequential series, must be paired with a start color. */
+  --dt-color-chart-sequential-range-00-start: var(--dt-color-chart-sequential-01); /* Start color value for default sequential range. Use to create a dynamically generated sequential series, must be paired with an end color. */
+  --dt-color-chart-sequential-10-selected: oklch(0.28 0.05 193); /* Selected state for tenth sequential chart color. */
+  --dt-color-chart-sequential-10-hover: oklch(0.31 0.06 217); /* Hover state for tenth sequential chart color. */
+  --dt-color-chart-sequential-09: oklch(0.39 0.06 243); /* Ninth color in sequential chart series, extremely dark shade. */
+  --dt-color-chart-sequential-08: oklch(0.46 0.06 246); /* Eighth color in sequential chart series, very dark shade. */
+  --dt-color-chart-sequential-07: oklch(0.54 0.05 249); /* Seventh color in sequential chart series, dark shade. */
+  --dt-color-chart-sequential-06: oklch(0.61 0.04 252); /* Sixth color in sequential chart series, medium-dark shade. */
+  --dt-color-chart-sequential-05: oklch(0.68 0.04 255); /* Fifth color in sequential chart series, medium shade. */
+  --dt-color-chart-sequential-04: oklch(0.75 0.03 258); /* Fourth color in sequential chart series, light-medium shade. */
+  --dt-color-chart-sequential-03: oklch(0.82 0.02 261); /* Third color in sequential chart series, light shade. */
+  --dt-color-chart-sequential-02: oklch(0.89 0.02 264); /* Second color in sequential chart series, very light shade. */
+  --dt-color-chart-sequential-01-selected: oklch(0.72 0.01 320); /* Selected state for first sequential chart color. */
+  --dt-color-chart-sequential-01-hover: oklch(0.84 0.01 293); /* Hover state for first sequential chart color. */
+  --dt-color-chart-categorical-11-selected: oklch(0.59 0.01 56.3);
+  --dt-color-chart-categorical-11-hover: oklch(0.71 0.01 56.3);
+  --dt-color-chart-categorical-28: oklch(0.64 0.21 273);
+  --dt-color-chart-categorical-26: oklch(0.72 0.19 385);
+  --dt-color-chart-categorical-22: oklch(0.77 0.09 362);
+  --dt-color-chart-categorical-21: oklch(0.67 0.17 119);
+  --dt-color-chart-categorical-20: oklch(0.64 0.21 273);
+  --dt-color-chart-categorical-19: oklch(0.62 0.21 244);
+  --dt-color-chart-categorical-18: oklch(0.78 0.14 86.6);
+  --dt-color-chart-categorical-17: oklch(0.74 0.21 343);
+  --dt-color-chart-categorical-16: oklch(0.66 0.15 140);
+  --dt-color-chart-categorical-15: oklch(0.74 0.19 399);
+  --dt-color-chart-categorical-14: oklch(0.66 0.21 280);
+  --dt-color-chart-categorical-13: oklch(0.68 0.21 398);
+  --dt-color-chart-categorical-12: oklch(0.64 0.22 329);
+  --dt-color-border-success-strong-inverted: var(--dt-color-border-positive-strong-inverted);
+  --dt-color-border-success-subtle-inverted: var(--dt-color-border-positive-subtle-inverted);
+  --dt-color-border-success-inverted: var(--dt-color-border-positive-inverted);
+  --dt-color-border-success-strong: var(--dt-color-border-positive-strong);
+  --dt-color-border-success-subtle: var(--dt-color-border-positive-subtle);
+  --dt-color-border-success: var(--dt-color-border-positive);
+  --dt-color-border-bold: oklch(from var(--dt-color-black-900) l c h / .5);
+  --dt-color-border-moderate: oklch(from var(--dt-color-black-900) l c h / .3);
+  --dt-color-border-default: oklch(from var(--dt-color-black-900) l c h / .17);
+  --dt-color-border-subtle: oklch(from var(--dt-color-black-900) l c h / .11);
+  --dt-color-surface-success-subtle-opaque-inverted: var(--dt-color-surface-positive-subtle-opaque-inverted); /* Success subtle surface as opaque background color. */
+  --dt-color-surface-success-opaque-inverted: var(--dt-color-surface-positive-opaque-inverted); /* Success surface as opaque background color. */
+  --dt-color-surface-contrast-opaque-inverted: oklch(from var(--dt-color-black-50) l c h / .97); /* Contrast surface as opaque background color. */
+  --dt-color-surface-strong-opaque-inverted: oklch(from var(--dt-color-black-50) l c h / .67); /* Strong surface as opaque background color. */
+  --dt-color-surface-bold-opaque-inverted: oklch(from var(--dt-color-black-50) l c h / .32); /* Bold surface as opaque background color. */
+  --dt-color-surface-moderate-opaque-inverted: oklch(from var(--dt-color-black-50) l c h / .23); /* Moderate surface as opaque background color. */
+  --dt-color-surface-secondary-opaque-inverted: oklch(from var(--dt-color-black-50) l c h / .15); /* Secondary surface as opaque background color. */
+  --dt-color-surface-success-subtle-inverted: var(--dt-color-surface-positive-subtle-inverted); /* A softer version of the default success surface. */
+  --dt-color-surface-success-inverted: var(--dt-color-surface-positive-inverted); /* Background surface color containing messaging or elements expressing a positive or successful state. */
+  --dt-color-surface-contrast-inverted: var(--dt-color-black-100); /* An inverted surface for lightened content and elements, most likely paired with inverted foreground colors. */
+  --dt-color-surface-strong-inverted: var(--dt-color-black-400); /* Use sparingly to draw the eye to a relatively important region. */
+  --dt-color-surface-bold-inverted: var(--dt-color-black-600); /* Highlight or call attention to specific areas of the interface. */
+  --dt-color-surface-moderate-inverted: var(--dt-color-black-700); /* A tertiary surface level, prominent without being too overpowering. */
+  --dt-color-surface-secondary-inverted: var(--dt-color-black-800); /* For adjacent or complementary regions. */
+  --dt-color-surface-primary-inverted: var(--dt-color-black-1000); /* An inverted surface for lightened content and elements, most likely paired with inverted foreground colors. */
+  --dt-color-surface-brand-subtle-opaque: oklch(0.9 0.06 301 / 0.5); /* Info surface as opaque background color. */
+  --dt-color-surface-info-subtle-opaque: oklch(0.9 0.05 257 / 0.5); /* Info surface as opaque background color. */
+  --dt-color-surface-positive-subtle-opaque: oklch(0.96 0.06 167 / 0.5); /* Positive subtle surface as opaque background color. */
+  --dt-color-surface-success-opaque: var(--dt-color-surface-positive-opaque); /* Success surface as opaque background color. */
+  --dt-color-surface-contrast-opaque: oklch(from var(--dt-color-black-900) l c h / .92); /* Contrast surface as opaque background color. */
+  --dt-color-surface-success-strong: var(--dt-color-surface-positive-strong); /* A contrasting positive state surface, most likely paired with inverted foreground colors. */
+  --dt-color-surface-success-subtle: var(--dt-color-surface-positive-subtle); /* A softer version of the default success surface. */
+  --dt-color-surface-success: var(--dt-color-surface-positive); /* Background surface color containing messaging or elements expressing a positive or successful state. */
+  --dt-color-surface-contrast: var(--dt-color-black-800); /* An inverted surface for lightened content and elements, most likely paired with inverted foreground colors. */
+  --dt-color-surface-strong: var(--dt-color-black-600); /* Use sparingly to draw the eye to a relatively important region. */
+  --dt-color-surface-bold: var(--dt-color-black-300); /* Highlight or call attention to specific areas of the interface. */
+  --dt-color-surface-moderate: var(--dt-color-black-200); /* A tertiary surface level, prominent without being too overpowering. */
+  --dt-color-surface-secondary: var(--dt-color-black-100); /* For adjacent or complementary regions. */
+  --dt-color-surface-primary: var(--dt-color-black-50); /* Default surface color for the majority of surfaces. */
+  --dt-color-surface-overlay: var(--dt-color-black-50); /* For overlay surfaces like modals, popovers, and dialogs. */
+  --dt-color-link-mention-inverted-background-hover: oklch(0.85 0.09 301 / 0.2);
+  --dt-color-link-mention-inverted-background: oklch(0.85 0.09 301 / 0.3);
+  --dt-color-link-mention-background-hover: oklch(0.85 0.09 301 / 0.15);
+  --dt-color-link-mention-background: lch(83.3 29.9 302 / 0.66);
+  --dt-color-link-mention-hover: var(--dt-color-link-primary-hover);
+  --dt-color-link-mention: var(--dt-color-link-primary);
+  --dt-color-link-muted-inverted-hover: var(--dt-color-black-100);
+  --dt-color-link-info-inverted-hover: var(--dt-color-foreground-info-strong-inverted);
+  --dt-color-link-info-inverted: var(--dt-color-foreground-info-inverted);
+  --dt-color-link-warning-inverted: var(--dt-color-foreground-warning-inverted);
+  --dt-color-link-success-inverted-hover: var(--dt-color-foreground-positive-strong-inverted);
+  --dt-color-link-success-inverted: var(--dt-color-foreground-positive-inverted);
+  --dt-color-link-positive-inverted-hover: var(--dt-color-foreground-positive-strong-inverted);
+  --dt-color-link-positive-inverted: var(--dt-color-foreground-positive-inverted);
+  --dt-color-link-critical-inverted-hover: var(--dt-color-foreground-critical-strong-inverted);
+  --dt-color-link-critical-inverted: var(--dt-color-foreground-critical-inverted);
+  --dt-color-link-warning: var(--dt-color-foreground-warning);
+  --dt-color-link-success-hover: var(--dt-color-foreground-positive-strong);
+  --dt-color-link-success: var(--dt-color-foreground-positive); /* positive */
+  --dt-color-link-positive-hover: var(--dt-color-foreground-positive-strong);
+  --dt-color-link-positive: var(--dt-color-foreground-positive); /* positive */
+  --dt-color-link-critical-hover: var(--dt-color-foreground-critical-strong);
+  --dt-color-link-critical: var(--dt-color-foreground-critical);
+  --dt-color-foreground-success-strong-inverted: var(--dt-color-foreground-positive-strong-inverted); /* Success strong text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-success-inverted: var(--dt-color-foreground-positive-inverted); /* Success text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-disabled-inverted: var(--dt-color-black-400); /* Disabled text color that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-placeholder-inverted: var(--dt-color-black-400); /* Placeholder text color that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-muted-inverted: oklch(from var(--dt-color-black-100) l c h / .65); /* Muted text color that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-tertiary-inverted: var(--dt-color-black-300); /* Tertiary text color that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-secondary-inverted: var(--dt-color-black-200); /* Secondary text color that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-primary-inverted: var(--dt-color-black-100); /* Primary text that sits on high-contrast surfaces or backgrounds. */
+  --dt-color-foreground-success-strong: var(--dt-color-foreground-positive-strong); /* Indicates a strong positive state on surfaces that require a stronger contrast. */
+  --dt-color-foreground-success: var(--dt-color-foreground-positive); /* Indicates a positive state. */
+  --dt-color-foreground-disabled: var(--dt-color-black-500); /* Used for text paired with disabled content or components, like the form elements. */
+  --dt-color-foreground-placeholder: var(--dt-color-black-500); /* Text color for placeholder text within form elements. */
+  --dt-color-foreground-muted: oklch(from var(--dt-color-black-1000) l c h / .5);
+  --dt-color-foreground-tertiary: var(--dt-color-black-650); /* Used to imply visual hierarchy relative to primary and secondary text colors, e.g. headlines and labels. */
+  --dt-color-foreground-secondary: var(--dt-color-black-750); /* Example uses include introduction paragraphs, labels, and descriptions paired with form elements. */
+  --dt-color-foreground-primary: var(--dt-color-black-900); /* Default text color throughout the UI. */
+  --dt-radio-color-foreground-checked: var(--dt-color-foreground-primary-inverted);
+  --dt-radio-color-border-unchecked-hover: var(--dt-color-border-bold);
+  --dt-radio-color-border-unchecked: var(--dt-color-border-moderate);
+  --dt-icon-size-border-500: var(--dt-icon-size-border-400);
+  --dt-checkbox-color-foreground-checked: var(--dt-color-foreground-primary-inverted);
+  --dt-checkbox-color-border-unchecked-hover: var(--dt-color-border-bold);
+  --dt-checkbox-color-border-unchecked: var(--dt-color-border-moderate);
+  --dt-badge-color-border-default: var(--dt-color-border-subtle);
+  --dt-shell-presence-color-offline: var(--dt-presence-color-offline);
+  --dt-shell-color-border-default: oklch(from var(--dt-shell-base-color-border) l c h / .17);
+  --dt-shell-color-border-subtle: oklch(from var(--dt-shell-base-color-border) l c h / 0.10);
+  --dt-shell-color-foreground-warning: oklch(0.44 0.14 59.7);
+  --dt-shell-color-foreground-critical: oklch(0.46 0.23 18.6);
+  --dt-shell-color-foreground-positive: oklch(0.44 0.13 155);
+  --dt-shell-color-foreground-disabled: oklch(from var(--dt-shell-base-color-foreground) l c h / .57);
+  --dt-shell-color-foreground-muted: oklch(0.26 0.01 78.2 / 0.6);
+  --dt-shell-color-foreground-strong: oklch(from var(--dt-shell-base-color-foreground) l c h / 1);
+  --dt-shell-color-foreground-tertiary: oklch(from var(--dt-shell-base-color-foreground) l c h / .72);
+  --dt-shell-color-foreground-secondary: oklch(from var(--dt-shell-base-color-foreground) l c h / .86);
+  --dt-shell-color-foreground-primary: var(--dt-shell-base-color-foreground);
+  --dt-shell-base-action-color-background-muted: var(--dt-shell-base-color-action);
+  --dt-shell-base-action-color-background-secondary: var(--dt-shell-base-color-action);
+  --dt-shell-base-action-color-background-primary: var(--dt-shell-base-color-action);
+  --dt-shell-base-color-accent: var(--dt-badge-color-background-bulletin);
+  --dt-shell-base-color-surface: var(--dt-color-surface-secondary);
+  --dt-theme-mention-color-foreground-strong: var(--dt-color-foreground-primary-inverted);
+  --dt-theme-presence-color-background-offline: var(--dt-presence-color-offline);
+  --dt-theme-sidebar-section-color-foreground: var(--dt-color-foreground-tertiary);
+  --dt-theme-sidebar-selected-row-color-background: oklch(from var(--dt-theme-color-base) l c h / .09);
+  --dt-theme-sidebar-selected-row-color-foreground: var(--dt-color-foreground-primary);
+  --dt-theme-sidebar-row-color-background-active: oklch(from var(--dt-theme-color-base) l c h / .15);
+  --dt-theme-sidebar-row-color-background-hover: oklch(from var(--dt-theme-color-base) l c h / 0.11);
+  --dt-theme-sidebar-row-color-background: oklch(from var(--dt-theme-color-base) l c h / 0);
+  --dt-theme-sidebar-status-color-foreground: var(--dt-color-foreground-tertiary);
+  --dt-theme-sidebar-color-foreground-unread: var(--dt-color-foreground-primary);
+  --dt-theme-sidebar-color-foreground: var(--dt-color-foreground-secondary);
+  --dt-theme-topbar-profile-color-background-active: oklch(from var(--dt-theme-color-base) l c h / .14);
+  --dt-theme-topbar-profile-color-background-hover: oklch(from var(--dt-theme-color-base) l c h / .10);
+  --dt-theme-topbar-profile-color-background-inverted: oklch(from var(--dt-theme-color-base) l c h / .75);
+  --dt-theme-topbar-profile-color-background: oklch(from var(--dt-theme-color-base) l c h / .05);
+  --dt-theme-topbar-profile-color-foreground-inverted: oklch(from var(--dt-color-foreground-primary-inverted) l c h / .75);
+  --dt-theme-topbar-button-color-background-active: oklch(from var(--dt-theme-color-base) l c h / .1);
+  --dt-theme-topbar-button-color-background-hover: oklch(from var(--dt-theme-color-base) l c h / .05);
+  --dt-theme-topbar-button-color-background: oklch(from var(--dt-theme-color-base) l c h / 0);
+  --dt-theme-topbar-button-color-foreground-hover: var(--dt-theme-color-base);
+  --dt-theme-topbar-button-color-foreground: oklch(from var(--dt-theme-color-base) l c h / .65);
+  --dt-theme-topbar-field-color-border-active: oklch(from var(--dt-theme-color-base) l c h / .2);
+  --dt-theme-topbar-field-color-border-hover: oklch(from var(--dt-theme-color-base) l c h / .1);
+  --dt-theme-topbar-field-color-border: oklch(from var(--dt-theme-color-base) l c h / 0);
+  --dt-theme-topbar-field-color-background-hover: oklch(0.51 0.01 78.2);
+  --dt-theme-topbar-field-color-background: oklch(from var(--dt-theme-color-base) l c h / .05);
+  --dt-theme-topbar-field-color-foreground-hover: oklch(from var(--dt-theme-color-base) l c h / .75);
+  --dt-theme-topbar-field-color-foreground: oklch(from var(--dt-theme-color-base) l c h / .5);
+  --dt-theme-topbar-color-background: var(--dt-color-surface-secondary);
+  --dt-theme-topbar-color-foreground: oklch(from var(--dt-theme-color-base) l c h / .8);
+  --dt-action-color-border-muted-outlined-default: var(--dt-color-border-default);
+  --dt-action-color-background-positive-active: oklch(0.81 0.09 165 / 0.45);
+  --dt-action-color-background-inverted-active: var(--dt-color-surface-bold-opaque-inverted);
+  --dt-action-color-background-inverted-hover: var(--dt-color-surface-moderate-opaque-inverted);
+  --dt-action-color-background-critical-active: oklch(0.78 0.07 17.3 / 0.5);
+  --dt-action-color-background-base-hover: var(--dt-color-surface-brand-subtle-opaque);
+  --dt-action-color-foreground-positive-hover: var(--dt-color-link-positive-hover);
+  --dt-action-color-foreground-positive-default: var(--dt-color-link-positive);
+  --dt-action-color-foreground-disabled-default: var(--dt-color-foreground-disabled);
+  --dt-action-color-foreground-inverted-primary-active: var(--dt-action-color-foreground-inverted-primary-hover);
+  --dt-action-color-foreground-inverted-default: var(--dt-color-foreground-primary-inverted);
+  --dt-action-color-foreground-critical-hover: var(--dt-color-link-critical-hover);
+  --dt-action-color-foreground-critical-default: var(--dt-color-link-critical);
+  --dt-action-color-foreground-base-active: var(--dt-action-color-foreground-base-hover);
+  --dt-inputs-color-border-success: var(--dt-inputs-color-border-positive);
+  --dt-inputs-color-border-hover: var(--dt-color-border-moderate);
+  --dt-inputs-color-border-default: var(--dt-color-border-default);
+  --dt-inputs-color-foreground-disabled: var(--dt-color-foreground-disabled);
+  --dt-inputs-color-foreground-placeholder: var(--dt-color-foreground-placeholder);
+  --dt-inputs-color-foreground-default: var(--dt-color-foreground-secondary);
+  --dt-typography-button-xl-font-size: var(--dt-button-font-size-xl); /* Text style for extra large button */
+  --dt-typography-button-lg-font-size: var(--dt-button-font-size-lg); /* Text style for large button */
+  --dt-typography-button-md-font-size: var(--dt-button-font-size-md); /* Text style for medium button */
+  --dt-typography-button-sm-font-size: var(--dt-button-font-size-sm); /* Text style for small button */
+  --dt-typography-button-xs-font-size: var(--dt-button-font-size-xs); /* Text style for extra small button */
+  --dt-typography-inputs-xl-font-size: var(--dt-inputs-font-size-xl); /* Text style for extra large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-lg-font-size: var(--dt-inputs-font-size-lg); /* Text style for large inputs (e.g. input and textarea) */
+  --dt-typography-inputs-md-font-size: var(--dt-inputs-font-size-md); /* Text style for medium inputs (e.g. input and textarea) */
+  --dt-typography-inputs-sm-font-size: var(--dt-inputs-font-size-sm); /* Text style for small inputs (e.g. input and textarea) */
+  --dt-typography-inputs-xs-font-size: var(--dt-inputs-font-size-xs);
+  --dt-typography-inputs-xs: var(--dt-typography-inputs-xs-font-weight) var(--dt-typography-inputs-xs-font-size)/var(--dt-typography-inputs-xs-line-height) var(--dt-typography-inputs-xs-font-family);
+  --dt-typography-inputs-sm: var(--dt-typography-inputs-sm-font-weight) var(--dt-typography-inputs-sm-font-size)/var(--dt-typography-inputs-sm-line-height) var(--dt-typography-inputs-sm-font-family);
+  --dt-typography-inputs-md: var(--dt-typography-inputs-md-font-weight) var(--dt-typography-inputs-md-font-size)/var(--dt-typography-inputs-md-line-height) var(--dt-typography-inputs-md-font-family);
+  --dt-typography-inputs-lg: var(--dt-typography-inputs-lg-font-weight) var(--dt-typography-inputs-lg-font-size)/var(--dt-typography-inputs-lg-line-height) var(--dt-typography-inputs-lg-font-family);
+  --dt-typography-inputs-xl: var(--dt-typography-inputs-xl-font-weight) var(--dt-typography-inputs-xl-font-size)/var(--dt-typography-inputs-xl-line-height) var(--dt-typography-inputs-xl-font-family);
+  --dt-typography-button-xs: var(--dt-typography-button-xs-font-weight) var(--dt-typography-button-xs-font-size)/var(--dt-typography-button-xs-line-height) var(--dt-typography-button-xs-font-family);
+  --dt-typography-button-sm: var(--dt-typography-button-sm-font-weight) var(--dt-typography-button-sm-font-size)/var(--dt-typography-button-sm-line-height) var(--dt-typography-button-sm-font-family);
+  --dt-typography-button-md: var(--dt-typography-button-md-font-weight) var(--dt-typography-button-md-font-size)/var(--dt-typography-button-md-line-height) var(--dt-typography-button-md-font-family);
+  --dt-typography-button-lg: var(--dt-typography-button-lg-font-weight) var(--dt-typography-button-lg-font-size)/var(--dt-typography-button-lg-line-height) var(--dt-typography-button-lg-font-family);
+  --dt-typography-button-xl: var(--dt-typography-button-xl-font-weight) var(--dt-typography-button-xl-font-size)/var(--dt-typography-button-xl-line-height) var(--dt-typography-button-xl-font-family);
+  --dt-typography-body-md: var(--dt-typography-body-md-font-weight) var(--dt-typography-body-md-font-size)/var(--dt-typography-body-md-line-height) var(--dt-typography-body-md-font-family);
+  --dt-typography-body-md-compact: var(--dt-typography-body-md-compact-font-weight) var(--dt-typography-body-md-compact-font-size)/var(--dt-typography-body-md-compact-line-height) var(--dt-typography-body-md-compact-font-family);
+  --dt-typography-body-sm: var(--dt-typography-body-sm-font-weight) var(--dt-typography-body-sm-font-size)/var(--dt-typography-body-sm-line-height) var(--dt-typography-body-sm-font-family);
+  --dt-typography-body-sm-compact: var(--dt-typography-body-sm-compact-font-weight) var(--dt-typography-body-sm-compact-font-size)/var(--dt-typography-body-sm-compact-line-height) var(--dt-typography-body-sm-compact-font-family);
+  --dt-typography-headline-eyebrow: var(--dt-typography-headline-eyebrow-font-weight) var(--dt-typography-headline-eyebrow-font-size)/var(--dt-typography-headline-eyebrow-line-height) var(--dt-typography-headline-eyebrow-font-family);
+  --dt-typography-headline-sm: var(--dt-typography-headline-sm-font-weight) var(--dt-typography-headline-sm-font-size)/var(--dt-typography-headline-sm-line-height) var(--dt-typography-headline-sm-font-family);
+  --dt-typography-headline-sm-compact: var(--dt-typography-headline-sm-compact-font-weight) var(--dt-typography-headline-sm-compact-font-size)/var(--dt-typography-headline-sm-compact-line-height) var(--dt-typography-headline-sm-compact-font-family);
+  --dt-typography-headline-sm-soft: var(--dt-typography-headline-sm-soft-font-weight) var(--dt-typography-headline-sm-soft-font-size)/var(--dt-typography-headline-sm-soft-line-height) var(--dt-typography-headline-sm-soft-font-family);
+  --dt-typography-headline-sm-soft-compact: var(--dt-typography-headline-sm-soft-compact-font-weight) var(--dt-typography-headline-sm-soft-compact-font-size)/var(--dt-typography-headline-sm-soft-compact-line-height) var(--dt-typography-headline-sm-soft-compact-font-family);
+  --dt-typography-headline-md: var(--dt-typography-headline-md-font-weight) var(--dt-typography-headline-md-font-size)/var(--dt-typography-headline-md-line-height) var(--dt-typography-headline-md-font-family);
+  --dt-typography-headline-md-compact: var(--dt-typography-headline-md-compact-font-weight) var(--dt-typography-headline-md-compact-font-size)/var(--dt-typography-headline-md-compact-line-height) var(--dt-typography-headline-md-compact-font-family);
+  --dt-typography-headline-lg: var(--dt-typography-headline-lg-font-weight) var(--dt-typography-headline-lg-font-size)/var(--dt-typography-headline-lg-line-height) var(--dt-typography-headline-lg-font-family);
+  --dt-typography-headline-lg-soft: var(--dt-typography-headline-lg-soft-font-weight) var(--dt-typography-headline-lg-soft-font-size)/var(--dt-typography-headline-lg-soft-line-height) var(--dt-typography-headline-lg-soft-font-family);
+  --dt-typography-headline-lg-compact: var(--dt-typography-headline-lg-compact-font-weight) var(--dt-typography-headline-lg-compact-font-size)/var(--dt-typography-headline-lg-compact-line-height) var(--dt-typography-headline-lg-compact-font-family);
+  --dt-typography-headline-lg-soft-compact: var(--dt-typography-headline-lg-soft-compact-font-weight) var(--dt-typography-headline-lg-soft-compact-font-size)/var(--dt-typography-headline-lg-soft-compact-line-height) var(--dt-typography-headline-lg-soft-compact-font-family);
+  --dt-typography-headline-xl: var(--dt-typography-headline-xl-font-weight) var(--dt-typography-headline-xl-font-size)/var(--dt-typography-headline-xl-line-height) var(--dt-typography-headline-xl-font-family);
+  --dt-typography-headline-xl-compact: var(--dt-typography-headline-xl-compact-font-weight) var(--dt-typography-headline-xl-compact-font-size)/var(--dt-typography-headline-xl-compact-line-height) var(--dt-typography-headline-xl-compact-font-family);
+  --dt-typography-headline-xxl: var(--dt-typography-headline-xxl-font-weight) var(--dt-typography-headline-xxl-font-size)/var(--dt-typography-headline-xxl-line-height) var(--dt-typography-headline-xxl-font-family);
+  --dt-typography-headline-xxl-compact: var(--dt-typography-headline-xxl-compact-font-weight) var(--dt-typography-headline-xxl-compact-font-size)/var(--dt-typography-headline-xxl-compact-line-height) var(--dt-typography-headline-xxl-compact-font-family);
+  --dt-typography-label-md: var(--dt-typography-label-md-font-weight) var(--dt-typography-label-md-font-size)/var(--dt-typography-label-md-line-height) var(--dt-typography-label-md-font-family);
+  --dt-typography-label-md-compact: var(--dt-typography-label-md-compact-font-weight) var(--dt-typography-label-md-compact-font-size)/var(--dt-typography-label-md-compact-line-height) var(--dt-typography-label-md-compact-font-family);
+  --dt-typography-label-md-plain: var(--dt-typography-label-md-plain-font-weight) var(--dt-typography-label-md-plain-font-size)/var(--dt-typography-label-md-plain-line-height) var(--dt-typography-label-md-plain-font-family);
+  --dt-typography-label-md-plain-compact: var(--dt-typography-label-md-plain-compact-font-weight) var(--dt-typography-label-md-plain-compact-font-size)/var(--dt-typography-label-md-plain-compact-line-height) var(--dt-typography-label-md-plain-compact-font-family);
+  --dt-typography-label-sm: var(--dt-typography-label-sm-font-weight) var(--dt-typography-label-sm-font-size)/var(--dt-typography-label-sm-line-height) var(--dt-typography-label-sm-font-family);
+  --dt-typography-label-sm-compact: var(--dt-typography-label-sm-compact-font-weight) var(--dt-typography-label-sm-compact-font-size)/var(--dt-typography-label-sm-compact-line-height) var(--dt-typography-label-sm-compact-font-family);
+  --dt-typography-label-sm-plain: var(--dt-typography-label-sm-plain-font-weight) var(--dt-typography-label-sm-plain-font-size)/var(--dt-typography-label-sm-plain-line-height) var(--dt-typography-label-sm-plain-font-family);
+  --dt-typography-label-sm-plain-compact: var(--dt-typography-label-sm-plain-compact-font-weight) var(--dt-typography-label-sm-plain-compact-font-size)/var(--dt-typography-label-sm-plain-compact-line-height) var(--dt-typography-label-sm-plain-compact-font-family);
+  --dt-typography-helper-md: var(--dt-typography-helper-md-font-weight) var(--dt-typography-helper-md-font-size)/var(--dt-typography-helper-md-line-height) var(--dt-typography-helper-md-font-family);
+  --dt-typography-helper-sm: var(--dt-typography-helper-sm-font-weight) var(--dt-typography-helper-sm-font-size)/var(--dt-typography-helper-sm-line-height) var(--dt-typography-helper-sm-font-family);
+  --dt-typography-code-md: var(--dt-typography-code-md-font-weight) var(--dt-typography-code-md-font-size)/var(--dt-typography-code-md-line-height) var(--dt-typography-code-md-font-family);
+  --dt-typography-code-sm: var(--dt-typography-code-sm-font-weight) var(--dt-typography-code-sm-font-size)/var(--dt-typography-code-sm-line-height) var(--dt-typography-code-sm-font-family); /* Text style for extra small inputs (e.g. input and textarea) */
+  --dt-color-chart-sequential-09-selected: oklch(0.32 0.04 195); /* Selected state for ninth sequential chart color. */
+  --dt-color-chart-sequential-09-hover: oklch(0.36 0.05 219); /* Hover state for ninth sequential chart color. */
+  --dt-color-chart-sequential-08-selected: oklch(0.37 0.04 198); /* Selected state for eighth sequential chart color. */
+  --dt-color-chart-sequential-08-hover: oklch(0.41 0.05 222); /* Hover state for eighth sequential chart color. */
+  --dt-color-chart-sequential-07-selected: oklch(0.43 0.04 200); /* Selected state for seventh sequential chart color. */
+  --dt-color-chart-sequential-07-hover: oklch(0.48 0.04 224); /* Hover state for seventh sequential chart color. */
+  --dt-color-chart-sequential-06-selected: oklch(0.47 0.03 202); /* Selected state for sixth sequential chart color. */
+  --dt-color-chart-sequential-06-hover: oklch(0.54 0.03 227); /* Hover state for sixth sequential chart color. */
+  --dt-color-chart-sequential-05-selected: oklch(0.52 0.03 204); /* Selected state for fifth sequential chart color. */
+  --dt-color-chart-sequential-05-hover: oklch(0.6 0.03 229); /* Hover state for fifth sequential chart color. */
+  --dt-color-chart-sequential-04-selected: oklch(0.57 0.02 206); /* Selected state for fourth sequential chart color. */
+  --dt-color-chart-sequential-04-hover: oklch(0.66 0.03 232); /* Hover state for fourth sequential chart color. */
+  --dt-color-chart-sequential-03-selected: oklch(0.62 0.02 208); /* Selected state for third sequential chart color. */
+  --dt-color-chart-sequential-03-hover: oklch(0.72 0.02 235); /* Hover state for third sequential chart color. */
+  --dt-color-chart-sequential-02-selected: oklch(0.67 0.02 210); /* Selected state for second sequential chart color. */
+  --dt-color-chart-sequential-02-hover: oklch(0.78 0.02 237); /* Hover state for second sequential chart color. */
+  --dt-color-chart-categorical-28-selected: oklch(0.45 0.21 273);
+  --dt-color-chart-categorical-28-hover: oklch(0.54 0.21 273);
+  --dt-color-chart-categorical-26-selected: oklch(0.5 0.19 385);
+  --dt-color-chart-categorical-26-hover: oklch(0.61 0.19 385);
+  --dt-color-chart-categorical-22-selected: oklch(0.54 0.09 362);
+  --dt-color-chart-categorical-22-hover: oklch(0.65 0.09 362);
+  --dt-color-chart-categorical-21-selected: oklch(0.47 0.17 119);
+  --dt-color-chart-categorical-21-hover: oklch(0.57 0.17 119);
+  --dt-color-chart-categorical-20-selected: oklch(0.45 0.21 273);
+  --dt-color-chart-categorical-20-hover: oklch(0.54 0.21 273);
+  --dt-color-chart-categorical-19-selected: oklch(0.43 0.21 244);
+  --dt-color-chart-categorical-19-hover: oklch(0.53 0.21 244);
+  --dt-color-chart-categorical-18-selected: oklch(0.55 0.14 86.6);
+  --dt-color-chart-categorical-18-hover: oklch(0.66 0.14 86.6);
+  --dt-color-chart-categorical-17-selected: oklch(0.52 0.21 343);
+  --dt-color-chart-categorical-17-hover: oklch(0.63 0.21 343);
+  --dt-color-chart-categorical-16-selected: oklch(0.46 0.15 140);
+  --dt-color-chart-categorical-16-hover: oklch(0.56 0.15 140);
+  --dt-color-chart-categorical-15-selected: oklch(0.52 0.19 399);
+  --dt-color-chart-categorical-15-hover: oklch(0.63 0.19 399);
+  --dt-color-chart-categorical-14-selected: oklch(0.46 0.21 280);
+  --dt-color-chart-categorical-14-hover: oklch(0.56 0.21 280);
+  --dt-color-chart-categorical-13-selected: oklch(0.48 0.21 398);
+  --dt-color-chart-categorical-13-hover: oklch(0.58 0.21 398);
+  --dt-color-chart-categorical-12-selected: oklch(0.45 0.22 329);
+  --dt-color-chart-categorical-12-hover: oklch(0.54 0.22 329);
+  --dt-color-chart-categorical-30: oklch(0.63 0.18 231);
+  --dt-color-chart-categorical-29: oklch(0.75 0.16 418);
+  --dt-color-chart-categorical-27: oklch(0.64 0.17 176);
+  --dt-color-chart-categorical-25: oklch(0.7 0.19 330);
+  --dt-color-chart-categorical-24: oklch(0.71 0.2 46.6);
+  --dt-color-chart-categorical-23: oklch(0.67 0.21 350);
+  --dt-color-surface-primary-opaque-inverted: oklch(from var(--dt-color-surface-primary-inverted) l c h / .85); /* Secondary surface as opaque background color. */
+  --dt-color-surface-success-subtle-opaque: var(--dt-color-surface-positive-subtle-opaque); /* Success subtle surface as opaque background color. */
+  --dt-color-surface-strong-opaque: oklch(from var(--dt-color-surface-contrast) l c h / .76); /* Strong surface as opaque background color. */
+  --dt-color-surface-bold-opaque: oklch(from var(--dt-color-surface-strong) l c h / .3); /* Bold surface as opaque background color. */
+  --dt-color-surface-moderate-opaque: oklch(from var(--dt-color-surface-bold) l c h / .45); /* Moderate surface as opaque background color. */
+  --dt-color-surface-secondary-opaque: oklch(from var(--dt-color-surface-moderate) l c h / .3); /* Secondary surface as opaque background color. */
+  --dt-color-surface-primary-opaque: oklch(from var(--dt-color-surface-secondary) l c h / .07); /* Primary surface as opaque background color. */
+  --dt-color-link-disabled-inverted-hover: var(--dt-color-foreground-disabled-inverted);
+  --dt-color-link-disabled-inverted: var(--dt-color-foreground-disabled-inverted);
+  --dt-color-link-muted-inverted: var(--dt-color-foreground-secondary-inverted);
+  --dt-color-link-disabled: var(--dt-color-foreground-disabled);
+  --dt-color-link-muted-hover: var(--dt-color-foreground-secondary);
+  --dt-color-link-muted: var(--dt-color-foreground-tertiary);
+  --dt-badge-color-background-default: var(--dt-color-surface-moderate-opaque);
+  --dt-avatar-anchor-hue: var(--dt-shell-base-color-accent); /* Theme accent color used to derive avatar anchor hue. Transformed to OKLCH hue degrees at build time. */
+  --dt-shell-mention-color-surface-secondary: oklch(0.26 0.24 287);
+  --dt-shell-mention-color-surface-primary: var(--dt-shell-base-color-accent);
+  --dt-shell-action-color-background-muted-selected: oklch(from var(--dt-shell-base-action-color-background-muted) l c h / 0.07);
+  --dt-shell-action-color-background-muted-active: oklch(from var(--dt-shell-base-action-color-background-muted) l c h / .07);
+  --dt-shell-action-color-background-muted-hover: oklch(from var(--dt-shell-base-action-color-background-muted) l c h / .10);
+  --dt-shell-action-color-background-muted-default: oklch(from var(--dt-shell-base-action-color-background-muted) l c h / 0.05);
+  --dt-shell-action-color-background-secondary-selected: oklch(from var(--dt-shell-base-action-color-background-secondary) l c h / .13);
+  --dt-shell-action-color-background-secondary-active: oklch(from var(--dt-shell-base-action-color-background-secondary) l c h / .16);
+  --dt-shell-action-color-background-secondary-hover: oklch(from var(--dt-shell-base-action-color-background-secondary) l c h / .10);
+  --dt-shell-action-color-background-secondary-default: oklch(from var(--dt-shell-base-action-color-background-secondary) l c h / 0);
+  --dt-shell-action-color-background-primary-selected: oklch(from var(--dt-shell-base-action-color-background-primary) l c h / .13);
+  --dt-shell-action-color-background-primary-active: oklch(from var(--dt-shell-base-action-color-background-primary) l c h / .16);
+  --dt-shell-action-color-background-primary-hover: oklch(from var(--dt-shell-base-action-color-background-primary) l c h / .10);
+  --dt-shell-action-color-background-primary-default: oklch(from var(--dt-shell-base-action-color-background-primary) l c h / 0);
+  --dt-shell-action-color-foreground-muted-default: var(--dt-shell-color-foreground-muted);
+  --dt-shell-action-color-foreground-secondary-disabled: var(--dt-shell-color-foreground-disabled);
+  --dt-shell-action-color-foreground-primary-disabled: var(--dt-shell-color-foreground-disabled);
+  --dt-shell-action-color-foreground-tertiary-default: var(--dt-shell-color-foreground-tertiary);
+  --dt-shell-action-color-foreground-primary-strong: var(--dt-shell-color-foreground-strong);
+  --dt-shell-action-color-foreground-secondary-default: var(--dt-shell-color-foreground-secondary);
+  --dt-shell-action-color-foreground-primary-default: var(--dt-shell-color-foreground-secondary);
+  --dt-shell-color-surface-default: var(--dt-shell-base-color-surface);
+  --dt-theme-sidebar-icon-color-foreground: var(--dt-theme-sidebar-color-foreground);
+  --dt-theme-sidebar-color-background: var(--dt-theme-topbar-color-background);
+  --dt-theme-topbar-profile-color-foreground: var(--dt-theme-topbar-color-foreground);
+  --dt-action-color-background-disabled-default: var(--dt-color-surface-bold-opaque);
+  --dt-action-color-background-muted-hover: var(--dt-color-surface-moderate-opaque);
+  --dt-action-color-background-base-active: oklch(0.8 0.06 301 / 0.5);
+  --dt-action-color-foreground-positive-active: var(--dt-action-color-foreground-positive-hover);
+  --dt-action-color-foreground-muted-hover: var(--dt-color-link-muted-hover);
+  --dt-action-color-foreground-muted-default: var(--dt-color-link-muted);
+  --dt-action-color-foreground-inverted-hover: var(--dt-action-color-foreground-inverted-default);
+  --dt-action-color-foreground-critical-active: var(--dt-action-color-foreground-critical-hover);
+  --dt-inputs-color-background-disabled: var(--dt-color-surface-moderate-opaque);
+  --dt-inputs-color-background-default: var(--dt-color-surface-secondary-opaque);
+  --dt-color-chart-categorical-30-selected: oklch(0.44 0.18 231);
+  --dt-color-chart-categorical-30-hover: oklch(0.54 0.18 231);
+  --dt-color-chart-categorical-29-selected: oklch(0.52 0.16 418);
+  --dt-color-chart-categorical-29-hover: oklch(0.64 0.16 418);
+  --dt-color-chart-categorical-27-selected: oklch(0.45 0.17 176);
+  --dt-color-chart-categorical-27-hover: oklch(0.54 0.17 176);
+  --dt-color-chart-categorical-25-selected: oklch(0.49 0.19 330);
+  --dt-color-chart-categorical-25-hover: oklch(0.59 0.19 330);
+  --dt-color-chart-categorical-24-selected: oklch(0.5 0.2 46.6);
+  --dt-color-chart-categorical-24-hover: oklch(0.6 0.2 46.6);
+  --dt-color-chart-categorical-23-selected: oklch(0.47 0.21 350);
+  --dt-color-chart-categorical-23-hover: oklch(0.57 0.21 350);
+  --dt-color-link-disabled-hover: var(--dt-color-link-disabled);
+  --dt-shell-action-color-foreground-muted-selected: oklch(0.1 0.01 78.2 / 0.6);
+  --dt-shell-action-color-foreground-muted-hover: oklch(0.16 0.01 78.2 / 0.6);
+  --dt-action-color-background-muted-active: oklch(from var(--dt-action-color-background-muted-hover) l c h / .6);
+  --dt-action-color-foreground-muted-active: var(--dt-action-color-foreground-muted-hover);
+  --dt-action-color-foreground-inverted-active: var(--dt-action-color-foreground-inverted-hover);
+  --dt-shell-action-color-foreground-muted-active: var(--dt-shell-action-color-foreground-muted-hover);
+  --dt-font-size-100-mobile: 1.2rem;
+  --dt-font-size-200-mobile: 1.6rem;
+  --dt-font-size-300-mobile: 2rem;
+  --dt-font-size-400-mobile: 2.9rem;
+  --dt-font-size-500-mobile: 4.1rem;
+  --dt-font-size-100-tc8: 1.7rem;
+  --dt-font-size-200-tc8: 2.1rem;
+  --dt-font-size-300-tc8: 2.7rem;
+  --dt-font-size-400-tc8: 3.8rem;
+  --dt-font-size-500-tc8: 5.4rem;
+  --dt-font-size-100-tv: 2.5rem;
+  --dt-font-size-200-tv: 3.2rem;
+  --dt-font-size-300-tv: 4.1rem;
+  --dt-font-size-400-tv: 5.8rem;
+  --dt-font-size-500-tv: 8.2rem;
+  --zi-hide: -1;
+  --zi-base: 0;
+  --zi-base1: 1;
+  --zi-selected: 25;
+  --zi-active: 50;
+  --zi-navigation: 100;
+  --zi-navigation-fixed: 150;
+  --zi-dropdown: 200;
+  --zi-popover: 300;
+  --zi-tooltip: 400;
+  --zi-drawer: 500;
+  --zi-modal: 600;
+  --zi-modal-element: 650;
+  --zi-notification: 700;
+}
+}

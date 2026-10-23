@@ -1,0 +1,660 @@
+@layer dialtone.base {/**
+ * Do not edit directly, this file was auto-generated.
+ */:root {
+  color-scheme: light;
+  --dt-shadow-focus-outset-2-type: dropShadow;
+  --dt-shadow-focus-outset-1-type: dropShadow;
+  --dt-shadow-focus-type: dropShadow;
+  --dt-shadow-focus-inset-type: dropShadow;
+  --dt-shadow-card-3-type: dropShadow;
+  --dt-shadow-card-3-color: oklch(0 0 0 / 0.0784);
+  --dt-shadow-card-2-type: dropShadow;
+  --dt-shadow-card-2-color: oklch(0 0 0 / 0.0392);
+  --dt-shadow-card-1-type: dropShadow;
+  --dt-shadow-card-1-color: oklch(0 0 0 / 0.0314);
+  --dt-shadow-extra-large-type: dropShadow;
+  --dt-shadow-extra-large-color: oklch(0 0 0 / 0.302);
+  --dt-shadow-large-type: dropShadow;
+  --dt-shadow-large-color: oklch(0 0 0 / 0.302);
+  --dt-shadow-medium-type: dropShadow;
+  --dt-shadow-medium-color: oklch(0 0 0 / 0.251);
+  --dt-shadow-small-type: dropShadow;
+  --dt-shadow-small-color: oklch(0 0 0 / 0.149);
+  --dt-opacity-1300: 1;
+  --dt-opacity-1200: 0.9;
+  --dt-opacity-1100: 0.8;
+  --dt-opacity-1000: 0.75;
+  --dt-opacity-900: 0.7;
+  --dt-opacity-800: 0.6;
+  --dt-opacity-700: 0.5;
+  --dt-opacity-600: 0.4;
+  --dt-opacity-500: 0.3;
+  --dt-opacity-400: 0.25;
+  --dt-opacity-300: 0.2;
+  --dt-opacity-200: 0.1;
+  --dt-opacity-100: 0.05;
+  --dt-opacity-0: 0;
+  --dt-color-brand-gold: oklch(0.7807 0.1708 66.55); /* Typically used as an accent color. */
+  --dt-color-brand-red: oklch(0.6392 0.25 15.77); /* Typically used as an accent color. */
+  --dt-color-brand-magenta: oklch(0.663 0.2652 351.9); /* Typically used as an accent color. */
+  --dt-color-brand-purple: oklch(0.5829 0.2426 287.41); /* Primary brand color. */
+  --dt-color-gradient-gold-red-magenta-purple: linear-gradient(135deg, oklch(0.3316 0.1466 303.8) 0%, oklch(0.3732 0.1633 304.46) 3.08%, oklch(0.4542 0.1926 314.52) 14.48%, oklch(0.489 0.2033 320.73) 23.67%, oklch(0.5259 0.2058 339.37) 35.5%, oklch(0.5856 0.2146 353.36) 48.3%, oklch(0.6184 0.2208 6.85) 60.29%, oklch(0.6538 0.21 23.11) 70.08%, oklch(0.7086 0.1852 45.04) 90.02%, oklch(0.7522 0.1645 66.26) 97.29%, oklch(0.7522 0.1645 66.26) 100%); /* Gradient for Ai-oriented treatments. */
+  --dt-color-indigo-1000: oklch(0.1938 0.0398 236.11);
+  --dt-color-indigo-950: oklch(0.2375 0.0454 241.01);
+  --dt-color-indigo-900: oklch(0.3327 0.0697 239.96);
+  --dt-color-indigo-800: oklch(0.4894 0.1004 244.85);
+  --dt-color-indigo-700: oklch(0.5946 0.1301 244.29);
+  --dt-color-indigo-600: oklch(0.6593 0.1308 248.79);
+  --dt-color-indigo-500: oklch(0.7105 0.1149 251.15);
+  --dt-color-indigo-400: oklch(0.7735 0.0947 250.52);
+  --dt-color-indigo-300: oklch(0.8578 0.0596 258.66);
+  --dt-color-indigo-200: oklch(0.9021 0.0402 258.81);
+  --dt-color-indigo-100: oklch(0.9547 0.0128 266.7);
+  --dt-color-indigo-50: oklch(0.9723 0.0074 260.73);
+  --dt-color-teal-1000: oklch(0.1442 0.0300 205);
+  --dt-color-teal-950: oklch(0.2161 0.0480 204);
+  --dt-color-teal-900: oklch(0.3449 0.0840 203);
+  --dt-color-teal-800: oklch(0.4546 0.1140 202);
+  --dt-color-teal-700: oklch(0.5743 0.1260 201);
+  --dt-color-teal-600: oklch(0.6526 0.1240 200);
+  --dt-color-teal-500: oklch(0.7060 0.1200 200);
+  --dt-color-teal-400: oklch(0.7803 0.1080 200);
+  --dt-color-teal-300: oklch(0.8614 0.0860 200);
+  --dt-color-teal-200: oklch(0.9088 0.0460 200);
+  --dt-color-teal-100: oklch(0.9574 0.0140 200);
+  --dt-color-teal-50: oklch(0.9802 0.0070 200);
+  --dt-color-olive-1000: oklch(0.2228 0.047 103.99);
+  --dt-color-olive-950: oklch(0.256 0.0488 104.11);
+  --dt-color-olive-900: oklch(0.3689 0.0748 104.32);
+  --dt-color-olive-800: oklch(0.4741 0.0945 104.05);
+  --dt-color-olive-700: oklch(0.5993 0.1226 104.49);
+  --dt-color-olive-600: oklch(0.6988 0.1446 105.01);
+  --dt-color-olive-500: oklch(0.7646 0.158 105.07);
+  --dt-color-olive-400: oklch(0.8438 0.175 105.26);
+  --dt-color-olive-300: oklch(0.89 0.1501 100.62);
+  --dt-color-olive-200: oklch(0.9364 0.1103 97.49);
+  --dt-color-olive-100: oklch(0.9563 0.0607 95.13);
+  --dt-color-olive-50: oklch(0.9815 0.027 93.1);
+  --dt-color-coral-1000: oklch(0.1994 0.0507 42);
+  --dt-color-coral-950: oklch(0.2386 0.0750 38);
+  --dt-color-coral-900: oklch(0.3497 0.1280 36);
+  --dt-color-coral-800: oklch(0.4762 0.1700 35);
+  --dt-color-coral-700: oklch(0.6203 0.2100 35);
+  --dt-color-coral-600: oklch(0.7111 0.2050 36);
+  --dt-color-coral-500: oklch(0.7806 0.1850 37);
+  --dt-color-coral-400: oklch(0.8394 0.1500 38);
+  --dt-color-coral-300: oklch(0.9030 0.1100 40);
+  --dt-color-coral-200: oklch(0.9328 0.0750 41);
+  --dt-color-coral-100: oklch(0.9658 0.0398 43);
+  --dt-color-coral-50: oklch(0.9834 0.0115 42);
+  --dt-color-berry-1000: oklch(0.1805 0.061 307.56);
+  --dt-color-berry-950: oklch(0.2636 0.0991 307.61);
+  --dt-color-berry-900: oklch(0.3594 0.1439 306.98);
+  --dt-color-berry-800: oklch(0.4606 0.225 300.98);
+  --dt-color-berry-700: oklch(0.5424 0.2605 308.89);
+  --dt-color-berry-600: oklch(0.6056 0.2853 316.11);
+  --dt-color-berry-500: oklch(0.6622 0.2996 322.9);
+  --dt-color-berry-400: oklch(0.707 0.2727 330.23);
+  --dt-color-berry-300: oklch(0.7678 0.2124 329.78);
+  --dt-color-berry-200: oklch(0.8522 0.1303 329.28);
+  --dt-color-berry-100: oklch(0.9518 0.0405 328.39);
+  --dt-color-berry-50: oklch(0.9709 0.0244 327.79);
+  --dt-color-tan-1000: oklch(0.1456 0.0028 68.55);
+  --dt-color-tan-950: oklch(0.192 0.0026 67.67);
+  --dt-color-tan-900: oklch(0.2272 0.0025 67.7);
+  --dt-color-tan-800: oklch(0.27 0.0047 67.63);
+  --dt-color-tan-700: oklch(0.3617 0.0032 48.64);
+  --dt-color-tan-600: oklch(0.4885 0.006 48.6);
+  --dt-color-tan-500: oklch(0.6045 0.0114 58.1);
+  --dt-color-tan-400: oklch(0.7228 0.0082 48.61);
+  --dt-color-tan-300: oklch(0.8365 0.0087 56.29);
+  --dt-color-tan-200: oklch(0.8968 0.006 59.64);
+  --dt-color-tan-100: oklch(0.9561 0.0034 67.78);
+  --dt-color-tan-50: oklch(0.9766 0.0017 67.8);
+  --dt-color-red-1000: oklch(0.1721 0.0689 8);
+  --dt-color-red-950: oklch(0.2429 0.0952 12.48);
+  --dt-color-red-900: oklch(0.3132 0.1252 14.67);
+  --dt-color-red-800: oklch(0.385 0.15406 16.4808);
+  --dt-color-red-700: oklch(0.4703 0.1879 17.53);
+  --dt-color-red-600: oklch(0.5724 0.229466 18.56);
+  --dt-color-red-500: oklch(0.6392 0.25 15.77);
+  --dt-color-red-400: oklch(0.6886 0.204 14.67);
+  --dt-color-red-300: oklch(0.7713 0.1367 14.03);
+  --dt-color-red-200: oklch(0.8211 0.1019 12.69);
+  --dt-color-red-100: oklch(0.8774 0.0653 17.3);
+  --dt-color-red-50: oklch(0.936 0.0322 22.46);
+  --dt-color-green-1000: oklch(0.2077 0.0458 161.69);
+  --dt-color-green-950: oklch(0.2725 0.0631 158.54);
+  --dt-color-green-900: oklch(0.3402 0.0813 156.77);
+  --dt-color-green-800: oklch(0.4299 0.104657 155.7992);
+  --dt-color-green-700: oklch(0.5152 0.1266 155.2);
+  --dt-color-green-600: oklch(0.6083 0.1511 154.75);
+  --dt-color-green-500: oklch(0.7391 0.1756 156.11);
+  --dt-color-green-400: oklch(0.7945 0.1694 158.87);
+  --dt-color-green-300: oklch(0.846 0.1357 162.49);
+  --dt-color-green-200: oklch(0.9148 0.0923 165.26);
+  --dt-color-green-100: oklch(0.961 0.0564 166.75);
+  --dt-color-green-50: oklch(0.9766 0.0201 169.36);
+  --dt-color-gold-1000: oklch(0.1849 0.0386 77.52);
+  --dt-color-gold-950: oklch(0.2269 0.049661 68.4257);
+  --dt-color-gold-900: oklch(0.3218 0.0723 64.75);
+  --dt-color-gold-800: oklch(0.418 0.096552 61.5939);
+  --dt-color-gold-700: oklch(0.5888 0.138492 59.7021);
+  --dt-color-gold-600: oklch(0.7336 0.174556 58.5601);
+  --dt-color-gold-500: oklch(0.7807 0.1708 66.55);
+  --dt-color-gold-400: oklch(0.8105 0.1572 71.72);
+  --dt-color-gold-300: oklch(0.8585 0.122968 75.6919);
+  --dt-color-gold-200: oklch(0.9018 0.0868 77.62);
+  --dt-color-gold-100: oklch(0.9436 0.0483 77.26);
+  --dt-color-gold-50: oklch(0.9818 0.0152 77.07);
+  --dt-color-magenta-1000: oklch(0.1422 0.0604 345.16);
+  --dt-color-magenta-950: oklch(0.227 0.0946 350.32);
+  --dt-color-magenta-900: oklch(0.2808 0.1164 351.92);
+  --dt-color-magenta-800: oklch(0.3868 0.1589 353.23);
+  --dt-color-magenta-700: oklch(0.4724 0.194579 353.8977);
+  --dt-color-magenta-600: oklch(0.5768 0.237302 354.3202);
+  --dt-color-magenta-500: oklch(0.663 0.2652 351.9);
+  --dt-color-magenta-400: oklch(0.7038 0.232 347.8);
+  --dt-color-magenta-300: oklch(0.7802 0.164 344.57);
+  --dt-color-magenta-200: oklch(0.8232 0.1275 343.61);
+  --dt-color-magenta-100: oklch(0.8813 0.0822 342.24);
+  --dt-color-magenta-50: oklch(0.9317 0.0463 340.48);
+  --dt-color-blue-1000: oklch(0.163 0.0489 252.1);
+  --dt-color-blue-950: oklch(0.2552 0.0945 258.02);
+  --dt-color-blue-900: oklch(0.3269 0.1294 259.43);
+  --dt-color-blue-800: oklch(0.4126 0.1703 260.22);
+  --dt-color-blue-700: oklch(0.4857 0.205 260.61);
+  --dt-color-blue-600: oklch(0.5552 0.223 260.26);
+  --dt-color-blue-500: oklch(0.6089 0.2128 259.28);
+  --dt-color-blue-400: oklch(0.6566 0.1838 258.62);
+  --dt-color-blue-300: oklch(0.7558 0.1259 258.28);
+  --dt-color-blue-200: oklch(0.8437 0.0781 257.48);
+  --dt-color-blue-100: oklch(0.9037 0.047 257.26);
+  --dt-color-blue-50: oklch(0.9486 0.0246 257.65);
+  --dt-color-purple-1000: oklch(0.1531 0.0859 291.49);
+  --dt-color-purple-950: oklch(0.2244 0.131 285.15);
+  --dt-color-purple-900: oklch(0.2984 0.1549 283.05);
+  --dt-color-purple-800: oklch(0.3629 0.1821 284.23);
+  --dt-color-purple-700: oklch(0.4108 0.2066 284.07);
+  --dt-color-purple-600: oklch(0.4831 0.2316 284.82);
+  --dt-color-purple-500: oklch(0.5829 0.2426 287.41);
+  --dt-color-purple-400: oklch(0.6717 0.189855 291.5342);
+  --dt-color-purple-300: oklch(0.7697 0.130656 294.1037);
+  --dt-color-purple-200: oklch(0.8546 0.085 300.63);
+  --dt-color-purple-100: oklch(0.9029 0.056 301.24);
+  --dt-color-purple-50: oklch(0.9514 0.0276 301.76);
+  --dt-color-neutral-transparent: transparent; /* Transparent color independent of any theme. */
+  --dt-color-neutral-black: oklch(0 0 0); /* Black color independent of any theme. */
+  --dt-color-neutral-white: oklch(1 0 0); /* White color independent of any theme. */
+  --dt-layout-24px: 2.4rem; /* 24px */
+  --dt-layout-20px: 2rem; /* 20px */
+  --dt-layout-8px: 0.8rem; /* 8px */
+  --dt-layout-2px: 0.2rem; /* 2px */
+  --dt-layout-1px: 0.1rem; /* 1px */
+  --dt-spacing-0-negative: 0rem;
+  --dt-spacing-1: 0.1rem; /* 1px - Minimal spacing for borders/dividers */
+  --dt-spacing-0: 0rem; /* 0px - No spacing */
+  --dt-size-radius-circle: 50%;
+  --dt-size-radius-pill: 10.2rem;
+  --dt-size-radius-600: 3.2rem;
+  --dt-size-radius-550: 2.4rem;
+  --dt-size-radius-500: 1.6rem;
+  --dt-size-radius-450: 1.2rem;
+  --dt-size-radius-400: 0.8rem;
+  --dt-size-radius-350: 0.6rem;
+  --dt-size-radius-300: 0.4rem;
+  --dt-size-radius-200: 0.2rem;
+  --dt-size-radius-100: 0.1rem;
+  --dt-size-radius-0: 0rem;
+  --dt-size-100-percent: 100%;
+  --dt-size-95-percent: 95%;
+  --dt-size-90-percent: 90%;
+  --dt-size-80-percent: 80%;
+  --dt-size-75-percent: 75%;
+  --dt-size-70-percent: 70%;
+  --dt-size-66-percent: 66.7%;
+  --dt-size-60-percent: 60%;
+  --dt-size-50-percent: 50%;
+  --dt-size-40-percent: 40%;
+  --dt-size-33-percent: 33.333%;
+  --dt-size-30-percent: 30%;
+  --dt-size-25-percent: 25%;
+  --dt-size-20-percent: 20%;
+  --dt-size-10-percent: 10%;
+  --dt-size-5-percent: 5%;
+  --dt-size-0-percent: 0%;
+  --dt-size-1200-negative: -204.8rem;
+  --dt-size-1150-negative: -153.6rem;
+  --dt-size-1130-negative: -134rem;
+  --dt-size-1125-negative: -128rem;
+  --dt-size-1120-negative: -126.8rem;
+  --dt-size-1115-negative: -114rem;
+  --dt-size-1100-negative: -102.4rem;
+  --dt-size-1080-negative: -91.2rem;
+  --dt-size-1060-negative: -82.8rem;
+  --dt-size-1050-negative: -76.8rem;
+  --dt-size-1040-negative: -76.4rem;
+  --dt-size-1020-negative: -62.8rem;
+  --dt-size-1000-negative: -51.2rem;
+  --dt-size-975-negative: -46.4rem;
+  --dt-size-950-negative: -38.4rem;
+  --dt-size-925-negative: -33.2rem;
+  --dt-size-905-negative: -26.4rem;
+  --dt-size-900-negative: -25.6rem;
+  --dt-size-875-negative: -21.6rem;
+  --dt-size-850-negative: -19.2rem;
+  --dt-size-825-negative: -16.4rem;
+  --dt-size-800-negative: -12.8rem;
+  --dt-size-775-negative: -11.4rem;
+  --dt-size-760-negative: -10.2rem;
+  --dt-size-750-negative: -9.6rem;
+  --dt-size-730-negative: -8.4rem;
+  --dt-size-720-negative: -7.2rem;
+  --dt-size-700-negative: -6.4rem;
+  --dt-size-650-negative: -4.8rem;
+  --dt-size-625-negative: -4.2rem;
+  --dt-size-600-negative: -3.2rem;
+  --dt-size-550-negative: -2.4rem;
+  --dt-size-525-negative: -2rem;
+  --dt-size-500-negative: -1.6rem;
+  --dt-size-450-negative: -1.2rem;
+  --dt-size-400-negative: -0.8rem;
+  --dt-size-350-negative: -0.6rem;
+  --dt-size-300-negative: -0.4rem;
+  --dt-size-200-negative: -0.2rem;
+  --dt-size-100-negative: -0.1rem;
+  --dt-size-50-negative: -0.05rem;
+  --dt-size-border-400: 0.8rem;
+  --dt-size-border-300: 0.4rem;
+  --dt-size-border-200: 0.2rem;
+  --dt-size-border-150: 0.15rem;
+  --dt-size-border-100: 0.1rem;
+  --dt-size-border-50: 0.05rem;
+  --dt-size-border-0: 0rem;
+  --dt-size-base: 8px;
+  --dt-size-1200: 204.8rem;
+  --dt-size-1150: 153.6rem;
+  --dt-size-1130: 134rem;
+  --dt-size-1125: 128rem;
+  --dt-size-1120: 126.8rem;
+  --dt-size-1115: 114rem;
+  --dt-size-1100: 102.4rem;
+  --dt-size-1080: 91.2rem;
+  --dt-size-1060: 82.8rem;
+  --dt-size-1050: 76.8rem;
+  --dt-size-1040: 76.4rem;
+  --dt-size-1020: 62.8rem;
+  --dt-size-1000: 51.2rem;
+  --dt-size-975: 46.4rem;
+  --dt-size-950: 38.4rem;
+  --dt-size-925: 33.2rem;
+  --dt-size-905: 26.4rem;
+  --dt-size-900: 25.6rem;
+  --dt-size-875: 21.6rem;
+  --dt-size-850: 19.2rem;
+  --dt-size-825: 16.4rem;
+  --dt-size-800: 12.8rem;
+  --dt-size-775: 11.4rem;
+  --dt-size-760: 10.2rem;
+  --dt-size-750: 9.6rem;
+  --dt-size-730: 8.4rem;
+  --dt-size-720: 7.2rem;
+  --dt-size-700: 6.4rem;
+  --dt-size-650: 4.8rem;
+  --dt-size-625: 4.2rem;
+  --dt-size-600: 3.2rem;
+  --dt-size-550: 2.4rem;
+  --dt-size-525: 2rem;
+  --dt-size-500: 1.6rem;
+  --dt-size-450: 1.2rem;
+  --dt-size-400: 0.8rem;
+  --dt-size-350: 0.6rem;
+  --dt-size-300: 0.4rem;
+  --dt-size-200: 0.2rem;
+  --dt-size-100: 0.1rem;
+  --dt-size-50: 0.05rem;
+  --dt-size-0: 0rem;
+  --dt-font-text-case-none: none;
+  --dt-font-text-case-capitalize: capitalize;
+  --dt-font-text-case-lowercase: lowercase;
+  --dt-font-text-case-uppercase: uppercase;
+  --dt-font-weight-bold: 700;
+  --dt-font-weight-semi-bold: 600;
+  --dt-font-weight-medium: 500;
+  --dt-font-weight-normal: 400;
+  --dt-font-line-height-600: 2;
+  --dt-font-line-height-500: 1.8;
+  --dt-font-line-height-400: 1.6;
+  --dt-font-line-height-300: 1.4;
+  --dt-font-line-height-200: 1.2;
+  --dt-font-line-height-100: 1;
+  --dt-font-family-mono: SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  --dt-font-family-body: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI Adjusted", "Segoe UI", SFMono, "Helvetica Neue", Cantarell, Ubuntu, Roboto, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --dt-font-size-root: 10px;
+  --dt-shadow-focus-outset-2-offset-y: var(--dt-size-0);
+  --dt-shadow-focus-outset-2-offset-x: var(--dt-size-0);
+  --dt-shadow-focus-outset-2-color: oklch(0.6089 0.2128 259.28);
+  --dt-shadow-focus-outset-2-spread: calc(var(--dt-size-200) + var(--dt-size-100));
+  --dt-shadow-focus-outset-2-blur: var(--dt-size-0);
+  --dt-shadow-focus-outset-1-offset-y: var(--dt-size-0);
+  --dt-shadow-focus-outset-1-offset-x: var(--dt-size-0);
+  --dt-shadow-focus-outset-1-spread: var(--dt-size-100);
+  --dt-shadow-focus-outset-1-blur: var(--dt-size-0);
+  --dt-shadow-focus-offset-y: var(--dt-size-0);
+  --dt-shadow-focus-offset-x: var(--dt-size-0);
+  --dt-shadow-focus-color: oklch(0.6089 0.2128 259.28);
+  --dt-shadow-focus-spread: var(--dt-size-200);
+  --dt-shadow-focus-blur: var(--dt-size-0);
+  --dt-shadow-focus-inset-offset-y: var(--dt-size-0);
+  --dt-shadow-focus-inset-offset-x: var(--dt-size-0);
+  --dt-shadow-focus-inset-color: oklch(0.6089 0.2128 259.28);
+  --dt-shadow-focus-inset-spread: var(--dt-size-200);
+  --dt-shadow-focus-inset-blur: var(--dt-size-0);
+  --dt-shadow-card-3-offset-y: var(--dt-size-200);
+  --dt-shadow-card-3-offset-x: var(--dt-size-0);
+  --dt-shadow-card-3-spread: var(--dt-size-0);
+  --dt-shadow-card-3-blur: var(--dt-size-500);
+  --dt-shadow-card-2-offset-y: var(--dt-size-200);
+  --dt-shadow-card-2-offset-x: var(--dt-size-0);
+  --dt-shadow-card-2-spread: var(--dt-size-0);
+  --dt-shadow-card-2-blur: var(--dt-size-300);
+  --dt-shadow-card-1-offset-y: var(--dt-size-100);
+  --dt-shadow-card-1-offset-x: var(--dt-size-0);
+  --dt-shadow-card-1-spread: var(--dt-size-0);
+  --dt-shadow-card-1-blur: var(--dt-size-200);
+  --dt-shadow-extra-large-offset-y: var(--dt-size-200);
+  --dt-shadow-extra-large-offset-x: var(--dt-size-0);
+  --dt-shadow-extra-large-spread: var(--dt-size-0);
+  --dt-shadow-extra-large-blur: var(--dt-size-600);
+  --dt-shadow-large-offset-y: var(--dt-size-200);
+  --dt-shadow-large-offset-x: var(--dt-size-0);
+  --dt-shadow-large-spread: var(--dt-size-0);
+  --dt-shadow-large-blur: var(--dt-size-500);
+  --dt-shadow-medium-offset-y: var(--dt-size-200);
+  --dt-shadow-medium-offset-x: var(--dt-size-0);
+  --dt-shadow-medium-spread: var(--dt-size-0);
+  --dt-shadow-medium-blur: var(--dt-size-400);
+  --dt-shadow-small-offset-y: var(--dt-size-200);
+  --dt-shadow-small-offset-x: var(--dt-size-0);
+  --dt-shadow-small-spread: var(--dt-size-0);
+  --dt-shadow-small-blur: var(--dt-size-300);
+  --dt-color-gradient-magenta-purple: linear-gradient(135deg, var(--dt-color-brand-magenta) 10%, var(--dt-color-brand-purple) 90%); /* Gradient for Ai-oriented treatments. */
+  --dt-color-black-1000: oklch(0.1595 0.0045 84.59);
+  --dt-color-black-950: oklch(0.2083 0.006 91.63);
+  --dt-color-black-900: oklch(0.2572 0.0063 78.21);
+  --dt-color-black-850: oklch(0.3008 0.0059 67.21);
+  --dt-color-black-800: oklch(0.3436 0.0055 56.21);
+  --dt-color-black-750: oklch(0.3902 0.0055 67.24);
+  --dt-color-black-700: oklch(0.4355 0.0055 78.27);
+  --dt-color-black-650: oklch(0.4747 0.0059 86.72);
+  --dt-color-black-600: oklch(0.5134 0.0063 95.18);
+  --dt-color-black-550: oklch(0.5586 0.0047 89.87);
+  --dt-color-black-500: oklch(0.6114 0.0032 84.56);
+  --dt-color-black-450: oklch(0.6706 0.0047 84.56);
+  --dt-color-black-400: oklch(0.7321 0.0061 84.57);
+  --dt-color-black-350: oklch(0.7914 0.006 84.57);
+  --dt-color-black-300: oklch(0.8448 0.0059 84.57);
+  --dt-color-black-250: oklch(0.8894 0.0044 84.56);
+  --dt-color-black-200: oklch(0.9245 0.0029 84.56);
+  --dt-color-black-150: oklch(0.9512 0.0027 66.64);
+  --dt-color-black-100: oklch(0.9748 0.0025 48.72);
+  --dt-color-black-50: oklch(1 0 0);
+  --dt-layout-100-percent: var(--dt-size-100-percent);
+  --dt-layout-95-percent: var(--dt-size-95-percent);
+  --dt-layout-90-percent: var(--dt-size-90-percent);
+  --dt-layout-80-percent: var(--dt-size-80-percent);
+  --dt-layout-75-percent: var(--dt-size-75-percent);
+  --dt-layout-70-percent: var(--dt-size-70-percent);
+  --dt-layout-66-percent: var(--dt-size-66-percent);
+  --dt-layout-60-percent: var(--dt-size-60-percent);
+  --dt-layout-50-percent: var(--dt-size-50-percent);
+  --dt-layout-40-percent: var(--dt-size-40-percent);
+  --dt-layout-33-percent: var(--dt-size-33-percent);
+  --dt-layout-30-percent: var(--dt-size-30-percent);
+  --dt-layout-25-percent: var(--dt-size-25-percent);
+  --dt-layout-20-percent: var(--dt-size-20-percent);
+  --dt-layout-10-percent: var(--dt-size-10-percent);
+  --dt-layout-5-percent: var(--dt-size-5-percent);
+  --dt-layout-0-percent: var(--dt-size-0-percent);
+  --dt-layout-base: calc(var(--dt-size-base) * 8); /* 64px - Layout base unit unit */
+  --dt-spacing-1-negative: calc(var(--dt-spacing-1) * -1);
+  --dt-spacing-base: var(--dt-size-base); /* 8px - Base spacing unit */
+  --dt-space-100-percent: var(--dt-size-100-percent);
+  --dt-space-95-percent: var(--dt-size-95-percent);
+  --dt-space-90-percent: var(--dt-size-90-percent);
+  --dt-space-80-percent: var(--dt-size-80-percent);
+  --dt-space-75-percent: var(--dt-size-75-percent);
+  --dt-space-70-percent: var(--dt-size-70-percent);
+  --dt-space-66-percent: var(--dt-size-66-percent);
+  --dt-space-60-percent: var(--dt-size-60-percent);
+  --dt-space-50-percent: var(--dt-size-50-percent);
+  --dt-space-40-percent: var(--dt-size-40-percent);
+  --dt-space-33-percent: var(--dt-size-33-percent);
+  --dt-space-30-percent: var(--dt-size-30-percent);
+  --dt-space-25-percent: var(--dt-size-25-percent);
+  --dt-space-20-percent: var(--dt-size-20-percent);
+  --dt-space-10-percent: var(--dt-size-10-percent);
+  --dt-space-5-percent: var(--dt-size-5-percent);
+  --dt-space-0-percent: var(--dt-size-0-percent);
+  --dt-space-1200-negative: var(--dt-size-1200-negative);
+  --dt-space-1150-negative: var(--dt-size-1150-negative);
+  --dt-space-1130-negative: var(--dt-size-1130-negative);
+  --dt-space-1125-negative: var(--dt-size-1125-negative);
+  --dt-space-1120-negative: var(--dt-size-1120-negative);
+  --dt-space-1115-negative: var(--dt-size-1115-negative);
+  --dt-space-1100-negative: var(--dt-size-1100-negative);
+  --dt-space-1080-negative: var(--dt-size-1080-negative);
+  --dt-space-1060-negative: var(--dt-size-1060-negative);
+  --dt-space-1050-negative: var(--dt-size-1050-negative);
+  --dt-space-1040-negative: var(--dt-size-1040-negative);
+  --dt-space-1020-negative: var(--dt-size-1020-negative);
+  --dt-space-1000-negative: var(--dt-size-1000-negative);
+  --dt-space-975-negative: var(--dt-size-975-negative);
+  --dt-space-950-negative: var(--dt-size-950-negative);
+  --dt-space-925-negative: var(--dt-size-925-negative);
+  --dt-space-905-negative: var(--dt-size-905-negative);
+  --dt-space-900-negative: var(--dt-size-900-negative);
+  --dt-space-875-negative: var(--dt-size-875-negative);
+  --dt-space-850-negative: var(--dt-size-850-negative);
+  --dt-space-825-negative: var(--dt-size-825-negative);
+  --dt-space-800-negative: var(--dt-size-800-negative);
+  --dt-space-775-negative: var(--dt-size-775-negative);
+  --dt-space-760-negative: var(--dt-size-760-negative);
+  --dt-space-750-negative: var(--dt-size-750-negative);
+  --dt-space-730-negative: var(--dt-size-730-negative);
+  --dt-space-720-negative: var(--dt-size-720-negative);
+  --dt-space-700-negative: var(--dt-size-700-negative);
+  --dt-space-650-negative: var(--dt-size-650-negative);
+  --dt-space-625-negative: var(--dt-size-625-negative);
+  --dt-space-600-negative: var(--dt-size-600-negative);
+  --dt-space-550-negative: var(--dt-size-550-negative);
+  --dt-space-525-negative: var(--dt-size-525-negative);
+  --dt-space-500-negative: var(--dt-size-500-negative);
+  --dt-space-450-negative: var(--dt-size-450-negative);
+  --dt-space-400-negative: var(--dt-size-400-negative);
+  --dt-space-350-negative: var(--dt-size-350-negative);
+  --dt-space-300-negative: var(--dt-size-300-negative);
+  --dt-space-200-negative: var(--dt-size-200-negative);
+  --dt-space-100-negative: var(--dt-size-100-negative);
+  --dt-space-50-negative: var(--dt-size-50-negative);
+  --dt-space-base: var(--dt-size-base);
+  --dt-space-1200: var(--dt-size-1200);
+  --dt-space-1150: var(--dt-size-1150);
+  --dt-space-1130: var(--dt-size-1130);
+  --dt-space-1125: var(--dt-size-1125);
+  --dt-space-1120: var(--dt-size-1120);
+  --dt-space-1115: var(--dt-size-1115);
+  --dt-space-1100: var(--dt-size-1100);
+  --dt-space-1080: var(--dt-size-1080);
+  --dt-space-1060: var(--dt-size-1060);
+  --dt-space-1050: var(--dt-size-1050);
+  --dt-space-1040: var(--dt-size-1040);
+  --dt-space-1020: var(--dt-size-1020);
+  --dt-space-1000: var(--dt-size-1000);
+  --dt-space-975: var(--dt-size-975);
+  --dt-space-950: var(--dt-size-950);
+  --dt-space-925: var(--dt-size-925);
+  --dt-space-905: var(--dt-size-905);
+  --dt-space-900: var(--dt-size-900);
+  --dt-space-875: var(--dt-size-875);
+  --dt-space-850: var(--dt-size-850);
+  --dt-space-825: var(--dt-size-825);
+  --dt-space-800: var(--dt-size-800);
+  --dt-space-775: var(--dt-size-775);
+  --dt-space-760: var(--dt-size-760);
+  --dt-space-750: var(--dt-size-750);
+  --dt-space-730: var(--dt-size-730);
+  --dt-space-720: var(--dt-size-720);
+  --dt-space-700: var(--dt-size-700);
+  --dt-space-650: var(--dt-size-650);
+  --dt-space-625: var(--dt-size-625);
+  --dt-space-600: var(--dt-size-600);
+  --dt-space-550: var(--dt-size-550);
+  --dt-space-525: var(--dt-size-525);
+  --dt-space-500: var(--dt-size-500);
+  --dt-space-450: var(--dt-size-450);
+  --dt-space-400: var(--dt-size-400);
+  --dt-space-350: var(--dt-size-350);
+  --dt-space-300: var(--dt-size-300);
+  --dt-space-200: var(--dt-size-200);
+  --dt-space-100: var(--dt-size-100);
+  --dt-space-50: var(--dt-size-50);
+  --dt-space-0: var(--dt-size-0);
+  --dt-font-family-expressive: "Season Mix", var(--dt-font-family-body);
+  --dt-font-size-800: calc(var(--dt-font-size-root) * 6.6);
+  --dt-font-size-750: calc(var(--dt-font-size-root) * 5.8);
+  --dt-font-size-700: calc(var(--dt-font-size-root) * 5.2);
+  --dt-font-size-650: calc(var(--dt-font-size-root) * 4.6);
+  --dt-font-size-600: calc(var(--dt-font-size-root) * 4.2);
+  --dt-font-size-550: calc(var(--dt-font-size-root) * 3.6);
+  --dt-font-size-500: calc(var(--dt-font-size-root) * 3.2); /* h1 */
+  --dt-font-size-450: calc(var(--dt-font-size-root) * 2.9); /* h2 */
+  --dt-font-size-400: calc(var(--dt-font-size-root) * 2.6); /* h3 */
+  --dt-font-size-350: calc(var(--dt-font-size-root) * 2.2); /* h4 */
+  --dt-font-size-300: calc(var(--dt-font-size-root) * 2); /* lg / large */
+  --dt-font-size-250: calc(var(--dt-font-size-root) * 1.8);
+  --dt-font-size-200: calc(var(--dt-font-size-root) * 1.6); /* md / medium / base */
+  --dt-font-size-150: calc(var(--dt-font-size-root) * 1.4); /* smd / small-medium / smedium */
+  --dt-font-size-125: calc(var(--dt-font-size-root) * 1.3);
+  --dt-font-size-100: calc(var(--dt-font-size-root) * 1.2); /* sm / small */
+  --dt-font-size-75: calc(var(--dt-font-size-root) * 1.1); /* xs / extra small */
+  --dt-font-size-50: var(--dt-font-size-root); /* xxs / extra extra small */
+  --dt-shadow-focus-outset-1-color: oklch(0.9748 0.0025 48.72);
+  --dt-shadow-focus: var(--dt-shadow-focus-inset);
+  --dt-shadow-focus-inset: var(--dt-shadow-focus-inset-offset-x) var(--dt-shadow-focus-inset-offset-y) var(--dt-shadow-focus-inset-blur) var(--dt-shadow-focus-inset-spread) var(--dt-shadow-focus-inset-color) inset;
+  --dt-shadow-card: var(--dt-shadow-card-1-offset-x) var(--dt-shadow-card-1-offset-y) var(--dt-shadow-card-1-blur) var(--dt-shadow-card-1-spread) var(--dt-shadow-card-1-color), var(--dt-shadow-card-2-offset-x) var(--dt-shadow-card-2-offset-y) var(--dt-shadow-card-2-blur) var(--dt-shadow-card-2-spread) var(--dt-shadow-card-2-color), var(--dt-shadow-card-3-offset-x) var(--dt-shadow-card-3-offset-y) var(--dt-shadow-card-3-blur) var(--dt-shadow-card-3-spread) var(--dt-shadow-card-3-color);
+  --dt-shadow-extra-large: var(--dt-shadow-extra-large-offset-x) var(--dt-shadow-extra-large-offset-y) var(--dt-shadow-extra-large-blur) var(--dt-shadow-extra-large-spread) var(--dt-shadow-extra-large-color);
+  --dt-shadow-large: var(--dt-shadow-large-offset-x) var(--dt-shadow-large-offset-y) var(--dt-shadow-large-blur) var(--dt-shadow-large-spread) var(--dt-shadow-large-color);
+  --dt-shadow-medium: var(--dt-shadow-medium-offset-x) var(--dt-shadow-medium-offset-y) var(--dt-shadow-medium-blur) var(--dt-shadow-medium-spread) var(--dt-shadow-medium-color);
+  --dt-shadow-small: var(--dt-shadow-small-offset-x) var(--dt-shadow-small-offset-y) var(--dt-shadow-small-blur) var(--dt-shadow-small-spread) var(--dt-shadow-small-color);
+  --dt-shadow-focus-outset: var(--dt-shadow-focus-outset-1-offset-x) var(--dt-shadow-focus-outset-1-offset-y) var(--dt-shadow-focus-outset-1-blur) var(--dt-shadow-focus-outset-1-spread) var(--dt-shadow-focus-outset-1-color), var(--dt-shadow-focus-outset-2-offset-x) var(--dt-shadow-focus-outset-2-offset-y) var(--dt-shadow-focus-outset-2-blur) var(--dt-shadow-focus-outset-2-spread) var(--dt-shadow-focus-outset-2-color);
+  --dt-layout-1600: calc(var(--dt-layout-base) * 16); /* 1024px */
+  --dt-layout-1550: calc(var(--dt-layout-base) * 15.5); /* 992px */
+  --dt-layout-1500: calc(var(--dt-layout-base) * 15); /* 960px */
+  --dt-layout-1450: calc(var(--dt-layout-base) * 14.5); /* 928px */
+  --dt-layout-1400: calc(var(--dt-layout-base) * 14); /* 896px */
+  --dt-layout-1350: calc(var(--dt-layout-base) * 13.5); /* 864px */
+  --dt-layout-1300: calc(var(--dt-layout-base) * 13); /* 832px */
+  --dt-layout-1250: calc(var(--dt-layout-base) * 12.5); /* 800px */
+  --dt-layout-1200: calc(var(--dt-layout-base) * 12); /* 768px */
+  --dt-layout-1150: calc(var(--dt-layout-base) * 11.5); /* 736px */
+  --dt-layout-1100: calc(var(--dt-layout-base) * 11); /* 704px */
+  --dt-layout-1050: calc(var(--dt-layout-base) * 10.5); /* 672px */
+  --dt-layout-1000: calc(var(--dt-layout-base) * 10); /* 640px */
+  --dt-layout-950: calc(var(--dt-layout-base) * 9.5); /* 608px */
+  --dt-layout-900: calc(var(--dt-layout-base) * 9); /* 576px */
+  --dt-layout-850: calc(var(--dt-layout-base) * 8.5); /* 544px */
+  --dt-layout-800: calc(var(--dt-layout-base) * 8); /* 512px */
+  --dt-layout-750: calc(var(--dt-layout-base) * 7.5); /* 480px */
+  --dt-layout-700: calc(var(--dt-layout-base) * 7); /* 448px */
+  --dt-layout-650: calc(var(--dt-layout-base) * 6.5); /* 416px */
+  --dt-layout-600: calc(var(--dt-layout-base) * 6); /* 384px */
+  --dt-layout-550: calc(var(--dt-layout-base) * 5.5); /* 352px */
+  --dt-layout-500: calc(var(--dt-layout-base) * 5); /* 320px */
+  --dt-layout-450: calc(var(--dt-layout-base) * 4.5); /* 288px */
+  --dt-layout-400: calc(var(--dt-layout-base) * 4); /* 256px */
+  --dt-layout-350: calc(var(--dt-layout-base) * 3.5); /* 224px */
+  --dt-layout-300: calc(var(--dt-layout-base) * 3); /* 192px */
+  --dt-layout-250: calc(var(--dt-layout-base) * 2.5); /* 160px */
+  --dt-layout-200: calc(var(--dt-layout-base) * 2); /* 128px */
+  --dt-layout-175: calc(var(--dt-layout-base) * 1.75); /* 112px */
+  --dt-layout-150: calc(var(--dt-layout-base) * 1.5); /* 96px */
+  --dt-layout-125: calc(var(--dt-layout-base) * 1.25); /* 80px */
+  --dt-layout-100: var(--dt-layout-base); /* 64px */
+  --dt-layout-75: calc(var(--dt-layout-base) * 0.75); /* 48px */
+  --dt-layout-50: calc(var(--dt-layout-base) * 0.5); /* 32px */
+  --dt-layout-25: calc(var(--dt-layout-base) * 0.25); /* 16px */
+  --dt-layout-0: calc(var(--dt-layout-base) * 0); /* 0px */
+  --dt-spacing-800: calc(var(--dt-spacing-base) * 8); /* 64px */
+  --dt-spacing-750: calc(var(--dt-spacing-base) * 7.5); /* 60px */
+  --dt-spacing-700: calc(var(--dt-spacing-base) * 7); /* 56px */
+  --dt-spacing-650: calc(var(--dt-spacing-base) * 6.5); /* 52px */
+  --dt-spacing-600: calc(var(--dt-spacing-base) * 6); /* 48px */
+  --dt-spacing-550: calc(var(--dt-spacing-base) * 5.5); /* 44px */
+  --dt-spacing-525: calc(var(--dt-spacing-base) * 5.25); /* 42px */
+  --dt-spacing-500: calc(var(--dt-spacing-base) * 5); /* 40px */
+  --dt-spacing-450: calc(var(--dt-spacing-base) * 4.5); /* 36px */
+  --dt-spacing-400: calc(var(--dt-spacing-base) * 4); /* 32px */
+  --dt-spacing-350: calc(var(--dt-spacing-base) * 3.5); /* 28px */
+  --dt-spacing-300: calc(var(--dt-spacing-base) * 3); /* 24px */
+  --dt-spacing-250: calc(var(--dt-spacing-base) * 2.5); /* 20px */
+  --dt-spacing-200: calc(var(--dt-spacing-base) * 2); /* 16px */
+  --dt-spacing-175: calc(var(--dt-spacing-base) * 1.75); /* 14px */
+  --dt-spacing-150: calc(var(--dt-spacing-base) * 1.5); /* 12px */
+  --dt-spacing-125: calc(var(--dt-spacing-base) * 1.25); /* 10px */
+  --dt-spacing-100: var(--dt-spacing-base); /* 8px */
+  --dt-spacing-75: calc(var(--dt-spacing-base) * 0.75); /* 6px */
+  --dt-spacing-50: calc(var(--dt-spacing-base) * 0.5); /* 4px */
+  --dt-spacing-25: calc(var(--dt-spacing-base) * 0.25); /* 2px */
+  --dt-spacing-800-negative: calc(var(--dt-spacing-800) * -1);
+  --dt-spacing-750-negative: calc(var(--dt-spacing-750) * -1);
+  --dt-spacing-700-negative: calc(var(--dt-spacing-700) * -1);
+  --dt-spacing-650-negative: calc(var(--dt-spacing-650) * -1);
+  --dt-spacing-600-negative: calc(var(--dt-spacing-600) * -1);
+  --dt-spacing-550-negative: calc(var(--dt-spacing-550) * -1);
+  --dt-spacing-525-negative: calc(var(--dt-spacing-525) * -1);
+  --dt-spacing-500-negative: calc(var(--dt-spacing-500) * -1);
+  --dt-spacing-450-negative: calc(var(--dt-spacing-450) * -1);
+  --dt-spacing-400-negative: calc(var(--dt-spacing-400) * -1);
+  --dt-spacing-350-negative: calc(var(--dt-spacing-350) * -1);
+  --dt-spacing-300-negative: calc(var(--dt-spacing-300) * -1);
+  --dt-spacing-250-negative: calc(var(--dt-spacing-250) * -1);
+  --dt-spacing-200-negative: calc(var(--dt-spacing-200) * -1);
+  --dt-spacing-175-negative: calc(var(--dt-spacing-175) * -1);
+  --dt-spacing-150-negative: calc(var(--dt-spacing-150) * -1);
+  --dt-spacing-125-negative: calc(var(--dt-spacing-125) * -1);
+  --dt-spacing-100-negative: calc(var(--dt-spacing-100) * -1);
+  --dt-spacing-75-negative: calc(var(--dt-spacing-75) * -1);
+  --dt-spacing-50-negative: calc(var(--dt-spacing-50) * -1);
+  --dt-spacing-25-negative: calc(var(--dt-spacing-25) * -1);
+  --dt-font-size-100-mobile: 1.2rem;
+  --dt-font-size-200-mobile: 1.6rem;
+  --dt-font-size-300-mobile: 2rem;
+  --dt-font-size-400-mobile: 2.9rem;
+  --dt-font-size-500-mobile: 4.1rem;
+  --dt-font-size-100-tc8: 1.7rem;
+  --dt-font-size-200-tc8: 2.1rem;
+  --dt-font-size-300-tc8: 2.7rem;
+  --dt-font-size-400-tc8: 3.8rem;
+  --dt-font-size-500-tc8: 5.4rem;
+  --dt-font-size-100-tv: 2.5rem;
+  --dt-font-size-200-tv: 3.2rem;
+  --dt-font-size-300-tv: 4.1rem;
+  --dt-font-size-400-tv: 5.8rem;
+  --dt-font-size-500-tv: 8.2rem;
+  --zi-hide: -1;
+  --zi-base: 0;
+  --zi-base1: 1;
+  --zi-selected: 25;
+  --zi-active: 50;
+  --zi-navigation: 100;
+  --zi-navigation-fixed: 150;
+  --zi-dropdown: 200;
+  --zi-popover: 300;
+  --zi-tooltip: 400;
+  --zi-drawer: 500;
+  --zi-modal: 600;
+  --zi-modal-element: 650;
+  --zi-notification: 700;
+}
+}
