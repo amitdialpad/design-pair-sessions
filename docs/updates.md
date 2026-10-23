@@ -1723,6 +1723,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
+
+Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
+
+---
+
+**[Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**<br><small>Oct 22, 2026 · Best practices</small>
+
+When to consider using fewer subagents and how to migrate the into your main loop.
+
+---
+
 **[HCLTech joins the Claude Partner Network as a Global Premier partner](https://claude.com/resources/articles/hcltech-joins-claude-partner-network)**<br><small>Oct 21, 2026 · Product announcements</small>
 
 HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT systems it runs for banks, hospitals, telecoms, and manufacturers
@@ -1733,7 +1745,7 @@ HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT
 
 Claude Security now watches your repositories as code changes, tracks findings until they’re fixed, learns from the context your team adds, and connects to your tools through an API and MCP. Available in public beta for Claude Enterprise customers.
 
----
+:::details View past updates
 
 **[Introducing Claude Duet](https://claude.com/resources/articles/claude-duet)**<br><small>Oct 21, 2026 · Product announcements</small>
 
@@ -1745,7 +1757,7 @@ Claude Duet is a new app where Claude works as a proactive agent. The research p
 
 As our merges per day grew more than tenfold, source control became our biggest development bottleneck. Here, we share how we migrated to an in-house version control system in five months.
 
-:::details View past updates
+---
 
 **[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**<br><small>Oct 16, 2026 · Best practices</small>
 
@@ -1763,19 +1775,7 @@ How one business development representative clears his inbound queue and drafts 
 
 Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
 
----
-
-**[Agent observability on the Claude Platform](https://claude.com/resources/articles/agent-observability-on-the-claude-platform)**<br><small>Oct 14, 2026 · Blog</small>
-
-Announcing OpenTelemetry traces from Claude Managed Agents, the Messages API, and Claude SDKs on the Claude Platform.
-
----
-
-**[Uber's CISO on building an insider threat program for AI](https://claude.com/resources/articles/uber-s-ciso-on-building-an-insider-threat-program-for-ai)**<br><small>Oct 13, 2026 · Perspectives</small>
-
-The importance of monitoring and observability for AI agents, and how Uber's open-source tooling works alongside Anthropic's Enterprise Frontier Safeguards.
-
 :::
 
-*Updated October 22, 2026*
+*Updated October 23, 2026*
 <!-- CLAUDE_FEED_END -->
