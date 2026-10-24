@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:03b7051a04fa7adfa4263063c6dc50c23eaeca5b -->
+
+**Write the generator store to the real database, open reads to Dialpad accounts**
+
+The generator's saved copy of a company bundle (the generator store) was never written to the real generated-companies database, so nothing had shown that a store of about 128 MB writes, reads back and cleans up there. Reading a generated company also needed a per-person member record that someone had to create by hand, and Aerolabs had to be wiped and republished because its history no longer matched the bundle. A wipe has no backup, so each of these needed a check before it and evidence after it. This PR turns the real store write on and adds those checks. The real database now holds Aerolabs as run run-0f0974818bab8d63595e0944. The store (143 chunks, 163 files) took 92.4 s to write, ag...
+
+<span class="release-meta">[dialpad/design#276](https://github.com/dialpad/design/pull/276) · 23 October 2026</span>
+
+---
+
 <!-- beacon-change:72405028feef9ca3f5886d2a4b4534f601ed959e -->
 
 **Write each run's company bundle to Firestore and pull it back to generate**
@@ -78,6 +88,8 @@ Apps in Beacon only existed as seeded data, so nothing a real service did could 
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:d67b9a1dfe612ecfd43cb146c532fc3756204faa -->
 
 **Add the apps entity, read-only app conversations, and a protected Agents &amp; apps sidebar group**
@@ -87,8 +99,6 @@ Beacon had no model for an app (an agent or integration) that talks to a user. A
 <span class="release-meta">[dialpad/design#242](https://github.com/dialpad/design/pull/242) · 20 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:2261a8ab40642cbaef152a58dab1869bba1e026c -->
 
