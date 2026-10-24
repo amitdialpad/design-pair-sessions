@@ -1733,9 +1733,19 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
+**[Claude Cowork and chat come together for Enterprise](https://claude.com/resources/articles/unified-claude-enterprise)**<br><small>Oct 23, 2026 · Product announcements</small>
 
-Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
+Chat and Cowork first came together for Pro and Max plans in September. The same unified experience is now generally available for Claude Enterprise plans.
+
+---
+
+**[Claude Duet Safety, Privacy, and Security](https://claude.com/resources/articles/claude-duet-safety-privacy-and-security)**<br><small>Oct 23, 2026 · Product announcements</small>
+
+These are the protections we built into Claude Duet for working across your accounts and acting on your behalf.
+
+---
+
+**[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
 
 ---
 
@@ -1743,7 +1753,7 @@ Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform 
 
 When to consider using fewer subagents and how to migrate the into your main loop.
 
----
+:::details View past updates
 
 **[HCLTech joins the Claude Partner Network as a Global Premier partner](https://claude.com/resources/articles/hcltech-joins-claude-partner-network)**<br><small>Oct 21, 2026 · Product announcements</small>
 
@@ -1753,9 +1763,7 @@ HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT
 
 **[Claude Security now scans continuously and tracks fixes](https://claude.com/resources/articles/claude-security-now-scans-continuously-and-tracks-fixes)**<br><small>Oct 21, 2026 · Product announcements</small>
 
-Claude Security now watches your repositories as code changes, tracks findings until they’re fixed, learns from the context your team adds, and connects to your tools through an API and MCP. Available in public beta for Claude Enterprise customers.
-
-:::details View past updates
+---
 
 **[Introducing Claude Duet](https://claude.com/resources/articles/claude-duet)**<br><small>Oct 21, 2026 · Product announcements</small>
 
@@ -1773,19 +1781,7 @@ As our merges per day grew more than tenfold, source control became our biggest 
 
 How do you review code at the volume agents produce it? On the Claude Code team, once we had high coverage and deep reviews, we started optimizing for the minimum amount of human review time that doesn't raise reverts or incidents.
 
----
-
-**[How an Anthropic BDR in Japan runs his day with Claude Managed Agents](https://claude.com/resources/articles/how-an-anthropic-japan-business-development-representative-runs-his-day)**<br><small>Oct 16, 2026 · Best practices</small>
-
-How one business development representative clears his inbound queue and drafts bilingual customer emails with Claude Managed Agents and Claude Tag.
-
----
-
-**[Code Review is now generally available](https://claude.com/resources/articles/code-review-is-now-generally-available)**<br><small>Oct 15, 2026 · Product announcements</small>
-
-Catch more bugs before they reach production. Code Review is generally available for Claude Team and Enterprise organizations.
-
 :::
 
-*Updated October 23, 2026*
+*Updated October 24, 2026*
 <!-- CLAUDE_FEED_END -->
