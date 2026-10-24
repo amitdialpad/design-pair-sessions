@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-23T13:54:06.348454+00:00",
+  "generated": "2026-10-24T12:58:50.750802+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -92,7 +92,7 @@
     },
     {
       "path": ".agents/skills/pr-complete/SKILL.md",
-      "sha": "ba723d074bb95603ddb7adc82eee7b6d12bb92c6"
+      "sha": "b43e33ea6daf99d2ee403f69f8117e520cd3f9d3"
     },
     {
       "path": ".agents/skills/pr-create/SKILL.md",
@@ -108,7 +108,7 @@
     },
     {
       "path": ".agents/skills/pr-stack/SKILL.md",
-      "sha": "b9afd4bc3e54d9b02a740a65b0a69a6a14655418"
+      "sha": "2a5870be79bac806410953a1f2b05d8b92b5406e"
     },
     {
       "path": ".agents/skills/pre-port-audit/SKILL.md",
@@ -116,7 +116,7 @@
     },
     {
       "path": ".agents/skills/project-start/SKILL.md",
-      "sha": "c653e583a5bed1fcc3a2f5af65f85bbb65135c29"
+      "sha": "34d4dd23550e3b1bb7d6f6a138aafffa257c9cd6"
     },
     {
       "path": ".agents/skills/prompt-creator/SKILL.md",
