@@ -136,7 +136,7 @@ REPORT_SUBJECT_PREFIX = "Weekly Agentic Customer Review"
 GLEAN_DRAFT_SUBJECT_PREFIX = "[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review"
 GLEAN_DRAFT_SEARCH_PHRASE = "Weekly Agentic Customer Review"
 INTERNAL_RELAY_RECIPIENT = "amit.ayre@dialpad.com"
-EXPECTED_REPORT_RECIPIENT_COUNT = 5
+APPROVED_REPORT_RECIPIENTS = (INTERNAL_RELAY_RECIPIENT,)
 GLEAN_MACHINE_START = "---BEGIN PULSE MACHINE JSON---"
 GLEAN_MACHINE_END = "---END PULSE MACHINE JSON---"
 CORE_REVENUE_FIELDS = (
@@ -181,15 +181,10 @@ def parse_bool(value: str | bool | None, default: bool = False) -> bool:
 
 def approved_report_recipients(recipients: str) -> tuple[str, ...]:
     addresses = [address.casefold() for _, address in getaddresses([recipients]) if address]
-    if (
-        len(addresses) != EXPECTED_REPORT_RECIPIENT_COUNT
-        or len(set(addresses)) != EXPECTED_REPORT_RECIPIENT_COUNT
-        or INTERNAL_RELAY_RECIPIENT not in addresses
-        or any(not address.endswith("@dialpad.com") for address in addresses)
-    ):
+    if tuple(addresses) != APPROVED_REPORT_RECIPIENTS:
         raise ValidationError(
-            "Pulse delivery requires exactly five unique Dialpad recipients, including Amit; "
-            "the protected recipient configuration is invalid"
+            "Pulse delivery is restricted to Amit only; the protected recipient configuration "
+            "must contain exactly amit.ayre@dialpad.com"
         )
     return tuple(addresses)
 
