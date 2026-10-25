@@ -4,7 +4,7 @@ Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
 
 Delivery is Monday at 09:00 `Asia/Kolkata`. The user-facing email is `Weekly Agentic Customer Review — YYYY-MM-DD`.
 
-The review contains only named customers with specific, current, safely attributable signals, ordered by failing, moved, then other useful current states. It reports lifecycle when known, use case, connectors/systems, weekly movement, Jira risk, commercial movement, and the next item Amit can watch or help unblock. It is not a portfolio census and contains no unsupported product-usage telemetry or generic data disclaimer.
+The review keeps named Agentic customers and their verified movement as the main story. After that, `CEO View — Company Health` provides a compact company-level scorecard: current bookings mix, latest correctly labeled ARR movement, customer and license direction, and fiscal-quarter progress. It is not a copy of the restricted CEO dashboard.
 
 ## Schedule
 
@@ -21,6 +21,7 @@ Required read-only sources:
 - Salesforce for exact-match identity, journey/commercial stage, use case, and Agentic-specific value for customers already named in current evidence.
 - Jira for customer-impacting bugs and issues changed in the weekly window.
 - Glean company search, documents, email, and calendar for customer context and the weekly Agentic newsletter.
+- Already-authorized Finance, RevOps, billing/ARR, or governed analytics sources for company-health metrics. Never bypass a permission boundary.
 - Production code only when a changed customer blocker needs implementation context; it is not required for an unchanged review.
 
 The review does not use BigQuery, Pinot, or Agentic Analytics. It never claims conversations, action-success, containment, resolution, CSAT, or other product telemetry.
@@ -38,7 +39,7 @@ The Glean Agent creates exactly one draft:
 
 The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
 
-Schema version 2 requires:
+Schema version 3 requires everything in version 2 plus:
 
 - Fresh read-only receipts for Salesforce, Jira, and Glean, plus production code only when used.
 - The previous Monday-through-Sunday comparison window.
@@ -47,6 +48,10 @@ Schema version 2 requires:
 - Agent/use case, integrations, weekly change, Jira state, commercial state, and next watch.
 - A summary derived exactly from customer rows.
 - Evidence-linked analysis for included customer signals when it clarifies implications or how Amit can help.
+- A `business_health` object rendered after the Agentic story.
+- Dialpad fiscal quarters: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
+- An authoritative Finance or RevOps source for the overall quarterly target. Sample dashboard values, incomplete quota aggregates, and inferred targets are rejected.
+- When the target is unverified, actual and forecast values may still appear, but target, attainment, gap, and required pace remain null with a specific target note.
 
 ## Delivery protection
 

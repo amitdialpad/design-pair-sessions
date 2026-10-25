@@ -299,6 +299,45 @@ def valid_dashboard_result() -> dict:
     }
 
 
+def valid_ceo_view_result() -> dict:
+    result = valid_dashboard_result()
+    result["snapshot"]["schema_version"] = 3
+    result["snapshot"]["business_health"] = {
+        "verdict": "stable",
+        "verdict_reason": "Core bookings remain positive, while retention pressure needs watching.",
+        "weekly_sales": {
+            "total_bookings": 1_000_000,
+            "core_bookings": 950_000,
+            "agentic_bookings": 50_000,
+            "agentic_share_pct": 5.0,
+        },
+        "latest_arr_period": {
+            "label": "September 2026",
+            "net_arr_change": 250_000,
+            "new_plus_expansion": 900_000,
+            "churn_plus_contraction": -650_000,
+            "net_customers": 24,
+            "paid_license_change": 1_200,
+        },
+        "quarter": {
+            "label": "Q3 FY27",
+            "actual_bookings": 15_200_000,
+            "target_status": "unverified",
+            "target_bookings": None,
+            "attainment_pct": None,
+            "gap_to_target": None,
+            "required_weekly_pace": None,
+            "commit_forecast": 15_500_000,
+            "best_case_forecast": 17_000_000,
+            "previous_quarter_bookings": 14_800_000,
+            "agentic_bookings": 1_100_000,
+            "agentic_share_pct": 7.2,
+            "target_note": "the available quota aggregate is incomplete",
+        },
+    }
+    return result
+
+
 def _legacy_result(report: str, source_status: dict) -> dict:
     return {
         "report_markdown": report,
@@ -421,6 +460,32 @@ class FakeRelayArchive(FakeArchive):
 
 
 class PulseValidationTests(unittest.TestCase):
+    def test_ceo_view_renders_after_agentic_review_and_withholds_unverified_target(self):
+        report, snapshot = validate_agent_result(
+            valid_ceo_view_result(),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertEqual(snapshot["schema_version"], 3)
+        self.assertIn("## CEO View — Company Health", report)
+        self.assertIn("Overall target is withheld", report)
+        self.assertNotIn("% of $", report)
+        self.assertLess(report.index("## Analysis"), report.index("## CEO View — Company Health"))
+
+    def test_ceo_view_rejects_target_math_when_unverified(self):
+        result = valid_ceo_view_result()
+        result["snapshot"]["business_health"]["quarter"]["attainment_pct"] = 99.0
+
+        with self.assertRaisesRegex(ValidationError, "must not publish derived target metrics"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
     def test_reporting_date_uses_ist_calendar_day(self):
         utc_time = datetime(2026, 9, 21, 3, 30, tzinfo=ZoneInfo("UTC"))
         report_now = now_in_timezone("Asia/Kolkata", utc_time)
