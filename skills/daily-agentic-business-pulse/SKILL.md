@@ -20,7 +20,7 @@ Answer from specific, current evidence:
 
 This is a verified-movement review, not a portfolio census. Include only named customers with a specific, current, safely attributable signal. A source-reported aggregate such as `30 deployments` may appear as context, but never claim that the included rows are the complete cohort. Sort failing customers first, then movers, then other useful current signals.
 
-This is a customer operating review, not a design essay. Do not repeat a known product problem unless its affected customer, severity, owner, status, or commercial effect changed this week.
+This is a customer operating review, not a design essay. Do not repeat a known product problem unless its affected customer, severity, owner, status, or commercial effect changed this week. After the Agentic review, add one compact section titled `CEO View — Company Health` for company-level direction.
 
 ## Safety
 
@@ -28,7 +28,7 @@ All company-source access is read-only.
 
 - Use only approved search, read, list, view, code-search, SOQL-query, Jira-search, email-search, and calendar-search operations.
 - Never create, update, comment, transition, label, configure, grant, export, delete, or send in Salesforce, Jira, repositories, Glean content, or customer systems.
-- Never use BigQuery, Pinot, Agentic Analytics, or another data platform for this review.
+- Never bypass a permission boundary. Company-health metrics may use only already-authorized read-only Salesforce, billing/ARR, Finance, RevOps, Glean, or governed analytics sources.
 - Never infer usage, action success, containment, resolution, CSAT, or other product telemetry.
 - Never store raw conversations, transcripts, prompts, tool arguments, customer payloads, credentials, or secrets.
 - The only permitted write is the existing Gmail MCP `Create Draft` action for the private relay envelope, addressed only to `amit.ayre@dialpad.com`.
@@ -101,7 +101,18 @@ Each item must:
 
 Do not repeat generic product guidance, list tools, or explain access limitations in the human email.
 
-## Machine contract: schema version 2
+## CEO View — Company Health
+
+Keep Agentic as the main story. Then show only the executive signals that changed or matter now:
+
+- This week's total bookings, core/non-Agentic bookings, Agentic bookings, and Agentic share.
+- The latest available ARR movement period, explicitly labeled with its real grain and date: net ARR, new plus expansion, churn plus contraction, net customers, and paid-license change. Do not describe monthly data as weekly.
+- The fiscal-quarter scoreboard using Dialpad's calendar: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
+- Quarter-to-date actual bookings, official full-quarter target, attainment, gap, required weekly pace, commit, best case, previous-quarter comparison, and Agentic share.
+
+The official target must come from an authoritative Finance or RevOps planning source. Never use sample dashboard data, sum incomplete Salesforce quotas, or treat a suspected subset target as the company target. When the target is unverified, set it and every derived target metric to `null`, explain the specific source problem in `target_note`, and still report verified actuals and forecast values.
+
+## Machine contract: schema version 3
 
 `report_markdown` in the internal source draft may be a short preview. The GitHub relay deterministically creates the final email from `snapshot`.
 
@@ -112,7 +123,7 @@ Do not repeat generic product guidance, list tools, or explain access limitation
   "data_status": "complete",
   "failures": [],
   "snapshot": {
-    "schema_version": 2,
+    "schema_version": 3,
     "report_date": "YYYY-MM-DD",
     "generated_at": "ISO-8601 timestamp",
     "comparison_window": {
@@ -126,7 +137,14 @@ Do not repeat generic product guidance, list tools, or explain access limitation
     "insights": [],
     "commercial_changes": [],
     "unknowns": [],
-    "changes_since_previous": []
+    "changes_since_previous": [],
+    "business_health": {
+      "verdict": "stable",
+      "verdict_reason": "Short evidence-based explanation",
+      "weekly_sales": {},
+      "latest_arr_period": {},
+      "quarter": {}
+    }
   }
 }
 ```
@@ -190,6 +208,7 @@ The relay creates:
 3. **Analysis** — short customer-by-customer interpretations focused on implications and ways Amit can help.
 4. **Gaps to resolve** — specific missing joins or measurements that materially limit an included insight. No generic data disclaimer.
 5. **Evidence** — one direct link per required source family plus the workflow run.
+6. **CEO View — Company Health** — executive company direction after the Agentic story, with target metrics withheld whenever the official target is not verified.
 
 Keep the final review under 1,600 visible words. The matrix is primary; prose is secondary.
 

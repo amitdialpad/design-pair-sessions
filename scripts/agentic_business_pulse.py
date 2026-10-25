@@ -367,7 +367,7 @@ def build_agent_request(
         "required_sources": list(DASHBOARD_REQUIRED_SOURCES),
         "response_contract": {
             "content_type": "application/json",
-            "snapshot_schema_version": 2,
+            "snapshot_schema_version": 3,
             "fields": ["report_markdown", "snapshot", "agent_request_id", "data_status", "failures"],
             "no_markdown_fence": True,
         },
@@ -656,12 +656,14 @@ def _normalize_incomplete_confidence(result: dict[str, Any]) -> None:
     result["report_markdown"] = earlier_report + report[confidence_match.start() : confidence_match.end()] + confidence_body
 
 
-def _dashboard_number(value: Any, path: str, *, allow_null: bool = False) -> float | int | None:
+def _dashboard_number(
+    value: Any, path: str, *, allow_null: bool = False, allow_negative: bool = False
+) -> float | int | None:
     number = _require_number(value, path, allow_null=allow_null)
     if number is not None:
         if not math.isfinite(float(number)):
             raise ValidationError(f"{path} must be finite")
-        if number < 0:
+        if number < 0 and not allow_negative:
             raise ValidationError(f"{path} cannot be negative")
     return number
 
@@ -733,6 +735,57 @@ def _dashboard_risk(customer: dict[str, Any]) -> str:
         )
     parts.append(str(customer["next_watch"]))
     return " · ".join(parts)
+
+
+def _money(value: float | int | None) -> str:
+    if value is None:
+        return "—"
+    sign = "−" if value < 0 else ""
+    amount = abs(float(value))
+    if amount >= 1_000_000:
+        return f"{sign}${amount / 1_000_000:.2f}M"
+    if amount >= 1_000:
+        return f"{sign}${amount / 1_000:.0f}K"
+    return f"{sign}${amount:,.0f}"
+
+
+def _render_business_health(business: dict[str, Any]) -> list[str]:
+    weekly = business["weekly_sales"]
+    latest = business["latest_arr_period"]
+    quarter = business["quarter"]
+    target = quarter["target_bookings"]
+    if quarter["target_status"] == "verified":
+        quarter_line = (
+            f"- **{quarter['label']}: {_money(quarter['actual_bookings'])} of {_money(target)}** "
+            f"({quarter['attainment_pct']:.1f}%) · gap {_money(quarter['gap_to_target'])} · "
+            f"required weekly pace {_money(quarter['required_weekly_pace'])}."
+        )
+    else:
+        quarter_line = (
+            f"- **{quarter['label']}: {_money(quarter['actual_bookings'])} booked.** "
+            f"Overall target is withheld because it is {quarter['target_status']}: {quarter['target_note']}"
+        )
+    forecast = []
+    if quarter["commit_forecast"] is not None:
+        forecast.append(f"commit {_money(quarter['commit_forecast'])}")
+    if quarter["best_case_forecast"] is not None:
+        forecast.append(f"best case {_money(quarter['best_case_forecast'])}")
+    lines = [
+        "",
+        "## CEO View — Company Health",
+        "",
+        f"- **{business['verdict'].title()}** — {business['verdict_reason']}",
+        f"- **This week's bookings:** {_money(weekly['total_bookings'])}; core/non-Agentic {_money(weekly['core_bookings'])}; Agentic {_money(weekly['agentic_bookings'])} ({weekly['agentic_share_pct']:.1f}%).",
+        f"- **Latest ARR movement ({latest['label']}):** net {_money(latest['net_arr_change'])}; new + expansion {_money(latest['new_plus_expansion'])}; churn + contraction {_money(latest['churn_plus_contraction'])}; net customers {latest['net_customers']:+d}; paid licenses {latest['paid_license_change']:+d}.",
+        quarter_line,
+    ]
+    if forecast:
+        lines.append(f"- **Quarter forecast:** {' · '.join(forecast)}.")
+    lines.append(
+        f"- **Agentic share of quarter bookings:** {quarter['agentic_share_pct']:.1f}% "
+        f"({_money(quarter['agentic_bookings'])})."
+    )
+    return lines
 
 
 def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> str:
@@ -811,6 +864,10 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     else:
         lines.append("- No material customer-record gap changed this week's interpretation.")
 
+    business = snapshot.get("business_health")
+    if isinstance(business, dict):
+        lines.extend(_render_business_health(business))
+
     lines.extend(["", "## Evidence", ""])
     source_status = snapshot["source_status"]
     evidence_links: list[str] = []
@@ -822,6 +879,58 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     evidence_links.append(f"[Workflow run]({workflow_url})")
     lines.append(" · ".join(evidence_links))
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _validate_business_health(snapshot: dict[str, Any]) -> None:
+    business = _require_mapping(snapshot.get("business_health"), "snapshot.business_health")
+    if business.get("verdict") not in {"strengthening", "stable", "weakening"}:
+        raise ValidationError("snapshot.business_health.verdict is invalid")
+    reason = business.get("verdict_reason")
+    if not isinstance(reason, str) or not reason.strip() or len(reason) > 320:
+        raise ValidationError("snapshot.business_health.verdict_reason is required")
+
+    weekly = _require_mapping(business.get("weekly_sales"), "snapshot.business_health.weekly_sales")
+    for field in ("total_bookings", "core_bookings", "agentic_bookings", "agentic_share_pct"):
+        _dashboard_number(weekly.get(field), f"snapshot.business_health.weekly_sales.{field}")
+    if not math.isclose(weekly["core_bookings"] + weekly["agentic_bookings"], weekly["total_bookings"], abs_tol=1.0):
+        raise ValidationError("weekly sales core plus Agentic must equal total bookings")
+    expected_share = 0 if weekly["total_bookings"] == 0 else weekly["agentic_bookings"] / weekly["total_bookings"] * 100
+    if not math.isclose(weekly["agentic_share_pct"], expected_share, abs_tol=0.1):
+        raise ValidationError("weekly Agentic share does not match bookings")
+
+    latest = _require_mapping(business.get("latest_arr_period"), "snapshot.business_health.latest_arr_period")
+    if not isinstance(latest.get("label"), str) or not latest["label"].strip():
+        raise ValidationError("snapshot.business_health.latest_arr_period.label is required")
+    for field in ("net_arr_change", "new_plus_expansion", "churn_plus_contraction"):
+        _dashboard_number(latest.get(field), f"snapshot.business_health.latest_arr_period.{field}", allow_negative=True)
+    for field in ("net_customers", "paid_license_change"):
+        value = latest.get(field)
+        if not isinstance(value, int) or isinstance(value, bool):
+            raise ValidationError(f"snapshot.business_health.latest_arr_period.{field} must be an integer")
+
+    quarter = _require_mapping(business.get("quarter"), "snapshot.business_health.quarter")
+    if quarter.get("target_status") not in {"verified", "unverified", "unavailable"}:
+        raise ValidationError("snapshot.business_health.quarter.target_status is invalid")
+    for field in ("actual_bookings", "agentic_bookings", "agentic_share_pct"):
+        _dashboard_number(quarter.get(field), f"snapshot.business_health.quarter.{field}")
+    expected_q_share = 0 if quarter["actual_bookings"] == 0 else quarter["agentic_bookings"] / quarter["actual_bookings"] * 100
+    if not math.isclose(quarter["agentic_share_pct"], expected_q_share, abs_tol=0.1):
+        raise ValidationError("quarter Agentic share does not match bookings")
+    nullable = ("target_bookings", "attainment_pct", "gap_to_target", "required_weekly_pace", "commit_forecast", "best_case_forecast", "previous_quarter_bookings")
+    for field in nullable:
+        _dashboard_number(quarter.get(field), f"snapshot.business_health.quarter.{field}", allow_null=True, allow_negative=field == "gap_to_target")
+    if quarter["target_status"] == "verified":
+        if not quarter["target_bookings"] or quarter["attainment_pct"] is None or quarter["gap_to_target"] is None:
+            raise ValidationError("verified quarter target requires target, attainment, and gap")
+        expected_attainment = quarter["actual_bookings"] / quarter["target_bookings"] * 100
+        expected_gap = quarter["target_bookings"] - quarter["actual_bookings"]
+        if not math.isclose(quarter["attainment_pct"], expected_attainment, abs_tol=0.1) or not math.isclose(quarter["gap_to_target"], expected_gap, abs_tol=1.0):
+            raise ValidationError("quarter target calculations do not match actual and target")
+    else:
+        if any(quarter[field] is not None for field in ("target_bookings", "attainment_pct", "gap_to_target", "required_weekly_pace")):
+            raise ValidationError("unverified quarter target must not publish derived target metrics")
+        if not isinstance(quarter.get("target_note"), str) or not quarter["target_note"].strip():
+            raise ValidationError("unverified quarter target requires target_note")
 
 
 def _validate_dashboard_source_status(
@@ -902,8 +1011,9 @@ def validate_customer_dashboard_result(
     if result.get("data_status") != "complete" or result.get("failures"):
         raise IntegrationError("Customer dashboard requires healthy read-only sources; no report was sent")
     report_date = report_now.date().isoformat()
-    if snapshot.get("schema_version") != 2:
-        raise ValidationError("snapshot.schema_version must be 2")
+    schema_version = snapshot.get("schema_version")
+    if schema_version not in {2, 3}:
+        raise ValidationError("snapshot.schema_version must be 2 or 3")
     if snapshot.get("report_date") != report_date:
         raise ValidationError("Snapshot report date does not match the current IST date")
     generated_at = _parse_datetime(snapshot.get("generated_at"), "snapshot.generated_at")
@@ -983,6 +1093,8 @@ def validate_customer_dashboard_result(
     _require_list(snapshot.get("commercial_changes"), "snapshot.commercial_changes")
     _require_list(snapshot.get("unknowns"), "snapshot.unknowns")
     _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
+    if schema_version == 3:
+        _validate_business_health(snapshot)
     snapshot["data_status"] = "complete"
     report = render_customer_dashboard(snapshot, workflow_url)
     if _visible_word_count(report) > 1600:
@@ -1031,7 +1143,7 @@ def validate_agent_result(
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") == 2:
+    if snapshot.get("schema_version") in {2, 3}:
         return validate_customer_dashboard_result(
             result,
             snapshot=snapshot,
@@ -1219,7 +1331,7 @@ def validate_agent_result(
 
 def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
     required_sources = (
-        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") == 2 else REQUIRED_SOURCES
+        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3} else REQUIRED_SOURCES
     )
     return {
         source: snapshot["source_status"][source]["queried_at"]
@@ -1596,7 +1708,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") == 2:
+    if snapshot.get("schema_version") in {2, 3}:
         comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
         for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
             if canonical not in comparison and isinstance(comparison.get(glean_name), str):
