@@ -1747,6 +1747,8 @@ These are the protections we built into Claude Duet for working across your acco
 
 **[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
 
+Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
+
 ---
 
 **[Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**<br><small>Oct 22, 2026 · Best practices</small>
@@ -1762,6 +1764,8 @@ HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT
 ---
 
 **[Claude Security now scans continuously and tracks fixes](https://claude.com/resources/articles/claude-security-now-scans-continuously-and-tracks-fixes)**<br><small>Oct 21, 2026 · Product announcements</small>
+
+Claude Security now watches your repositories as code changes, tracks findings until they’re fixed, learns from the context your team adds, and connects to your tools through an API and MCP. Available in public beta for Claude Enterprise customers.
 
 ---
 
@@ -1783,5 +1787,5 @@ How do you review code at the volume agents produce it? On the Claude Code team,
 
 :::
 
-*Updated October 24, 2026*
+*Updated October 25, 2026*
 <!-- CLAUDE_FEED_END -->
