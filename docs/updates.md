@@ -1803,17 +1803,23 @@ These are the protections we built into Claude Duet for working across your acco
 
 ---
 
+**[LLMs are making formal software verification feasible at a much larger scale](https://www.anthropic.com/research/formal-verification)**<br><small>Oct 22, 2026 · Insights</small>
+
+Claude formally proved security properties in the compiled code of 123 open-source libraries. Along the way, it found bugs that had eluded detection for years.
+
+---
+
 **[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
 
 Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
 
----
+:::details View past updates
 
 **[Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**<br><small>Oct 22, 2026 · Best practices</small>
 
 When to consider using fewer subagents and how to migrate the into your main loop.
 
-:::details View past updates
+---
 
 **[HCLTech joins the Claude Partner Network as a Global Premier partner](https://claude.com/resources/articles/hcltech-joins-claude-partner-network)**<br><small>Oct 21, 2026 · Product announcements</small>
 
@@ -1837,13 +1843,7 @@ Claude Duet is a new app where Claude works as a proactive agent. The research p
 
 As our merges per day grew more than tenfold, source control became our biggest development bottleneck. Here, we share how we migrated to an in-house version control system in five months.
 
----
-
-**[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**<br><small>Oct 16, 2026 · Best practices</small>
-
-How do you review code at the volume agents produce it? On the Claude Code team, once we had high coverage and deep reviews, we started optimizing for the minimum amount of human review time that doesn't raise reverts or incidents.
-
 :::
 
-*Updated October 25, 2026*
+*Updated October 26, 2026*
 <!-- CLAUDE_FEED_END -->
