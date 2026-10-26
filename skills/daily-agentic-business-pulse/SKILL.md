@@ -112,6 +112,8 @@ Keep Agentic as the main story. Then show only the executive signals that change
 
 The official target must come from an authoritative Finance or RevOps planning source. Never use sample dashboard data, sum incomplete Salesforce quotas, or treat a suspected subset target as the company target. When the target is unverified, set it and every derived target metric to `null`, explain the specific source problem in `target_note`, and still report verified actuals and forecast values.
 
+Company-health metrics degrade independently. If the latest ARR bridge cannot be verified from a current authorized source, set `latest_arr_period` to `null`, add a specific non-empty `latest_arr_note`, and continue with the verified Agentic review, bookings, and quarter data. Never substitute an older bridge, zeros, or estimates. Missing company-health context must not suppress otherwise valid customer evidence.
+
 ## Machine contract: schema version 3
 
 `report_markdown` in the internal source draft may be a short preview. The GitHub relay deterministically creates the final email from `snapshot`.
@@ -142,7 +144,8 @@ The official target must come from an authoritative Finance or RevOps planning s
       "verdict": "stable",
       "verdict_reason": "Short evidence-based explanation",
       "weekly_sales": {},
-      "latest_arr_period": {},
+      "latest_arr_period": null,
+      "latest_arr_note": "The latest monthly ARR bridge was not available from a current authorized source.",
       "quarter": {}
     }
   }
@@ -199,6 +202,8 @@ Each customer:
 
 The relay rejects an empty verified-signal set, duplicate names, mismatched summaries, stale or writable sources, unsafe links, invalid Jira keys, negative or non-finite values, secrets, raw payloads, transcripts, and unsupported recipients.
 
+`business_health.latest_arr_period` may be `null` only when `business_health.latest_arr_note` gives the specific current-source gap. This is a visible unavailable state, not a reason to fail the complete report.
+
 ## Deterministic email format
 
 The relay creates:
@@ -222,6 +227,8 @@ Do not create a normal draft when:
 - The report date is not Monday in `Asia/Kolkata`.
 - The weekly window is invalid.
 - A source would require a write or permission/configuration change.
+
+Do not fail the complete report solely because the latest ARR bridge is unavailable. Preserve the verified Agentic review and render the explicit ARR-unavailable note in `CEO View — Company Health`.
 
 Return `data_status: incomplete` with a concise failure entry. Never reuse an earlier report as current evidence, invent movement, or turn the newsletter into telemetry.
 
