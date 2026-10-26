@@ -556,6 +556,52 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 19–25 Oct 2026
+
+11 changes merged into Beacon this week: Write the generator store to the real database, open reads to Dialpad accounts; Write each run's company bundle to Firestore and pull it back to generate; Show normalized direct profile details; Model the conversation list, message paging and generator store in Firestore; Add the Dialpad Copilot entry point and panel behind a flag; Make the generated-company data root configurable; Keep the build run date when appending company history; Connect a real GitHub app and sync its events into Beacon; Add the apps entity, read-only app conversations, and a protected Agents & apps sidebar group; Plan each append day from its own local day; Select append intervals as [start, end). The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Write the generator store to the real database, open reads to Dialpad accounts](https://github.com/dialpad/design/pull/276)** (dialpad/design#276). The generator's saved copy of a company bundle (the generator store) was never written to the real generated-companies database, so nothing had shown that a store of about 128 MB writes, reads back and cleans up there. Reading a generated company also needed a per-person member record that someone had to create by hand, and Aerolabs had to be wiped and republished because its history no longer matched the bundle. A wipe has no backup, so each of these needed a check before it and evidence after it. This PR turns the real store write on and adds those checks. The real database now holds Aerolabs as run run-0f0974818bab8d63595e0944. The store (143 chunks, 163 files) took 92.4 s to write, against a probe prediction of 92.0 s. pull --real returns it identical to the bundle, and a Dialpad account with no member record read the company with no failed read.
+- **[Write each run's company bundle to Firestore and pull it back to generate](https://github.com/dialpad/design/pull/267)** (dialpad/design#267). Generating more days of a company starts from the previous bundle, and that bundle is 160 MB of JSON tracked in git under apps/beacon/data. Moving it out of git needs somewhere the generator can read it from. The Firestore model already had a codec for a stored bundle, but nothing wrote one, read one or said which one was current. This PR makes each published run keep its bundle in Firestore and adds a command that turns the active run's bundle back into a folder the generator can append to. It writes to the emulator only. Beacon does not read any of it, and data/ stays the source until it is untracked.
+- **[Show normalized direct profile details](https://github.com/dialpad/design/pull/264)** (dialpad/design#264). Direct-contact profiles only read the Contact record, so employee profiles omitted company-owned titles, offices, timezones, and assigned phone numbers. Populated profiles appeared incomplete even though Beacon already had the information. This PR composes the existing normalized records without copying fields back onto Contact.
+- **[Model the conversation list, message paging and generator store in Firestore](https://github.com/dialpad/design/pull/263)** (dialpad/design#263). The generated company bundles are 160 MB of JSON in git, and the Firestore model that will replace them could not yet serve what Beacon reads. A conversation list cost one conversation read per row and carried no title, route or preview inputs. Messages could not be paged back through equal timestamps. The generator had nowhere to keep its own copy of a bundle. The publication also dropped call and contact fields Beacon reads, and left customer ids in the participants of customer conversations. This PR extends the existing @dialpad/world-firestore model so Beacon can list conversations with one query, page a conversation's history, and keep the generator's bundle server-only. It writes to the emulator only, and nothing in Beacon reads any of it yet.
+- **[Add the Dialpad Copilot entry point and panel behind a flag](https://github.com/dialpad/design/pull/234)** (dialpad/design#234). Dialpad Copilot has no place in Beacon yet, so the V1 designs (entry point, empty state, conversation content types, composer states, @mention) can't be reviewed in the real product shell. This adds them behind the new dialpadCopilot experiment flag (off by default) with mocked responses, so design and PM can try the flow in Beacon before any backend exists.
+- **[Make the generated-company data root configurable](https://github.com/dialpad/design/pull/254)** (dialpad/design#254). The generated company bundles live in apps/beacon/data, and every tool that reads or writes them assumes that folder. That blocks moving the bundles out of git, which this PR starts to prepare for. BEACON_WORLD_DATA_ROOT now names the folder. Unset or empty, nothing changes. When set, the variable moves the generator (mock:world), the Firestore and publication commands, mock:world:release, the Vite dev server, the pnpm build copy and the corpus specs to that folder. One plain-JavaScript rule, mock-engine/cli/worldDataRoot.js, decides the folder, so the native Node scripts and the TypeScript code agree. The data stays in git; this PR does not move it.
+- **[Keep the build run date when appending company history](https://github.com/dialpad/design/pull/252)** (dialpad/design#252). Appending days to a generated company gave the world a new run date (asOf) every time, the end of the day being added. Rows stamped with that date then came out different from what the build stored. The relationship affinity edges have no timestamp key for the merge to filter on, so all 1,909 Aerolabs edges were rewritten on every append. The other rows stamped with the run date stayed the same only because of how the interval boundary works. The append now uses the bundle's stored history.bootstrapEnd as the run date. The communication window still moves with each appended day, so the days are planned as before. A build is unchanged.
+- **[Connect a real GitHub app and sync its events into Beacon](https://github.com/dialpad/design/pull/243)** (dialpad/design#243). Apps in Beacon only existed as seeded data, so nothing a real service did could reach a user. This PR connects a real one end to end: a user connects GitHub from Beacon, and GitHub activity from the repositories they choose shows up as messages in that app's conversation. It stacks on the apps entity and read-only app conversations from DDT-2427.
+- **[Add the apps entity, read-only app conversations, and a protected Agents & apps sidebar group](https://github.com/dialpad/design/pull/242)** (dialpad/design#242). Beacon had no model for an app (an agent or integration) that talks to a user. Anything an app produced would have had to pose as a person's message in a channel or DM, with no way to stop a user from replying into it or to find it in one place. This PR adds apps as a first-class entity and gives each one a conversation only that app can write to. Users see these conversations in a protected "Agents & apps" sidebar group and as App rows in the Inbox.
+- **[Plan each append day from its own local day](https://github.com/dialpad/design/pull/246)** (dialpad/design#246). An append planned every missing local day over a re-planned 30-day trailing window and kept only the new interval's rows. On Aerolabs that cost about 15 minutes per interval. The two-day append through 2026-10-14 took about 31 minutes and then failed with message thread parent references unknown id, so no further append worked from the published bundle. Each day is now planned over its own local day, from the counters, group sessions and content usage the earlier days left. The same two-interval preview takes 53 s and passes the bundle audit. A six-day run takes 127 s. No stored message changes.
+- **[Select append intervals as [start, end)](https://github.com/dialpad/design/pull/239)** (dialpad/design#239). An append selected each interval's rows with (start, end], but the planner plans [start, end). A row stamped exactly at local midnight belongs to the day it starts, so the previous day's candidate never holds it and the append skipped it. Seven day-only Aerolabs windows held seven such messages, and the stored build has twelve. A reply to a skipped message is left pointing at a parent that is not in the bundle. This PR selects [start, end). The Firestore incremental publisher has to agree, or the fix moves the failure: after a run that stops at local midnight (--through), the next bundle holds the row at that instant, but the publisher sent a row only when effectiveAt &gt; cutoff and digested rows with effectiveAt &lt;= cutoff. The row was not sent, and the drift check refused the bundle as changed history. The cutoff is now an exclusive end there too.
+
+#### The bigger shift
+
+This was a focused week with 11 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+- Erase or discard an already loaded real company before its first load with this model. Calls and conversations now publish different history content, so republishing would conflict. - Deploy the new index and the `chunks.payload` exemption (`pnpm firebase:rules:deploy:generated-companies`, then wait for `READY`) before the list runs against a real database. The emulator does not enforce indexes. - Deploy `connect-api` with its runtime service account before Settings &gt; Apps can connect outside local development.
+
+#### Try this
+
+From `apps/beacon`, run `pnpm firebase:rules:test`. Expect 13 files and 160 tests to pass, including the Dialpad tester specs and the gateway-versus-rules agreement table.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Write the generator store to the real database, open reads to Dialpad accounts, Write each run's company bundle to Firestore and pull it back to generate, Show normalized direct profile details, Model the conversation list, message paging and generator store in Firestore, Add the Dialpad Copilot entry point and panel behind a flag, Make the generated-company data root configurable, Keep the build run date when appending company history, Connect a real GitHub app and sync its events into Beacon, Add the apps entity, read-only app conversations, and a protected Agents & apps sidebar group, Plan each append day from its own local day, Select append intervals as [start, end).
+
+---
+
 ### Week of 12–18 Oct 2026
 
 6 changes merged into Beacon this week: Keep stored conversations when appending Aerolabs history; Show copy result in devtools flags tooltip; Support relative world release URLs; Re-project the support rows after an append instead of merging them by date; Show shared thread links as a read-only preview, never an access grant; Continue the planner's ids when appending days to a generated company. The details below come directly from the merged monorepo PRs.
@@ -682,7 +728,7 @@ From `apps/beacon`, run `pnpm firebase:rules:test` (needs Java 21) and expect 8 
 
 The week's Beacon record is Secure generated companies with Firestore rules and a sharing policy, Open threads at the first unread reply, Promote generated companies and read them through a browser gateway, Stage generated companies in the Firestore emulator, Add durable per-user thread read state, Add the Aerolabs source adapter and publication preview, Add generated-company publication contract and recording target, Consolidate world-contract and world-core as @dialpad/world-engine.
 
----
+:::details View September 2026
 
 ### Week of 21–27 Sep 2026
 
@@ -1677,6 +1723,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
