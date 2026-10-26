@@ -16,6 +16,11 @@ on:
         required: false
         default: false
         type: boolean
+      test_send:
+        description: Send one protected test email with a distinct subject and idempotency key
+        required: false
+        default: false
+        type: boolean
   pull_request:
     paths:
       - '.github/workflows/daily-agentic-business-pulse.yml'
@@ -65,6 +70,7 @@ jobs:
           PULSE_RECIPIENTS: ${{ secrets.PULSE_RECIPIENTS }}
           PULSE_TIMEZONE: Asia/Kolkata
           PULSE_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+          PULSE_TEST_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.test_send || false }}
           PULSE_INPUT_MODE: glean_gmail_draft
           PULSE_NOT_BEFORE_LOCAL_TIME: ${{ github.event_name == 'schedule' && '09:00' || '' }}
           PULSE_SKILL_PATH: skills/daily-agentic-business-pulse/SKILL.md

@@ -1044,6 +1044,45 @@ class PulseDeliveryTests(unittest.TestCase):
             [deterministic_message_id(REPORT_DATE, dry_run=True)],
         )
 
+    def test_test_send_uses_distinct_id_and_subject_and_sends_once(self):
+        archive = FakeArchive()
+        sent = []
+        config = PulseConfig(**{**self.config.__dict__, "test_send": True})
+
+        def capture_sender(message, config):
+            sent.append(message)
+            return self.fake_sender(message, config)
+
+        result = run_pulse(
+            config,
+            current_time=REPORT_NOW,
+            agent=self.fake_agent,
+            archive=archive,
+            sender=capture_sender,
+        )
+        self.assertEqual(result["run_status"], "success")
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(sent[0]["Subject"], f"[TEST] Weekly Agentic Customer Review — {REPORT_DATE}")
+        self.assertEqual(sent[0]["X-Dialpad-Pulse-Mode"], "test")
+        self.assertEqual(
+            sent[0]["Message-ID"],
+            deterministic_message_id(REPORT_DATE, test_send=True),
+        )
+        self.assertEqual(sent[0]["Bcc"], TEST_REPORT_RECIPIENTS)
+
+    def test_test_send_is_not_blocked_by_existing_live_delivery(self):
+        archive = FakeArchive(duplicate=False)
+        config = PulseConfig(**{**self.config.__dict__, "test_send": True})
+        result = run_pulse(
+            config,
+            current_time=REPORT_NOW,
+            agent=self.fake_agent,
+            archive=archive,
+            sender=self.fake_sender,
+        )
+        self.assertEqual(result["run_status"], "success")
+        self.assertEqual(result["message_id"], deterministic_message_id(REPORT_DATE, test_send=True))
+
     def test_retry_skips_duplicate_before_agent_or_sender(self):
         archive = FakeArchive(duplicate=True)
         calls = []
@@ -1664,6 +1703,8 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("pull_request:", workflow)
         self.assertIn("dry_run:", workflow)
+        self.assertIn("test_send:", workflow)
+        self.assertIn("PULSE_TEST_SEND:", workflow)
         self.assertIn("contents: read", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertIn("PULSE_INPUT_MODE: glean_gmail_draft", workflow)
