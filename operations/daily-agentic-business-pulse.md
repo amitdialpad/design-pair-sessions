@@ -35,7 +35,7 @@ The Glean Agent creates exactly one draft:
 - Subject: `[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD`
 - To: `amit.ayre@dialpad.com`
 - No Cc, Bcc, or attachments
-- One schema-version-2 JSON block between the established machine markers
+- One schema-version-3 JSON block between the established machine markers
 
 The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
 
@@ -52,6 +52,7 @@ Schema version 3 requires everything in version 2 plus:
 - Dialpad fiscal quarters: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
 - An authoritative Finance or RevOps source for the overall quarterly target. Sample dashboard values, incomplete quota aggregates, and inferred targets are rejected.
 - When the target is unverified, actual and forecast values may still appear, but target, attainment, gap, and required pace remain null with a specific target note.
+- When the latest monthly ARR bridge is unavailable from a current authorized source, `latest_arr_period` is null and `latest_arr_note` states the precise gap. The verified Agentic review, bookings, and quarter data remain deliverable; old, zero-filled, or estimated ARR values are never substituted.
 
 ## Delivery protection
 
@@ -86,7 +87,7 @@ Expected application failures use the existing once-per-IST-date failure alert. 
 
 1. Run all repository tests and pull-request validation.
 2. Update the private Glean Agent instructions and schedule in draft.
-3. Preview the Agent and confirm a complete schema-v2 snapshot with no source writes.
+3. Preview the Agent and confirm a complete schema-v3 snapshot with no source writes.
 4. Publish only after the preview validates.
 5. Run GitHub with `dry_run=true`.
 6. Confirm one private body-only draft, no SMTP call, only Amit in Bcc, no attachments, no machine JSON, and a readable verified-signal matrix.

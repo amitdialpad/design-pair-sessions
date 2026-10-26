@@ -776,9 +776,18 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
         "",
         f"- **{business['verdict'].title()}** — {business['verdict_reason']}",
         f"- **This week's bookings:** {_money(weekly['total_bookings'])}; core/non-Agentic {_money(weekly['core_bookings'])}; Agentic {_money(weekly['agentic_bookings'])} ({weekly['agentic_share_pct']:.1f}%).",
-        f"- **Latest ARR movement ({latest['label']}):** net {_money(latest['net_arr_change'])}; new + expansion {_money(latest['new_plus_expansion'])}; churn + contraction {_money(latest['churn_plus_contraction'])}; net customers {latest['net_customers']:+d}; paid licenses {latest['paid_license_change']:+d}.",
         quarter_line,
     ]
+    if latest is None:
+        lines.insert(
+            5,
+            f"- **Latest ARR movement unavailable:** {business['latest_arr_note']}",
+        )
+    else:
+        lines.insert(
+            5,
+            f"- **Latest ARR movement ({latest['label']}):** net {_money(latest['net_arr_change'])}; new + expansion {_money(latest['new_plus_expansion'])}; churn + contraction {_money(latest['churn_plus_contraction'])}; net customers {latest['net_customers']:+d}; paid licenses {latest['paid_license_change']:+d}.",
+        )
     if forecast:
         lines.append(f"- **Quarter forecast:** {' · '.join(forecast)}.")
     lines.append(
@@ -898,15 +907,23 @@ def _validate_business_health(snapshot: dict[str, Any]) -> None:
     if not math.isclose(weekly["agentic_share_pct"], expected_share, abs_tol=0.1):
         raise ValidationError("weekly Agentic share does not match bookings")
 
-    latest = _require_mapping(business.get("latest_arr_period"), "snapshot.business_health.latest_arr_period")
-    if not isinstance(latest.get("label"), str) or not latest["label"].strip():
-        raise ValidationError("snapshot.business_health.latest_arr_period.label is required")
-    for field in ("net_arr_change", "new_plus_expansion", "churn_plus_contraction"):
-        _dashboard_number(latest.get(field), f"snapshot.business_health.latest_arr_period.{field}", allow_negative=True)
-    for field in ("net_customers", "paid_license_change"):
-        value = latest.get(field)
-        if not isinstance(value, int) or isinstance(value, bool):
-            raise ValidationError(f"snapshot.business_health.latest_arr_period.{field} must be an integer")
+    latest = business.get("latest_arr_period")
+    if latest is None:
+        latest_note = business.get("latest_arr_note")
+        if not isinstance(latest_note, str) or not latest_note.strip() or len(latest_note) > 320:
+            raise ValidationError(
+                "unavailable snapshot.business_health.latest_arr_period requires latest_arr_note"
+            )
+    else:
+        latest = _require_mapping(latest, "snapshot.business_health.latest_arr_period")
+        if not isinstance(latest.get("label"), str) or not latest["label"].strip():
+            raise ValidationError("snapshot.business_health.latest_arr_period.label is required")
+        for field in ("net_arr_change", "new_plus_expansion", "churn_plus_contraction"):
+            _dashboard_number(latest.get(field), f"snapshot.business_health.latest_arr_period.{field}", allow_negative=True)
+        for field in ("net_customers", "paid_license_change"):
+            value = latest.get(field)
+            if not isinstance(value, int) or isinstance(value, bool):
+                raise ValidationError(f"snapshot.business_health.latest_arr_period.{field} must be an integer")
 
     quarter = _require_mapping(business.get("quarter"), "snapshot.business_health.quarter")
     if quarter.get("target_status") not in {"verified", "unverified", "unavailable"}:

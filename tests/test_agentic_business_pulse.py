@@ -486,6 +486,37 @@ class PulseValidationTests(unittest.TestCase):
                 workflow_url=WORKFLOW_URL,
             )
 
+    def test_ceo_view_sends_verified_agentic_review_when_arr_bridge_is_unavailable(self):
+        result = valid_ceo_view_result()
+        business = result["snapshot"]["business_health"]
+        business["latest_arr_period"] = None
+        business["latest_arr_note"] = (
+            "The latest monthly ARR bridge was not available from a current authorized source."
+        )
+
+        report, snapshot = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIsNone(snapshot["business_health"]["latest_arr_period"])
+        self.assertIn("Latest ARR movement unavailable", report)
+        self.assertIn("## Verified customer movement", report)
+
+    def test_ceo_view_rejects_unavailable_arr_bridge_without_a_reason(self):
+        result = valid_ceo_view_result()
+        result["snapshot"]["business_health"]["latest_arr_period"] = None
+
+        with self.assertRaisesRegex(ValidationError, "requires latest_arr_note"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
     def test_reporting_date_uses_ist_calendar_day(self):
         utc_time = datetime(2026, 9, 21, 3, 30, tzinfo=ZoneInfo("UTC"))
         report_now = now_in_timezone("Asia/Kolkata", utc_time)
