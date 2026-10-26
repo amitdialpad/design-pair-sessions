@@ -367,7 +367,7 @@ def build_agent_request(
         "required_sources": list(DASHBOARD_REQUIRED_SOURCES),
         "response_contract": {
             "content_type": "application/json",
-            "snapshot_schema_version": 3,
+            "snapshot_schema_version": 5,
             "fields": ["report_markdown", "snapshot", "agent_request_id", "data_status", "failures"],
             "no_markdown_fence": True,
         },
@@ -749,8 +749,22 @@ def _money(value: float | int | None) -> str:
     return f"{sign}${amount:,.0f}"
 
 
+def _signed_money(value: float | int) -> str:
+    return ("+" if value > 0 else "") + _money(value)
+
+
+def _render_executive_read(executive: dict[str, Any]) -> list[str]:
+    return [
+        "",
+        "## Executive signal",
+        "",
+        executive["paragraph"],
+    ]
+
+
 def _render_business_health(business: dict[str, Any]) -> list[str]:
     weekly = business["weekly_sales"]
+    salesforce_snapshot = business.get("salesforce_operational_snapshot")
     latest = business["latest_arr_period"]
     quarter = business["quarter"]
     target = quarter["target_bookings"]
@@ -778,6 +792,36 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
         f"- **This week's bookings:** {_money(weekly['total_bookings'])}; core/non-Agentic {_money(weekly['core_bookings'])}; Agentic {_money(weekly['agentic_bookings'])} ({weekly['agentic_share_pct']:.1f}%).",
         quarter_line,
     ]
+    if isinstance(salesforce_snapshot, dict):
+        lines.insert(
+            5,
+            f"- **Salesforce ARR snapshot ({salesforce_snapshot['as_of_date']}):** "
+            f"{_money(salesforce_snapshot['current_arr'])} current vs "
+            f"{_money(salesforce_snapshot['quarter_start_arr'])} at the start of "
+            f"{salesforce_snapshot['quarter_label']}; net "
+            f"{_signed_money(salesforce_snapshot['net_arr_change'])} "
+            f"({salesforce_snapshot['net_arr_change_pct']:+.1f}%).",
+        )
+        lines.insert(
+            6,
+            f"- **What is underneath the net:** the opening customer cohort is "
+            f"{_signed_money(salesforce_snapshot['opening_cohort_change'])}; "
+            f"new, reactivated, or previously unsnapshotted accounts contribute "
+            f"{_money(salesforce_snapshot['new_or_unsnapshotted_arr'])}; "
+            f"{salesforce_snapshot['paying_accounts']:,} paying accounts and "
+            f"{salesforce_snapshot['paid_licenses']:,} paid licenses.",
+        )
+        comparison = salesforce_snapshot["comparison"]
+        if comparison["previous_snapshot_date"] is None:
+            lines.insert(7, f"- **Weekly comparison:** {comparison['comparison_note']}")
+        else:
+            lines.insert(
+                7,
+                f"- **Since {comparison['previous_snapshot_date']}:** ARR "
+                f"{_signed_money(comparison['arr_change_since_previous'])}; "
+                f"paying accounts {comparison['paying_account_change']:+,d}; "
+                f"paid licenses {comparison['paid_license_change']:+,d}.",
+            )
     if latest is None:
         lines.insert(
             5,
@@ -811,10 +855,11 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     lines = [
         f"# Weekly Agentic Customer Review — {report_date}",
         f"_Weekly review: {comparison['label']}_",
-        "",
-        "## This week",
-        "",
     ]
+    executive = snapshot.get("executive_read")
+    if isinstance(executive, dict):
+        lines.extend(_render_executive_read(executive))
+    lines.extend(["", "## This week", ""])
     reported_deployments = summary.get("reported_deployment_count")
     if reported_deployments is not None:
         lines.append(
@@ -890,7 +935,9 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     return "\n".join(lines).rstrip() + "\n"
 
 
-def _validate_business_health(snapshot: dict[str, Any]) -> None:
+def _validate_business_health(
+    snapshot: dict[str, Any], *, require_salesforce_snapshot: bool = False
+) -> None:
     business = _require_mapping(snapshot.get("business_health"), "snapshot.business_health")
     if business.get("verdict") not in {"strengthening", "stable", "weakening"}:
         raise ValidationError("snapshot.business_health.verdict is invalid")
@@ -906,6 +953,110 @@ def _validate_business_health(snapshot: dict[str, Any]) -> None:
     expected_share = 0 if weekly["total_bookings"] == 0 else weekly["agentic_bookings"] / weekly["total_bookings"] * 100
     if not math.isclose(weekly["agentic_share_pct"], expected_share, abs_tol=0.1):
         raise ValidationError("weekly Agentic share does not match bookings")
+
+    salesforce_snapshot = business.get("salesforce_operational_snapshot")
+    if require_salesforce_snapshot and salesforce_snapshot is None:
+        raise ValidationError(
+            "snapshot.business_health.salesforce_operational_snapshot is required"
+        )
+    if salesforce_snapshot is not None:
+        salesforce_snapshot = _require_mapping(
+            salesforce_snapshot,
+            "snapshot.business_health.salesforce_operational_snapshot",
+        )
+        try:
+            date.fromisoformat(str(salesforce_snapshot.get("as_of_date", "")))
+        except ValueError as error:
+            raise ValidationError(
+                "snapshot.business_health.salesforce_operational_snapshot.as_of_date must be an ISO date"
+            ) from error
+        if not isinstance(salesforce_snapshot.get("quarter_label"), str) or not salesforce_snapshot["quarter_label"].strip():
+            raise ValidationError(
+                "snapshot.business_health.salesforce_operational_snapshot.quarter_label is required"
+            )
+        for field in (
+            "quarter_start_arr",
+            "current_arr",
+            "opening_cohort_current_arr",
+            "new_or_unsnapshotted_arr",
+        ):
+            _dashboard_number(
+                salesforce_snapshot.get(field),
+                f"snapshot.business_health.salesforce_operational_snapshot.{field}",
+            )
+        for field in ("net_arr_change", "net_arr_change_pct", "opening_cohort_change"):
+            _dashboard_number(
+                salesforce_snapshot.get(field),
+                f"snapshot.business_health.salesforce_operational_snapshot.{field}",
+                allow_negative=True,
+            )
+        for field in ("paying_accounts", "paid_licenses"):
+            value = salesforce_snapshot.get(field)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                raise ValidationError(
+                    f"snapshot.business_health.salesforce_operational_snapshot.{field} must be a non-negative integer"
+                )
+        expected_net = salesforce_snapshot["current_arr"] - salesforce_snapshot["quarter_start_arr"]
+        expected_pct = (
+            0
+            if salesforce_snapshot["quarter_start_arr"] == 0
+            else expected_net / salesforce_snapshot["quarter_start_arr"] * 100
+        )
+        expected_cohort_change = (
+            salesforce_snapshot["opening_cohort_current_arr"]
+            - salesforce_snapshot["quarter_start_arr"]
+        )
+        expected_current = (
+            salesforce_snapshot["opening_cohort_current_arr"]
+            + salesforce_snapshot["new_or_unsnapshotted_arr"]
+        )
+        if not math.isclose(salesforce_snapshot["net_arr_change"], expected_net, abs_tol=1.0):
+            raise ValidationError("Salesforce operational net ARR does not match current minus quarter start")
+        if not math.isclose(salesforce_snapshot["net_arr_change_pct"], expected_pct, abs_tol=0.1):
+            raise ValidationError("Salesforce operational ARR percentage does not match the snapshot")
+        if not math.isclose(salesforce_snapshot["opening_cohort_change"], expected_cohort_change, abs_tol=1.0):
+            raise ValidationError("Salesforce opening-cohort change does not match the snapshot")
+        if not math.isclose(salesforce_snapshot["current_arr"], expected_current, abs_tol=1.0):
+            raise ValidationError("Salesforce operational current ARR does not reconcile to its cohorts")
+        method_note = salesforce_snapshot.get("method_note")
+        if not isinstance(method_note, str) or not method_note.strip() or len(method_note) > 320:
+            raise ValidationError("Salesforce operational snapshot requires a short method_note")
+        comparison = _require_mapping(
+            salesforce_snapshot.get("comparison"),
+            "snapshot.business_health.salesforce_operational_snapshot.comparison",
+        )
+        previous_date = comparison.get("previous_snapshot_date")
+        comparison_values = (
+            comparison.get("arr_change_since_previous"),
+            comparison.get("paying_account_change"),
+            comparison.get("paid_license_change"),
+        )
+        if previous_date is None:
+            if any(value is not None for value in comparison_values):
+                raise ValidationError("Salesforce baseline comparison values must be null")
+            comparison_note = comparison.get("comparison_note")
+            if not isinstance(comparison_note, str) or not comparison_note.strip() or len(comparison_note) > 320:
+                raise ValidationError("Salesforce baseline requires comparison_note")
+        else:
+            try:
+                parsed_previous = date.fromisoformat(str(previous_date))
+                parsed_current = date.fromisoformat(salesforce_snapshot["as_of_date"])
+            except ValueError as error:
+                raise ValidationError("Salesforce previous_snapshot_date must be an ISO date") from error
+            if parsed_previous >= parsed_current:
+                raise ValidationError("Salesforce previous snapshot must predate the current snapshot")
+            _dashboard_number(
+                comparison_values[0],
+                "snapshot.business_health.salesforce_operational_snapshot.comparison.arr_change_since_previous",
+                allow_negative=True,
+            )
+            for field, value in zip(
+                ("paying_account_change", "paid_license_change"), comparison_values[1:], strict=True
+            ):
+                if not isinstance(value, int) or isinstance(value, bool):
+                    raise ValidationError(
+                        f"snapshot.business_health.salesforce_operational_snapshot.comparison.{field} must be an integer"
+                    )
 
     latest = business.get("latest_arr_period")
     if latest is None:
@@ -948,6 +1099,22 @@ def _validate_business_health(snapshot: dict[str, Any]) -> None:
             raise ValidationError("unverified quarter target must not publish derived target metrics")
         if not isinstance(quarter.get("target_note"), str) or not quarter["target_note"].strip():
             raise ValidationError("unverified quarter target requires target_note")
+
+
+def _validate_executive_read(snapshot: dict[str, Any]) -> None:
+    executive = _require_mapping(snapshot.get("executive_read"), "snapshot.executive_read")
+    paragraph = executive.get("paragraph")
+    if not isinstance(paragraph, str) or not paragraph.strip() or len(paragraph) > 900:
+        raise ValidationError("snapshot.executive_read.paragraph is required and must be concise")
+    if "\n" in paragraph or len(re.findall(r"\S+", paragraph)) > 140:
+        raise ValidationError("snapshot.executive_read.paragraph must be one short paragraph")
+    if executive.get("confidence") not in {"low", "medium", "high"}:
+        raise ValidationError("snapshot.executive_read.confidence is invalid")
+    links = _require_list(executive.get("links"), "snapshot.executive_read.links")
+    if not links or not all(_valid_link(link) for link in links):
+        raise ValidationError("snapshot.executive_read needs evidence")
+    if len(links) > 4:
+        raise ValidationError("snapshot.executive_read.links must contain at most 4 links")
 
 
 def _validate_dashboard_source_status(
@@ -1029,8 +1196,8 @@ def validate_customer_dashboard_result(
         raise IntegrationError("Customer dashboard requires healthy read-only sources; no report was sent")
     report_date = report_now.date().isoformat()
     schema_version = snapshot.get("schema_version")
-    if schema_version not in {2, 3}:
-        raise ValidationError("snapshot.schema_version must be 2 or 3")
+    if schema_version not in {2, 3, 4, 5}:
+        raise ValidationError("snapshot.schema_version must be 2, 3, 4, or 5")
     if snapshot.get("report_date") != report_date:
         raise ValidationError("Snapshot report date does not match the current IST date")
     generated_at = _parse_datetime(snapshot.get("generated_at"), "snapshot.generated_at")
@@ -1110,8 +1277,10 @@ def validate_customer_dashboard_result(
     _require_list(snapshot.get("commercial_changes"), "snapshot.commercial_changes")
     _require_list(snapshot.get("unknowns"), "snapshot.unknowns")
     _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
-    if schema_version == 3:
-        _validate_business_health(snapshot)
+    if schema_version in {3, 4, 5}:
+        _validate_business_health(snapshot, require_salesforce_snapshot=schema_version in {4, 5})
+    if schema_version == 5:
+        _validate_executive_read(snapshot)
     snapshot["data_status"] = "complete"
     report = render_customer_dashboard(snapshot, workflow_url)
     if _visible_word_count(report) > 1600:
@@ -1160,7 +1329,7 @@ def validate_agent_result(
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5}:
         return validate_customer_dashboard_result(
             result,
             snapshot=snapshot,
@@ -1348,7 +1517,7 @@ def validate_agent_result(
 
 def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
     required_sources = (
-        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3} else REQUIRED_SOURCES
+        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3, 4, 5} else REQUIRED_SOURCES
     )
     return {
         source: snapshot["source_status"][source]["queried_at"]
@@ -1725,7 +1894,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5}:
         comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
         for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
             if canonical not in comparison and isinstance(comparison.get(glean_name), str):
