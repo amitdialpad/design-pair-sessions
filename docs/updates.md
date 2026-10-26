@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:681a93059e556fb732181bcb30a73d4687001fc3 -->
+
+**Keep Jira keys out of comments and doc prose**
+
+Beacon's comment rules, reviewer packets and audit policies told authors to add a Jira key to TODOs and comments. Keys kept piling up in code and docs, readers without Jira access could not follow them, and nothing checked new ones. About 70 doc lines carried a key. This PR changes what authors and reviewers are told, adds a check for keys on added lines, and removes the keys from doc prose without dropping the facts beside them. Keys in existing source comments stay; later comment-audit runs handle them one area at a time. Schema version history and the census table rows in seed-family-parity.md keep their keys by design.
+
+<span class="release-meta">[dialpad/design#283](https://github.com/dialpad/design/pull/283) · 26 October 2026</span>
+
+---
+
 <!-- beacon-change:03b7051a04fa7adfa4263063c6dc50c23eaeca5b -->
 
 **Write the generator store to the real database, open reads to Dialpad accounts**
@@ -78,6 +88,8 @@ Appending days to a generated company gave the world a new run date (asOf) every
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:8d7b9adc894c434fb2fed3213d04a29871bafcdd -->
 
 **Connect a real GitHub app and sync its events into Beacon**
@@ -87,8 +99,6 @@ Apps in Beacon only existed as seeded data, so nothing a real service did could 
 <span class="release-meta">[dialpad/design#243](https://github.com/dialpad/design/pull/243) · 20 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:d67b9a1dfe612ecfd43cb146c532fc3756204faa -->
 
