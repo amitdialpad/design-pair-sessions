@@ -234,6 +234,7 @@ class PulseConfig:
     skill_path: Path
     reports_dir: Path
     dry_run: bool = False
+    test_send: bool = False
     source_max_age_hours: int = 12
     agent_timeout_seconds: int = 600
     allow_insecure_agent_url: bool = False
@@ -278,6 +279,7 @@ class PulseConfig:
                 )
             ),
             dry_run=parse_bool(os.environ.get("PULSE_DRY_RUN"), default=False),
+            test_send=parse_bool(os.environ.get("PULSE_TEST_SEND"), default=False),
             source_max_age_hours=int(os.environ.get("PULSE_SOURCE_MAX_AGE_HOURS", "12")),
             agent_timeout_seconds=int(os.environ.get("PULSE_AGENT_TIMEOUT_SECONDS", "600")),
             allow_insecure_agent_url=parse_bool(os.environ.get("PULSE_ALLOW_INSECURE_AGENT_URL"), default=False),
@@ -335,8 +337,12 @@ def workflow_url_from_env() -> str:
     return f"{server}/{repository}/actions/runs/{run_id}" if run_id else f"{server}/{repository}/actions"
 
 
-def deterministic_message_id(report_date: str, dry_run: bool = False) -> str:
-    mode = "dry-run-" if dry_run else ""
+def deterministic_message_id(
+    report_date: str, dry_run: bool = False, test_send: bool = False
+) -> str:
+    if dry_run and test_send:
+        raise PulseError("A pulse cannot be both a dry run and a test send")
+    mode = "dry-run-" if dry_run else "test-" if test_send else ""
     return f"<{mode}daily-agentic-business-pulse-{report_date}@dialpad.com>"
 
 
@@ -1762,10 +1768,13 @@ def build_email_message(
     recipient: str,
     message_id: str,
     dry_run: bool,
+    test_send: bool = False,
 ) -> EmailMessage:
+    if dry_run and test_send:
+        raise PulseError("A pulse cannot be both a dry run and a test send")
     expected_recipients = approved_report_recipients(recipient)
     recipient = ", ".join(expected_recipients)
-    subject_prefix = "[DRY RUN] " if dry_run else ""
+    subject_prefix = "[DRY RUN] " if dry_run else "[TEST] " if test_send else ""
     message = EmailMessage()
     message["Subject"] = f"{subject_prefix}{REPORT_SUBJECT_PREFIX} — {report_date}"
     message["From"] = f"Weekly Agentic Customer Review <{sender}>"
@@ -1773,7 +1782,9 @@ def build_email_message(
     message["Bcc"] = recipient
     message["Message-ID"] = message_id
     message["X-Dialpad-Pulse-Date"] = report_date
-    message["X-Dialpad-Pulse-Mode"] = "dry-run" if dry_run else "live"
+    message["X-Dialpad-Pulse-Mode"] = (
+        "dry-run" if dry_run else "test" if test_send else "live"
+    )
     message.set_content(report)
     message.add_alternative(markdown_to_email_html(report), subtype="html")
     enforce_message_recipient_contract(message, expected_recipients=expected_recipients, bcc_only=True)
@@ -2319,7 +2330,11 @@ def run_pulse(
     report_now = now_in_timezone(config.timezone_name, current_time)
     report_date = report_now.date().isoformat()
     workflow_url = workflow_url_from_env()
-    live_message_id = deterministic_message_id(report_date, dry_run=False)
+    if config.dry_run and config.test_send:
+        raise PulseError("A pulse cannot be both a dry run and a test send")
+    delivery_message_id = deterministic_message_id(
+        report_date, dry_run=config.dry_run, test_send=config.test_send
+    )
 
     if not config.skill_path.is_file():
         raise IntegrationError(f"Complete pulse skill is missing: {config.skill_path}")
@@ -2334,18 +2349,18 @@ def run_pulse(
 
     gmail_archive = archive or GmailArchive(config.gmail_user, config.gmail_password, config.imap_host)
     if config.dry_run:
-        gmail_archive.delete_drafts_by_message_id(deterministic_message_id(report_date, dry_run=True))
-    if not config.dry_run and gmail_archive.sent_message_exists(live_message_id):
+        gmail_archive.delete_drafts_by_message_id(delivery_message_id)
+    if not config.dry_run and gmail_archive.sent_message_exists(delivery_message_id):
         result = {
             "report_date": report_date,
             "run_status": "duplicate_skipped",
             "email_status": "already_sent",
-            "message_id": live_message_id,
+            "message_id": delivery_message_id,
             "workflow_url": workflow_url,
         }
         write_run_result(config.reports_dir, report_date, result)
         return result
-    if not config.dry_run and gmail_archive.draft_message_exists(live_message_id):
+    if not config.dry_run and gmail_archive.draft_message_exists(delivery_message_id):
         raise IntegrationError(
             "A prepared live report already exists in Gmail Drafts but no Sent copy was confirmed. "
             "The prior delivery state is ambiguous, so this retry will not risk a duplicate send."
@@ -2366,10 +2381,10 @@ def run_pulse(
         source_max_age_hours=config.source_max_age_hours,
         workflow_url=workflow_url,
     )
-    message_id = deterministic_message_id(report_date, dry_run=config.dry_run)
+    message_id = delivery_message_id
     snapshot["delivery"] = {
         "message_id": message_id,
-        "mode": "dry_run" if config.dry_run else "live",
+        "mode": "dry_run" if config.dry_run else "test" if config.test_send else "live",
     }
     report_path, snapshot_path = persist_output_files(config.reports_dir, report_date, report, snapshot)
 
@@ -2380,6 +2395,7 @@ def run_pulse(
         recipient=config.recipient,
         message_id=message_id,
         dry_run=config.dry_run,
+        test_send=config.test_send,
     )
     draft_uid = gmail_archive.persist_draft(message)
 
@@ -2433,7 +2449,11 @@ def run_pulse_from_glean_draft(
     )
     report_date = report_now.date().isoformat()
     workflow_url = workflow_url_from_env()
-    live_message_id = deterministic_message_id(report_date, dry_run=False)
+    if config.dry_run and config.test_send:
+        raise PulseError("A pulse cannot be both a dry run and a test send")
+    prepared_message_id = deterministic_message_id(
+        report_date, dry_run=config.dry_run, test_send=config.test_send
+    )
 
     if not config.skill_path.is_file():
         raise IntegrationError(f"Complete pulse skill is missing: {config.skill_path}")
@@ -2441,17 +2461,16 @@ def run_pulse_from_glean_draft(
         raise IntegrationError("Pulse skill appears truncated; refusing to validate a shortened prompt")
 
     gmail_archive = archive or GmailArchive(config.gmail_user, config.gmail_password, config.imap_host)
-    if not config.dry_run and gmail_archive.sent_message_exists(live_message_id):
+    if not config.dry_run and gmail_archive.sent_message_exists(prepared_message_id):
         result = {
             "report_date": report_date,
             "run_status": "duplicate_skipped",
             "email_status": "already_sent",
-            "message_id": live_message_id,
+            "message_id": prepared_message_id,
             "workflow_url": workflow_url,
         }
         write_run_result(config.reports_dir, report_date, result)
         return result
-    prepared_message_id = deterministic_message_id(report_date, dry_run=config.dry_run)
     if config.dry_run:
         gmail_archive.delete_drafts_by_message_id(prepared_message_id)
     elif gmail_archive.draft_message_exists(prepared_message_id):
@@ -2478,7 +2497,7 @@ def run_pulse_from_glean_draft(
     )
     snapshot["delivery"] = {
         "message_id": prepared_message_id,
-        "mode": "dry_run" if config.dry_run else "live",
+        "mode": "dry_run" if config.dry_run else "test" if config.test_send else "live",
         "input": "scheduled_glean_gmail_draft",
     }
     report_path, snapshot_path = persist_output_files(config.reports_dir, report_date, report, snapshot)
@@ -2489,6 +2508,7 @@ def run_pulse_from_glean_draft(
         recipient=config.recipient,
         message_id=prepared_message_id,
         dry_run=config.dry_run,
+        test_send=config.test_send,
     )
     prepared_draft_uid = gmail_archive.persist_draft(message)
 
