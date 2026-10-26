@@ -301,7 +301,12 @@ def valid_dashboard_result() -> dict:
 
 def valid_ceo_view_result() -> dict:
     result = valid_dashboard_result()
-    result["snapshot"]["schema_version"] = 3
+    result["snapshot"]["schema_version"] = 5
+    result["snapshot"]["executive_read"] = {
+        "paragraph": "The signal this week is that Agentic activity is still not compounding: customer work increased, but the changed delivery evidence was another publishing blocker and commercial movement remained small. That keeps the company in transition rather than proving the new growth engine; the next meaningful change would be several customers advancing into dependable production or a sustained rise in won Agentic ACV.",
+        "confidence": "medium",
+        "links": [SOURCE_LINKS["salesforce"], "https://dialpad.atlassian.net/browse/DP-200001"],
+    }
     result["snapshot"]["business_health"] = {
         "verdict": "stable",
         "verdict_reason": "Core bookings remain positive, while retention pressure needs watching.",
@@ -310,6 +315,27 @@ def valid_ceo_view_result() -> dict:
             "core_bookings": 950_000,
             "agentic_bookings": 50_000,
             "agentic_share_pct": 5.0,
+        },
+        "salesforce_operational_snapshot": {
+            "as_of_date": REPORT_DATE,
+            "quarter_label": "Q3 FY27",
+            "quarter_start_arr": 378_353_420.936,
+            "current_arr": 392_077_094.28,
+            "net_arr_change": 13_723_673.344,
+            "net_arr_change_pct": 3.6272,
+            "opening_cohort_current_arr": 376_372_129.8,
+            "opening_cohort_change": -1_981_291.136,
+            "new_or_unsnapshotted_arr": 15_704_964.48,
+            "paying_accounts": 62_687,
+            "paid_licenses": 1_010_826,
+            "method_note": "Read-only Salesforce account fields; operational estimate, not the Finance-certified ARR bridge.",
+            "comparison": {
+                "previous_snapshot_date": None,
+                "arr_change_since_previous": None,
+                "paying_account_change": None,
+                "paid_license_change": None,
+                "comparison_note": "Baseline established; the first week-over-week comparison will appear next Monday.",
+            },
         },
         "latest_arr_period": {
             "label": "September 2026",
@@ -468,11 +494,34 @@ class PulseValidationTests(unittest.TestCase):
             workflow_url=WORKFLOW_URL,
         )
 
-        self.assertEqual(snapshot["schema_version"], 3)
+        self.assertEqual(snapshot["schema_version"], 5)
+        self.assertTrue(report.startswith(f"# Weekly Agentic Customer Review — {REPORT_DATE}"))
+        self.assertIn("## Executive signal", report)
+        self.assertIn("The signal this week", report)
+        self.assertNotIn("**Why it matters:**", report)
+        self.assertNotIn("**Watch next:**", report)
+        self.assertNotIn("Dialpad Tap", report)
+        self.assertNotIn("Next three months", report)
+        self.assertLess(report.index("## Executive signal"), report.index("## This week"))
         self.assertIn("## CEO View — Company Health", report)
+        self.assertIn("Salesforce ARR snapshot", report)
+        self.assertIn("opening customer cohort", report)
+        self.assertIn("Baseline established", report)
         self.assertIn("Overall target is withheld", report)
         self.assertNotIn("% of $", report)
         self.assertLess(report.index("## Analysis"), report.index("## CEO View — Company Health"))
+
+    def test_executive_read_rejects_an_unsupported_signal(self):
+        result = valid_ceo_view_result()
+        result["snapshot"]["executive_read"]["links"] = []
+
+        with self.assertRaisesRegex(ValidationError, "needs evidence"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
 
     def test_ceo_view_rejects_target_math_when_unverified(self):
         result = valid_ceo_view_result()
@@ -485,6 +534,47 @@ class PulseValidationTests(unittest.TestCase):
                 source_max_age_hours=12,
                 workflow_url=WORKFLOW_URL,
             )
+
+    def test_ceo_view_rejects_salesforce_snapshot_that_does_not_reconcile(self):
+        result = valid_ceo_view_result()
+        result["snapshot"]["business_health"]["salesforce_operational_snapshot"][
+            "net_arr_change"
+        ] += 100_000
+
+        with self.assertRaisesRegex(ValidationError, "net ARR does not match"):
+            validate_agent_result(
+                result,
+                report_now=REPORT_NOW,
+                source_max_age_hours=12,
+                workflow_url=WORKFLOW_URL,
+            )
+
+    def test_ceo_view_renders_week_over_week_salesforce_comparison(self):
+        result = valid_ceo_view_result()
+        comparison = result["snapshot"]["business_health"]["salesforce_operational_snapshot"][
+            "comparison"
+        ]
+        comparison.update(
+            {
+                "previous_snapshot_date": "2026-09-14",
+                "arr_change_since_previous": 1_250_000,
+                "paying_account_change": 45,
+                "paid_license_change": -120,
+                "comparison_note": None,
+            }
+        )
+
+        report, _ = validate_agent_result(
+            result,
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIn("Since 2026-09-14", report)
+        self.assertIn("ARR +$1.25M", report)
+        self.assertIn("paying accounts +45", report)
+        self.assertIn("paid licenses -120", report)
 
     def test_ceo_view_sends_verified_agentic_review_when_arr_bridge_is_unavailable(self):
         result = valid_ceo_view_result()

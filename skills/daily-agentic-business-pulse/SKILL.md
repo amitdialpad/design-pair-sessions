@@ -20,7 +20,7 @@ Answer from specific, current evidence:
 
 This is a verified-movement review, not a portfolio census. Include only named customers with a specific, current, safely attributable signal. A source-reported aggregate such as `30 deployments` may appear as context, but never claim that the included rows are the complete cohort. Sort failing customers first, then movers, then other useful current signals.
 
-This is a customer operating review, not a design essay. Do not repeat a known product problem unless its affected customer, severity, owner, status, or commercial effect changed this week. After the Agentic review, add one compact section titled `CEO View — Company Health` for company-level direction.
+This is a customer operating review, not a design essay. Do not repeat a known product problem unless its affected customer, severity, owner, status, or commercial effect changed this week. Open with an evidence-gated `Executive signal`, then present the Agentic customer review and one compact `CEO View — Company Health` for company-level direction.
 
 ## Safety
 
@@ -106,6 +106,8 @@ Do not repeat generic product guidance, list tools, or explain access limitation
 Keep Agentic as the main story. Then show only the executive signals that changed or matter now:
 
 - This week's total bookings, core/non-Agentic bookings, Agentic bookings, and Agentic share.
+- A fresh read-only Salesforce operational snapshot every Monday: current account ARR, quarter-start ARR, the opening-cohort movement, ARR from new/reactivated/previously unsnapshotted accounts, paying-account count, and paid-license count.
+- A week-over-week comparison to the prior Monday's Salesforce operational snapshot when that prior snapshot is available. The first run establishes a baseline and says so explicitly.
 - The latest available ARR movement period, explicitly labeled with its real grain and date: net ARR, new plus expansion, churn plus contraction, net customers, and paid-license change. Do not describe monthly data as weekly.
 - The fiscal-quarter scoreboard using Dialpad's calendar: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
 - Quarter-to-date actual bookings, official full-quarter target, attainment, gap, required weekly pace, commit, best case, previous-quarter comparison, and Agentic share.
@@ -114,7 +116,32 @@ The official target must come from an authoritative Finance or RevOps planning s
 
 Company-health metrics degrade independently. If the latest ARR bridge cannot be verified from a current authorized source, set `latest_arr_period` to `null`, add a specific non-empty `latest_arr_note`, and continue with the verified Agentic review, bookings, and quarter data. Never substitute an older bridge, zeros, or estimates. Missing company-health context must not suppress otherwise valid customer evidence.
 
-## Machine contract: schema version 3
+The Salesforce operational snapshot is not the Finance-certified ARR bridge. Build it only from current read-only Account fields and label it `Salesforce operational estimate` in `method_note`:
+
+- `quarter_start_arr`: sum of `First_Day_FQ_ARR__c` for accounts with a positive quarter-start value.
+- `opening_cohort_current_arr`: current `ARR__c` for that same positive quarter-start cohort.
+- `new_or_unsnapshotted_arr`: current `ARR__c` for positive-ARR accounts whose quarter-start ARR is null or zero. This bucket can contain new, reactivated, or previously unsnapshotted accounts; never call all of it new ARR.
+- `current_arr`: opening-cohort current ARR plus new/reactivated/previously unsnapshotted ARR.
+- `net_arr_change`: current ARR minus quarter-start ARR; `net_arr_change_pct` uses quarter-start ARR as the denominator.
+- `paying_accounts` and `paid_licenses`: count accounts and sum `Total_Dialpad_License__c` where `Customer__c` is true and `ARR__c` is positive.
+
+Do not describe the opening-cohort movement as churn or retention. It is a net of expansion, contraction, churn, reactivation, and Salesforce corrections. Retrieve the previous Monday's delivered review and compare only the three like-for-like stored values: current ARR, paying accounts, and paid licenses. If no prior operational snapshot is safely available, leave the comparison values null and state that the baseline was established.
+
+## Executive signal
+
+Lead the email with one short paragraph containing the strongest decision-relevant signal from the current week. This is an authored point of view, not a metric summary or fixed checklist.
+
+- Select the change that best explains whether the business or Agentic trajectory materially improved, weakened, or remained stuck.
+- Synthesize what matters in natural prose. Explain the implication or next proof only when it sharpens the signal; do not render fixed labels or a watch list.
+- Use one to four direct HTTPS evidence links and set confidence to `low`, `medium`, or `high`.
+- Compare against prior reviews and known context, but do not repeat layoffs, strategy shifts, core scale, or other stable background unless new evidence changes their implication.
+- Mention the three- or six-month outlook only when the current week's evidence materially changes that outlook.
+- Do not include Dialpad Tap or Amit's personal work. It is context shared for discussion, not part of this business report.
+- Current public market evidence may be used when it materially changes the interpretation. Prefer primary sources, retain the direct links in `executive_read.links`, and never use a market trend as proof of a private Dialpad fact.
+
+Use official written company material for restructuring or strategy facts. Sensitive user-supplied context may guide what to investigate, but it must not appear as a report fact unless an approved source verifies it. When no single signal is strong enough, say that the trajectory is unchanged and name the one next proof that matters most; do not manufacture novelty.
+
+## Machine contract: schema version 5
 
 `report_markdown` in the internal source draft may be a short preview. The GitHub relay deterministically creates the final email from `snapshot`.
 
@@ -125,7 +152,7 @@ Company-health metrics degrade independently. If the latest ARR bridge cannot be
   "data_status": "complete",
   "failures": [],
   "snapshot": {
-    "schema_version": 3,
+      "schema_version": 5,
     "report_date": "YYYY-MM-DD",
     "generated_at": "ISO-8601 timestamp",
     "comparison_window": {
@@ -140,10 +167,36 @@ Company-health metrics degrade independently. If the latest ARR bridge cannot be
     "commercial_changes": [],
     "unknowns": [],
     "changes_since_previous": [],
+    "executive_read": {
+      "paragraph": "One concise, evidence-grounded paragraph containing the strongest weekly signal and its implication.",
+      "confidence": "medium",
+      "links": ["https://..."]
+    },
     "business_health": {
       "verdict": "stable",
       "verdict_reason": "Short evidence-based explanation",
       "weekly_sales": {},
+        "salesforce_operational_snapshot": {
+          "as_of_date": "YYYY-MM-DD",
+          "quarter_label": "Q3 FY27",
+          "quarter_start_arr": 0,
+          "current_arr": 0,
+          "net_arr_change": 0,
+          "net_arr_change_pct": 0,
+          "opening_cohort_current_arr": 0,
+          "opening_cohort_change": 0,
+          "new_or_unsnapshotted_arr": 0,
+          "paying_accounts": 0,
+          "paid_licenses": 0,
+          "method_note": "Salesforce operational estimate from read-only Account fields; not the Finance-certified ARR bridge.",
+          "comparison": {
+            "previous_snapshot_date": null,
+            "arr_change_since_previous": null,
+            "paying_account_change": null,
+            "paid_license_change": null,
+            "comparison_note": "Baseline established; the first week-over-week comparison will appear next Monday."
+          }
+        },
       "latest_arr_period": null,
       "latest_arr_note": "The latest monthly ARR bridge was not available from a current authorized source.",
       "quarter": {}
@@ -202,7 +255,7 @@ Each customer:
 
 The relay rejects an empty verified-signal set, duplicate names, mismatched summaries, stale or writable sources, unsafe links, invalid Jira keys, negative or non-finite values, secrets, raw payloads, transcripts, and unsupported recipients.
 
-`business_health.latest_arr_period` may be `null` only when `business_health.latest_arr_note` gives the specific current-source gap. This is a visible unavailable state, not a reason to fail the complete report.
+`executive_read` and `business_health.salesforce_operational_snapshot` are required in schema version 5. The executive signal needs direct HTTPS evidence and must remain one concise paragraph in the rendered report. The Salesforce snapshot must reconcile arithmetically. `business_health.latest_arr_period` may be `null` only when `business_health.latest_arr_note` gives the specific current-source gap. This is a visible unavailable state, not a reason to fail the complete report.
 
 ## Deterministic email format
 

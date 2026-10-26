@@ -4,7 +4,7 @@ Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
 
 Delivery is Monday at 09:00 `Asia/Kolkata`. The user-facing email is `Weekly Agentic Customer Review — YYYY-MM-DD`.
 
-The review keeps named Agentic customers and their verified movement as the main story. After that, `CEO View — Company Health` provides a compact company-level scorecard: current bookings mix, latest correctly labeled ARR movement, customer and license direction, and fiscal-quarter progress. It is not a copy of the restricted CEO dashboard.
+The review opens with `Executive signal`: one evidence-backed paragraph containing an authored point of view on the strongest decision-relevant change. It may use relevant current market evidence, but it does not repeat static company history, expose its source mechanics, or include Amit's personal work. The named Agentic customers and verified movement remain the operating detail. `CEO View — Company Health` provides a compact company-level scorecard: current bookings mix, latest correctly labeled ARR movement, customer and license direction, and fiscal-quarter progress. It is not a copy of the restricted CEO dashboard.
 
 ## Schedule
 
@@ -35,11 +35,11 @@ The Glean Agent creates exactly one draft:
 - Subject: `[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD`
 - To: `amit.ayre@dialpad.com`
 - No Cc, Bcc, or attachments
-- One schema-version-3 JSON block between the established machine markers
+- One schema-version-5 JSON block between the established machine markers
 
 The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
 
-Schema version 3 requires everything in version 2 plus:
+Schema version 5 requires everything in version 4 plus:
 
 - Fresh read-only receipts for Salesforce, Jira, and Glean, plus production code only when used.
 - The previous Monday-through-Sunday comparison window.
@@ -49,10 +49,17 @@ Schema version 3 requires everything in version 2 plus:
 - A summary derived exactly from customer rows.
 - Evidence-linked analysis for included customer signals when it clarifies implications or how Amit can help.
 - A `business_health` object rendered after the Agentic story.
+- A fresh Monday read-only Salesforce operational snapshot with current ARR, quarter-start ARR, opening-cohort movement, new/reactivated/previously unsnapshotted ARR, paying accounts, and paid licenses.
+- A like-for-like comparison with the prior Monday's stored Salesforce snapshot when available; the first run establishes the baseline.
 - Dialpad fiscal quarters: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
 - An authoritative Finance or RevOps source for the overall quarterly target. Sample dashboard values, incomplete quota aggregates, and inferred targets are rejected.
 - When the target is unverified, actual and forecast values may still appear, but target, attainment, gap, and required pace remain null with a specific target note.
 - When the latest monthly ARR bridge is unavailable from a current authorized source, `latest_arr_period` is null and `latest_arr_note` states the precise gap. The verified Agentic review, bookings, and quarter data remain deliverable; old, zero-filled, or estimated ARR values are never substituted.
+- An `executive_read` rendered before all operating detail as one paragraph: the strongest current-week signal, why it matters now, and the next observable proof.
+- No Dialpad Tap or other personal-project content. Stable company history is omitted unless new evidence changes its implication.
+- Restructuring, strategy, or leadership-intent claims only when supported by approved written company evidence. Private conversation may guide research but is never published as evidence.
+
+The Salesforce snapshot is an operational estimate, not the restricted Finance-certified ARR bridge. Its arithmetic must reconcile, its method note must state the distinction, and opening-cohort movement must not be labeled churn or retention.
 
 ## Delivery protection
 
@@ -87,7 +94,7 @@ Expected application failures use the existing once-per-IST-date failure alert. 
 
 1. Run all repository tests and pull-request validation.
 2. Update the private Glean Agent instructions and schedule in draft.
-3. Preview the Agent and confirm a complete schema-v3 snapshot with no source writes.
+3. Preview the Agent and confirm a complete schema-v5 snapshot with no source writes.
 4. Publish only after the preview validates.
 5. Run GitHub with `dry_run=true`.
 6. Confirm one private body-only draft, no SMTP call, only Amit in Bcc, no attachments, no machine JSON, and a readable verified-signal matrix.
