@@ -1791,6 +1791,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Expanding Claude for Nonprofits](https://claude.com/resources/articles/expanding-claude-for-nonprofits)**<br><small>Oct 26, 2026 · Product announcements</small>
+
+Anthropic's new Claude for Nonprofits plugin brings new skills to verified nonprofit organizations, taking the operational work that stretches small teams.
+
+---
+
 **[Claude Cowork and chat come together for Enterprise](https://claude.com/resources/articles/unified-claude-enterprise)**<br><small>Oct 23, 2026 · Product announcements</small>
 
 Chat and Cowork first came together for Pro and Max plans in September. The same unified experience is now generally available for Claude Enterprise plans.
@@ -1807,13 +1813,13 @@ These are the protections we built into Claude Duet for working across your acco
 
 Claude formally proved security properties in the compiled code of 123 open-source libraries. Along the way, it found bugs that had eluded detection for years.
 
----
+:::details View past updates
 
 **[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
 
 Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
 
-:::details View past updates
+---
 
 **[Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**<br><small>Oct 22, 2026 · Best practices</small>
 
@@ -1822,8 +1828,6 @@ When to consider using fewer subagents and how to migrate the into your main loo
 ---
 
 **[HCLTech joins the Claude Partner Network as a Global Premier partner](https://claude.com/resources/articles/hcltech-joins-claude-partner-network)**<br><small>Oct 21, 2026 · Product announcements</small>
-
-HCLTech is partnering with Anthropic to bring Claude and Claude Code into the IT systems it runs for banks, hospitals, telecoms, and manufacturers
 
 ---
 
@@ -1837,13 +1841,7 @@ Claude Security now watches your repositories as code changes, tracks findings u
 
 Claude Duet is a new app where Claude works as a proactive agent. The research preview opens by waitlist today for Pro and Max subscribers in the US.
 
----
-
-**[Redesigning source control at Anthropic](https://www.anthropic.com/engineering/redesigning-source-control)**<br><small>Oct 19, 2026 · Best practices</small>
-
-As our merges per day grew more than tenfold, source control became our biggest development bottleneck. Here, we share how we migrated to an in-house version control system in five months.
-
 :::
 
-*Updated October 26, 2026*
+*Updated October 27, 2026*
 <!-- CLAUDE_FEED_END -->
