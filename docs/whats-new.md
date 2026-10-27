@@ -6,6 +6,20 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-27
+
+### Modified
+
+- `apps/beacon/.agents/resources/rules/documentation.md`
+- `apps/beacon/.agents/skills/code-quality.local.md`
+- `apps/beacon/.agents/skills/comment-audit.local.md`
+- `apps/beacon/.agents/skills/docs-audit.local.md`
+- `apps/beacon/.claude/agents/mock-data/contact-center-generator.md`
+- `apps/beacon/.claude/agents/mock-data/data-integrity-validator.md`
+- `apps/beacon/.claude/agents/pr-review/comment-analyzer.md`
+
+---
+
 ## 2026-10-24
 
 ### Modified

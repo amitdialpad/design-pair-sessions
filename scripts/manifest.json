@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-24T12:58:50.750802+00:00",
+  "generated": "2026-10-27T14:59:09.837800+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -220,7 +220,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/documentation.md",
-      "sha": "edee92f2583fe249f9482fde1ab016d6f45d1291"
+      "sha": "479cff441cf5b75dd370d63c711e4e1da5a1567a"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/electron.md",
@@ -316,11 +316,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/code-quality.local.md",
-      "sha": "f97b67230c543f98d84d6b6feb660264a07cfebe"
+      "sha": "407a44b64b26997e74e6d0177f1310d08bb8d805"
     },
     {
       "path": "apps/beacon/.agents/skills/comment-audit.local.md",
-      "sha": "d3d5b7c19393f51dc739a3f953cf6c7fe7020567"
+      "sha": "b4d0f9a9c23f60fe6d77fefcd796ddde090ffaed"
     },
     {
       "path": "apps/beacon/.agents/skills/component-work.local.md",
@@ -356,7 +356,7 @@
     },
     {
       "path": "apps/beacon/.agents/skills/docs-audit.local.md",
-      "sha": "e926435350d7d6b069ccc2feadaf97f86b70b3df"
+      "sha": "2c219bfeb71884d1e359a6a28575c3500ce75f6f"
     },
     {
       "path": "apps/beacon/.agents/skills/feature-flags/SKILL.md",
@@ -548,7 +548,7 @@
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/contact-center-generator.md",
-      "sha": "e6c01f262d4ee4d262bac8cdbac47da577dd29d2"
+      "sha": "2bf34a3f6b6cc48f60eae6a8e00f0f237859b3db"
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/contact-center-membership-generator.md",
@@ -564,7 +564,7 @@
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/data-integrity-validator.md",
-      "sha": "2e6b01d3ac6bf01be6b7883326a3ab02e5b0865e"
+      "sha": "4eae440e66b0ec7f4769aafb3c8f1a43d9bcfa17"
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/disposition-list-generator.md",
@@ -660,7 +660,7 @@
     },
     {
       "path": "apps/beacon/.claude/agents/pr-review/comment-analyzer.md",
-      "sha": "5c4a9ae4cdc0e32f9b8e685b2fc086cc9ac87701"
+      "sha": "0e8c7e62a5c22dabb14d0037fbfa4d4f634df665"
     },
     {
       "path": "apps/beacon/.claude/agents/pr-review/silent-failure-hunter.md",
