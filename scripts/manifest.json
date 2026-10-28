@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-27T14:59:09.837800+00:00",
+  "generated": "2026-10-28T15:34:30.820915+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -39,6 +39,10 @@
       "sha": "d68e285b0e55c5813909bb997d8d3def4dd52163"
     },
     {
+      "path": ".agents/skills/decision-surface/SKILL.md",
+      "sha": "bbc28f4b7ca60616ef0de10975cfe92189787a94"
+    },
+    {
       "path": ".agents/skills/delegate/SKILL.md",
       "sha": "663bf5c546f30400fc4d81c45046dad8dc12bbf4"
     },
@@ -52,7 +56,7 @@
     },
     {
       "path": ".agents/skills/design-spec/SKILL.md",
-      "sha": "f88a385502203fdcb90c0489bd7fae6b45eee4b0"
+      "sha": "fa2f1400b59cb3055f9a7ca3825ae04a67b53887"
     },
     {
       "path": ".agents/skills/dialtone-usage/SKILL.md",
@@ -84,7 +88,7 @@
     },
     {
       "path": ".agents/skills/perf-check/SKILL.md",
-      "sha": "50fe319fc994ca5aad620a5cbc10413518a9c8d7"
+      "sha": "aef0ed68e27dae3b40a4cc025376e9d915bda59c"
     },
     {
       "path": ".agents/skills/pr-comments/SKILL.md",
@@ -128,7 +132,7 @@
     },
     {
       "path": ".agents/skills/shaping/SKILL.md",
-      "sha": "d338d1b629d23d64cebb6115b0ab3d997f38b342"
+      "sha": "834419a42c2a656d7feda4a770f6cf15bd341715"
     },
     {
       "path": ".agents/skills/skeptic-review/SKILL.md",
