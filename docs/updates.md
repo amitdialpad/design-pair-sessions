@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:3a3dd29785c8f9acda8e430e061fb6fa8c03058f -->
+
+**Sign in to Firebase before a published company opens from the DevTools picker**
+
+Beacon only reads company data that ships inside the app. A company published to Firebase had no way into the normal app, and nothing checked that the person opening it is allowed to. This PR adds that first step: pick a published company, sign in with Google, and see which Firebase session Beacon opened. The data on screen is still the bundled copy of the company. Reading it from Firebase is separate work.
+
+<span class="release-meta">[dialpad/design#294](https://github.com/dialpad/design/pull/294) · 28 October 2026</span>
+
+---
+
+<!-- beacon-change:377c9386acb4a76238fce3d29d1072d949e3e53a -->
+
+**DDT-2482, DDT-2483 open customer history to the groups that deal with them**
+
+Beacon's database rules only showed a customer's history to the person who owned it, or to everyone when a company-wide sharing setting was on. A customer who spoke to billing and later to sales was stored as two unrelated copies, so a sales rep could not see what billing had already told them. Now a member of a contact center that has dealt with a customer sees that customer's whole history across every contact center. Someone in none of those groups sees none of it. Private messages between staff stay private, and so do a rep's own calls and voicemails. The company-wide sharing setting is gone. Removing someone from a group takes effect on their next read.
+
+<span class="release-meta">[dialpad/design#287](https://github.com/dialpad/design/pull/287) · 27 October 2026</span>
+
+---
+
 <!-- beacon-change:681a93059e556fb732181bcb30a73d4687001fc3 -->
 
 **Keep Jira keys out of comments and doc prose**
@@ -68,6 +88,8 @@ Dialpad Copilot has no place in Beacon yet, so the V1 designs (entry point, empt
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:deb19abedadd750d135cd11a0a7200f0a1f3761a -->
 
 **Make the generated-company data root configurable**
@@ -87,8 +109,6 @@ Appending days to a generated company gave the world a new run date (asOf) every
 <span class="release-meta">[dialpad/design#252](https://github.com/dialpad/design/pull/252) · 21 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:8d7b9adc894c434fb2fed3213d04a29871bafcdd -->
 
