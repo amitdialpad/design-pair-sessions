@@ -1821,9 +1821,21 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product announcements</small>
+
+Smart reports show what work is happening and where, surveys capture feedback on it, and pooled group budgets give each team one shared budget.
+
+---
+
 **[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product announcements</small>
 
 Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
+
+---
+
+**[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Product announcements</small>
+
+IDC integrated Claude as part of its Quanta platform, and it has rolled Claude out across its own business
 
 ---
 
@@ -1831,7 +1843,7 @@ Anthropic's new legal artifacts and connectors help legal teams get work done wi
 
 Best practices for managing costs and measuring return on investment for Anthropic's Claude Code on Google Cloud.
 
----
+:::details View past updates
 
 **[Claude for Financial Advisors](https://claude.com/resources/articles/claude-for-financial-advisors)**<br><small>Oct 27, 2026 · Product announcements</small>
 
@@ -1843,7 +1855,7 @@ Financial advisors can now connect Claude to the custodians, portfolio platforms
 
 Anthropic's new Claude for Nonprofits plugin brings new skills to verified nonprofit organizations, taking the operational work that stretches small teams.
 
-:::details View past updates
+---
 
 **[Claude Cowork and chat come together for Enterprise](https://claude.com/resources/articles/unified-claude-enterprise)**<br><small>Oct 23, 2026 · Product announcements</small>
 
@@ -1861,19 +1873,7 @@ These are the protections we built into Claude Duet for working across your acco
 
 Claude formally proved security properties in the compiled code of 123 open-source libraries. Along the way, it found bugs that had eluded detection for years.
 
----
-
-**[The full Claude Platform, available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed)**<br><small>Oct 22, 2026 · Product announcements</small>
-
-Use Claude Models on Google Cloud (Anthropic managed) to access Claude Platform features with Google Cloud authentication, billing, and commitment retirement.
-
----
-
-**[Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**<br><small>Oct 22, 2026 · Best practices</small>
-
-When to consider using fewer subagents and how to migrate the into your main loop.
-
 :::
 
-*Updated October 28, 2026*
+*Updated October 29, 2026*
 <!-- CLAUDE_FEED_END -->
