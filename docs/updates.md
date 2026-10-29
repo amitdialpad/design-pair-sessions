@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:a462b443b0a89674dba5888cf586e58d82c9fc3b -->
+
+**Add one shared hovercard for contacts, groups and channels**
+
+The contact hovercard was a separate Dialtone popover per trigger. It opened only from a name or avatar, offered no way to message or call from it, and disappeared as the pointer moved between sidebar rows. Groups and channels had no hovercard at all, and starting a meeting with a person meant leaving the page. This PR replaces it with one card mounted in the app shell. Sidebar rows are hover targets as a whole, the card moves between rows without closing, and it summarizes a contact, a group or a channel. From the card you can call, start a meeting, or message in place.
+
+<span class="release-meta">[dialpad/design#295](https://github.com/dialpad/design/pull/295) · 28 October 2026</span>
+
+---
+
 <!-- beacon-change:3a3dd29785c8f9acda8e430e061fb6fa8c03058f -->
 
 **Sign in to Firebase before a published company opens from the DevTools picker**
@@ -78,6 +88,8 @@ The generated company bundles are 160 MB of JSON in git, and the Firestore model
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:058194f2f602869e526d7d6b01b82a8382609445 -->
 
 **Add the Dialpad Copilot entry point and panel behind a flag**
@@ -87,8 +99,6 @@ Dialpad Copilot has no place in Beacon yet, so the V1 designs (entry point, empt
 <span class="release-meta">[dialpad/design#234](https://github.com/dialpad/design/pull/234) · 21 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:deb19abedadd750d135cd11a0a7200f0a1f3761a -->
 
