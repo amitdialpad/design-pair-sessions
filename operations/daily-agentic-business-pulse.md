@@ -1,5 +1,11 @@
 # Weekly Agentic Customer Review operations
 
+## Customer portfolio revision
+
+Schema 6 adds evidence-dated customer_insight and portfolio coverage. Review all known customers already admitted to Agentic delivery, including EAP/pilots and quiet engagements. Reconcile PM/customer communications, agreements, workbooks and CRM before using Jira as supporting context. Distinguish commercial/partner gates from technical defects. Retain stale-status customers as unconfirmed, with explicit coverage gaps. The renderer removes Jira counts and duplicate analysis and shows customer position, primary dependency, owner and implication. See the schema-6 correction at the start of the report contract for the exact fields and precedence.
+
+Manual test_send supports a real current-date midweek test. Scheduled reports remain Monday-only; test permission never changes production cadence. Test comparisons begin seven days before the latest Monday and end yesterday; source freshness and delivery protections remain required.
+
 Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
 
 Delivery is Monday at 09:00 `Asia/Kolkata`. The user-facing email is `Weekly Agentic Customer Review — YYYY-MM-DD`.
