@@ -373,7 +373,7 @@ def build_agent_request(
         "required_sources": list(DASHBOARD_REQUIRED_SOURCES),
         "response_contract": {
             "content_type": "application/json",
-            "snapshot_schema_version": 5,
+            "snapshot_schema_version": 6,
             "fields": ["report_markdown", "snapshot", "agent_request_id", "data_status", "failures"],
             "no_markdown_fence": True,
         },
@@ -848,6 +848,8 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
 
 
 def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> str:
+    if snapshot.get("schema_version") == 6:
+        return render_customer_portfolio(snapshot, workflow_url)
     customers = sorted(
         snapshot["customers"],
         key=lambda customer: (
@@ -1144,6 +1146,53 @@ def _validate_dashboard_source_status(
             raise ValidationError(f"Required source {source} needs at least one HTTPS evidence link")
 
 
+def render_customer_portfolio(snapshot: dict[str, Any], workflow_url: str) -> str:
+    lines = [f"# Weekly Agentic Customer Review — {snapshot['report_date']}",
+             f"_Review: {snapshot['comparison_window']['label']}_"]
+    lines.extend(_render_executive_read(snapshot['executive_read']))
+    coverage = snapshot['coverage']
+    lines.extend(['', '## Customer coverage', '',
+                  f"{len(snapshot['customers'])} customers in Agentic delivery. {coverage['note']}",
+                  '', '## Customer review', '',
+                  '| Customer | Journey and commercial state | Where things stand | What happens next |',
+                  '|---|---|---|---|'])
+    for customer in sorted(snapshot['customers'], key=lambda c: (DASHBOARD_MOVEMENT_ORDER[c['movement']], c['account_name'].casefold())):
+        insight = customer['customer_insight']
+        position = f"{insight['current_position']} {insight['business_implication']} (Evidence: {insight['evidence_date']}; {insight['status']}.)"
+        dependency = f"{insight['primary_dependency']} Owner: {insight['dependency_owner']}. {customer['next_watch']}"
+        lines.append('| ' + ' | '.join(_dashboard_cell(v) for v in (
+            f"[{customer['account_name']}]({insight['links'][0]})",
+            f"{customer['lifecycle_stage'].title()} · {customer['agent_or_use_case']} · {customer['commercial']['stage']}",
+            position, dependency)) + ' |')
+    if snapshot['unknowns']:
+        lines.extend(['', '## Gaps to resolve', ''])
+        lines.extend(f'- {item}' for item in snapshot['unknowns'])
+    lines.extend(_render_business_health(snapshot['business_health']))
+    lines.extend(['', '## Evidence', '', ' · '.join(
+        [f"[Portfolio source {i+1}]({link})" for i, link in enumerate(coverage['links'])]
+        + [f'[Workflow run]({workflow_url})'])])
+    return '\n'.join(lines).rstrip() + '\n'
+
+
+def _validate_customer_insight(customer: dict[str, Any], report_date: str) -> None:
+    insight = _require_mapping(customer.get('customer_insight'), 'customer_insight')
+    for field in ('engagement', 'current_position', 'primary_dependency', 'dependency_owner', 'business_implication'):
+        value = insight.get(field)
+        if not isinstance(value, str) or not value.strip() or len(value) > 320:
+            raise ValidationError(f'customer_insight.{field} must be a short substantive statement')
+    if insight.get('status') not in {'verified', 'unconfirmed'}:
+        raise ValidationError('customer_insight.status must be verified or unconfirmed')
+    try:
+        evidence_date = date.fromisoformat(insight.get('evidence_date', ''))
+    except (ValueError, TypeError) as error:
+        raise ValidationError('customer_insight.evidence_date is required') from error
+    if evidence_date > date.fromisoformat(report_date):
+        raise ValidationError('customer_insight evidence cannot be future dated')
+    links = _require_list(insight.get('links'), 'customer_insight.links')
+    if not links or not all(_valid_link(link) for link in links):
+        raise ValidationError('customer_insight.links needs evidence')
+
+
 def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, Any]:
     path = f"snapshot.customers[{index}]"
     customer = _require_mapping(customer_value, path)
@@ -1197,13 +1246,14 @@ def validate_customer_dashboard_result(
     report_now: datetime,
     source_max_age_hours: int,
     workflow_url: str,
+    test_send: bool = False,
 ) -> tuple[str, dict[str, Any]]:
     if result.get("data_status") != "complete" or result.get("failures"):
         raise IntegrationError("Customer dashboard requires healthy read-only sources; no report was sent")
     report_date = report_now.date().isoformat()
     schema_version = snapshot.get("schema_version")
-    if schema_version not in {2, 3, 4, 5}:
-        raise ValidationError("snapshot.schema_version must be 2, 3, 4, or 5")
+    if schema_version not in {2, 3, 4, 5, 6}:
+        raise ValidationError("snapshot.schema_version must be 2, 3, 4, 5, or 6")
     if snapshot.get("report_date") != report_date:
         raise ValidationError("Snapshot report date does not match the current IST date")
     generated_at = _parse_datetime(snapshot.get("generated_at"), "snapshot.generated_at")
@@ -1219,9 +1269,9 @@ def validate_customer_dashboard_result(
         comparison_end = date.fromisoformat(comparison["end"])
     except ValueError as error:
         raise ValidationError("Comparison-window start and end must be ISO dates") from error
-    if report_now.weekday() != 0:
+    if report_now.weekday() != 0 and not test_send:
         raise ValidationError("Weekly customer review may run only on Monday in Asia/Kolkata")
-    expected_start = report_now.date() - timedelta(days=7)
+    expected_start = report_now.date() - timedelta(days=7 + report_now.weekday())
     expected_end = report_now.date() - timedelta(days=1)
     if comparison_start != expected_start or comparison_end != expected_end:
         raise ValidationError("Comparison window must cover the previous Monday through Sunday")
@@ -1233,6 +1283,16 @@ def validate_customer_dashboard_result(
     if not customers:
         raise ValidationError("snapshot.customers must contain at least one verified customer signal")
     validated_customers = [_validate_dashboard_customer(value, index) for index, value in enumerate(customers)]
+    if schema_version == 6:
+        for customer in validated_customers:
+            _validate_customer_insight(customer, report_date)
+        coverage = _require_mapping(snapshot.get('coverage'), 'snapshot.coverage')
+        if coverage.get('status') not in {'reconciled', 'partial'}:
+            raise ValidationError('coverage.status must be reconciled or partial')
+        if not isinstance(coverage.get('note'), str) or not coverage['note'].strip() or len(coverage['note']) > 600:
+            raise ValidationError('coverage.note is required')
+        if not coverage.get('links') or not all(_valid_link(link) for link in _require_list(coverage['links'], 'coverage.links')):
+            raise ValidationError('coverage.links needs roster evidence')
     if len({customer["account_name"] for customer in validated_customers}) != len(validated_customers):
         raise ValidationError("snapshot.customers cannot contain duplicate account names")
 
@@ -1251,7 +1311,7 @@ def validate_customer_dashboard_result(
         "active_customer_count": len(validated_customers),
         "movers_7d": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
         "customers_with_changed_blockers_7d": sum(customer["movement"] == "failing" for customer in validated_customers),
-        "customers_without_current_data": 0,
+        "customers_without_current_data": sum(c['customer_insight']['status'] == 'unconfirmed' for c in validated_customers) if schema_version == 6 else 0,
         "commercial_moves_7d": sum(
             customer["commercial"]["movement_7d"] != "no_change"
             for customer in validated_customers
@@ -1283,13 +1343,13 @@ def validate_customer_dashboard_result(
     _require_list(snapshot.get("commercial_changes"), "snapshot.commercial_changes")
     _require_list(snapshot.get("unknowns"), "snapshot.unknowns")
     _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
-    if schema_version in {3, 4, 5}:
-        _validate_business_health(snapshot, require_salesforce_snapshot=schema_version in {4, 5})
-    if schema_version == 5:
+    if schema_version in {3, 4, 5, 6}:
+        _validate_business_health(snapshot, require_salesforce_snapshot=schema_version in {4, 5, 6})
+    if schema_version in {5, 6}:
         _validate_executive_read(snapshot)
     snapshot["data_status"] = "complete"
     report = render_customer_dashboard(snapshot, workflow_url)
-    if _visible_word_count(report) > 1600:
+    if _visible_word_count(report) > (max(1600, 700 + len(customers) * 180) if schema_version == 6 else 1600):
         raise ValidationError("Customer dashboard exceeds 1600 visible words")
     _walk_forbidden_keys(snapshot)
     _scan_sensitive_text(report, "report_markdown")
@@ -1312,6 +1372,7 @@ def validate_agent_result(
     report_now: datetime,
     source_max_age_hours: int,
     workflow_url: str,
+    test_send: bool = False,
 ) -> tuple[str, dict[str, Any]]:
     failures = _require_list(result.get("failures", []), "failures")
     data_status = result.get("data_status")
@@ -1335,13 +1396,14 @@ def validate_agent_result(
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3, 4, 5}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5, 6}:
         return validate_customer_dashboard_result(
             result,
             snapshot=snapshot,
             report_now=report_now,
             source_max_age_hours=source_max_age_hours,
             workflow_url=workflow_url,
+            test_send=test_send,
         )
     report_date = report_now.date().isoformat()
 
@@ -1523,7 +1585,7 @@ def validate_agent_result(
 
 def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
     required_sources = (
-        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3, 4, 5} else REQUIRED_SOURCES
+        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3, 4, 5, 6} else REQUIRED_SOURCES
     )
     return {
         source: snapshot["source_status"][source]["queried_at"]
@@ -1905,7 +1967,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3, 4, 5}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5, 6}:
         comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
         for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
             if canonical not in comparison and isinstance(comparison.get(glean_name), str):
@@ -2380,6 +2442,7 @@ def run_pulse(
         report_now=report_now,
         source_max_age_hours=config.source_max_age_hours,
         workflow_url=workflow_url,
+        test_send=config.test_send,
     )
     message_id = delivery_message_id
     snapshot["delivery"] = {
@@ -2494,6 +2557,7 @@ def run_pulse_from_glean_draft(
         report_now=report_now,
         source_max_age_hours=config.source_max_age_hours,
         workflow_url=workflow_url,
+        test_send=config.test_send,
     )
     snapshot["delivery"] = {
         "message_id": prepared_message_id,

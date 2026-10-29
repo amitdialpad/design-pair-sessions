@@ -486,6 +486,68 @@ class FakeRelayArchive(FakeArchive):
 
 
 class PulseValidationTests(unittest.TestCase):
+    def portfolio_result(self):
+        result = valid_ceo_view_result()
+        snapshot = result['snapshot']
+        snapshot['schema_version'] = 6
+        snapshot['coverage'] = {'status': 'partial', 'note': 'Known delivery roster reconciled; EAP coverage remains incomplete.', 'links': [SOURCE_LINKS['glean']]}
+        for customer in snapshot['customers']:
+            customer['customer_insight'] = {
+                'engagement': 'Assigned delivery team for the paid pilot.',
+                'current_position': 'Launch is waiting on partner onboarding.',
+                'primary_dependency': 'Partner agreement must be executed before API onboarding.',
+                'dependency_owner': 'Partner legal and onboarding teams',
+                'business_implication': 'Launch timing remains unconfirmed until onboarding and acceptance finish.',
+                'evidence_date': REPORT_DATE,
+                'status': 'verified',
+                'links': [SOURCE_LINKS['glean']],
+            }
+        return result
+
+    def test_portfolio_renders_dependency_instead_of_ticket_counts(self):
+        result = self.portfolio_result()
+        report, _ = validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+        self.assertIn('Partner agreement must be executed', report)
+        self.assertIn('EAP coverage remains incomplete', report)
+        self.assertNotIn('Jira change', report)
+        self.assertNotIn('open bug', report)
+        self.assertNotIn('## Analysis', report)
+        self.assertIn('pulse-customer-card', markdown_to_email_html(report))
+
+    def test_portfolio_retains_quiet_customer_with_unconfirmed_status(self):
+        result = self.portfolio_result()
+        customer = result['snapshot']['customers'][0]
+        old_movement = customer['movement']
+        customer['movement'] = 'no_change'
+        customer['customer_insight']['status'] = 'unconfirmed'
+        summary = result['snapshot']['summary']
+        summary['customers_without_current_data'] = 1
+        summary['movers_7d'] -= int(old_movement in {'moved', 'failing'})
+        summary['customers_with_changed_blockers_7d'] -= int(old_movement == 'failing')
+        report, _ = validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+        self.assertIn(customer['account_name'], report)
+        self.assertIn('unconfirmed', report)
+
+    def test_portfolio_requires_dependency_evidence(self):
+        result = self.portfolio_result()
+        result['snapshot']['customers'][0]['customer_insight']['links'] = []
+        with self.assertRaisesRegex(ValidationError, 'customer_insight.links'):
+            validate_agent_result(result, report_now=REPORT_NOW, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+
+    def test_midweek_test_does_not_enable_midweek_live_delivery(self):
+        result = self.portfolio_result()
+        now = REPORT_NOW.replace(day=24)
+        snapshot = result['snapshot']
+        snapshot['report_date'] = '2026-09-24'
+        snapshot['generated_at'] = now.isoformat()
+        snapshot['comparison_window']['end'] = '2026-09-23'
+        for source in snapshot['source_status'].values():
+            source['queried_at'] = now.isoformat()
+        with self.assertRaisesRegex(ValidationError, 'only on Monday'):
+            validate_agent_result(result, report_now=now, source_max_age_hours=12, workflow_url=WORKFLOW_URL)
+        report, _ = validate_agent_result(result, report_now=now, source_max_age_hours=12, workflow_url=WORKFLOW_URL, test_send=True)
+        self.assertIn('2026-09-24', report)
+
     def test_ceo_view_renders_after_agentic_review_and_withholds_unverified_target(self):
         report, snapshot = validate_agent_result(
             valid_ceo_view_result(),

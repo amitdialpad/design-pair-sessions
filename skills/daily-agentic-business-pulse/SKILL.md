@@ -4,6 +4,20 @@ description: Produces a weekly, evidence-based Agentic customer review showing v
 ---
 # Weekly Agentic Customer Review
 
+## Customer portfolio correction — schema 6 (supersedes conflicting rules below)
+
+Cover every known customer admitted to Agentic delivery: EAP accepted into onboarding/build, pilots, pre-sale builds with assigned delivery resources, deployments, and live engagements. Exclude mere sales prospects without evidence of delivery entry. Reconcile the PS portfolio, EAP/build roster, PM/FDE workbooks, Salesforce deployment records, and prior delivered roster. Salesforce may discover candidates when delivery entry is explicitly evidenced. Do not cap at eleven or drop quiet customers. Retain known delivery customers until explicit exit evidence; explain exits in changes_since_previous.
+
+Read customer communications and PM status, deployment plans/RAID logs, agreements and Salesforce before Jira. Establish the dependency actually preventing the next customer milestone. Distinguish customer contracts from partner agreements, access, onboarding, acceptance, and technical defects. Never promote an open ticket to the primary cause without direct support. Reconcile conflicting accounts; if unresolved, say the primary dependency is unconfirmed. Do not claim success from a closed ticket or infer failure from silence.
+
+Schema 6 retains schema-5 fields and requires each customer to contain customer_insight with: engagement (delivery-entry evidence), current_position, primary_dependency, dependency_owner, business_implication (each nonempty <=320 characters), evidence_date (substantive evidence date YYYY-MM-DD), status (verified or unconfirmed), and links (nonempty direct HTTPS evidence list). Mark stale/missing current status unconfirmed, retain the customer with last evidence date and no_change, and never invent a blocker, owner, date or impact. Set change_this_week and next_watch to meaningful customer state and dependency resolution. Jira counts are audit data only.
+
+Require snapshot.coverage with status reconciled or partial, note (nonempty <=600 characters), and links (nonempty HTTPS roster sources). Explicitly describe gaps; never assert complete coverage without reconciliation. Summary active_customer_count is all rows; customers_without_current_data counts unconfirmed customer_insight rows. failing means a newly changed blocking dependency; moved requires real changed state; continuing holds are no_change. An unchanged customer needs no new weekly event to remain included.
+
+Render the executive signal, coverage, customer stories, material gaps, then company health. Omit ticket counts and duplicate Analysis. Each story explains purpose, position, dependency, owner, and business implication. Scale the length budget with the roster; never drop customers to fit the old 1600-word cap. The executive signal must synthesize customer outcomes/dependencies in plain language rather than ticket activity or metric summaries.
+
+Scheduled report dates stay Monday with the preceding Monday-Sunday window. An explicitly requested test_send can run on another day with the real current IST report_date and fresh evidence. Its window begins seven days before the most recent Monday and ends yesterday; label it accurately and distinguish current status from in-window changes. No backdating evidence. Only the protected manual test_send path permits this; scheduled delivery stays unchanged.
+
 ## Mission
 
 Run every Monday at 08:00 `Asia/Kolkata` so the approved relay can deliver at 09:00. Cover the previous Monday through Sunday and compare with the preceding weekly review.
