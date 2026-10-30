@@ -6,6 +6,34 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-30
+
+### Modified
+
+- `.agents/skills/breadboard-reflection/SKILL.md`
+- `.agents/skills/breadboard/SKILL.md`
+- `.agents/skills/bug-hunt/SKILL.md`
+- `.agents/skills/comment-audit/SKILL.md`
+- `.agents/skills/component-work/SKILL.md`
+- `.agents/skills/delegate/SKILL.md`
+- `.agents/skills/design-spec/SKILL.md`
+- `.agents/skills/dialtone-usage/SKILL.md`
+- `.agents/skills/perf-check/SKILL.md`
+- `.agents/skills/pr-comments/SKILL.md`
+- `.agents/skills/pr-prep/SKILL.md`
+- `.agents/skills/prototype-builder/SKILL.md`
+- `.agents/skills/shaping/SKILL.md`
+- `.agents/skills/skeptic-review/SKILL.md`
+- `.agents/skills/skill-create/SKILL.md`
+- `.agents/skills/skill-rename/SKILL.md`
+- `.agents/skills/skill-search/SKILL.md`
+- `.agents/skills/step-by-step-execution/SKILL.md`
+- `.agents/skills/test-audit/SKILL.md`
+- `.agents/skills/test-create/SKILL.md`
+- `.agents/skills/workflow-edit/SKILL.md`
+
+---
+
 ## 2026-10-28
 
 ### Added

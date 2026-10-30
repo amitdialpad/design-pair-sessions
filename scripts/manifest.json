@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-28T15:34:30.820915+00:00",
+  "generated": "2026-10-30T15:24:08.840121+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -8,15 +8,15 @@
     },
     {
       "path": ".agents/skills/breadboard-reflection/SKILL.md",
-      "sha": "85be56affc7b4e2e38f7681ec48f8ee1f07f13e8"
+      "sha": "4426fabc51fff5b9a4cd02e19c6f6c219bd61891"
     },
     {
       "path": ".agents/skills/breadboard/SKILL.md",
-      "sha": "3efc29ddbb05957af4e3929ec6f3fc64fc3d52ef"
+      "sha": "d00f94ba201550cd81e75d6e937a3c032a89979c"
     },
     {
       "path": ".agents/skills/bug-hunt/SKILL.md",
-      "sha": "36cfcf0360118bc98d254adcf052f7e13e90a35d"
+      "sha": "412f49231a28716fdc67b119576f25ee84f9ed3d"
     },
     {
       "path": ".agents/skills/code-quality/SKILL.md",
@@ -24,11 +24,11 @@
     },
     {
       "path": ".agents/skills/comment-audit/SKILL.md",
-      "sha": "ccdf97bc9b7480eada48179365d204692488ed7b"
+      "sha": "39ba0fd55e7e39e91eea2820c77434132573ed04"
     },
     {
       "path": ".agents/skills/component-work/SKILL.md",
-      "sha": "8ba37bc7d9eb25e8d36dcab33d9cb33a6633f433"
+      "sha": "759eca9772b83711457f75197d8bb422272b7783"
     },
     {
       "path": ".agents/skills/data-trace/SKILL.md",
@@ -44,7 +44,7 @@
     },
     {
       "path": ".agents/skills/delegate/SKILL.md",
-      "sha": "663bf5c546f30400fc4d81c45046dad8dc12bbf4"
+      "sha": "9e18886d7dd460440e8cd944a330b930ee72973d"
     },
     {
       "path": ".agents/skills/deps-audit/SKILL.md",
@@ -56,11 +56,11 @@
     },
     {
       "path": ".agents/skills/design-spec/SKILL.md",
-      "sha": "fa2f1400b59cb3055f9a7ca3825ae04a67b53887"
+      "sha": "7836520292f7abbdabb9702b2825788e47e76b2f"
     },
     {
       "path": ".agents/skills/dialtone-usage/SKILL.md",
-      "sha": "48e09fa0c2653d90a2b83ae903bf7884abb98625"
+      "sha": "5ba68089a251f49967bad3a50bbf3c75702a8387"
     },
     {
       "path": ".agents/skills/docs-audit/SKILL.md",
@@ -88,11 +88,11 @@
     },
     {
       "path": ".agents/skills/perf-check/SKILL.md",
-      "sha": "aef0ed68e27dae3b40a4cc025376e9d915bda59c"
+      "sha": "11dd7a44cd1e2df0b240b088d42e272428076e4d"
     },
     {
       "path": ".agents/skills/pr-comments/SKILL.md",
-      "sha": "5e6b510bc8744b444b09ba2e5dc4e89611acdac8"
+      "sha": "e2eff17d0716c6fbfb30da62160d843a85459a27"
     },
     {
       "path": ".agents/skills/pr-complete/SKILL.md",
@@ -104,7 +104,7 @@
     },
     {
       "path": ".agents/skills/pr-prep/SKILL.md",
-      "sha": "d264ee51b2da1214cee886b266d8af5fdd379eed"
+      "sha": "dff08890296c54ce0e661af69b07b7b0d6486c4d"
     },
     {
       "path": ".agents/skills/pr-reviewer/SKILL.md",
@@ -128,43 +128,43 @@
     },
     {
       "path": ".agents/skills/prototype-builder/SKILL.md",
-      "sha": "ac704b75f209a31c5c91bac64cd46ddf2a175b28"
+      "sha": "ff499a88af92adcdf99ff92e31fb20cb1f973e1e"
     },
     {
       "path": ".agents/skills/shaping/SKILL.md",
-      "sha": "834419a42c2a656d7feda4a770f6cf15bd341715"
+      "sha": "bba43c4615db1f15daf9e1193ae4e6f34fe83658"
     },
     {
       "path": ".agents/skills/skeptic-review/SKILL.md",
-      "sha": "d57c0abfb2aec842db9a4a3faa16e6ea2034e3f1"
+      "sha": "87dce8ee05f32b2a03bf3fc20e2322218f53e55b"
     },
     {
       "path": ".agents/skills/skill-create/SKILL.md",
-      "sha": "26d9909dad6bd270a1b87b6652275d0ce18247f9"
+      "sha": "10eacc5fc42be3f1032e0cc315efb44cbdfaa942"
     },
     {
       "path": ".agents/skills/skill-rename/SKILL.md",
-      "sha": "2611f43c5bd3ada688250fa59778cab1afdfad00"
+      "sha": "9249122aa862b17aa4a4c7baaeb4be023512a468"
     },
     {
       "path": ".agents/skills/skill-search/SKILL.md",
-      "sha": "c787f43752b9b1c70922e36de5dd046183ae6628"
+      "sha": "ca490688367395714ade273e2f001b9692a05dae"
     },
     {
       "path": ".agents/skills/step-by-step-execution/SKILL.md",
-      "sha": "697e3b5a6e889316a12c4387146a5362148318f9"
+      "sha": "8214a6701b799ed2e17c7b9f8a74ca7ba25daad0"
     },
     {
       "path": ".agents/skills/test-audit/SKILL.md",
-      "sha": "7615c77f1cae8e385845d1b9ff552ebdfed02cd7"
+      "sha": "319deb5675685af262c513f46a45e50ca71736b2"
     },
     {
       "path": ".agents/skills/test-create/SKILL.md",
-      "sha": "68cad96ad568a3261204fc0edec081d7c556c04f"
+      "sha": "75990402929ccc404113c750c4d04553b58896e9"
     },
     {
       "path": ".agents/skills/workflow-edit/SKILL.md",
-      "sha": "a754b1b1352cbb6e50be4634454f9814f5ce22a3"
+      "sha": "0179d5fdac2346ee7fe8f34cd1d705747f3785e3"
     },
     {
       "path": ".agents/skills/writing-help/SKILL.md",
