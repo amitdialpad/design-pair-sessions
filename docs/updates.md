@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:4288a97439b160da503d2b1fe1832067df84dd34 -->
+
+**Measure a function that keeps one sidebar row per person per conversation**
+
+The sidebar has to show which conversations have something unread without querying each one. Nobody had measured whether a server function can keep that answer current fast enough, or how a channel with thousands of members avoids writing one row per member. This adds a Firestore-triggered function. When a tester message is created, it moves a small "newest message" row for each member of the conversation. In a large conversation it moves one shared document instead. I deployed it by hand to the real generated-companies database, measured it against throwaway probe- companies, and deleted it. The function, the code that measures it, and the results are in this PR.
+
+<span class="release-meta">[dialpad/design#307](https://github.com/dialpad/design/pull/307) · 30 October 2026</span>
+
+---
+
 <!-- beacon-change:a462b443b0a89674dba5888cf586e58d82c9fc3b -->
 
 **Add one shared hovercard for contacts, groups and channels**
@@ -78,6 +88,8 @@ Direct-contact profiles only read the Contact record, so employee profiles omitt
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:665d442fcbd5117a0af449ac7cdefbf5107e9969 -->
 
 **Model the conversation list, message paging and generator store in Firestore**
@@ -87,8 +99,6 @@ The generated company bundles are 160 MB of JSON in git, and the Firestore model
 <span class="release-meta">[dialpad/design#263](https://github.com/dialpad/design/pull/263) · 21 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:058194f2f602869e526d7d6b01b82a8382609445 -->
 
