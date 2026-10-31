@@ -6,6 +6,14 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-10-31
+
+### Modified
+
+- `.agents/skills/pr-complete/SKILL.md`
+
+---
+
 ## 2026-10-30
 
 ### Modified

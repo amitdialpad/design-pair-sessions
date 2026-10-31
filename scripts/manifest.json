@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-30T15:24:08.840121+00:00",
+  "generated": "2026-10-31T14:52:55.287036+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -96,7 +96,7 @@
     },
     {
       "path": ".agents/skills/pr-complete/SKILL.md",
-      "sha": "b43e33ea6daf99d2ee403f69f8117e520cd3f9d3"
+      "sha": "bb27224f27e055c1ae5d17fc36ad9b8108360220"
     },
     {
       "path": ".agents/skills/pr-create/SKILL.md",
