@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:3ad41132732b935245b5be55655245aa7422ba43 -->
+
+**Add read-only rules and indexes for the companies database**
+
+The live companies database needs its own Security Rules and indexes before anything writes real company data to it. The only draft was a trial rules file that only the specs used. This PR replaces it with the rules file that deploys. The rules are read-only. A person is found through their access member document. A private conversation is visible only to the people on its own member list, so company admins, customer support and super admins read no private conversation they are not on. Staff (super admin and customer support) come from one global platformStaff record and read public conversations in every company. Message totals go to company admins and super admins, and contact permissi...
+
+<span class="release-meta">[dialpad/design#315](https://github.com/dialpad/design/pull/315) · 31 October 2026</span>
+
+---
+
 <!-- beacon-change:4288a97439b160da503d2b1fe1832067df84dd34 -->
 
 **Measure a function that keeps one sidebar row per person per conversation**
@@ -78,6 +88,8 @@ Generating more days of a company starts from the previous bundle, and that bund
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:01841aa5ffb53a5dc5b4d3dab837ff971297cddc -->
 
 **Show normalized direct profile details**
@@ -87,8 +99,6 @@ Direct-contact profiles only read the Contact record, so employee profiles omitt
 <span class="release-meta">[dialpad/design#264](https://github.com/dialpad/design/pull/264) · 22 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:665d442fcbd5117a0af449ac7cdefbf5107e9969 -->
 
