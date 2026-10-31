@@ -1843,11 +1843,11 @@ Latest announcements from Anthropic.
 <!-- CLAUDE_FEED_START -->
 **[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product announcements</small>
 
+Smart reports show what work is happening and where, surveys capture feedback on it, and pooled group budgets give each team one shared budget.
+
 ---
 
 **[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product announcements</small>
-
-Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
 
 ---
 
@@ -1893,5 +1893,5 @@ Claude formally proved security properties in the compiled code of 123 open-sour
 
 :::
 
-*Updated October 30, 2026*
+*Updated October 31, 2026*
 <!-- CLAUDE_FEED_END -->
