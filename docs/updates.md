@@ -1849,6 +1849,8 @@ Smart reports show what work is happening and where, surveys capture feedback on
 
 **[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product announcements</small>
 
+Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
+
 ---
 
 **[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Product announcements</small>
@@ -1893,5 +1895,5 @@ Claude formally proved security properties in the compiled code of 123 open-sour
 
 :::
 
-*Updated October 31, 2026*
+*Updated November 1, 2026*
 <!-- CLAUDE_FEED_END -->
