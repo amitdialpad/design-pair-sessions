@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:de1d37554de5af9f4c2a15ae21d52d382df3c767 -->
+
+**Let channel members archive and org admins manage public channels**
+
+Archiving was gated on the delete permission, which defaults to channel admins, so an ordinary member could not archive a channel. Channel settings controlled only posting, and a company, office or super admin could not manage a public channel they were not in without joining it by hand. This PR gives archiving its own permission, turns Channel settings into one choice, and lets those three org roles act on any public channel by joining it as part of the action.
+
+<span class="release-meta">[dialpad/design#319](https://github.com/dialpad/design/pull/319) · 2 November 2026</span>
+
+---
+
 <!-- beacon-change:3ad41132732b935245b5be55655245aa7422ba43 -->
 
 **Add read-only rules and indexes for the companies database**
@@ -78,6 +88,8 @@ The generator's saved copy of a company bundle (the generator store) was never w
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:72405028feef9ca3f5886d2a4b4534f601ed959e -->
 
 **Write each run's company bundle to Firestore and pull it back to generate**
@@ -87,8 +99,6 @@ Generating more days of a company starts from the previous bundle, and that bund
 <span class="release-meta">[dialpad/design#267](https://github.com/dialpad/design/pull/267) · 22 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:01841aa5ffb53a5dc5b4d3dab837ff971297cddc -->
 
