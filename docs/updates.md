@@ -1894,6 +1894,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product announcements</small>
+
+New in the Messages API, send your conversation once, and the API receives only what’s new with every turn.
+
+---
+
 **[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product announcements</small>
 
 Smart reports show what work is happening and where, surveys capture feedback on it, and pooled group budgets give each team one shared budget.
@@ -1910,13 +1916,13 @@ Anthropic's new legal artifacts and connectors help legal teams get work done wi
 
 IDC integrated Claude as part of its Quanta platform, and it has rolled Claude out across its own business
 
----
+:::details View past updates
 
 **[Manage costs and demonstrate ROI for Claude Code on Google Cloud](https://claude.com/resources/articles/how-to-manage-costs-and-demonstrate-roi-for-claude-code-on-google-cloud)**<br><small>Oct 27, 2026 · Best practices</small>
 
 Best practices for managing costs and measuring return on investment for Anthropic's Claude Code on Google Cloud.
 
-:::details View past updates
+---
 
 **[Claude for Financial Advisors](https://claude.com/resources/articles/claude-for-financial-advisors)**<br><small>Oct 27, 2026 · Product announcements</small>
 
@@ -1940,13 +1946,7 @@ Chat and Cowork first came together for Pro and Max plans in September. The same
 
 These are the protections we built into Claude Duet for working across your accounts and acting on your behalf.
 
----
-
-**[LLMs are making formal software verification feasible at a much larger scale](https://www.anthropic.com/research/formal-verification)**<br><small>Oct 22, 2026 · Insights</small>
-
-Claude formally proved security properties in the compiled code of 123 open-source libraries. Along the way, it found bugs that had eluded detection for years.
-
 :::
 
-*Updated November 1, 2026*
+*Updated November 2, 2026*
 <!-- CLAUDE_FEED_END -->
