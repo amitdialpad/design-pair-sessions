@@ -616,6 +616,47 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 26 Oct–1 Nov 2026
+
+6 changes merged into Beacon this week: Add read-only rules and indexes for the companies database; Measure a function that keeps one sidebar row per person per conversation; Add one shared hovercard for contacts, groups and channels; Sign in to Firebase before a published company opens from the DevTools picker; DDT-2482, DDT-2483 open customer history to the groups that deal with them; Keep Jira keys out of comments and doc prose. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Add read-only rules and indexes for the companies database](https://github.com/dialpad/design/pull/315)** (dialpad/design#315). The live companies database needs its own Security Rules and indexes before anything writes real company data to it. The only draft was a trial rules file that only the specs used. This PR replaces it with the rules file that deploys. The rules are read-only. A person is found through their access member document. A private conversation is visible only to the people on its own member list, so company admins, customer support and super admins read no private conversation they are not on. Staff (super admin and customer support) come from one global platformStaff record and read public conversations in every company. Message totals go to company admins and super admins, and contact permission records go to every active member of the company. Everything else is denied and every write is refused. No server writer exists yet, so every client is refused until one is built.
+- **[Measure a function that keeps one sidebar row per person per conversation](https://github.com/dialpad/design/pull/307)** (dialpad/design#307). The sidebar has to show which conversations have something unread without querying each one. Nobody had measured whether a server function can keep that answer current fast enough, or how a channel with thousands of members avoids writing one row per member. This adds a Firestore-triggered function. When a tester message is created, it moves a small "newest message" row for each member of the conversation. In a large conversation it moves one shared document instead. I deployed it by hand to the real generated-companies database, measured it against throwaway probe- companies, and deleted it. The function, the code that measures it, and the results are in this PR.
+- **[Add one shared hovercard for contacts, groups and channels](https://github.com/dialpad/design/pull/295)** (dialpad/design#295). The contact hovercard was a separate Dialtone popover per trigger. It opened only from a name or avatar, offered no way to message or call from it, and disappeared as the pointer moved between sidebar rows. Groups and channels had no hovercard at all, and starting a meeting with a person meant leaving the page. This PR replaces it with one card mounted in the app shell. Sidebar rows are hover targets as a whole, the card moves between rows without closing, and it summarizes a contact, a group or a channel. From the card you can call, start a meeting, or message in place.
+- **[Sign in to Firebase before a published company opens from the DevTools picker](https://github.com/dialpad/design/pull/294)** (dialpad/design#294). Beacon only reads company data that ships inside the app. A company published to Firebase had no way into the normal app, and nothing checked that the person opening it is allowed to. This PR adds that first step: pick a published company, sign in with Google, and see which Firebase session Beacon opened. The data on screen is still the bundled copy of the company. Reading it from Firebase is separate work.
+- **[DDT-2482, DDT-2483 open customer history to the groups that deal with them](https://github.com/dialpad/design/pull/287)** (dialpad/design#287). Beacon's database rules only showed a customer's history to the person who owned it, or to everyone when a company-wide sharing setting was on. A customer who spoke to billing and later to sales was stored as two unrelated copies, so a sales rep could not see what billing had already told them. Now a member of a contact center that has dealt with a customer sees that customer's whole history across every contact center. Someone in none of those groups sees none of it. Private messages between staff stay private, and so do a rep's own calls and voicemails. The company-wide sharing setting is gone. Removing someone from a group takes effect on their next read.
+- **[Keep Jira keys out of comments and doc prose](https://github.com/dialpad/design/pull/283)** (dialpad/design#283). Beacon's comment rules, reviewer packets and audit policies told authors to add a Jira key to TODOs and comments. Keys kept piling up in code and docs, readers without Jira access could not follow them, and nothing checked new ones. About 70 doc lines carried a key. This PR changes what authors and reviewers are told, adds a check for keys on added lines, and removes the keys from doc prose without dropping the facts beside them. Keys in existing source comments stay; later comment-audit runs handle them one area at a time. Schema version history and the census table rows in seed-family-parity.md keep their keys by design.
+
+#### The bigger shift
+
+This was a focused week with 6 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+Wait for the four composite indexes to show `READY`: `gcloud firestore indexes composite list --database=companies --project dp-ux-engineering`. A query that needs one fails with `failed-precondition` until then. Before publishing from this branch to the real database, erase and republish the Aerolabs company in `dp-ux-engineering`. Customer record ids changed, so the old ones conflict.
+
+#### Try this
+
+From `apps/beacon`, run `pnpm firebase:rules:test`. It starts the local emulator only, and every `firebase-rules` spec should pass.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Add read-only rules and indexes for the companies database, Measure a function that keeps one sidebar row per person per conversation, Add one shared hovercard for contacts, groups and channels, Sign in to Firebase before a published company opens from the DevTools picker, DDT-2482, DDT-2483 open customer history to the groups that deal with them, Keep Jira keys out of comments and doc prose.
+
+---
+
 ### Week of 19–25 Oct 2026
 
 11 changes merged into Beacon this week: Write the generator store to the real database, open reads to Dialpad accounts; Write each run's company bundle to Firestore and pull it back to generate; Show normalized direct profile details; Model the conversation list, message paging and generator store in Firestore; Add the Dialpad Copilot entry point and panel behind a flag; Make the generated-company data root configurable; Keep the build run date when appending company history; Connect a real GitHub app and sync its events into Beacon; Add the apps entity, read-only app conversations, and a protected Agents & apps sidebar group; Plan each append day from its own local day; Select append intervals as [start, end). The details below come directly from the merged monorepo PRs.
@@ -745,7 +786,7 @@ Open `/threads` with unread subscribed threads, click **Mark all as read**, and 
 
 The week's Beacon record is Add mark all as read to Threads, Keep thread replies, notifications, and read state in sync, Refuse to overwrite existing messages when days are appended to a generated company, Recount read-state unread counts from the merged messages when days are appended, Publish only what is new in later generated-company runs and refuse drift in older history, Move Beacon read state to the unified read-attention model, Publish generated companies to the generated-companies database with one idempotent run, Measure generated companies on a real database and deploy their indexes, Preserve live replies and read progression.
 
----
+:::details View October 2026
 
 ### Week of 28 Sep–4 Oct 2026
 
@@ -1783,6 +1824,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
