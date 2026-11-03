@@ -8,6 +8,76 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:4521498a1e524d5229110440a0ecbe9c996f921d -->
+
+**Offer Mark thread read on the Inbox thread detail**
+
+The Inbox thread detail never offered Mark thread read or Mark thread unread on the thread's first message, although the Threads view does. The Inbox item dropped the viewer's subscription, and nothing passed the thread's unread state or the two menu events through the feed list, so the menu item that already exists stayed hidden. The first message's menu now offers one of the two actions to a subscribed viewer: Mark thread read while the thread has unread replies, Mark thread unread once it is read. It writes through the same useThreadReadActions as the Threads view, so the change shows at once, rolls back with a message on failure, and syncs across tabs.
+
+<span class="release-meta">[dialpad/design#337](https://github.com/dialpad/design/pull/337) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:4958f640957c181e68223239887d9f12ab5e24dd -->
+
+**Perf(world-engine, beacon): DDT-2404 cut the 30-day Aerolabs build from 27 to under 2 minutes with identical output**
+
+Building 30 days of Aerolabs history took about 27 minutes, and each day cost more than the last. Planning checked every draft already placed for every candidate message option, and built every candidate even when it could not win. That made rebuilds and appends too slow to iterate on. This PR removes the repeated work without changing any choice the planner makes. On one machine the 30-day build now takes about 100 seconds and a one-day append about 15. The generated files are byte-for-byte the same as before: 162 of 162 for the 30-day build and 163 of 163 for the one-day and three-day appends.
+
+<span class="release-meta">[dialpad/design#335](https://github.com/dialpad/design/pull/335) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:9b4a5b58456c24009b39d4ea06b9ec67a98c0f82 -->
+
+**Match the conversation header avatar size to the feed avatar**
+
+The avatar for a person in the conversation header was always 32px, while the same person's avatar in the feed grew with density: 32px compact, 40px default, 48px comfortable. At the default and comfortable densities the header avatar was smaller than the feed avatar it stands for. The feed row, the feed header and the Inbox detail header now read one size from useConversationAvatarSize(), so they match at every density. The feed header's icon box grows with the avatar, so the header stays the same height (78px at each density).
+
+<span class="release-meta">[dialpad/design#334](https://github.com/dialpad/design/pull/334) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:d9970fadd797f7c3201d8b968f5e4b0a76783ea5 -->
+
+**Keep the call bar clear of the sidebar and composer**
+
+Since the callbarkit swap, the in-call bar floats over the whole window. It covers the left rail's bottom controls, the sidebar's last conversations and the composer, and it sits off-center because its 100%-width container leaves the kit's capped bar left-aligned. During a call, parts of the app are unreachable. The bar now sits centered, 64px in from each side and 16px above the bottom. While it is open, the home left sidebar and each composer at the bottom of the window pad their bottom edge by the bar's height, so nothing sits under it, and the padding eases in and out with the bar. A feed that was at the bottom stays there.
+
+<span class="release-meta">[dialpad/design#332](https://github.com/dialpad/design/pull/332) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:aa724aed921ba0b01c89ca509a1be35d24cb0e4e -->
+
+**Show archived state on the channel profile and fold archive notices**
+
+An archived channel's profile looked like an active one: the same hash or lock icon, and nothing saying who archived it or when. In the feed, every join, archive and reactivate notice was its own row, so archiving and unarchiving a channel a few minutes after joining it stacked three rows of system text. The profile header now shows an archive icon labeled "Archived channel" and an "Archived by &lt;name&gt; on &lt;date&gt;" line next to "Created by". A reactivated channel goes back to its normal icon and shows "Reactivated by &lt;name&gt; on &lt;date&gt;" until it is archived again. A missing or unknown actor reads "Unknown". Archive and reactivate notices fold into a join, leave, archive or reactivate notice po...
+
+<span class="release-meta">[dialpad/design#331](https://github.com/dialpad/design/pull/331) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:deeb5be6c90c5c54c32932ddf2cb4ba085ca94aa -->
+
+**Hide archived channels from the sidebar**
+
+Archiving a channel never touched the sidebar. An archived channel stayed starred, in a custom group or under Channels, and was still there after the user navigated away. The sidebar now skips archived channels when it draws. Archive and Unarchive write no sidebar rows, every member's sidebar changes, and a reactivated channel returns to the group that stored it, or to Channels when that group no longer exists.
+
+<span class="release-meta">[dialpad/design#327](https://github.com/dialpad/design/pull/327) · 2 November 2026</span>
+
+---
+
+<!-- beacon-change:1e0f430415f3a3ab829da1d69c10f056a28a2d83 -->
+
+**Replace the legacy calling bar with callbarkit**
+
+Beacon's legacy calling bar was built by hand: its own control buttons, overflow measuring, More menu and popovers. It broke below 640px, where the bar became a stacked card with no controls. Between about 640px and 1000px it lost the More button, so controls that did not fit could not be reached. No control had an accessible state: no aria-pressed, no toolbar role, no name on the bar. Maintaining that code meant re-solving what @dialpad/callbarkit already does. This PR replaces the legacy renderer (the one used when the unifiedCallbar flag is off) with @dialpad/callbarkit 3.0.0-next.1. The unified renderer, the incoming-call card and the voicemail card are unchanged.
+
+<span class="release-meta">[dialpad/design#325](https://github.com/dialpad/design/pull/325) · 2 November 2026</span>
+
+---
+
 <!-- beacon-change:de1d37554de5af9f4c2a15ae21d52d382df3c767 -->
 
 **Let channel members archive and org admins manage public channels**
@@ -17,6 +87,8 @@ Archiving was gated on the delete permission, which defaults to channel admins, 
 <span class="release-meta">[dialpad/design#319](https://github.com/dialpad/design/pull/319) · 2 November 2026</span>
 
 ---
+
+:::details View older updates
 
 <!-- beacon-change:3ad41132732b935245b5be55655245aa7422ba43 -->
 
@@ -87,8 +159,6 @@ The generator's saved copy of a company bundle (the generator store) was never w
 <span class="release-meta">[dialpad/design#276](https://github.com/dialpad/design/pull/276) · 23 October 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:72405028feef9ca3f5886d2a4b4534f601ed959e -->
 
