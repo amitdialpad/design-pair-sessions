@@ -2018,5 +2018,5 @@ These are the protections we built into Claude Duet for working across your acco
 
 :::
 
-*Updated November 2, 2026*
+*Updated November 3, 2026*
 <!-- CLAUDE_FEED_END -->
