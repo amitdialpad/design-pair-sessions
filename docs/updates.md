@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:c30d98549d19fc1d61729aedee77eeeb28cfec13 -->
+
+**Read offices live from Firestore through the existing controller**
+
+A Firebase company in Beacon showed the same bundled offices as the plain company, so nothing proved that Beacon can read a real table from Firestore and show it on screen. The live-data work needs that proof before other tables move over. The browser cache label also still followed the bundle fingerprint, not the snapshot the data came from. This PR reads the offices table live for a Firebase company. The sign-in gate keeps its gateway, a lazy service follows the active snapshot's offices and writes them into the browser table, and the existing office controller shows them with no component change. A bundled company never loads any of it. A failed or empty read keeps the last rows, and D...
+
+<span class="release-meta">[dialpad/design#346](https://github.com/dialpad/design/pull/346) · 4 November 2026</span>
+
+---
+
+<!-- beacon-change:639fc7928f7f8e958fe85c85dc5efc2b9e43a949 -->
+
+**Add scores, sentiment and notes to generated contact-center calls**
+
+Generated Aerolabs contact-center calls had no CSAT, no sentiment and no disposition notes, although Beacon's Call already has csat, sentiment and disposition_notes. mock:world now writes all three, with scores that agree with each call's planned outcome.
+
+<span class="release-meta">[dialpad/design#347](https://github.com/dialpad/design/pull/347) · 4 November 2026</span>
+
+---
+
+<!-- beacon-change:545fc5150f6bab6b2714ae45723eea8cecb46d03 -->
+
+**Show mentions older than the loaded feed window and land Jump to latest at the bottom**
+
+Open a channel far from where you last read it and the Feed pill can say there are no mentions while an unread @mention sits above the loaded messages. The loaded window cannot place the read cursor, so its counts are unknown, and the Feed turned unknown into zero. "Jump to latest" also only scrolled to the first unread message, so a user returning to a channel after months could not skip the stale history and read the newest page. This PR takes the pill counts from the shared durable attention summary when the loaded window cannot prove them, and makes each pill action load what it points at. "Jump to latest" loads the newest page and lands at the bottom. The mention and first-unread pil...
+
+<span class="release-meta">[dialpad/design#343](https://github.com/dialpad/design/pull/343) · 3 November 2026</span>
+
+---
+
+<!-- beacon-change:c841f7cd31d8b22157c317f753bda1519648e959 -->
+
+**Add a legacy-capture audit that lists legacy seed documents the generator lacks**
+
+The legacy seed tree (apps/beacon/src/data) can only be deleted once the generated Aerolabs bundle carries everything in it. Nothing measured that. The count of missing documents came from a one-off comparison by file name, so "all captured" was a claim, not a number. pnpm mock:audit legacy-capture replaces the claim with a count. It reads the seed tree, the generated bundle and the source-family ledger, and writes nothing. Each legacy family is captured, replaced, empty, not_needed or uncaptured. An uncaptured family needs an owner in legacyCaptureOwners.ts, or the command exits 1. Zero uncaptured is the gate for deleting the legacy data files.
+
+<span class="release-meta">[dialpad/design#339](https://github.com/dialpad/design/pull/339) · 3 November 2026</span>
+
+---
+
 <!-- beacon-change:4521498a1e524d5229110440a0ecbe9c996f921d -->
 
 **Offer Mark thread read on the Inbox thread detail**
@@ -48,6 +88,8 @@ Since the callbarkit swap, the in-call bar floats over the whole window. It cove
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:aa724aed921ba0b01c89ca509a1be35d24cb0e4e -->
 
 **Show archived state on the channel profile and fold archive notices**
@@ -87,8 +129,6 @@ Archiving was gated on the delete permission, which defaults to channel admins, 
 <span class="release-meta">[dialpad/design#319](https://github.com/dialpad/design/pull/319) · 2 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:3ad41132732b935245b5be55655245aa7422ba43 -->
 
