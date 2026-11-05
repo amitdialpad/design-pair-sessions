@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:82a42f6ed526956ee437bb7692d9071df486be6e -->
+
+**Filter Inbox mentions by projection counts and seed voicemail avatars from the caller**
+
+The Inbox Mentions filter kept any row whose latest message text contained @. An email address matched, and a row with an unread mention that was not its latest message was hidden. Separately, a voicemail conversation showed the wrong avatar color in the Inbox header and no large avatar in the intro, because both looked the contact up from the row instead of the voicemail caller. This PR filters on the read-attention projection's mention counts and resolves a voicemail's contact from its caller.
+
+<span class="release-meta">[dialpad/design#348](https://github.com/dialpad/design/pull/348) · 4 November 2026</span>
+
+---
+
 <!-- beacon-change:c30d98549d19fc1d61729aedee77eeeb28cfec13 -->
 
 **Read offices live from Firestore through the existing controller**
@@ -78,6 +88,8 @@ The avatar for a person in the conversation header was always 32px, while the sa
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:d9970fadd797f7c3201d8b968f5e4b0a76783ea5 -->
 
 **Keep the call bar clear of the sidebar and composer**
@@ -87,8 +99,6 @@ Since the callbarkit swap, the in-call bar floats over the whole window. It cove
 <span class="release-meta">[dialpad/design#332](https://github.com/dialpad/design/pull/332) · 3 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:aa724aed921ba0b01c89ca509a1be35d24cb0e4e -->
 
