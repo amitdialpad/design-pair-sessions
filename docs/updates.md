@@ -2014,6 +2014,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[New agents and products for security, productivity, and creative work on Claude Marketplace](https://claude.com/resources/articles/new-agents-and-products-claude-marketplace)**<br><small>Nov 4, 2026 · Blog</small>
+
+Explore new agents and products on Claude Marketplace that help teams with security, developer infrastructure, creative work, and productivity.
+
+---
+
 **[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product announcements</small>
 
 New in the Messages API, send your conversation once, and the API receives only what’s new with every turn.
@@ -2030,13 +2036,13 @@ Smart reports show what work is happening and where, surveys capture feedback on
 
 Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
 
----
+:::details View past updates
 
 **[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Product announcements</small>
 
 IDC integrated Claude as part of its Quanta platform, and it has rolled Claude out across its own business
 
-:::details View past updates
+---
 
 **[Manage costs and demonstrate ROI for Claude Code on Google Cloud](https://claude.com/resources/articles/how-to-manage-costs-and-demonstrate-roi-for-claude-code-on-google-cloud)**<br><small>Oct 27, 2026 · Best practices</small>
 
@@ -2060,13 +2066,7 @@ Anthropic's new Claude for Nonprofits plugin brings new skills to verified nonpr
 
 Chat and Cowork first came together for Pro and Max plans in September. The same unified experience is now generally available for Claude Enterprise plans.
 
----
-
-**[Claude Duet Safety, Privacy, and Security](https://claude.com/resources/articles/claude-duet-safety-privacy-and-security)**<br><small>Oct 23, 2026 · Product announcements</small>
-
-These are the protections we built into Claude Duet for working across your accounts and acting on your behalf.
-
 :::
 
-*Updated November 4, 2026*
+*Updated November 5, 2026*
 <!-- CLAUDE_FEED_END -->
