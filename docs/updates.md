@@ -2034,31 +2034,43 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
-**[New agents and products for security, productivity, and creative work on Claude Marketplace](https://claude.com/resources/articles/new-agents-and-products-claude-marketplace)**<br><small>Nov 4, 2026 · Blog</small>
+**[Introducing Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude)**<br><small>Nov 5, 2026 · Product updates</small>
+
+Ask Claude about your money and get straight answers from the accounts you connect.
+
+---
+
+**[More visibility and control over Claude Enterprise for security teams](https://claude.com/resources/articles/claude-enterprise-security-updates)**<br><small>Nov 5, 2026 · Product updates</small>
+
+Claude Enterprise has new security and admin features, including a security center, inference hooks, centralized management, and additional access controls.
+
+---
+
+**[New agents and products for security, productivity, and creative work on Claude Marketplace](https://claude.com/resources/articles/new-agents-and-products-claude-marketplace)**<br><small>Nov 4, 2026 · Product updates</small>
 
 Explore new agents and products on Claude Marketplace that help teams with security, developer infrastructure, creative work, and productivity.
 
 ---
 
-**[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product announcements</small>
+**[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product updates</small>
 
 New in the Messages API, send your conversation once, and the API receives only what’s new with every turn.
 
----
+:::details View past updates
 
-**[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product announcements</small>
+**[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product updates</small>
 
 Smart reports show what work is happening and where, surveys capture feedback on it, and pooled group budgets give each team one shared budget.
 
 ---
 
-**[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product announcements</small>
+**[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product updates</small>
 
 Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
 
-:::details View past updates
+---
 
-**[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Product announcements</small>
+**[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Enterprise announcements</small>
 
 IDC integrated Claude as part of its Quanta platform, and it has rolled Claude out across its own business
 
@@ -2070,23 +2082,11 @@ Best practices for managing costs and measuring return on investment for Anthrop
 
 ---
 
-**[Claude for Financial Advisors](https://claude.com/resources/articles/claude-for-financial-advisors)**<br><small>Oct 27, 2026 · Product announcements</small>
+**[Claude for Financial Advisors](https://claude.com/resources/articles/claude-for-financial-advisors)**<br><small>Oct 27, 2026 · Product updates</small>
 
 Financial advisors can now connect Claude to the custodians, portfolio platforms, CRMs, and planning tools they depend on, along with new skills tailored to the daily work of a financial advisor.
 
----
-
-**[Expanding Claude for Nonprofits](https://claude.com/resources/articles/expanding-claude-for-nonprofits)**<br><small>Oct 26, 2026 · Product announcements</small>
-
-Anthropic's new Claude for Nonprofits plugin brings new skills to verified nonprofit organizations, taking the operational work that stretches small teams.
-
----
-
-**[Claude Cowork and chat come together for Enterprise](https://claude.com/resources/articles/unified-claude-enterprise)**<br><small>Oct 23, 2026 · Product announcements</small>
-
-Chat and Cowork first came together for Pro and Max plans in September. The same unified experience is now generally available for Claude Enterprise plans.
-
 :::
 
-*Updated November 5, 2026*
+*Updated November 6, 2026*
 <!-- CLAUDE_FEED_END -->
