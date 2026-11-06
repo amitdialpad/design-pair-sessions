@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:82d0434470919456656773f25c1c2c30b07e56a5 -->
+
+**Add --as-of to mock:world and mark alert-event and integration tables as kept, empty**
+
+The mock-world parity census listed the contact-center alert-event and integration tables as owed generator work (contact-center-enrichment, missing_owned, owner DDT-2213). Nothing in Beacon seeds, writes or reads either table, and no product surface needs them, so the row sent people looking for work with no consumer. Separately, pnpm mock:world always builds at the real clock, so a rebuilt Aerolabs bundle cannot be reproduced: two builds made at different times end at different times and differ. The census now records the two tables as kept, empty and not generated, and build and generate accept --as-of to pin the command clock.
+
+<span class="release-meta">[dialpad/design#357](https://github.com/dialpad/design/pull/357) · 6 November 2026</span>
+
+---
+
+<!-- beacon-change:297172f2e45fd509a9f6d8da1095053b572737c4 -->
+
+**Add customer texts to generated Aerolabs contact centers**
+
+Generated Aerolabs worlds had only internal chat. Customer texts to contact centers were missing from generated data, so the 30 texts in the legacy seed had no generated replacement. Traveler Care customers also had no chats with staff at all (0 of 21), so those centers could not text. mock:world now produces customer texts through the existing chat planner. A company declares a texting setting (campaigns with approved sender numbers), centers opt in, and an agent-to-customer chat in a text-enabled center becomes a text: an sms conversation with delivery fields, a 160-character body cap, and a per-day link row to the center.
+
+<span class="release-meta">[dialpad/design#352](https://github.com/dialpad/design/pull/352) · 5 November 2026</span>
+
+---
+
 <!-- beacon-change:82a42f6ed526956ee437bb7692d9071df486be6e -->
 
 **Filter Inbox mentions by projection counts and seed voicemail avatars from the caller**
@@ -68,6 +88,8 @@ The Inbox thread detail never offered Mark thread read or Mark thread unread on 
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:4958f640957c181e68223239887d9f12ab5e24dd -->
 
 **Perf(world-engine, beacon): DDT-2404 cut the 30-day Aerolabs build from 27 to under 2 minutes with identical output**
@@ -87,8 +109,6 @@ The avatar for a person in the conversation header was always 32px, while the sa
 <span class="release-meta">[dialpad/design#334](https://github.com/dialpad/design/pull/334) · 3 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:d9970fadd797f7c3201d8b968f5e4b0a76783ea5 -->
 
