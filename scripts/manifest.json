@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-10-31T14:52:55.287036+00:00",
+  "generated": "2026-11-06T16:26:22.051959+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -588,7 +588,7 @@
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/hours-profile-generator.md",
-      "sha": "6f7171e8a2da1e5316a8874382c7fff530d15462"
+      "sha": "103573d7571e1971037ede1a569a42d3618e2312"
     },
     {
       "path": "apps/beacon/.claude/agents/mock-data/id-registry-agent.md",

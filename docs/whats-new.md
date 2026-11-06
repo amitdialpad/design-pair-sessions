@@ -6,6 +6,14 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-11-06
+
+### Modified
+
+- `apps/beacon/.claude/agents/mock-data/hours-profile-generator.md`
+
+---
+
 ## 2026-10-31
 
 ### Modified
