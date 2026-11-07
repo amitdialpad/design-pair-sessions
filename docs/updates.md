@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:4f723bed4f5f23b20a9d35dc7c6d5765a6b03db5 -->
+
+**Add @here and @channel group mentions to channels**
+
+A channel on its default notification level only badges people for messages that mention them by name, so there is no way to get a whole channel's attention without naming every member. Muted channels are worse: nothing short of a personal mention reaches them. This PR adds @here and @channel to channels. @channel reaches every active member except the sender. @here reaches active members whose contact status is active or busy at send time. A reached member gets the @ badge and an Inbox row, and a popup, sound or browser notification unless they muted the conversation or thread explicitly or have global mute on. A channel can restrict who may use the tokens. A sender without permission ca...
+
+<span class="release-meta">[dialpad/design#355](https://github.com/dialpad/design/pull/355) · 6 November 2026</span>
+
+---
+
+<!-- beacon-change:89b77ab46db0eca6571b8d87df83fbcd91cd9544 -->
+
+**Rebuild the Aerolabs bundle at a pinned clock and retire the customer text owner**
+
+The committed Aerolabs mock bundle predates the customer text conversations and call scores added in earlier DDT-2213 slices, and the legacy-capture audit still carried an owner entry for contactCenters/*/messages that excused the family from capture. PR #357 added --as-of, so the bundle can now be rebuilt reproducibly. This PR rebuilds apps/beacon/data/aerolabs (93 files) and its data/registry.json entry at 2026-11-06T05:00:00.000Z (New York local midnight), removes the owner entry because the family is now captured, and recounts the corpus pins against the new bundle.
+
+<span class="release-meta">[dialpad/design#359](https://github.com/dialpad/design/pull/359) · 6 November 2026</span>
+
+---
+
 <!-- beacon-change:82d0434470919456656773f25c1c2c30b07e56a5 -->
 
 **Add --as-of to mock:world and mark alert-event and integration tables as kept, empty**
@@ -68,6 +88,8 @@ Open a channel far from where you last read it and the Feed pill can say there a
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:c841f7cd31d8b22157c317f753bda1519648e959 -->
 
 **Add a legacy-capture audit that lists legacy seed documents the generator lacks**
@@ -87,8 +109,6 @@ The Inbox thread detail never offered Mark thread read or Mark thread unread on 
 <span class="release-meta">[dialpad/design#337](https://github.com/dialpad/design/pull/337) · 3 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:4958f640957c181e68223239887d9f12ab5e24dd -->
 
