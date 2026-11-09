@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-11-07T15:14:46.816031+00:00",
+  "generated": "2026-11-09T19:17:11.177700+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -76,7 +76,7 @@
     },
     {
       "path": ".agents/skills/jira/SKILL.md",
-      "sha": "ad02cf2a5132c5d0a9fa68db1d613c24213175a9"
+      "sha": "c26be9b66a1dec1ddee527f4a5664a3fe8843f56"
     },
     {
       "path": ".agents/skills/kickoff-doc/SKILL.md",
@@ -92,7 +92,7 @@
     },
     {
       "path": ".agents/skills/pr-comments/SKILL.md",
-      "sha": "e2eff17d0716c6fbfb30da62160d843a85459a27"
+      "sha": "e7992ebd0be54c2f9b1cad3fe1544b3e9d44e30b"
     },
     {
       "path": ".agents/skills/pr-complete/SKILL.md",
@@ -100,7 +100,7 @@
     },
     {
       "path": ".agents/skills/pr-create/SKILL.md",
-      "sha": "d2cd771aca77da2316e1b0eaa5aa80002b01149c"
+      "sha": "d70d67151096786bc81e865679e7e0f83c496752"
     },
     {
       "path": ".agents/skills/pr-prep/SKILL.md",
@@ -120,7 +120,7 @@
     },
     {
       "path": ".agents/skills/project-start/SKILL.md",
-      "sha": "34d4dd23550e3b1bb7d6f6a138aafffa257c9cd6"
+      "sha": "140a8aea7b11bf6656f73f7c4f567a7fdea008a2"
     },
     {
       "path": ".agents/skills/prompt-creator/SKILL.md",
@@ -140,15 +140,15 @@
     },
     {
       "path": ".agents/skills/skill-create/SKILL.md",
-      "sha": "10eacc5fc42be3f1032e0cc315efb44cbdfaa942"
+      "sha": "1f0b1e3df1e58632193e48e5a7c81e7767fc66ef"
     },
     {
       "path": ".agents/skills/skill-rename/SKILL.md",
-      "sha": "9249122aa862b17aa4a4c7baaeb4be023512a468"
+      "sha": "b4d31e821695a46cd67450b5b6b1ca431326585a"
     },
     {
       "path": ".agents/skills/skill-search/SKILL.md",
-      "sha": "ca490688367395714ade273e2f001b9692a05dae"
+      "sha": "b92650db6325dac7a4a15efdb6635564131f2303"
     },
     {
       "path": ".agents/skills/step-by-step-execution/SKILL.md",
@@ -408,11 +408,11 @@
     },
     {
       "path": "apps/beacon/.agents/skills/pr-comments.local.md",
-      "sha": "f0a3f05eb12c7508fcb100eefb588d6a7fd96344"
+      "sha": "9b6453ef054011648614d4b81acd57a7759d255d"
     },
     {
       "path": "apps/beacon/.agents/skills/pr-create.local.md",
-      "sha": "a1aa2e53713dbee256313e6ebb416255a187e45d"
+      "sha": "ea6165c36b548945fe944e88234c33fb81df07d9"
     },
     {
       "path": "apps/beacon/.agents/skills/pr-prep.local.md",

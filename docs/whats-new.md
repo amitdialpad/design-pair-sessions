@@ -6,6 +6,22 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-11-09
+
+### Modified
+
+- `.agents/skills/jira/SKILL.md`
+- `.agents/skills/pr-comments/SKILL.md`
+- `.agents/skills/pr-create/SKILL.md`
+- `.agents/skills/project-start/SKILL.md`
+- `.agents/skills/skill-create/SKILL.md`
+- `.agents/skills/skill-rename/SKILL.md`
+- `.agents/skills/skill-search/SKILL.md`
+- `apps/beacon/.agents/skills/pr-comments.local.md`
+- `apps/beacon/.agents/skills/pr-create.local.md`
+
+---
+
 ## 2026-11-07
 
 ### Modified
