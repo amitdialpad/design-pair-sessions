@@ -2108,6 +2108,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The components of agent memory](https://www.anthropic.com/research/components-of-agent-memory)**<br><small>Nov 6, 2026 · Insights</small>
+
+For Claude to learn from experience, it has to decide what’s worth remembering before it knows what’s next. Here’s how “dreaming” helps it organize memory and correct mistakes.
+
+---
+
 **[Introducing Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude)**<br><small>Nov 5, 2026 · Product updates</small>
 
 Ask Claude about your money and get straight answers from the accounts you connect.
@@ -2124,13 +2130,13 @@ Claude Enterprise has new security and admin features, including a security cent
 
 Explore new agents and products on Claude Marketplace that help teams with security, developer infrastructure, creative work, and productivity.
 
----
+:::details View past updates
 
 **[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product updates</small>
 
 New in the Messages API, send your conversation once, and the API receives only what’s new with every turn.
 
-:::details View past updates
+---
 
 **[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product updates</small>
 
@@ -2146,21 +2152,13 @@ Anthropic's new legal artifacts and connectors help legal teams get work done wi
 
 **[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Enterprise announcements</small>
 
-IDC integrated Claude as part of its Quanta platform, and it has rolled Claude out across its own business
-
 ---
 
 **[Manage costs and demonstrate ROI for Claude Code on Google Cloud](https://claude.com/resources/articles/how-to-manage-costs-and-demonstrate-roi-for-claude-code-on-google-cloud)**<br><small>Oct 27, 2026 · Best practices</small>
 
 Best practices for managing costs and measuring return on investment for Anthropic's Claude Code on Google Cloud.
 
----
-
-**[Claude for Financial Advisors](https://claude.com/resources/articles/claude-for-financial-advisors)**<br><small>Oct 27, 2026 · Product updates</small>
-
-Financial advisors can now connect Claude to the custodians, portfolio platforms, CRMs, and planning tools they depend on, along with new skills tailored to the daily work of a financial advisor.
-
 :::
 
-*Updated November 8, 2026*
+*Updated November 9, 2026*
 <!-- CLAUDE_FEED_END -->
