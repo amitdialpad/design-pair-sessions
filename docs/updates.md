@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:0c0fd4f007628bf6e7b3a8f112aae8b1a307b51a -->
+
+**Run the meeting room controls on the callbarkit bar**
+
+The meeting room's footer was a Mic button, a Camera button and a Leave button, built by hand. It had no room for the tools a meeting needs and looked unlike the call bar, which already runs on callbarkit. This PR puts the room on the same kit bar, laid out like the uc_client meeting bar:
+
+<span class="release-meta">[dialpad/design#384](https://github.com/dialpad/design/pull/384) · 10 November 2026</span>
+
+---
+
+<!-- beacon-change:bac7c4b94bca282e6202fa79b5ec390e9d796158 -->
+
+**DDT-2562, DDT-2564 add built-in roles as data and the cancelled-call pointer**
+
+Every company has two built-in roles, Company admin and Member, but nothing in the data model package said what they are. Beacon's generator kept its own copy with fixed ids and permission keys, and the next generator would have needed another. Separately, a caller who hangs up before a call connects had no way to see that call on their sidebar list row: the shared conversation summary skips cancelled calls on purpose, so the row could not show it. The built-in roles now live once in the package, and the spec requires a system role to match one of them. ReadPosition gets an optional private lastCancelledCall for the caller's own row.
+
+<span class="release-meta">[dialpad/design#380](https://github.com/dialpad/design/pull/380) · 10 November 2026</span>
+
+---
+
+<!-- beacon-change:b98bc7b1562d8cefce5fea03a52320c53f31a249 -->
+
+**Add Tidewater Gulls, a people-only company from the spec**
+
+Beacon's mock companies grew one entity at a time, so the same idea carries different names on different records. The data model spec fixes the vocabulary, but no company was made from it yet. People come first because everything else refers to them. This PR adds Tidewater Gulls, a fictional basketball club, as the first company made from the spec. It has offices and people only: 4 offices, 132 staff in 12 departments and 26 players. It has no conversations, calls, contact centers or billing yet. The mock engine makes its records in the spec's shape and grades them. A temporary converter then turns them into the rows Beacon reads today, and the build checks those rows against the records...
+
+<span class="release-meta">[dialpad/design#378](https://github.com/dialpad/design/pull/378) · 10 November 2026</span>
+
+---
+
+<!-- beacon-change:79b34d4eca6e884544352fcf17481e6329b5a0ba -->
+
+**Adopt callbarkit 3.0.0-next.2 in the call bar**
+
+Beacon's call bar runs on callbarkit 3.0.0-next.1 and carries its own copies of things the kit did not have: a keypad, a directive that copies the bar's mode onto menus, and a jsdom layout helper. next.2 ships all three. Using them exposed three problems. The keypad was clipped at the kit's 210px menu height and changed size as its digits shrank. Keypad in the More menu opened as a submenu instead of swapping into the bar. And when the bar got narrow, the contact area's number and timer row painted under the AI button. This PR moves Beacon to next.2 and deletes the copies the kit now covers.
+
+<span class="release-meta">[dialpad/design#376](https://github.com/dialpad/design/pull/376) · 10 November 2026</span>
+
+---
+
 <!-- beacon-change:4f723bed4f5f23b20a9d35dc7c6d5765a6b03db5 -->
 
 **Add @here and @channel group mentions to channels**
@@ -48,6 +88,8 @@ Generated Aerolabs worlds had only internal chat. Customer texts to contact cent
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:82a42f6ed526956ee437bb7692d9071df486be6e -->
 
 **Filter Inbox mentions by projection counts and seed voicemail avatars from the caller**
@@ -87,8 +129,6 @@ Open a channel far from where you last read it and the Feed pill can say there a
 <span class="release-meta">[dialpad/design#343](https://github.com/dialpad/design/pull/343) · 3 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:c841f7cd31d8b22157c317f753bda1519648e959 -->
 
