@@ -2148,6 +2148,36 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Claude can design electronic prototypes from start to finish](https://www.anthropic.com/research/claude-electronics-design)**<br><small>Nov 9, 2026 · Insights</small>
+
+We asked Claude to design three electronic devices: a speakerphone, a voice-assistant hub, and a handheld virtual pet. The prototypes worked without any fixes to their circuitry.
+
+---
+
+**[Claude Fable 5.2 and Mythos 5.2](https://www.anthropic.com/claude-fable-and-mythos-5-2)**<br><small>Nov 9, 2026 · Product updates</small>
+
+Claude Fable 5.2 and Claude Mythos 5.2, our new models for the hardest technical challenges. Fable 5.2 sets a new bar in coding, finance, and the sciences.
+
+---
+
+**[Which Claude model should you build with?](https://claude.dev/blog/which-claude-model-should-you-build-with/)**<br><small>Nov 9, 2026 · Best practices</small>
+
+Which Claude model to pick, what they cost, and how to use them together.
+
+---
+
+**[Safely scaling multi-agent teams with Claude Fable 5.2](https://claude.dev/blog/safely-scaling-multi-agent-teams-with-fable-5-2/)**<br><small>Nov 9, 2026 · Best practices</small>
+
+How a team of 1,000 agents running an early version of Claude Fable 5.2 reproduced a formal proof of Fermat's Last Theorem with general tools, a shared database, and layered safety controls.
+
+:::details View past updates
+
+**[JPMorganChase expands Claude Code to more employees across the firm](https://claude.com/resources/articles/jpmorganchase-expands-claude-code)**<br><small>Nov 9, 2026 · Enterprise announcements</small>
+
+JPMorganChase is rolling out Claude across the firm, to more employees beyond engineers.
+
+---
+
 **[The components of agent memory](https://www.anthropic.com/research/components-of-agent-memory)**<br><small>Nov 6, 2026 · Insights</small>
 
 For Claude to learn from experience, it has to decide what’s worth remembering before it knows what’s next. Here’s how “dreaming” helps it organize memory and correct mistakes.
@@ -2168,37 +2198,7 @@ Claude Enterprise has new security and admin features, including a security cent
 
 **[New agents and products for security, productivity, and creative work on Claude Marketplace](https://claude.com/resources/articles/new-agents-and-products-claude-marketplace)**<br><small>Nov 4, 2026 · Product updates</small>
 
-Explore new agents and products on Claude Marketplace that help teams with security, developer infrastructure, creative work, and productivity.
-
-:::details View past updates
-
-**[Make long-running agents faster with message threads](https://claude.com/resources/articles/message-threads)**<br><small>Nov 2, 2026 · Product updates</small>
-
-New in the Messages API, send your conversation once, and the API receives only what’s new with every turn.
-
----
-
-**[Smart reports, surveys, and pooled group budgets for Claude Enterprise](https://claude.com/resources/articles/smart-reports-surveys-pooled-budgets)**<br><small>Oct 28, 2026 · Product updates</small>
-
-Smart reports show what work is happening and where, surveys capture feedback on it, and pooled group budgets give each team one shared budget.
-
----
-
-**[Introducing artifacts for legal work](https://claude.com/resources/articles/introducing-artifacts-for-legal-work)**<br><small>Oct 28, 2026 · Product updates</small>
-
-Anthropic's new legal artifacts and connectors help legal teams get work done with Claude.
-
----
-
-**[IDC brings Quanta into Claude and adopts Claude across the company](https://claude.com/resources/articles/idc-brings-quanta-into-claude-and-adopts-claude-across-the-company)**<br><small>Oct 28, 2026 · Enterprise announcements</small>
-
----
-
-**[Manage costs and demonstrate ROI for Claude Code on Google Cloud](https://claude.com/resources/articles/how-to-manage-costs-and-demonstrate-roi-for-claude-code-on-google-cloud)**<br><small>Oct 27, 2026 · Best practices</small>
-
-Best practices for managing costs and measuring return on investment for Anthropic's Claude Code on Google Cloud.
-
 :::
 
-*Updated November 9, 2026*
+*Updated November 10, 2026*
 <!-- CLAUDE_FEED_END -->
