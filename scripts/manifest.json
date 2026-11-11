@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-11-09T19:17:11.177700+00:00",
+  "generated": "2026-11-11T16:43:50.796363+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -252,7 +252,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/meeting-system.md",
-      "sha": "35fd47e64c353e7f5a7cd53698f09bd6989fe1f5"
+      "sha": "31aba71bc9710978c9712c7d404daf296c5760b8"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/navigation.md",

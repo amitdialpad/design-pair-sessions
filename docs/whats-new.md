@@ -6,6 +6,14 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-11-11
+
+### Modified
+
+- `apps/beacon/.agents/resources/rules/meeting-system.md`
+
+---
+
 ## 2026-11-09
 
 ### Modified
