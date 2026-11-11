@@ -2188,6 +2188,30 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Introducing Claude Whiteboards, Claude Sheets, and Claude Data](https://claude.com/resources/articles/sheets-whiteboards-data)**<br><small>Nov 10, 2026 · Product updates</small>
+
+Brainstorm on a shared whiteboard, build a spreadsheet, and share dashboards with your team, all with Claude. Available today on all paid plans.
+
+---
+
+**[More ways to work with Claude: Sheets, Whiteboards, and Interactive Connectors](https://claude.com/resources/articles/more-ways-to-work-with-claude-sheets-whiteboards-and-interactive-connectors)**<br><small>Nov 10, 2026 · Product updates</small>
+
+Anthropic introduces Claude Sheets and Claude Whiteboards, and an upgrade to interactive connectors.
+
+---
+
+**[Your apps can now open in Claude, and Claude can work in them](https://claude.com/resources/articles/interactive-connectors-full-tool)**<br><small>Nov 10, 2026 · Product updates</small>
+
+Interactive connectors can now open beside your chat or full screen, so you and Claude can work in the same tool, where the connector supports it.
+
+---
+
+**[How Curative is building a national provider network with agents on Claude](https://claude.com/resources/articles/how-curative-is-building-a-national-provider-network-with-agents-on-claude)**<br><small>Nov 10, 2026 · Best practices</small>
+
+How Curative built a hierarchy of agents on Claude to sign provider contracts about 50 times faster than its team did in 2025.
+
+:::details View past updates
+
 **[Claude can design electronic prototypes from start to finish](https://www.anthropic.com/research/claude-electronics-design)**<br><small>Nov 9, 2026 · Insights</small>
 
 We asked Claude to design three electronic devices: a speakerphone, a voice-assistant hub, and a handheld virtual pet. The prototypes worked without any fixes to their circuitry.
@@ -2210,35 +2234,13 @@ Which Claude model to pick, what they cost, and how to use them together.
 
 How a team of 1,000 agents running an early version of Claude Fable 5.2 reproduced a formal proof of Fermat's Last Theorem with general tools, a shared database, and layered safety controls.
 
-:::details View past updates
+---
 
 **[JPMorganChase expands Claude Code to more employees across the firm](https://claude.com/resources/articles/jpmorganchase-expands-claude-code)**<br><small>Nov 9, 2026 · Enterprise announcements</small>
 
 JPMorganChase is rolling out Claude across the firm, to more employees beyond engineers.
 
----
-
-**[The components of agent memory](https://www.anthropic.com/research/components-of-agent-memory)**<br><small>Nov 6, 2026 · Insights</small>
-
-For Claude to learn from experience, it has to decide what’s worth remembering before it knows what’s next. Here’s how “dreaming” helps it organize memory and correct mistakes.
-
----
-
-**[Introducing Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude)**<br><small>Nov 5, 2026 · Product updates</small>
-
-Ask Claude about your money and get straight answers from the accounts you connect.
-
----
-
-**[More visibility and control over Claude Enterprise for security teams](https://claude.com/resources/articles/claude-enterprise-security-updates)**<br><small>Nov 5, 2026 · Product updates</small>
-
-Claude Enterprise has new security and admin features, including a security center, inference hooks, centralized management, and additional access controls.
-
----
-
-**[New agents and products for security, productivity, and creative work on Claude Marketplace](https://claude.com/resources/articles/new-agents-and-products-claude-marketplace)**<br><small>Nov 4, 2026 · Product updates</small>
-
 :::
 
-*Updated November 10, 2026*
+*Updated November 11, 2026*
 <!-- CLAUDE_FEED_END -->
