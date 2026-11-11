@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:7b5bed52ccd921ad90c6f6c318a6e3b390b33b18 -->
+
+**Require --company for real publish writes**
+
+The generated-company commands take --company &lt;key&gt; and default it to aerolabs. Someone publishing another company's world who forgets the flag, for example pnpm firebase:generated:run --real --apply while working on Tidewater, would target Aerolabs. The drift and source-revision checks would probably refuse it, but they were not built as a guard for this. A real write now has to name its company, even --company aerolabs. Without it the command stops with Name the company: add --company &lt;key&gt; (for example --company aerolabs) and writes nothing.
+
+<span class="release-meta">[dialpad/design#397](https://github.com/dialpad/design/pull/397) · 11 November 2026</span>
+
+---
+
+<!-- beacon-change:18d83213560c229f41a6ea19ceca3d602cf6b877 -->
+
+**Publish a named company, including a people-only one**
+
+The generated-company commands could only publish Aerolabs. A company with no message or call history, such as Tidewater, could not build a publication at all. This PR lets the commands take a company and builds a publication for a company that has people but no history.
+
+<span class="release-meta">[dialpad/design#396](https://github.com/dialpad/design/pull/396) · 11 November 2026</span>
+
+---
+
+<!-- beacon-change:be7eadc004992f0f4e965eeecd496e6bd1b52dc2 -->
+
+**Restore inbox jump to conversation**
+
+Restore **Inbox → ••• → Jump to conversation** for calls whose conversation ID differs from the contact ID. Validated locally: - Beacon lint, including app and test type checks: passed. - Production build: passed. - Focused navigation and contact-helper tests: 8 passed. - Formatting and diff checks: passed. - Manual browser testing: navigation works.
+
+<span class="release-meta">[dialpad/design#393](https://github.com/dialpad/design/pull/393) · 11 November 2026</span>
+
+---
+
+<!-- beacon-change:345ed6c083c75af51a499d49e3e1e354b069a950 -->
+
+**DDT-2577, DDT-2578 tidy the data model spec and add the Company record**
+
+Four reviews of the prototype data model spec found decisions that were never written into it, one unread-count bug, names that meant two things, and tests that checked the checker instead of the spec. This fixes all of it while nothing outside the package reads the spec. It also delivers DDT-2578, the Company record and the planned-list additions. No new rule: each change is a decided item, a bug fix, a rename or a test cut.
+
+<span class="release-meta">[dialpad/design#394](https://github.com/dialpad/design/pull/394) · 11 November 2026</span>
+
+---
+
 <!-- beacon-change:0c0fd4f007628bf6e7b3a8f112aae8b1a307b51a -->
 
 **Run the meeting room controls on the callbarkit bar**
@@ -48,6 +88,8 @@ Beacon's call bar runs on callbarkit 3.0.0-next.1 and carries its own copies of 
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:4f723bed4f5f23b20a9d35dc7c6d5765a6b03db5 -->
 
 **Add @here and @channel group mentions to channels**
@@ -87,8 +129,6 @@ Generated Aerolabs worlds had only internal chat. Customer texts to contact cent
 <span class="release-meta">[dialpad/design#352](https://github.com/dialpad/design/pull/352) · 5 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:82a42f6ed526956ee437bb7692d9071df486be6e -->
 
