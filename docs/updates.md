@@ -2198,6 +2198,30 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Operate Claude Managed Agents inside your security perimeter](https://claude.com/resources/articles/self-hosted-claude-managed-agents)**<br><small>Nov 12, 2026 · Product updates</small>
+
+Introducing self-hosted Claude Managed Agents in private beta. Now you can run agents in your own environment, whether that’s in your own cloud or on-premise.
+
+---
+
+**[J. Crew brings its signature approach to styling to life with Claude](https://claude.com/resources/articles/j-crew-style-advisor-with-claude)**<br><small>Nov 12, 2026 · Enterprise announcements</small>
+
+J.Crew’s new Style Advisor uses Claude to help customers shop JCrew.com by complete outfit, drawing on looks created by J.Crew’s own stylists.
+
+---
+
+**[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 12, 2026 · Best practices</small>
+
+Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
+
+---
+
+**[Introducing Claude for Manufacturing](https://claude.com/resources/articles/claude-for-manufacturing)**<br><small>Nov 12, 2026 · Product updates</small>
+
+Claude for Manufacturing drafts quotes, quality reports, and supplier requests from your plant’s own records, for your team to review and approve.
+
+:::details View past updates
+
 **[Introducing Claude Whiteboards, Claude Sheets, and Claude Data](https://claude.com/resources/articles/sheets-whiteboards-data)**<br><small>Nov 10, 2026 · Product updates</small>
 
 Brainstorm on a shared whiteboard, build a spreadsheet, and share dashboards with your team, all with Claude. Available today on all paid plans.
@@ -2220,37 +2244,13 @@ Interactive connectors can now open beside your chat or full screen, so you and 
 
 How Curative built a hierarchy of agents on Claude to sign provider contracts about 50 times faster than its team did in 2025.
 
-:::details View past updates
+---
 
 **[Claude can design electronic prototypes from start to finish](https://www.anthropic.com/research/claude-electronics-design)**<br><small>Nov 9, 2026 · Insights</small>
 
 We asked Claude to design three electronic devices: a speakerphone, a voice-assistant hub, and a handheld virtual pet. The prototypes worked without any fixes to their circuitry.
 
----
-
-**[Claude Fable 5.2 and Mythos 5.2](https://www.anthropic.com/claude-fable-and-mythos-5-2)**<br><small>Nov 9, 2026 · Product updates</small>
-
-Claude Fable 5.2 and Claude Mythos 5.2, our new models for the hardest technical challenges. Fable 5.2 sets a new bar in coding, finance, and the sciences.
-
----
-
-**[Which Claude model should you build with?](https://claude.dev/blog/which-claude-model-should-you-build-with/)**<br><small>Nov 9, 2026 · Best practices</small>
-
-Which Claude model to pick, what they cost, and how to use them together.
-
----
-
-**[Safely scaling multi-agent teams with Claude Fable 5.2](https://claude.dev/blog/safely-scaling-multi-agent-teams-with-fable-5-2/)**<br><small>Nov 9, 2026 · Best practices</small>
-
-How a team of 1,000 agents running an early version of Claude Fable 5.2 reproduced a formal proof of Fermat's Last Theorem with general tools, a shared database, and layered safety controls.
-
----
-
-**[JPMorganChase expands Claude Code to more employees across the firm](https://claude.com/resources/articles/jpmorganchase-expands-claude-code)**<br><small>Nov 9, 2026 · Enterprise announcements</small>
-
-JPMorganChase is rolling out Claude across the firm, to more employees beyond engineers.
-
 :::
 
-*Updated November 11, 2026*
+*Updated November 12, 2026*
 <!-- CLAUDE_FEED_END -->
