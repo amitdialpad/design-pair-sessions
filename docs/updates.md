@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:bae9531cf5761631fc1312e3a082458fe9568a6d -->
+
+**Offer Tidewater's Firebase twin**
+
+Beacon's company picker now offers Tidewater's Firebase copy, next to Aerolabs's. Opening ?company=firebase:tidewater loads the fictional sports club from the shared generated-companies database instead of the bundled files. The publishing runbook says so in one sentence.
+
+<span class="release-meta">[dialpad/design#398](https://github.com/dialpad/design/pull/398) · 11 November 2026</span>
+
+---
+
 <!-- beacon-change:7b5bed52ccd921ad90c6f6c318a6e3b390b33b18 -->
 
 **Require --company for real publish writes**
@@ -78,6 +88,8 @@ Beacon's mock companies grew one entity at a time, so the same idea carries diff
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:79b34d4eca6e884544352fcf17481e6329b5a0ba -->
 
 **Adopt callbarkit 3.0.0-next.2 in the call bar**
@@ -87,8 +99,6 @@ Beacon's call bar runs on callbarkit 3.0.0-next.1 and carries its own copies of 
 <span class="release-meta">[dialpad/design#376](https://github.com/dialpad/design/pull/376) · 10 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:4f723bed4f5f23b20a9d35dc7c6d5765a6b03db5 -->
 
