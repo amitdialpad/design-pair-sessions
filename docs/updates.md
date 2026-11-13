@@ -2228,6 +2228,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Using Claude Opus 5.5 as your daily driver for knowledge work](https://claude.com/resources/articles/using-claude-opus-5-5-as-your-daily-driver-for-knowledge-work)**<br><small>Nov 12, 2026 · Blog</small>
+
+Here's Opus 5.5 compares with Anthropic's other models for daily work.
+
+---
+
 **[Operate Claude Managed Agents inside your security perimeter](https://claude.com/resources/articles/self-hosted-claude-managed-agents)**<br><small>Nov 12, 2026 · Product updates</small>
 
 Introducing self-hosted Claude Managed Agents in private beta. Now you can run agents in your own environment, whether that’s in your own cloud or on-premise.
@@ -2244,13 +2250,19 @@ J.Crew’s new Style Advisor uses Claude to help customers shop JCrew.com by com
 
 Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
 
+:::details View past updates
+
+**[Introducing Claude Meetings](https://claude.com/resources/articles/claude-meetings)**<br><small>Nov 12, 2026 · Product updates</small>
+
+Add Claude to your video calls to take notes, answer questions, and build docs and whiteboards while your team talks.
+
 ---
 
 **[Introducing Claude for Manufacturing](https://claude.com/resources/articles/claude-for-manufacturing)**<br><small>Nov 12, 2026 · Product updates</small>
 
 Claude for Manufacturing drafts quotes, quality reports, and supplier requests from your plant’s own records, for your team to review and approve.
 
-:::details View past updates
+---
 
 **[Introducing Claude Whiteboards, Claude Sheets, and Claude Data](https://claude.com/resources/articles/sheets-whiteboards-data)**<br><small>Nov 10, 2026 · Product updates</small>
 
@@ -2268,19 +2280,7 @@ Anthropic introduces Claude Sheets and Claude Whiteboards, and an upgrade to int
 
 Interactive connectors can now open beside your chat or full screen, so you and Claude can work in the same tool, where the connector supports it.
 
----
-
-**[How Curative is building a national provider network with agents on Claude](https://claude.com/resources/articles/how-curative-is-building-a-national-provider-network-with-agents-on-claude)**<br><small>Nov 10, 2026 · Best practices</small>
-
-How Curative built a hierarchy of agents on Claude to sign provider contracts about 50 times faster than its team did in 2025.
-
----
-
-**[Claude can design electronic prototypes from start to finish](https://www.anthropic.com/research/claude-electronics-design)**<br><small>Nov 9, 2026 · Insights</small>
-
-We asked Claude to design three electronic devices: a speakerphone, a voice-assistant hub, and a handheld virtual pet. The prototypes worked without any fixes to their circuitry.
-
 :::
 
-*Updated November 12, 2026*
+*Updated November 13, 2026*
 <!-- CLAUDE_FEED_END -->
