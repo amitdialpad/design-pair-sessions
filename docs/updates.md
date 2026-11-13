@@ -8,6 +8,36 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:ea37b4fcd81170bb26f8a666f185200d31d47aba -->
+
+**Name the round checker and row check for every round**
+
+Renames the spec package's record checker and the mock engine's Beacon row check so their names cover every round, not only people. checkPeopleRecords is now checkCompanyRecords (with CompanyRecordRule, CompanyRecordFinding and the README section "Checking company records"), and peopleRowCheck.ts is now roundRowCheck.ts (with BeaconRoundRows and checkRoundRows). The output label "People rules" reads "Company record rules". Names only: no behavior or test logic changes.
+
+<span class="release-meta">[dialpad/design#413](https://github.com/dialpad/design/pull/413) · 13 November 2026</span>
+
+---
+
+<!-- beacon-change:d31e06862f5811bc4794fb2360acc2adfaf2582d -->
+
+**Give Tidewater phone numbers, contact centers and customers**
+
+Tidewater Gulls, the fictional company built from the prototype data model, now has phone numbers, three contact centers and 600 customers. They are spec records, graded in the build like the people round. A temporary converter (the shim) writes the rows Beacon reads today, and the row check fails the build if the rows and the records differ in any way. Every person gets a direct number, players and part-time staff included. The build fails if anyone has none. A person's number now lives only on its channel, not in their contact info.
+
+<span class="release-meta">[dialpad/design#407](https://github.com/dialpad/design/pull/407) · 13 November 2026</span>
+
+---
+
+<!-- beacon-change:6950ab39bbf5ef70a9b31da3ddf8a2742ab69c4b -->
+
+**Publish a round's rows and spec records one gated step at a time**
+
+Adds pnpm round:publish, one command per step for publishing a generated company to the generated-companies database: check, plan, erase, provision, rows, records, verify. It also adds a store for spec records under companies/{id}/specRecords/{Kind}/records/{id}. Each record carries a reserved _store.run key and is written only under a promoted run from the approved bundle. How a real write is gated:
+
+<span class="release-meta">[dialpad/design#406](https://github.com/dialpad/design/pull/406) · 12 November 2026</span>
+
+---
+
 <!-- beacon-change:bae9531cf5761631fc1312e3a082458fe9568a6d -->
 
 **Offer Tidewater's Firebase twin**
@@ -58,6 +88,8 @@ Four reviews of the prototype data model spec found decisions that were never wr
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:0c0fd4f007628bf6e7b3a8f112aae8b1a307b51a -->
 
 **Run the meeting room controls on the callbarkit bar**
@@ -87,8 +119,6 @@ Beacon's mock companies grew one entity at a time, so the same idea carries diff
 <span class="release-meta">[dialpad/design#378](https://github.com/dialpad/design/pull/378) · 10 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:79b34d4eca6e884544352fcf17481e6329b5a0ba -->
 
