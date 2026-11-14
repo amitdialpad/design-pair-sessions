@@ -2248,6 +2248,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 13, 2026 · Best practices</small>
+
+Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
+
+---
+
+**[Building always-on agents](https://claude.com/resources/articles/building-always-on-agents)**<br><small>Nov 13, 2026 · Best practices</small>
+
+Always-on agents run indefinitely, deciding how and when to act across many sessions. This guide walks through their core primitives and how they fit together.
+
+---
+
 **[Using Claude Opus 5.5 as your daily driver for knowledge work](https://claude.com/resources/articles/using-claude-opus-5-5-as-your-daily-driver-for-knowledge-work)**<br><small>Nov 12, 2026 · Blog</small>
 
 Here's Opus 5.5 compares with Anthropic's other models for daily work.
@@ -2258,19 +2270,13 @@ Here's Opus 5.5 compares with Anthropic's other models for daily work.
 
 Introducing self-hosted Claude Managed Agents in private beta. Now you can run agents in your own environment, whether that’s in your own cloud or on-premise.
 
----
+:::details View past updates
 
 **[J. Crew brings its signature approach to styling to life with Claude](https://claude.com/resources/articles/j-crew-style-advisor-with-claude)**<br><small>Nov 12, 2026 · Enterprise announcements</small>
 
 J.Crew’s new Style Advisor uses Claude to help customers shop JCrew.com by complete outfit, drawing on looks created by J.Crew’s own stylists.
 
 ---
-
-**[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 12, 2026 · Best practices</small>
-
-Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
-
-:::details View past updates
 
 **[Introducing Claude Meetings](https://claude.com/resources/articles/claude-meetings)**<br><small>Nov 12, 2026 · Product updates</small>
 
@@ -2294,13 +2300,7 @@ Brainstorm on a shared whiteboard, build a spreadsheet, and share dashboards wit
 
 Anthropic introduces Claude Sheets and Claude Whiteboards, and an upgrade to interactive connectors.
 
----
-
-**[Your apps can now open in Claude, and Claude can work in them](https://claude.com/resources/articles/interactive-connectors-full-tool)**<br><small>Nov 10, 2026 · Product updates</small>
-
-Interactive connectors can now open beside your chat or full screen, so you and Claude can work in the same tool, where the connector supports it.
-
 :::
 
-*Updated November 13, 2026*
+*Updated November 14, 2026*
 <!-- CLAUDE_FEED_END -->
