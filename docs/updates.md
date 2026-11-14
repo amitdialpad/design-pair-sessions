@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:6a1395611d88d833d3a66c6d47e41dde23d1379c -->
+
+**Add Groups and Phone Numbers tables to Settings**
+
+Settings &gt; Groups and Settings &gt; Phone Numbers were placeholders. They are now read-only tables in the style of the Users list. Groups lists every group with its handle, type (Department, Coaching team, Skill routing, Contact center), how many people are in it now, its supervisors and its office. Phone Numbers lists every company number, formatted the way Beacon formats numbers elsewhere, with its label, type, who or what it belongs to (a person, a contact center, an office main line, or unassigned), office and status.
+
+<span class="release-meta">[dialpad/design#416](https://github.com/dialpad/design/pull/416) · 13 November 2026</span>
+
+---
+
+<!-- beacon-change:66c912ee08a2fbc9fe9de15fd03a2a6be37e1e40 -->
+
+**Give Tidewater regions, department groups and memberships**
+
+The sports-club test company (Tidewater) gets its groups, generated from the data-model spec: two regions, the 12 departments as groups, a membership for everyone in a department (department leads as supervisors, players in no group), and one new person, the game-presentation producer. Adding the producer changes nobody else: every existing person, customer and phone number keeps its name and number. The producer reports to the VP of arena operations and has a number from a neighbouring area code, because the local fictional number ranges are full.
+
+<span class="release-meta">[dialpad/design#418](https://github.com/dialpad/design/pull/418) · 13 November 2026</span>
+
+---
+
 <!-- beacon-change:ea37b4fcd81170bb26f8a666f185200d31d47aba -->
 
 **Name the round checker and row check for every round**
@@ -68,6 +88,8 @@ The generated-company commands could only publish Aerolabs. A company with no me
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:be7eadc004992f0f4e965eeecd496e6bd1b52dc2 -->
 
 **Restore inbox jump to conversation**
@@ -87,8 +109,6 @@ Four reviews of the prototype data model spec found decisions that were never wr
 <span class="release-meta">[dialpad/design#394](https://github.com/dialpad/design/pull/394) · 11 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:0c0fd4f007628bf6e7b3a8f112aae8b1a307b51a -->
 
