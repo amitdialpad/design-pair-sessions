@@ -6,6 +6,15 @@ claim that a new feature has shipped. Use `skill-search` for the current invento
 
 The [toolkit guide](/toolkit) and [prototyping guide](/prototyping) explain how to use them.
 
+## 2026-11-14
+
+### Modified
+
+- `apps/studio/.agents/skills/pr-prep.local.md`
+- `apps/studio/.agents/skills/prompt-creator.local.md`
+
+---
+
 ## 2026-11-13
 
 ### Modified
