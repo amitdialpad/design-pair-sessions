@@ -2322,5 +2322,5 @@ Anthropic introduces Claude Sheets and Claude Whiteboards, and an upgrade to int
 
 :::
 
-*Updated November 14, 2026*
+*Updated November 15, 2026*
 <!-- CLAUDE_FEED_END -->
