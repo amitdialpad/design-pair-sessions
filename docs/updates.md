@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:22ea5dee7cf67803acf53c8c5d30cc0dbab0f728 -->
+
+**Move both callbars to callbarkit 3.0.0-next.3**
+
+Moves Beacon's call bar and meeting bar to callbarkit 3.0.0-next.3, the version released today.
+
+<span class="release-meta">[dialpad/design#430](https://github.com/dialpad/design/pull/430) · 15 November 2026</span>
+
+---
+
+<!-- beacon-change:320406f842a1aa1a612b3d8bca6deb0620382d05 -->
+
+**Give the Settings lists one shared table layout with a docked header**
+
+All five Settings lists (Users, Offices, Coaching Teams, Groups and Phone Numbers) now share one layout. The title, the filter strip and the column header stay docked together as one block, each list scrolls once, rows are 56 px tall, and the table sits in the page with no bordered box.
+
+<span class="release-meta">[dialpad/design#429](https://github.com/dialpad/design/pull/429) · 14 November 2026</span>
+
+---
+
 <!-- beacon-change:6a1395611d88d833d3a66c6d47e41dde23d1379c -->
 
 **Add Groups and Phone Numbers tables to Settings**
@@ -68,6 +88,8 @@ Beacon's company picker now offers Tidewater's Firebase copy, next to Aerolabs's
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:7b5bed52ccd921ad90c6f6c318a6e3b390b33b18 -->
 
 **Require --company for real publish writes**
@@ -87,8 +109,6 @@ The generated-company commands could only publish Aerolabs. A company with no me
 <span class="release-meta">[dialpad/design#396](https://github.com/dialpad/design/pull/396) · 11 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:be7eadc004992f0f4e965eeecd496e6bd1b52dc2 -->
 
