@@ -153,6 +153,8 @@ The Salesforce operational snapshot is not the Finance-certified ARR bridge. Bui
 - `net_arr_change`: current ARR minus quarter-start ARR; `net_arr_change_pct` uses quarter-start ARR as the denominator.
 - `paying_accounts` and `paid_licenses`: count accounts and sum `Total_Dialpad_License__c` where `Customer__c` is true and `ARR__c` is positive.
 
+The operational `paid_licenses` field is labeled "licenses on paying accounts" in the email: it sums total Dialpad product licenses in that account cohort, not a Finance-certified paid-seat measure.
+
 Do not describe the opening-cohort movement as churn or retention. It is a net of expansion, contraction, churn, reactivation, and Salesforce corrections. Retrieve the previous Monday's delivered review and compare only the three like-for-like stored values: current ARR, paying accounts, and paid licenses. If no prior operational snapshot is safely available, leave the comparison values null and state that the baseline was established.
 
 ## Executive signal

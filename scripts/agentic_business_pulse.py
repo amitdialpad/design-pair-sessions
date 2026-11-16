@@ -822,7 +822,7 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
             f"new, reactivated, or previously unsnapshotted accounts contribute "
             f"{_money(salesforce_snapshot['new_or_unsnapshotted_arr'])}; "
             f"{salesforce_snapshot['paying_accounts']:,} paying accounts and "
-            f"{salesforce_snapshot['paid_licenses']:,} paid licenses.",
+            f"{salesforce_snapshot['paid_licenses']:,} licenses on paying accounts.",
         )
         comparison = salesforce_snapshot["comparison"]
         if comparison["previous_snapshot_date"] is None:
@@ -833,7 +833,7 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
                 f"- **Since {comparison['previous_snapshot_date']}:** ARR "
                 f"{_signed_money(comparison['arr_change_since_previous'])}; "
                 f"paying accounts {comparison['paying_account_change']:+,d}; "
-                f"paid licenses {comparison['paid_license_change']:+,d}.",
+                f"licenses on paying accounts {comparison['paid_license_change']:+,d}.",
             )
     if latest is None:
         lines.insert(

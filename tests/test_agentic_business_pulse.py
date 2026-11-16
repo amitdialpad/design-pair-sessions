@@ -986,7 +986,7 @@ class PulseValidationTests(unittest.TestCase):
         self.assertIn("Since 2026-09-14", report)
         self.assertIn("ARR +$1.25M", report)
         self.assertIn("paying accounts +45", report)
-        self.assertIn("paid licenses -120", report)
+        self.assertIn("licenses on paying accounts -120", report)
 
     def test_ceo_view_sends_verified_agentic_review_when_arr_bridge_is_unavailable(self):
         result = valid_ceo_view_result()
