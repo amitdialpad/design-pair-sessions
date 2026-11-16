@@ -2547,6 +2547,9 @@ def run_pulse_from_glean_draft(
         wait_seconds=config.glean_draft_wait_seconds,
         poll_seconds=config.glean_draft_poll_seconds,
     )
+    validation_now = report_now if current_time is not None else now_in_timezone(config.timezone_name)
+    if validation_now.date().isoformat() != report_date:
+        raise ValidationError("The report date changed while waiting for the Glean draft; retry on the current IST date")
     agent_result = parse_glean_draft(
         source_message,
         report_date=report_date,
@@ -2554,7 +2557,7 @@ def run_pulse_from_glean_draft(
     )
     report, snapshot = validate_agent_result(
         agent_result,
-        report_now=report_now,
+        report_now=validation_now,
         source_max_age_hours=config.source_max_age_hours,
         workflow_url=workflow_url,
         test_send=config.test_send,

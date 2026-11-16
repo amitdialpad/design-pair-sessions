@@ -1724,6 +1724,64 @@ class GleanDraftRelayTests(PulseDeliveryTests):
         snapshot = json.loads((self.reports_dir / f"{REPORT_DATE}.json").read_text())
         self.assertEqual(snapshot["delivery"]["input"], "scheduled_glean_gmail_draft")
 
+    def test_relay_accepts_fresh_source_receipts_from_late_draft(self):
+        arrival_time = REPORT_NOW.replace(minute=30)
+        payload = valid_dashboard_result()
+        for source in payload["snapshot"]["source_status"].values():
+            source["queried_at"] = arrival_time.replace(minute=25).isoformat()
+        archive = FakeRelayArchive(source_message=glean_source_draft(payload))
+
+        with patch(
+            "agentic_business_pulse.now_in_timezone",
+            side_effect=[REPORT_NOW, arrival_time],
+        ):
+            result = run_pulse_from_glean_draft(
+                self.config, archive=archive, sender=self.fake_sender
+            )
+
+        self.assertEqual(result["run_status"], "success")
+        self.assertEqual(result["email_status"], "accepted")
+        self.assertEqual(archive.deleted, ["42", "source-7"])
+
+    def test_relay_rejects_sources_that_become_stale_while_waiting(self):
+        arrival_time = REPORT_NOW.replace(minute=30)
+        payload = valid_dashboard_result()
+        for source in payload["snapshot"]["source_status"].values():
+            source["queried_at"] = REPORT_NOW.replace(
+                day=20, hour=21, minute=15
+            ).isoformat()
+        archive = FakeRelayArchive(source_message=glean_source_draft(payload))
+
+        with patch(
+            "agentic_business_pulse.now_in_timezone",
+            side_effect=[REPORT_NOW, arrival_time],
+        ), self.assertRaisesRegex(ValidationError, "salesforce.*stale"):
+            run_pulse_from_glean_draft(
+                self.config, archive=archive, sender=self.fake_sender
+            )
+
+        self.assertEqual(archive.drafts, [])
+        self.assertEqual(archive.deleted, [])
+
+    def test_relay_fails_closed_when_draft_wait_crosses_report_date(self):
+        start_time = REPORT_NOW.replace(hour=23, minute=50)
+        arrival_time = REPORT_NOW.replace(day=22, hour=0, minute=10)
+        payload = valid_dashboard_result()
+        for source in payload["snapshot"]["source_status"].values():
+            source["queried_at"] = start_time.isoformat()
+        archive = FakeRelayArchive(source_message=glean_source_draft(payload))
+
+        with patch(
+            "agentic_business_pulse.now_in_timezone",
+            side_effect=[start_time, arrival_time],
+        ), self.assertRaisesRegex(ValidationError, "report date changed"):
+            run_pulse_from_glean_draft(
+                self.config, archive=archive, sender=self.fake_sender
+            )
+
+        self.assertEqual(archive.drafts, [])
+        self.assertEqual(archive.deleted, [])
+
     def test_dry_relay_never_sends_or_deletes_source_draft(self):
         archive = FakeRelayArchive()
         calls = []
