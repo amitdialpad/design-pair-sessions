@@ -67,7 +67,7 @@ def render_transition_company_health(business: dict) -> list[str]:
         lines.extend(
             _row(metric, UNAVAILABLE, UNAVAILABLE)
             for metric in (
-                "Annual recurring contract value · Salesforce estimate",
+                "Annual recurring contract value · Dialpad Salesforce accounts",
                 "Quarter-start comparable value",
                 "Quarter change · same Salesforce measure",
                 "Paying customer accounts / licenses",
@@ -81,7 +81,7 @@ def render_transition_company_health(business: dict) -> list[str]:
         lines.extend(
             [
                 _row(
-                    "Annual recurring contract value · Salesforce estimate",
+                    "Annual recurring contract value · Dialpad Salesforce accounts",
                     _money(salesforce["current_arr"]),
                     as_of,
                 ),
@@ -226,7 +226,8 @@ def render_transition_company_health(business: dict) -> list[str]:
         [
             "",
             "**Data note:** Salesforce is Dialpad's own sales system. Its annual recurring contract value is an operational estimate, "
-            "not earned revenue or Finance-certified ARR. Bookings, forecasts and the Finance ARR bridge are separate measures.",
+            "not earned revenue or Finance-certified ARR. Its Account-record perimeter has not been reconciled as a combined Dialpad + Ada total. "
+            "Bookings, forecasts and the Finance ARR bridge are separate measures.",
         ]
     )
     if salesforce is not None:

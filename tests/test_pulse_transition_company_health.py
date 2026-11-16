@@ -80,7 +80,7 @@ class TransitionCompanyHealthTests(unittest.TestCase):
     def test_available_measures_keep_values_definitions_and_real_periods(self):
         text = self.render(synthetic_business())
         self.assertIn("## Company revenue and sales", text)
-        self.assertIn("| Annual recurring contract value · Salesforce estimate | $1.50M | As of 2032-05-17 |", text)
+        self.assertIn("| Annual recurring contract value · Dialpad Salesforce accounts | $1.50M | As of 2032-05-17 |", text)
         self.assertIn("| Quarter-start comparable value | $1.20M | Start of Q2 FY33 |", text)
         self.assertIn("+$300.0K (+25.0%)", text)
         self.assertIn("120 accounts / 4,200 licenses", text)
@@ -178,6 +178,7 @@ class TransitionCompanyHealthTests(unittest.TestCase):
         text = self.render(synthetic_business())
         self.assertIn("not earned revenue or Finance-certified ARR", text)
         self.assertIn("Salesforce is Dialpad's own sales system", text)
+        self.assertIn("Account-record perimeter has not been reconciled as a combined Dialpad + Ada total", text)
         self.assertIn("Latest Finance ARR bridge · separate from the Salesforce estimate", text)
         self.assertIn("| Net ARR change | +$12.0K | March 2032 |", text)
         self.assertIn("+$20.0K / −$8.0K", text)
@@ -197,13 +198,14 @@ class TransitionCompanyHealthTests(unittest.TestCase):
         self.assertEqual(business, before)
         self.assertNotIn("9,999,999", text)
         self.assertNotIn("987", text)
-        self.assertIn("| Annual recurring contract value · Salesforce estimate | $1.50M |", text)
+        self.assertIn("| Annual recurring contract value · Dialpad Salesforce accounts | $1.50M |", text)
+        self.assertIn("has not been reconciled as a combined Dialpad + Ada total", text)
 
     def test_missing_optional_salesforce_snapshot_is_explicit(self):
         business = synthetic_business()
         business.pop("salesforce_operational_snapshot")
         text = self.render(business)
-        self.assertIn("| Annual recurring contract value · Salesforce estimate | Unavailable | Unavailable |", text)
+        self.assertIn("| Annual recurring contract value · Dialpad Salesforce accounts | Unavailable | Unavailable |", text)
         self.assertIn("Salesforce operational snapshot: Unavailable.", text)
         self.assertIn("| Quarter bookings · actual | $500.0K |", text)
 
