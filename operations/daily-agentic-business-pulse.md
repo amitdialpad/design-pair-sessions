@@ -69,6 +69,10 @@ Schema version 5 requires everything in version 4 plus:
 
 The Salesforce snapshot is an operational estimate, not the restricted Finance-certified ARR bridge. Its arithmetic must reconcile, its method note must state the distinction, and opening-cohort movement must not be labeled churn or retention.
 
+Bookings context can be explicitly unavailable while the verified customer review and fresh Salesforce operational snapshot remain deliverable. Use `weekly_sales: null` plus a specific `weekly_sales_note`, and/or `quarter: null` plus a specific `quarter_note`; each note is nonempty and at most 320 characters. The renderer shows the gaps without substitute numbers or derived percentages. The operational snapshot still requires its real fiscal quarter label. Available sections retain all arithmetic, numeric, source, and freshness checks. Missing only an official target continues to use the established null-target quarter object.
+
+The Agentic monetary field is `Opportunity.Agent_AI_ACV__c`, not a whole-opportunity sum filtered by Product Interest. Reconcile the company-bookings cohort, dates, won stages, revenue/subtype/exclusion rules and currencies before deriving core or share. Broad won-opportunity ACV totals alone do not establish governed company bookings. Never clip signed adjustments, invent a currency conversion, or silently redefine bookings to pass validation.
+
 ## Delivery protection
 
 The final report recipient is stored in the protected `PULSE_RECIPIENTS` repository secret rather than exposed as workflow configuration. It must contain only Amit's approved Dialpad address. Amit is placed in Bcc; To contains only `undisclosed-recipients:;` and Cc is absent. SMTP removes the Bcc header from the transmitted message. Any missing, additional, duplicate, different, or visible final recipient fails before SMTP. The internal Glean relay draft also remains addressed only to Amit.

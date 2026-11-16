@@ -7,7 +7,7 @@ import smtplib
 import sys
 import tempfile
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 from email.message import EmailMessage
 from pathlib import Path
 from unittest.mock import patch
@@ -55,6 +55,8 @@ DASHBOARD_SOURCE_LINKS = {
     "glean": SOURCE_LINKS["glean"],
     "production_code": SOURCE_LINKS["production_code"],
 }
+WEEKLY_SALES_NOTE = "The governed weekly bookings measure could not be verified from the current authorized source."
+QUARTER_NOTE = "The governed quarter bookings measure could not be verified from the current authorized source."
 
 
 def valid_result() -> dict:
@@ -503,6 +505,250 @@ class PulseValidationTests(unittest.TestCase):
                 'links': [SOURCE_LINKS['glean']],
             }
         return result
+
+    def bookings_gap_result(self, *, weekly: bool = True, quarter: bool = True, schema: int = 6):
+        result = self.portfolio_result() if schema == 6 else valid_ceo_view_result()
+        result["snapshot"]["schema_version"] = schema
+        business = result["snapshot"]["business_health"]
+        if weekly:
+            business["weekly_sales"] = None
+            business["weekly_sales_note"] = WEEKLY_SALES_NOTE
+        if quarter:
+            business["quarter"] = None
+            business["quarter_note"] = QUARTER_NOTE
+        return result
+
+    def test_ceo_view_renders_unavailable_weekly_sales_and_preserves_quarter(self):
+        report, snapshot = validate_agent_result(
+            self.bookings_gap_result(quarter=False),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIsNone(snapshot["business_health"]["weekly_sales"])
+        self.assertIn("This week's bookings unavailable", report)
+        self.assertIn(WEEKLY_SALES_NOTE, report)
+        self.assertIn("Q3 FY27: $15.20M booked", report)
+        self.assertIn("Agentic share of quarter bookings", report)
+        self.assertIn("Salesforce ARR snapshot", report)
+        self.assertNotIn("core/non-Agentic", report)
+        self.assertNotIn("None", report)
+        self.assertNotIn("0.0%", report)
+
+    def test_ceo_view_renders_unavailable_quarter_and_preserves_weekly_sales(self):
+        report, snapshot = validate_agent_result(
+            self.bookings_gap_result(weekly=False),
+            report_now=REPORT_NOW,
+            source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIsNone(snapshot["business_health"]["quarter"])
+        self.assertIn("Quarter bookings unavailable", report)
+        self.assertIn(QUARTER_NOTE, report)
+        self.assertIn("This week's bookings:", report)
+        self.assertIn("core/non-Agentic", report)
+        self.assertIn("Salesforce ARR snapshot", report)
+        for omitted in (
+            "Agentic share of quarter bookings", "Quarter forecast", "Overall target",
+            "required weekly pace", "$15.20M", "$14.80M", "None", "0.0%",
+        ):
+            self.assertNotIn(omitted, report)
+
+    def test_ceo_view_renders_both_bookings_unavailable_for_schema5_and6(self):
+        for schema in (5, 6):
+            with self.subTest(schema=schema):
+                report, snapshot = validate_agent_result(
+                    self.bookings_gap_result(schema=schema),
+                    report_now=REPORT_NOW,
+                    source_max_age_hours=12,
+                    workflow_url=WORKFLOW_URL,
+                )
+
+                self.assertIsNone(snapshot["business_health"]["weekly_sales"])
+                self.assertIsNone(snapshot["business_health"]["quarter"])
+                self.assertIn("This week's bookings unavailable", report)
+                self.assertIn("Quarter bookings unavailable", report)
+                self.assertIn(WEEKLY_SALES_NOTE, report)
+                self.assertIn(QUARTER_NOTE, report)
+                self.assertIn(snapshot["customers"][0]["account_name"], report)
+                self.assertIn("Salesforce ARR snapshot", report)
+                self.assertIn("Latest ARR movement", report)
+                for omitted in ("Agentic share of quarter bookings", "Quarter forecast", "None", "0.0%"):
+                    self.assertNotIn(omitted, report)
+
+    def test_ceo_view_requires_short_notes_for_unavailable_bookings(self):
+        missing = object()
+        for field, note_field in (("weekly_sales", "weekly_sales_note"), ("quarter", "quarter_note")):
+            for invalid in (missing, None, "", "   ", 7, [], {}, True, "x" * 321):
+                with self.subTest(field=field, invalid=repr(invalid)):
+                    result = self.portfolio_result()
+                    business = result["snapshot"]["business_health"]
+                    business[field] = None
+                    if invalid is not missing:
+                        business[note_field] = invalid
+                    with self.assertRaisesRegex(ValidationError, note_field):
+                        validate_agent_result(
+                            result, report_now=REPORT_NOW,
+                            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                        )
+
+    def test_bookings_gaps_require_explicit_null_instead_of_missing_measure(self):
+        for field in ("weekly_sales", "quarter"):
+            with self.subTest(field=field):
+                result = self.bookings_gap_result()
+                result["snapshot"]["business_health"].pop(field)
+                with self.assertRaisesRegex(ValidationError, "must be an object or explicit null"):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_available_bookings_reject_unavailable_notes(self):
+        for note_field in ("weekly_sales_note", "quarter_note"):
+            with self.subTest(note_field=note_field):
+                result = self.portfolio_result()
+                result["snapshot"]["business_health"][note_field] = "This measure is unavailable."
+                with self.assertRaisesRegex(ValidationError, f"must not include {note_field}"):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_available_bookings_accept_absent_or_empty_unavailable_notes(self):
+        for empty_note in (None, ""):
+            with self.subTest(note=repr(empty_note)):
+                result = self.portfolio_result()
+                business = result["snapshot"]["business_health"]
+                business["weekly_sales_note"] = empty_note
+                business["quarter_note"] = empty_note
+                report, _ = validate_agent_result(
+                    result, report_now=REPORT_NOW,
+                    source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                )
+                self.assertIn("This week's bookings:", report)
+                self.assertIn("Agentic share of quarter bookings", report)
+                self.assertNotIn("bookings unavailable", report)
+
+    def test_ceo_view_accepts_320_character_unavailable_bookings_notes(self):
+        result = self.bookings_gap_result()
+        business = result["snapshot"]["business_health"]
+        business["weekly_sales_note"] = "w" * 320
+        business["quarter_note"] = "q" * 320
+
+        report, _ = validate_agent_result(
+            result, report_now=REPORT_NOW,
+            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+        )
+
+        self.assertIn("w" * 320, report)
+        self.assertIn("q" * 320, report)
+
+    def test_bookings_gaps_keep_salesforce_snapshot_required(self):
+        for schema in (3, 5, 6):
+            for weekly, quarter in ((True, False), (False, True), (True, True)):
+                with self.subTest(schema=schema, weekly_gap=weekly, quarter_gap=quarter):
+                    result = self.bookings_gap_result(schema=schema, weekly=weekly, quarter=quarter)
+                    result["snapshot"]["business_health"].pop("salesforce_operational_snapshot")
+                    with self.assertRaisesRegex(ValidationError, "salesforce_operational_snapshot is required"):
+                        validate_agent_result(
+                            result, report_now=REPORT_NOW,
+                            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                        )
+
+    def test_bookings_gaps_require_current_date_salesforce_snapshot(self):
+        for weekly, quarter in ((True, False), (False, True), (True, True)):
+            with self.subTest(weekly_gap=weekly, quarter_gap=quarter):
+                result = self.bookings_gap_result(weekly=weekly, quarter=quarter)
+                result["snapshot"]["business_health"]["salesforce_operational_snapshot"]["as_of_date"] = "2026-09-20"
+                with self.assertRaisesRegex(ValidationError, "must match the current report date"):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_bookings_gaps_keep_source_receipts_required(self):
+        for source in ("salesforce", "jira", "glean"):
+            with self.subTest(source=source):
+                result = self.bookings_gap_result()
+                result["snapshot"]["source_status"][source]["status"] = "timeout"
+                with self.assertRaisesRegex(IntegrationError, source):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_bookings_gap_preserves_available_weekly_sales_validation(self):
+        cases = (
+            ("total_bookings", -1, "cannot be negative"),
+            ("total_bookings", float("inf"), "must be finite"),
+            ("total_bookings", 1_000_100, "core plus Agentic must equal"),
+            ("agentic_share_pct", 7.0, "share does not match"),
+        )
+        for field, invalid, reason in cases:
+            with self.subTest(field=field, invalid=invalid):
+                result = self.bookings_gap_result(weekly=False)
+                result["snapshot"]["business_health"]["weekly_sales"][field] = invalid
+                with self.assertRaisesRegex(ValidationError, reason):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_bookings_gap_preserves_available_quarter_validation(self):
+        cases = (
+            ("agentic_bookings", -1, "cannot be negative"),
+            ("actual_bookings", float("inf"), "must be finite"),
+            ("agentic_share_pct", 9.0, "share does not match"),
+            ("attainment_pct", 99.0, "must not publish derived target metrics"),
+        )
+        for field, invalid, reason in cases:
+            with self.subTest(field=field, invalid=invalid):
+                result = self.bookings_gap_result(quarter=False)
+                result["snapshot"]["business_health"]["quarter"][field] = invalid
+                with self.assertRaisesRegex(ValidationError, reason):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_unavailable_quarter_requires_actual_salesforce_fiscal_label(self):
+        cases = (
+            (2026, 1, 5, "Q4 FY26"), (2026, 2, 2, "Q1 FY27"),
+            (2026, 4, 6, "Q1 FY27"), (2026, 5, 4, "Q2 FY27"),
+            (2026, 7, 6, "Q2 FY27"), (2026, 8, 3, "Q3 FY27"),
+            (2026, 10, 5, "Q3 FY27"), (2026, 11, 2, "Q4 FY27"),
+            (2027, 1, 4, "Q4 FY27"),
+        )
+        for year, month, day, label in cases:
+            with self.subTest(report_date=f"{year}-{month}-{day}", label=label):
+                now = REPORT_NOW.replace(year=year, month=month, day=day)
+                result = self.bookings_gap_result()
+                snapshot = result["snapshot"]
+                snapshot["report_date"] = now.date().isoformat()
+                snapshot["generated_at"] = now.isoformat()
+                snapshot["comparison_window"]["start"] = (now.date() - timedelta(days=7)).isoformat()
+                snapshot["comparison_window"]["end"] = (now.date() - timedelta(days=1)).isoformat()
+                for source in snapshot["source_status"].values():
+                    source["queried_at"] = now.isoformat()
+                for customer in snapshot["customers"]:
+                    customer["customer_insight"]["evidence_date"] = now.date().isoformat()
+                sf = snapshot["business_health"]["salesforce_operational_snapshot"]
+                sf["as_of_date"] = now.date().isoformat()
+                sf["quarter_label"] = label
+                _, validated = validate_agent_result(
+                    result, report_now=now,
+                    source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                )
+                self.assertEqual(validated["business_health"]["salesforce_operational_snapshot"]["quarter_label"], label)
+
+                sf["quarter_label"] = "Q1 FY00"
+                with self.assertRaisesRegex(ValidationError, "quarter_label"):
+                    validate_agent_result(
+                        result, report_now=now,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
 
     def test_portfolio_renders_dependency_instead_of_ticket_counts(self):
         result = self.portfolio_result()
