@@ -4,6 +4,8 @@
 
 Schema 6 adds evidence-dated customer_insight and portfolio coverage. Review all known customers already admitted to Agentic delivery, including EAP/pilots and quiet engagements. Reconcile PM/customer communications, agreements, workbooks and CRM before using Jira as supporting context. Distinguish commercial/partner gates from technical defects. Retain stale-status customers as unconfirmed, with explicit coverage gaps. The renderer removes Jira counts and duplicate analysis and shows customer position, primary dependency, owner and implication. See the schema-6 correction at the start of the report contract for the exact fields and precedence.
 
+Every customer audit must be attempted and recorded, but it may complete as verified or unconfirmed. Missing individual primary documents or unresolved status conflicts become explicit row-level gaps if the source family is healthy and admission/identity remains verified. Do not fabricate missing support or current status. Reconcile supported roster additions and aliases rather than forcing a prior generated report's count. Partial coverage and properly audited unconfirmed rows do not populate `failures`; `data_status: complete` describes a safely completed procedure. Source-family failures, unverifiable admission, skipped audits, and unsupported verified claims still block delivery.
+
 Manual test_send supports a real current-date midweek test. Scheduled reports remain Monday-only; test permission never changes production cadence. Test comparisons begin seven days before the latest Monday and end yesterday; source freshness and delivery protections remain required.
 
 Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
@@ -41,7 +43,7 @@ The Glean Agent creates exactly one draft:
 - Subject: `[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD`
 - To: `amit.ayre@dialpad.com`
 - No Cc, Bcc, or attachments
-- One schema-version-5 JSON block between the established machine markers
+- One schema-version-6 JSON block between the established machine markers
 
 The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
 
@@ -100,7 +102,7 @@ Expected application failures use the existing once-per-IST-date failure alert. 
 
 1. Run all repository tests and pull-request validation.
 2. Update the private Glean Agent instructions and schedule in draft.
-3. Preview the Agent and confirm a complete schema-v5 snapshot with no source writes.
+3. Preview the Agent and confirm a complete schema-v6 snapshot with no source writes. Partial coverage and audited unconfirmed rows are valid; required source-family health and all other hard gates remain mandatory.
 4. Publish only after the preview validates.
 5. Run GitHub with `dry_run=true`.
 6. Confirm one private body-only draft, no SMTP call, only Amit in Bcc, no attachments, no machine JSON, and a readable verified-signal matrix.
