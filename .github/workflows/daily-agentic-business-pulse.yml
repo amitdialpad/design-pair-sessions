@@ -26,11 +26,13 @@ on:
       - '.github/workflows/daily-agentic-business-pulse.yml'
       - 'operations/daily-agentic-business-pulse.md'
       - 'scripts/agentic_business_pulse.py'
+      - 'scripts/pulse_transition_company_health.py'
       - 'scripts/failure_notification.py'
       - 'scripts/run-agentic-business-pulse.py'
       - 'scripts/notify-failure.py'
       - 'skills/daily-agentic-business-pulse/**'
       - 'tests/test_agentic_business_pulse.py'
+      - 'tests/test_pulse_transition_company_health.py'
       - 'tests/test_failure_notification.py'
 
 permissions:

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import hashlib
+import copy
 import html
 import json
+import re
 import smtplib
 import sys
 import tempfile
@@ -27,6 +29,7 @@ from agentic_business_pulse import (  # noqa: E402
     PulseError,
     ValidationError,
     build_email_message,
+    build_agent_request,
     deterministic_message_id,
     markdown_to_email_html,
     now_in_timezone,
@@ -428,6 +431,100 @@ def _legacy_result(report: str, source_status: dict) -> dict:
     }
 
 
+def transition_claim(text="Synthetic source-backed position.", *, status="verified", evidence_date="2026-09-18"):
+    return {
+        "text": text,
+        "status": status,
+        "evidence_date": None if status == "unconfirmed" else evidence_date,
+        "links": [] if status == "unconfirmed" else ["https://example.com/primary-evidence"],
+    }
+
+
+def valid_transition_result():
+    customers = []
+    for name, route, service_status, movement in (
+        ("Aster Example", "ada_migration", "verified", "no_change"),
+        ("Birch Example", "ada_new", "last_known", "moved"),
+        ("Cedar Example", "undecided", "unconfirmed", "no_change"),
+    ):
+        milestone = transition_claim("Review the synthetic transition plan.", status="proposed")
+        milestone.update(target_date="2026-10-05", date_status="proposed")
+        if name == "Birch Example":
+            milestone.update(status="verified", target_date="2026-10-12", date_status="committed")
+        if name == "Cedar Example":
+            milestone = transition_claim("A customer-approved next milestone was not located.", status="unconfirmed")
+            milestone.update(target_date=None, date_status="none")
+        customer = {
+            "account_name": name,
+            "name_permitted": True,
+            "lifecycle_stage": "live" if name == "Aster Example" else "build",
+            "movement": movement,
+            "agent_or_use_case": "Synthetic service-desk routing.",
+            "links": ["https://example.com/customer-record"],
+            "integrations": [{"name": "Example CRM", "status": "connected"}],
+            "change_this_week": "A synthetic fulfillment plan was approved." if movement == "moved" else "No new customer decision is established.",
+            "next_watch": "Record the customer's next approved decision and accountable owner.",
+            "jira": {"new_or_changed_7d": None, "open_customer_bugs": None, "keys": [], "note": "Complete customer issue coverage is not established."},
+            "commercial": {"stage": "Synthetic signed agreement", "movement_7d": "no_change", "agentic_acv": 1234 if name == "Aster Example" else None},
+            "transition": {
+                "route": route,
+                "current_service": transition_claim(
+                    "Example voice service remains live." if name == "Aster Example" else "A dated service confirmation is missing." if service_status == "unconfirmed" else "The last source records an unlaunched pilot.",
+                    status=service_status,
+                ),
+                "direction": transition_claim("Consider an Ada migration while the existing service stays live.", status="proposed") if name == "Aster Example" else transition_claim("An Ada fulfillment plan was approved.") if name == "Birch Example" else transition_claim("The customer has not approved a platform direction in the available sources.", status="unconfirmed"),
+                "decision": transition_claim("A named customer approval of the transition baseline is missing.", status="unconfirmed"),
+                "next_milestone": milestone,
+                "accountability": transition_claim("Example delivery lead owns the next review."),
+                "blocker": transition_claim("The specific customer approval gate is not evidenced.", status="unconfirmed"),
+                "priority_cohorts": ["fulfillment", "vip"] if name == "Aster Example" else ["fulfillment"] if name == "Birch Example" else [],
+                "attention": name == "Aster Example",
+                "attention_reason": "Confirm approval before any customer cutover." if name == "Aster Example" else "",
+            },
+        }
+        customers.append(customer)
+    business = {
+        "verdict": "stable", "verdict_reason": "Synthetic operational estimate is above its quarter-start baseline.",
+        "weekly_sales": None, "weekly_sales_note": "A governed synthetic weekly sales cohort was not verified.",
+        "latest_arr_period": None, "latest_arr_note": "A complete synthetic Finance ARR bridge was not verified.",
+        "quarter": None, "quarter_note": "A governed synthetic quarter scoreboard was not verified.",
+        "salesforce_operational_snapshot": {
+            "as_of_date": REPORT_DATE, "quarter_label": "Q3 FY27", "quarter_start_arr": 1000,
+            "current_arr": 1100, "net_arr_change": 100, "net_arr_change_pct": 10,
+            "opening_cohort_current_arr": 900, "opening_cohort_change": -100,
+            "new_or_unsnapshotted_arr": 200, "paying_accounts": 10, "paid_licenses": 15,
+            "method_note": "Synthetic Salesforce operational estimate; not a Finance-certified ARR bridge.",
+            "comparison": {"previous_snapshot_date": None, "arr_change_since_previous": None,
+                           "paying_account_change": None, "paid_license_change": None,
+                           "comparison_note": "A compatible precise prior synthetic snapshot is unavailable."},
+        },
+    }
+    return {
+        "report_markdown": f"# Weekly Agentic Customer Review — {REPORT_DATE}\n",
+        "agent_request_id": "synthetic-transition-review", "data_status": "complete", "failures": [],
+        "snapshot": {
+            "schema_version": 7, "report_date": REPORT_DATE, "generated_at": REPORT_NOW.isoformat(),
+            "comparison_window": {"start": "2026-09-14", "end": "2026-09-20", "label": "September 14–20, 2026"},
+            "source_status": {source: {"status": "ok", "queried_at": REPORT_NOW.isoformat(), "links": [f"https://example.com/{source}"], "access_mode": "read_only"} for source in ("salesforce", "jira", "glean")},
+            "executive_read": {"paragraph": "A synthetic fulfillment plan advanced while a live customer considers migration. A proposed migration does not establish customer acceptance or a completed cutover.", "confidence": "medium", "links": ["https://example.com/strategy"]},
+            "coverage": {"status": "partial", "note": "Synthetic admitted roster retained; several decision claims still need primary evidence.", "links": ["https://example.com/roster"]},
+            "summary": {"active_customer_count": 3, "movers_7d": 1, "customers_with_changed_blockers_7d": 0, "customers_without_current_data": 2, "commercial_moves_7d": 0},
+            "customers": customers, "business_health": business,
+            "strategy_updates": [transition_claim("A synthetic transition priority was agreed.")],
+            "priority_cohorts": [
+                {"key": "fulfillment", "label": "Synthetic signed fulfillment", "reported_count": 6,
+                 "evidence_date": "2026-09-18", "links": ["https://example.com/fulfillment-priority"],
+                 "matched_customers": ["Aster Example", "Birch Example"], "note": "Synthetic source count; not completed migrations."},
+                {"key": "vip", "label": "Synthetic VIP migration", "reported_count": 2,
+                 "evidence_date": "2026-09-18", "links": ["https://example.com/vip-priority"],
+                 "matched_customers": ["Aster Example"], "note": "This priority overlaps the synthetic fulfillment cohort."},
+            ],
+            "unknowns": ["A precise approval gate is missing for individual claims, rather than the entire customer record."],
+            "changes_since_previous": ["The synthetic admitted roster is unchanged."],
+        },
+    }
+
+
 class FakeArchive:
     def __init__(self, duplicate: bool = False, ambiguous_draft: bool = False) -> None:
         self.duplicate = duplicate
@@ -485,6 +582,333 @@ class FakeRelayArchive(FakeArchive):
         if report_date != REPORT_DATE:
             raise AssertionError(report_date)
         return "source-7", self.source_message
+
+
+class TransitionReviewTests(unittest.TestCase):
+    def validate(self, result=None):
+        return validate_agent_result(
+            result or valid_transition_result(), report_now=REPORT_NOW,
+            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+        )
+
+    def test_transition_keeps_live_service_separate_from_proposed_vip_migration(self):
+        report, snapshot = self.validate()
+        customer = snapshot["customers"][0]
+        self.assertEqual(customer["lifecycle_stage"], "live")
+        self.assertEqual(customer["transition"]["route"], "ada_migration")
+        self.assertNotIn("customer_insight", customer)
+        self.assertIn("Example voice service remains live. (Verified · 2026-09-18", report)
+        self.assertIn("Consider an Ada migration while the existing service stays live. (Proposed", report)
+        self.assertIn("3 customer records · 1 with verified current-service evidence · 2 without verified current-service evidence", report)
+        self.assertIn("Example CRM (connected)", report)
+        self.assertIn("Recorded Agentic contract ACV: $1K.", report)
+        self.assertIn("not recognized revenue or a new Ada sale", report)
+
+    def test_transition_highlights_link_to_one_canonical_record_per_customer(self):
+        report, _ = self.validate()
+        changes = report.split("## What changed this week", 1)[1].split("## Priority context", 1)[0]
+        highlights = report.split("## Customer transition", 1)[1].split("## Decisions needing attention", 1)[0]
+        decisions = report.split("## Decisions needing attention", 1)[1].split("## Company", 1)[0]
+        self.assertIn("Birch Example", changes)
+        self.assertNotIn("Aster Example", changes)
+        self.assertIn("Aster Example", highlights)
+        self.assertIn("Birch Example", highlights)
+        self.assertNotIn("Cedar Example", highlights)
+        self.assertIn("Aster Example", decisions)
+        self.assertNotIn("Birch Example", decisions)
+        rendered = markdown_to_email_html(report)
+        for customer in valid_transition_result()["snapshot"]["customers"]:
+            self.assertEqual(report.count(f"### {customer['account_name']}\n"), 1)
+        anchors = re.findall(r'<h3 id="(customer-[a-f0-9]{16})"', rendered)
+        self.assertEqual(len(anchors), 3)
+        self.assertTrue(set(re.findall(r'href="#(customer-[a-f0-9]{16})"', rendered)).issubset(set(anchors)))
+        self.assertNotIn("| Customer |", report)
+
+    def test_transition_missing_claim_proof_is_preserved_without_zero_fill(self):
+        report, snapshot = self.validate()
+        claim = snapshot["customers"][2]["transition"]["current_service"]
+        self.assertIsNone(claim["evidence_date"])
+        self.assertEqual(claim["links"], [])
+        self.assertIn("A dated service confirmation is missing. (Unconfirmed)", report)
+        self.assertIn("Missing amounts are not zero.", report)
+        cedar = report.split("### Cedar Example\n", 1)[1]
+        self.assertNotIn("Recorded Agentic contract ACV:", cedar)
+        self.assertNotIn("ACV is not established", report)
+        self.assertIn("The last source records an unlaunched pilot. (Last known · 2026-09-18", report)
+
+    def test_transition_claim_status_and_evidence_checks(self):
+        cases = (
+            ("text", "", "text"), ("text", "x" * 321, "text"),
+            ("status", "complete", "status"), ("evidence_date", None, "evidence_date"),
+            ("evidence_date", "2026-09-22", "future dated"),
+            ("evidence_date", "2026-02-30", "ISO date"),
+            ("links", [], "HTTPS evidence"), ("links", ["http://example.com/source"], "HTTPS evidence"),
+        )
+        for field, value, reason in cases:
+            with self.subTest(field=field, value=value):
+                result = valid_transition_result()
+                result["snapshot"]["customers"][0]["transition"]["current_service"][field] = value
+                with self.assertRaisesRegex(ValidationError, reason):
+                    self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["transition"]["blocker"].pop("evidence_date")
+        with self.assertRaisesRegex(ValidationError, "explicit null"):
+            self.validate(result)
+
+    def test_transition_each_claim_retains_its_own_status(self):
+        for status in ("verified", "last_known", "proposed", "unconfirmed"):
+            with self.subTest(status=status):
+                result = valid_transition_result()
+                result["snapshot"]["customers"][0]["transition"]["decision"] = transition_claim("A synthetic decision position.", status=status)
+                report, snapshot = self.validate(result)
+                self.assertIn(f"A synthetic decision position. ({status.replace('_', ' ').capitalize()}", report)
+                self.assertEqual(snapshot["customers"][0]["transition"]["current_service"]["status"], "verified")
+
+    def test_transition_milestone_proposal_never_renders_as_a_commitment(self):
+        report, _ = self.validate()
+        aster = report.split("### Aster Example\n", 1)[1].split("### Birch Example\n", 1)[0]
+        self.assertIn("Proposed target: 2026-10-05", aster)
+        self.assertNotIn("Committed target", aster)
+        self.assertIn("Committed target: 2026-10-12", report)
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["transition"]["next_milestone"]["date_status"] = "committed"
+        with self.assertRaisesRegex(ValidationError, "committed date requires verified"):
+            self.validate(result)
+
+    def test_transition_target_dates_and_evidence_dates_have_separate_rules(self):
+        for target, date_status in ((None, "proposed"), ("2026-10-05", "none"), ("not-a-date", "committed")):
+            with self.subTest(target=target, date_status=date_status):
+                result = valid_transition_result()
+                result["snapshot"]["customers"][0]["transition"]["next_milestone"].update(target_date=target, date_status=date_status)
+                with self.assertRaisesRegex(ValidationError, "target_date"):
+                    self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["transition"]["next_milestone"]["evidence_date"] = "2026-10-05"
+        with self.assertRaisesRegex(ValidationError, "future dated"):
+            self.validate(result)
+
+    def test_transition_attention_needs_a_bounded_specific_reason(self):
+        for field, value in (("attention", 1), ("attention_reason", ""), ("attention_reason", None), ("attention_reason", "x" * 321)):
+            with self.subTest(field=field):
+                result = valid_transition_result()
+                result["snapshot"]["customers"][0]["transition"][field] = value
+                with self.assertRaisesRegex(ValidationError, field):
+                    self.validate(result)
+
+    def test_transition_cohorts_allow_overlap_and_report_unmapped_without_adding_totals(self):
+        report, _ = self.validate()
+        section = report.split("## Priority context", 1)[1].split("## Customer transition", 1)[0]
+        self.assertIn("6 reported · 2 matched · 4 unmapped", section)
+        self.assertIn("2 reported · 1 matched · 1 unmapped", section)
+        self.assertIn("not additive portfolio totals or completed migrations", section)
+        self.assertNotIn("8 reported", section)
+        self.assertNotIn("%", section)
+
+    def test_transition_cohort_count_requires_reported_integer_evidence(self):
+        for value in (-1, 1.5, True, None, "6"):
+            with self.subTest(value=value):
+                result = valid_transition_result()
+                result["snapshot"]["priority_cohorts"][0]["reported_count"] = value
+                with self.assertRaisesRegex(ValidationError, "nonnegative integer"):
+                    self.validate(result)
+        for field, value in (("evidence_date", None), ("links", [])):
+            result = valid_transition_result()
+            result["snapshot"]["priority_cohorts"][0][field] = value
+            with self.assertRaisesRegex(ValidationError, field):
+                self.validate(result)
+
+    def test_transition_cohort_membership_rejects_duplicates_unknowns_and_inconsistency(self):
+        cases = (
+            ("matched_customers", ["Aster Example", "Aster Example"], "unique"),
+            ("matched_customers", ["Absent Example"], "canonical"),
+            ("matched_customers", ["Aster Example"], "reciprocal"),
+            ("reported_count", 1, "cannot exceed"),
+        )
+        for field, value, reason in cases:
+            with self.subTest(field=field, value=value):
+                result = valid_transition_result()
+                result["snapshot"]["priority_cohorts"][0][field] = value
+                with self.assertRaisesRegex(ValidationError, reason):
+                    self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["priority_cohorts"].append(copy.deepcopy(result["snapshot"]["priority_cohorts"][0]))
+        with self.assertRaisesRegex(ValidationError, "unique nonempty cohort key"):
+            self.validate(result)
+        for tags in (["vip", "vip"], ["missing-cohort"]):
+            result = valid_transition_result()
+            result["snapshot"]["customers"][2]["transition"]["priority_cohorts"] = tags
+            with self.assertRaisesRegex(ValidationError, "cohort"):
+                self.validate(result)
+
+    def test_transition_rejects_casefold_duplicate_customers(self):
+        result = valid_transition_result()
+        result["snapshot"]["customers"][1]["account_name"] = "ASTER EXAMPLE"
+        with self.assertRaisesRegex(ValidationError, "case-insensitive duplicate"):
+            self.validate(result)
+
+    def test_transition_strategy_updates_need_dated_evidence(self):
+        result = valid_transition_result()
+        result["snapshot"]["strategy_updates"][0] = transition_claim("A strategy source has not been located.", status="unconfirmed")
+        with self.assertRaisesRegex(ValidationError, "evidence_date"):
+            self.validate(result)
+
+    def test_transition_source_health_freshness_and_privacy_still_gate_delivery(self):
+        for source in ("salesforce", "jira", "glean"):
+            result = valid_transition_result()
+            result["snapshot"]["source_status"][source]["status"] = "timeout"
+            with self.assertRaisesRegex(IntegrationError, source):
+                self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["source_status"]["salesforce"]["queried_at"] = "2026-09-20T08:00:00+05:30"
+        with self.assertRaisesRegex(ValidationError, "stale"):
+            self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["transition"]["credentials"] = "synthetic forbidden storage"
+        with self.assertRaisesRegex(ValidationError, "forbidden"):
+            self.validate(result)
+
+    def test_transition_parser_and_request_route_to_schema7(self):
+        result = valid_transition_result()
+        customer = result["snapshot"]["customers"][0]
+        customer["name"] = customer.pop("account_name")
+        source = result["snapshot"]["source_status"]["glean"]
+        source["evidence_links"] = source.pop("links")
+        parsed = parse_glean_draft(glean_source_draft(result), report_date=REPORT_DATE, workflow_url=WORKFLOW_URL)
+        _, snapshot = self.validate(parsed)
+        self.assertEqual(snapshot["schema_version"], 7)
+        self.assertEqual(snapshot["customers"][0]["account_name"], "Aster Example")
+        request = build_agent_request(report_now=REPORT_NOW, skill_text="Synthetic instructions.", previous_snapshot=None, workflow_url=WORKFLOW_URL, source_context=())
+        self.assertEqual(request["response_contract"]["snapshot_schema_version"], 7)
+
+    def test_transition_company_health_hook_gets_only_trusted_review_window(self):
+        result = valid_transition_result()
+        result["snapshot"]["business_health"]["_review_window_label"] = "Untrusted producer label"
+        with patch("pulse_transition_company_health.render_transition_company_health", return_value=["", "## Company revenue and sales", "", "Synthetic company section."]) as render:
+            report, snapshot = self.validate(result)
+        business = render.call_args.args[0]
+        self.assertEqual(business["_review_window_label"], "September 14–20, 2026")
+        self.assertEqual(snapshot["business_health"]["_review_window_label"], "Untrusted producer label")
+        self.assertIn("## Company revenue and sales", report)
+
+    def test_transition_company_numbers_render_as_a_compact_metric_table(self):
+        report, _ = self.validate()
+        rendered = markdown_to_email_html(report)
+        self.assertIn('class="pulse-company-metrics"', rendered)
+        self.assertIn('<th align="left" scope="col"', rendered)
+        self.assertNotIn('class="pulse-customer-card"', rendered)
+        self.assertIn("Annual recurring contract value", rendered)
+
+    def test_transition_preserves_producer_consequence_order_in_main_sections(self):
+        result = valid_transition_result()
+        customers = result["snapshot"]["customers"]
+        customers[1]["transition"].update(attention=True, attention_reason="A committed customer checkpoint needs a decision.")
+        result["snapshot"]["customers"] = [customers[1], customers[0], customers[2]]
+        report, _ = self.validate(result)
+        highlights = report.split("## Customer transition", 1)[1].split("## Decisions needing attention", 1)[0]
+        decisions = report.split("## Decisions needing attention", 1)[1].split("## Company", 1)[0]
+        self.assertLess(highlights.index("Birch Example"), highlights.index("Aster Example"))
+        self.assertLess(decisions.index("Birch Example"), decisions.index("Aster Example"))
+        self.assertIn("A synthetic fulfillment plan was approved.", highlights)
+        self.assertIn("Confirm approval before any customer cutover.", highlights)
+        self.assertIn("Next checkpoint: Review the synthetic transition plan. (committed target: 2026-10-12)", decisions)
+        self.assertLess(report.index("### Aster Example"), report.index("### Birch Example"))
+
+    def test_transition_renders_only_unique_optional_product_interpretations(self):
+        result = valid_transition_result()
+        customers = result["snapshot"]["customers"]
+        result["snapshot"]["insights"] = [
+            {"account_name": customers[0]["account_name"], "text": customers[0]["next_watch"].upper(), "links": ["https://example.com/repeated-context"]},
+            {"account_name": customers[1]["account_name"], "text": "A shared approval summary could help customers distinguish a proposal from a committed cutover.", "links": ["https://example.com/design-context"]},
+        ]
+        report, _ = self.validate(result)
+        section = report.split("### Product and design implications", 1)[1].split("## Company", 1)[0]
+        self.assertIn("proposed consideration", section)
+        self.assertIn("shared approval summary", section)
+        self.assertNotIn(customers[0]["next_watch"].upper(), section)
+        self.assertNotIn("Aster Example", section)
+        result["snapshot"]["insights"] = result["snapshot"]["insights"][:1]
+        report, _ = self.validate(result)
+        self.assertNotIn("### Product and design implications", report)
+
+    def test_transition_carries_forward_supported_commitments_without_new_research_tasks(self):
+        result = valid_transition_result()
+        result["snapshot"]["changes_since_previous"] = ["The previously committed synthetic checkpoint remains October 12; no earlier cutover was approved."]
+        report, _ = self.validate(result)
+        changes = report.split("## What changed this week", 1)[1].split("## Priority context", 1)[0]
+        self.assertIn("Since the previous review", changes)
+        self.assertIn("previously committed synthetic checkpoint remains October 12", changes)
+        decisions = report.split("## Decisions needing attention", 1)[1].split("## Company", 1)[0]
+        self.assertNotIn("Cedar Example", decisions)
+        self.assertEqual(report.count("A dated service confirmation is missing."), 1)
+
+    def test_transition_keeps_existing_jira_commercial_and_health_validation(self):
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["jira"].pop("note")
+        with self.assertRaisesRegex(ValidationError, "jira.note"):
+            self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["commercial"]["agentic_acv"] = -1
+        with self.assertRaisesRegex(ValidationError, "cannot be negative"):
+            self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["business_health"].pop("weekly_sales_note")
+        with patch("pulse_transition_company_health.render_transition_company_health") as render:
+            with self.assertRaisesRegex(ValidationError, "weekly_sales_note"):
+                self.validate(result)
+        render.assert_not_called()
+
+
+class CompanyContextTests(unittest.TestCase):
+    def validate(self, result):
+        return validate_agent_result(
+            result, report_now=REPORT_NOW, source_max_age_hours=12,
+            workflow_url=WORKFLOW_URL,
+        )
+
+    def test_dated_company_context_is_separate_from_weekly_change(self):
+        result = valid_transition_result()
+        text = "A prior-period combined run-rate was reported on a pro forma, unaudited basis."
+        result["snapshot"]["company_context"] = [{
+            "text": text, "status": "last_known", "evidence_date": "2026-07-31",
+            "links": ["https://example.com/company-briefing"],
+        }]
+        report, _ = self.validate(result)
+        self.assertNotIn(text, report.split("## What changed this week")[1].split("## Priority context")[0])
+        self.assertIn(text, report.split("### Company context and outlook")[1])
+
+    def test_unknown_company_profit_does_not_become_zero(self):
+        result = valid_transition_result()
+        result["snapshot"]["company_context"] = [{
+            "text": "Current profit and cash-flow statements were not available in the authorized sources reviewed.",
+            "status": "unconfirmed", "evidence_date": None, "links": [],
+        }]
+        report, _ = self.validate(result)
+        self.assertIn("Current profit and cash-flow statements", report)
+        self.assertNotIn("profit: $0", report)
+
+    def test_company_context_retains_claim_evidence_and_size_gates(self):
+        base = {"text": "A dated corporate update.", "status": "verified", "evidence_date": REPORT_DATE,
+                "links": ["https://example.com/company-update"]}
+        for change in ({"evidence_date": "2027-01-01"}, {"links": []}):
+            with self.subTest(change=change):
+                result = valid_transition_result()
+                result["snapshot"]["company_context"] = [{**base, **change}]
+                with self.assertRaisesRegex(ValidationError, "company_context"):
+                    self.validate(result)
+        result = valid_transition_result()
+        result["snapshot"]["company_context"] = [base] * 9
+        with self.assertRaisesRegex(ValidationError, "at most eight"):
+            self.validate(result)
+
+    def test_proposed_milestone_date_cannot_be_invented_without_support(self):
+        result = valid_transition_result()
+        result["snapshot"]["customers"][0]["transition"]["next_milestone"] = {
+            "text": "An assessment date is not established.", "status": "unconfirmed",
+            "evidence_date": None, "links": [], "target_date": "2026-10-05",
+            "date_status": "proposed",
+        }
+        with self.assertRaisesRegex(ValidationError, "dated target requires sourced"):
+            self.validate(result)
 
 
 class PulseValidationTests(unittest.TestCase):

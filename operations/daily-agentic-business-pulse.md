@@ -1,119 +1,99 @@
 # Weekly Agentic Customer Review operations
 
-## Customer portfolio revision
+Workflow: Daily Agentic Business Pulse (existing repository/workflow name retained). Human email: Weekly Agentic Customer Review — YYYY-MM-DD. The active producer contract is [schema 7](../skills/daily-agentic-business-pulse/SKILL.md); schema-1 through schema-6 compatibility is for existing readers only.
 
-Schema 6 adds evidence-dated customer_insight and portfolio coverage. Review all known customers already admitted to Agentic delivery, including EAP/pilots and quiet engagements. Reconcile PM/customer communications, agreements, workbooks and CRM before using Jira as supporting context. Distinguish commercial/partner gates from technical defects. Retain stale-status customers as unconfirmed, with explicit coverage gaps. The renderer removes Jira counts and duplicate analysis and shows customer position, primary dependency, owner and implication. See the schema-6 correction at the start of the report contract for the exact fields and precedence.
+## Purpose and evidence boundary
 
-Every customer audit must be attempted and recorded, but it may complete as verified or unconfirmed. Missing individual primary documents or unresolved status conflicts become explicit row-level gaps if the source family is healthy and admission/identity remains verified. Do not fabricate missing support or current status. Reconcile supported roster additions and aliases rather than forcing a prior generated report's count. Partial coverage and properly audited unconfirmed rows do not populate `failures`; `data_status: complete` describes a safely completed procedure. Source-family failures, unverifiable admission, skipped audits, and unsupported verified claims still block delivery.
+The review supports business awareness, anticipation, and product judgment. Explain changed selling/fulfillment/support model, source-backed business constraints, and customer consequences rather than producing a delivery evidence ledger or a list of proof-gathering tasks. Retain the full admitted portfolio and qualify service, direction, approval, milestone, accountability, and blocker independently. Missing documentation is not automatically a customer decision or failure.
 
-Manual test_send supports a real current-date midweek test. Scheduled reports remain Monday-only; test permission never changes production cadence. Test comparisons begin seven days before the latest Monday and end yesterday; source freshness and delivery protections remain required.
+Company-source access stays read-only. Research runs inside private Glean Agent 8f3fd6d966c64916b11b505a580ff64f. Source order is written leadership decisions, current migration/fulfillment inventory, PM/customer workbooks and communications, exact Salesforce admission/commercial identity, then Jira supporting evidence. Generated reports and agent recaps are discovery only; re-read primary evidence. Query or document modification time never replaces substantive claim date.
 
-Workflow: `Daily Agentic Business Pulse` (repository workflow name retained)
+Salesforce, Jira, and Glean must be healthy, linked, fresh, and recorded with access_mode: read_only. Receipts use actual successful read/query times, at most 12 hours old and at most 10 minutes future-dated. Optional code context needs a receipt when used and never proves acceptance. Inaccessible individual documents become precise claim gaps when the source family is healthy; they never excuse skipping the audit.
 
-Delivery is Monday at 09:00 `Asia/Kolkata`. The user-facing email is `Weekly Agentic Customer Review — YYYY-MM-DD`.
+No source writes, repository changes, customer outreach, grants/configuration, permission bypass, or customer-system exports during report generation. The research agent's only write is approved Gmail Create Draft for the source envelope. Protected relay Gmail persistence/delivery is separate. No BigQuery, Pinot, Agentic Analytics, inferred usage/outcome telemetry, raw conversations, transcripts, prompts, tool arguments, customer payloads, credentials, or secrets belong in the review.
 
-The review opens with `Executive signal`: one evidence-backed paragraph containing an authored point of view on the strongest decision-relevant change. It may use relevant current market evidence, but it does not repeat static company history, expose its source mechanics, or include Amit's personal work. The named Agentic customers and verified movement remain the operating detail. `CEO View — Company Health` provides a compact company-level scorecard: current bookings mix, latest correctly labeled ARR movement, customer and license direction, and fiscal-quarter progress. It is not a copy of the restricted CEO dashboard.
+## Schedule and date rules
 
-## Schedule
+The private Glean Agent runs Monday 08:00 Asia/Kolkata; protected delivery is Monday 09:00. Unchanged GitHub Monday fallback times: 04:07, 04:47, 05:53, 07:07, and 09:07 IST. UTC cron expressions: 37 22 * * 0; 17 23 * * 0; 23 0 * * 1; 37 1 * * 1; 37 3 * * 1. A cron event is not a guaranteed start time.
 
-The private Glean Agent runs Mondays at 08:00 IST. GitHub has five Monday-only fallback cron events beginning at 04:07, 04:47, 05:53, 07:07, and 09:07 IST. The first runner released waits until 09:00 before checking Gmail; later runs exit after the first accepted send.
+The first released scheduled runner waits until 09:00 IST, then polls Gmail every 30 seconds for up to 1,800 seconds. Runs are serialized with concurrency group daily-agentic-business-pulse, cancel-in-progress: false, and 345-minute job timeout. Later runs check accepted-send idempotency and skip duplicates. A fallback relay does not rerun research.
 
-Manual `workflow_dispatch` supports a no-send dry run and never waits for 09:00.
+Scheduled report_date is actual Monday IST; comparison window is preceding Monday through Sunday. Manual workflow_dispatch dry_run and protected test_send never wait until 09:00. Only explicitly requested test_send permits another current IST date; its window starts seven days before latest Monday and ends yesterday. Tests do not change cadence or permit stale/backdated evidence.
 
-## Source and safety boundary
+## Schema 7 operating checks
 
-Company-data collection runs inside private Glean Agent `8f3fd6d966c64916b11b505a580ff64f`.
+Read the full active contract before changing the private agent:
 
-Required read-only sources:
+- Retain every admitted customer. Reconcile prior delivered roster, exact aliases/identities, primary delivery entry, and additional inventory candidates. Broader inventory is not admission. Explain supported additions, explicit exits, and alias corrections; unresolved differences require partial coverage, not a forced count.
+- Carry forward pending commitments/checkpoints: did proof arrive, slip, or remain unresolved? Missing evidence alone does not establish a missed commitment.
+- Require base customer fields and transition.route; six claims current_service, direction, decision, next_milestone, accountability, blocker; reciprocal priority tags; attention fields. Every claim independently has text/status/substantive date/primary links. Known service survives missing decision evidence.
+- Non-unconfirmed claims need substantive date <= report date and primary links. Unconfirmed claims may have explicit null date and empty links but identify precise missing proof. Proposed migration is not approved migration, target is not commitment, migration work is not accepted completion, and coordinator is not automatically accountable.
+- Milestone date_status none pairs with null target_date. Proposed/committed require ISO target date; committed also requires verified primary support from the appropriate party. Proposed dates stay visibly proposed.
+- Priority reported counts and exact matched names are separate. Unique cohort keys/memberships must reciprocate row tags. Different cohorts can overlap. Show unmatched remainder; never add priority counts or assume every priority customer is live.
+- Summary derives exactly from rows. customers_without_current_data means current_service.status is not verified, not whole-customer ignorance. Continuing holds are no_change; failing requires a newly changed blocking dependency. Recommendations, tags, or newly discovered old records alone are not weekly movement.
+- Attempt and privately record every source-to-conclusion row/claim audit. Never promote a recap to evidence, a closed ticket to acceptance, or a contractual/access gate to inferred technical cause.
+- Jira counters retain schema-6 nullable semantics: both fields present; null only with specific row note and visible gap; validated keys retained. Cited-key length and updated time do not prove full counts or material changes. Never substitute zero. Jira source health/freshness stays mandatory.
 
-- Salesforce for exact-match identity, journey/commercial stage, use case, and Agentic-specific value for customers already named in current evidence.
-- Jira for customer-impacting bugs and issues changed in the weekly window.
-- Glean company search, documents, email, and calendar for customer context and the weekly Agentic newsletter.
-- Already-authorized Finance, RevOps, billing/ARR, or governed analytics sources for company-health metrics. Never bypass a permission boundary.
-- Production code only when a changed customer blocker needs implementation context; it is not required for an unchanged review.
+Render order is Executive signal; What changed this week; Priority context; Customer transition; Decisions needing attention; Company revenue and sales; Full roster and evidence gaps. Main highlights/attention preserve producer order by consequence and credible deadline; full canonical roster is alphabetical. Routine appointments do not outrank more consequential commitments. Each customer has one full record; highlights refer to it.
 
-The review does not use BigQuery, Pinot, or Agentic Analytics. It never claims conversations, action-success, containment, resolution, CSAT, or other product telemetry.
+Keep purpose/systems, dated position/direction, actual decision, qualified milestone, accountable role/coordinator, blocker, and Agentic contract ACV visible. Avoid duplicate stories, six generic unknown columns, ticket-count tables, and a fixed word cap that drops customers. An optional one- or two-item Product and design implications section uses grounded unique insights, never repeats next_watch or assigns PS work to Amit. Strategy updates may include source-backed money constraints with precise label and owner; they are not automatically earned revenue/bookings/forecast.
 
-No Salesforce or Jira writes, repository writes, source-system configuration, permissions changes, exports, or customer-system mutations are allowed. The only Glean Agent write is Gmail MCP `Create Draft` for the internal relay envelope.
+## Company measures
 
-## Internal source draft
+Optional company_context carries at most eight individually qualified claims about Ada, the combined company, financial evidence gaps, or a supported outlook. Keep entity, period and source quality explicit. Historical/pro forma/publicly reported values are not fresh certified results and cannot be added to the Dialpad-only operational snapshot. Apply normal claim validation; no invented profit, cash, valuation or three-month forecast.
 
-The Glean Agent creates exactly one draft:
+Revenue fields/validation remain unchanged. The schema-7 compact helper presents numbers first with real periods, scoped interpretation, and specific unavailable notes. It does not fetch data, certify estimates, redefine measures, or infer broad company strengthening from one ARR metric. Profit, cash, valuation, and outlook stay unproven unless separately sourced.
 
-- Subject: `[INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD`
-- To: `amit.ayre@dialpad.com`
-- No Cc, Bcc, or attachments
-- One schema-version-6 JSON block between the established machine markers
+The mandatory fresh Salesforce snapshot is annual recurring contract value from Dialpad's own Salesforce Account records, not a customer's CRM, earned revenue, or the Finance-certified ARR bridge. Preserve positive quarter-start cohort, its current ARR, positive ARR without opening snapshot, and all arithmetic. Label paid_licenses licenses on paying accounts: sum Total_Dialpad_License__c where Customer__c is true and ARR__c positive. Opening-cohort change is not churn/retention; the entire new/unsnapshotted bucket is not new growth.
 
-The internal draft must never be sent manually. The GitHub relay ignores its narrative, validates the structured snapshot, and deterministically renders the final matrix.
+Prior-report comparisons require stored like-for-like fields, cohort and currency, not rounded human email. Otherwise prior date/changes stay null with specific baseline note. Finance ARR retains actual reporting grain or explicit latest_arr_period null plus latest_arr_note; never substitute old bridges, zeros, or operational estimates.
 
-Schema version 5 requires everything in version 4 plus:
+Available bookings need governed common company/Agentic scope, dates, stages, exclusions/subtypes, and currency conversion. Opportunity.Agent_AI_ACV__c is the dedicated amount; Product Interest does not classify whole-opportunity ACV as Agentic. Broad won totals alone are not governed bookings. Never clip adjustments, count fulfillment/migration as a new sale, or combine Ada/Dialpad ARR without reconciled entity/currency/cohort.
 
-- Fresh read-only receipts for Salesforce, Jira, and Glean, plus production code only when used.
-- The previous Monday-through-Sunday comparison window.
-- At least one named customer with a specific verified weekly signal.
-- One lifecycle and movement state per customer.
-- Agent/use case, integrations, weekly change, Jira state, commercial state, and next watch.
-- A summary derived exactly from customer rows.
-- Evidence-linked analysis for included customer signals when it clarifies implications or how Amit can help.
-- A `business_health` object rendered after the Agentic story.
-- A fresh Monday read-only Salesforce operational snapshot with current ARR, quarter-start ARR, opening-cohort movement, new/reactivated/previously unsnapshotted ARR, paying accounts, and paid licenses.
-- A like-for-like comparison with the prior Monday's stored Salesforce snapshot when available; the first run establishes the baseline.
-- Dialpad fiscal quarters: Q1 February–April, Q2 May–July, Q3 August–October, Q4 November–January.
-- An authoritative Finance or RevOps source for the overall quarterly target. Sample dashboard values, incomplete quota aggregates, and inferred targets are rejected.
-- When the target is unverified, actual and forecast values may still appear, but target, attainment, gap, and required pace remain null with a specific target note.
-- When the latest monthly ARR bridge is unavailable from a current authorized source, `latest_arr_period` is null and `latest_arr_note` states the precise gap. The verified Agentic review, bookings, and quarter data remain deliverable; old, zero-filled, or estimated ARR values are never substituted.
-- An `executive_read` rendered before all operating detail as one paragraph: the strongest current-week signal, why it matters now, and the next observable proof.
-- No Dialpad Tap or other personal-project content. Stable company history is omitted unless new evidence changes its implication.
-- Restructuring, strategy, or leadership-intent claims only when supported by approved written company evidence. Private conversation may guide research but is never published as evidence.
+When scope cannot be verified, explicit weekly_sales null plus weekly_sales_note, and/or quarter null plus quarter_note, preserve safe customer review without substitute metrics/shares. Notes are nonempty <=320 characters; missing keys fail. Available objects keep every numeric/arithmetic gate and no unavailable note. Either null bookings object requires fresh current-report-date Salesforce snapshot and correct fiscal-quarter label.
 
-The Salesforce snapshot is an operational estimate, not the restricted Finance-certified ARR bridge. Its arithmetic must reconcile, its method note must state the distinction, and opening-cohort movement must not be labeled churn or retention.
+Q1 is February–April, Q2 May–July, Q3 August–October, Q4 November–January. Missing only the official Finance/RevOps target retains quarter actuals/available forecasts with target, attainment, gap, and required pace null plus target_note. Never infer company targets from sample dashboards, incomplete quotas, or subset plans. Leadership ambition remains a target. Full technical methods/receipts remain private; human presentation stays concise.
 
-Bookings context can be explicitly unavailable while the verified customer review and fresh Salesforce operational snapshot remain deliverable. Use `weekly_sales: null` plus a specific `weekly_sales_note`, and/or `quarter: null` plus a specific `quarter_note`; each note is nonempty and at most 320 characters. The renderer shows the gaps without substitute numbers or derived percentages. The operational snapshot still requires its real fiscal quarter label. Available sections retain all arithmetic, numeric, source, and freshness checks. Missing only an official target continues to use the established null-target quarter object.
+## Private source draft and protected delivery
 
-The Agentic monetary field is `Opportunity.Agent_AI_ACV__c`, not a whole-opportunity sum filtered by Product Interest. Reconcile the company-bookings cohort, dates, won stages, revenue/subtype/exclusion rules and currencies before deriving core or share. Broad won-opportunity ACV totals alone do not establish governed company bookings. Never clip signed adjustments, invent a currency conversion, or silently redefine bookings to pass validation.
+After all gates pass, create exactly one source draft:
 
-Schema-6 Jira audit counts may be explicit null with a specific per-row `jira.note` (nonempty, at most 320 characters) and a visible `unknowns` explanation. This is for unverified complete issue coverage or material-change history, not a substitute zero. Validated mapped keys remain required; key-list length and an `updated` timestamp alone do not establish the counters. Available values and all older schemas keep their existing numeric validation, and current read-only Jira source health remains required.
+- Subject: [INTERNAL RELAY — DO NOT SEND] Weekly Agentic Customer Review — YYYY-MM-DD
+- To: amit.ayre@dialpad.com; no Cc, Bcc, or attachments.
+- Human preview then one schema-7 JSON envelope between ---BEGIN PULSE MACHINE JSON--- and ---END PULSE MACHINE JSON---.
 
-## Delivery protection
+Never send the internal draft manually. The relay ignores narrative, validates snapshot, deterministically renders final body, and persists the protected body-only Gmail delivery draft before SMTP. Final email has no attachments or machine JSON.
 
-The final report recipient is stored in the protected `PULSE_RECIPIENTS` repository secret rather than exposed as workflow configuration. It must contain only Amit's approved Dialpad address. Amit is placed in Bcc; To contains only `undisclosed-recipients:;` and Cc is absent. SMTP removes the Bcc header from the transmitted message. Any missing, additional, duplicate, different, or visible final recipient fails before SMTP. The internal Glean relay draft also remains addressed only to Amit.
+Final recipients come only from protected PULSE_RECIPIENTS: Amit's single approved address, Bcc only. To is exactly undisclosed-recipients:;, Cc absent; SMTP strips Bcc. Missing/additional/duplicate/different/visible final recipients fail before SMTP. Source-draft permission never authorizes a different recipient.
 
-The live email and failure notification use deterministic IST-date Message-IDs. Gmail Sent is checked before delivery, so retries and fallback schedules cannot send duplicates. The email contains no attachments or machine JSON.
+Live Message-ID is <daily-agentic-business-pulse-YYYY-MM-DD@dialpad.com>; dry-run/test paths have separate keys and protected test subject. Gmail Sent is checked before delivery. Prior accepted send returns duplicate_skipped. A prepared draft with no confirmed Sent record blocks an ambiguous retry rather than risking a second send. Never clear idempotency or bypass persistence to force delivery.
 
-Runtime files are written only to the ephemeral runner for validation and email preparation:
+## Runtime privacy
 
-- `reports/agentic_business_pulse/YYYY-MM-DD.md`
-- `reports/agentic_business_pulse/YYYY-MM-DD.json`
+Validation/preparation files exist only on the ephemeral runner, mode 0600:
 
-This repository is public. Never upload report bodies, snapshots, source drafts or customer evidence as GitHub Actions artifacts, job summaries, logs or repository files. The workflow deliberately has no artifact-upload step. Private Gmail draft persistence remains mandatory before SMTP; the delivered report stays in Gmail. Normalized source evidence and recovery files stay in the private Glean run. Runtime files disappear with the runner.
+- reports/agentic_business_pulse/YYYY-MM-DD.md
+- reports/agentic_business_pulse/YYYY-MM-DD.json
+- reports/agentic_business_pulse/YYYY-MM-DD.run.json
 
-## Failure behavior
+This repository is public. Never upload bodies, snapshots, source drafts, audit excerpts, or evidence as Actions artifacts, logs, summaries, or repository files. The workflow has no artifact-upload step. Public results/logs contain sanitized operational metadata only, never private values/evidence. Private audit/source persistence stays in private Glean runs and approved Gmail drafts/delivered mail; runtime files disappear with the runner. Do not introduce new storage or export destinations.
 
-The normal review fails closed when:
+## Failures and operator interpretation
 
-- a required source is missing, unhealthy, stale, or not marked read-only;
-- no named customer has a specific verified signal in the weekly window;
-- a claimed signal cannot be attributed safely enough to include;
-- the run is not Monday in `Asia/Kolkata`;
-- the comparison window is not the previous Monday through Sunday;
-- summary counts do not match customer rows;
-- customer names, links, Jira keys, or commercial values are invalid;
-- credentials, raw payloads, tool arguments, transcripts, or unredacted email addresses are detected;
-- Gmail persistence, recipient validation, or idempotency checks fail.
+Fail closed for unhealthy/missing/stale/writable required sources; unsafe/unverifiable admission/identity; skipped audits; unsupported verified claims; invalid dates/window/schema/summaries/links/values; privacy violations; or failed recipient/persistence/idempotency gates. Empty admitted roster is invalid.
 
-Expected application failures use the existing once-per-IST-date failure alert. If the notifier fails, the workflow remains failed so GitHub is the final alert path.
+No newly verified movement is not itself failure. Safely audited partial coverage, last-known/proposed/unconfirmed claims, incomplete named priority cohorts, nullable Jira counts, and explicit unavailable optional measures remain visible gaps. Complete means safe procedure, not universal certainty.
+
+Expected failures use once-per-IST-date alert with Message-ID <daily-agentic-business-pulse-failure-YYYY-MM-DD@design-pair-sessions.github>. Sent/already-sent alert yields handled failure and can leave Actions green; green does not prove report delivery. Notifier failure leaves process failed so GitHub is final alert path. Inspect sanitized outcome and Gmail Sent state, never print private source responses or exception payloads.
 
 ## Release verification
 
-1. Run all repository tests and pull-request validation.
-2. Update the private Glean Agent instructions and schedule in draft.
-3. Preview the Agent and confirm a complete schema-v6 snapshot with no source writes. Partial coverage and audited unconfirmed rows are valid; required source-family health and all other hard gates remain mandatory.
-4. Publish only after the preview validates.
-5. Run GitHub with `dry_run=true`.
-6. Confirm one private body-only draft, no SMTP call, only Amit in Bcc, no attachments, no machine JSON, and a readable verified-signal matrix.
-7. Only then run live once.
-8. Confirm Gmail accepts one email delivered only to Amit without exposing the recipient address.
-9. Re-run live and confirm `duplicate_skipped`.
+1. Check active contract against relay/helper and run repository tests/live PR validation with synthetic fixtures.
+2. Update private Glean instructions in draft; preserve read-only access, source envelope, protected recipient, Monday 08:00/09:00 schedule.
+3. Preview current authorized sources. Independently audit roster/admission/aliases, primary support/dates, carried commitments, real movement, cohort reciprocity/remainder, summaries, company scopes/currency/nulls, editorial consequence, and privacy. Generated preview prose is not evidence.
+4. Confirm safe complete schema-7 snapshot. Audited uncertain claims and partial coverage are valid; all required source/admission/audit/schema/privacy gates remain mandatory. Publish only after validation.
+5. Run protected no-send dry_run. Confirm readable body-only private delivery draft, one canonical record per customer, no machine JSON/attachments/public artifacts, approved Bcc only.
+6. Only when explicitly authorized, perform one protected test_send or live send as requested; verify Gmail accepted correct rendered body/recipient without exposing address. Preview alone is not send authorization.
+7. Verify separate test/live idempotency: a repeated authorized delivery with same key must duplicate_skip, not send again.
 
-Fixtures prove structure only. They never prove real customer facts.
+Fixtures prove structure/arithmetic/rendering only, never real customer facts or freshness.
