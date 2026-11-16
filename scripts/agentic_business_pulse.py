@@ -1290,7 +1290,9 @@ def _render_transition_roster_customer(customer: dict[str, Any], cohort_labels: 
         context.append(f"Recorded Agentic contract ACV: {_money(commercial['agentic_acv'])}.")
     if transition["priority_cohorts"]:
         context.append("**Priority context:** " + "; ".join(cohort_labels[key] for key in transition["priority_cohorts"]) + ".")
-    context.append("**Record evidence:** " + _render_roster_sources(customer["links"], sources) + ".")
+    additional_record_links = [link for link in customer["links"] if link not in sources]
+    if additional_record_links:
+        context.append("**Record evidence:** " + _render_roster_sources(additional_record_links, sources) + ".")
     return [
         "", f"### {customer['account_name']}", "",
         f"**Current service:** {claims['current_service']} **Direction — {TRANSITION_ROUTE_LABELS[transition['route']]}:** {claims['direction']}",
@@ -1405,6 +1407,7 @@ def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str
         f"**{len(customers)} customer records · {len(customers) - service_gaps} with verified current-service evidence · "
         f"{service_gaps} without verified current-service evidence.** {snapshot['coverage']['note']}",
         "Claims retain their own status and evidence date; a missing decision or owner does not erase a known service position.",
+        "Reference section: Dialpad service can be a current or interim path, not a permanent exception to the Ada strategy. If your email app clips this long roster, choose View entire message to read every record.",
         "Amounts shown are recorded Agentic contract ACV, not recognized revenue or a new Ada sale. Missing amounts are not zero.",
     ])
     cohort_labels = {cohort["key"]: cohort["label"] for cohort in snapshot["priority_cohorts"]}
@@ -1992,8 +1995,7 @@ def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     def protect_link(match: re.Match[str]) -> str:
         label, target = match.groups()
         links.append(
-            f'<a href="{target}" style="color:{link_color};text-decoration:underline;'
-            f'text-decoration-thickness:1px;text-underline-offset:3px">{label}</a>'
+            f'<a href="{target}" style="color:{link_color}">{label}</a>'
         )
         return f"{token_prefix}{len(links) - 1}\x00"
 
@@ -2143,8 +2145,8 @@ def markdown_to_email_html(report: str) -> str:
             if current_section == "Full roster and evidence gaps":
                 anchor = _transition_customer_anchor(line[4:])
                 parts.append(
-                    f'<h3 id="{anchor}" class="story-headline" style="font-family:Georgia,\'Times New Roman\',serif;font-size:25px;'
-                    f'line-height:1.22;margin:28px 0 10px;color:#24211f">{_inline_markdown(line[4:])}</h3>'
+                    f'<h3 id="{anchor}" class="story-headline" style="font-family:Georgia,serif;font-size:25px;'
+                    f'line-height:1.22;margin:28px 0 10px">{_inline_markdown(line[4:])}</h3>'
                 )
             elif separator:
                 parts.append(

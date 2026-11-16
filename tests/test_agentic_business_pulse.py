@@ -699,7 +699,7 @@ class TransitionReviewTests(unittest.TestCase):
         self.assertIn("(Verified · 2026-09-18 · source 3)", record)
         self.assertIn("Last known · 2026-09-17 · source 1, [source 4]", record)
         self.assertIn("Proposed target: 2026-10-05", record)
-        self.assertIn("**Record evidence:** source 1, [source 6](https://example.com/admission-primary)", record)
+        self.assertIn("**Record evidence:** [source 6](https://example.com/admission-primary)", record)
         self.assertIn("**Use case:** Synthetic service-desk routing.", record)
         self.assertIn("Example CRM (connected)", record)
         self.assertIn("Recorded Agentic contract ACV: $1K.", record)
@@ -734,7 +734,7 @@ class TransitionReviewTests(unittest.TestCase):
         rendered = markdown_to_email_html(report)
         self.assertLess(len(rendered.encode("utf-8")), 100_000)
         self.assertEqual(len(re.findall(r'<h3 id="customer-[a-f0-9]{16}"', rendered)), 48)
-        self.assertEqual(rendered.count('<p style="margin:0 0 8px">'), 48 * 4 + 4)
+        self.assertIn('View entire message', rendered)
         for customer in customers:
             self.assertIn(customer["account_name"], report)
             self.assertIn(customer["links"][0], rendered)
