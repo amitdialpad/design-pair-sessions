@@ -636,6 +636,33 @@ class TransitionReviewTests(unittest.TestCase):
         self.assertNotIn("ACV is not established", report)
         self.assertIn("The last source records an unlaunched pilot. (Last known · 2026-09-18", report)
 
+    def test_transition_front_read_is_bounded_without_losing_attention_records(self):
+        result = valid_transition_result()
+        snapshot = result["snapshot"]
+        customers = []
+        for index in range(8):
+            customer = copy.deepcopy(snapshot["customers"][0])
+            customer["account_name"] = f"Priority Example {index + 1}"
+            customer["transition"]["priority_cohorts"] = []
+            customer["transition"]["attention_reason"] = f"Consequence {index + 1}."
+            customer["transition"]["decision"]["text"] = f"Distinct decision {index + 1}."
+            customers.append(customer)
+        snapshot.update(customers=customers, priority_cohorts=[])
+        snapshot["summary"].update(active_customer_count=8, movers_7d=0, customers_without_current_data=0)
+        report, _ = self.validate(result)
+        highlights = report.split("## Customer transition", 1)[1].split("## Decisions needing attention", 1)[0]
+        decisions = report.split("## Decisions needing attention", 1)[1].split("## Company", 1)[0]
+        roster = report.split("## Full roster and evidence gaps", 1)[1]
+        self.assertIn("Consequence 5.", highlights)
+        self.assertNotIn("Consequence 6.", highlights)
+        self.assertIn("Other updates in the full roster:", highlights)
+        self.assertIn("Distinct decision 5.", decisions)
+        self.assertNotIn("Distinct decision 6.", decisions)
+        self.assertIn("Priority Example 8", decisions)
+        for index in range(8):
+            self.assertIn(f"Distinct decision {index + 1}.", roster)
+            self.assertEqual(report.count(f"### Priority Example {index + 1}\n"), 1)
+
     def test_transition_roster_pairs_all_claims_and_reuses_only_same_customer_sources(self):
         result = valid_transition_result()
         customer = result["snapshot"]["customers"][0]

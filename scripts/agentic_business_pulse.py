@@ -1343,19 +1343,20 @@ def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str
         lines.append("No source-backed priority cohort count is available; no zero or combined total is inferred.")
 
     lines.extend(["", "## Customer transition", ""])
-    for customer in highlighted:
+    for customer in highlighted[:5]:
         transition = customer["transition"]
         consequence = customer["change_this_week"] if customer["movement"] in {"failing", "moved"} else transition["attention_reason"]
         lines.append(
-            f"- {_transition_customer_link(customer)} — **{TRANSITION_ROUTE_LABELS[transition['route']]}:** "
-            f"{consequence} Direction: {transition['direction']['text']} "
-            f"({transition['direction']['status'].replace('_', ' ')})."
+            f"- {_transition_customer_link(customer)} — **{TRANSITION_ROUTE_LABELS[transition['route']]} "
+            f"({transition['direction']['status'].replace('_', ' ')}):** {consequence}"
         )
+    if len(highlighted) > 5:
+        lines.append("Other updates in the full roster: " + ", ".join(_transition_customer_link(customer) for customer in highlighted[5:]) + ".")
     if not highlighted:
         lines.append("No material customer mover or attention item was recorded. The full roster retains dated positions below.")
 
     lines.extend(["", "## Decisions needing attention", ""])
-    for customer in attention:
+    for customer in attention[:5]:
         transition = customer["transition"]
         milestone = transition["next_milestone"]
         target = f" Next checkpoint: {milestone['text']}"
@@ -1367,6 +1368,8 @@ def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str
             f"Accountability: {transition['accountability']['text']} "
             f"({transition['accountability']['status'].replace('_', ' ')}).{target}"
         )
+    if len(attention) > 5:
+        lines.append("Additional attention items retain their full decisions and owners below: " + ", ".join(_transition_customer_link(customer) for customer in attention[5:]) + ".")
     if not attention:
         lines.append("No decision was explicitly flagged for attention.")
 
