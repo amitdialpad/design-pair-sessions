@@ -636,6 +636,82 @@ class TransitionReviewTests(unittest.TestCase):
         self.assertNotIn("ACV is not established", report)
         self.assertIn("The last source records an unlaunched pilot. (Last known · 2026-09-18", report)
 
+    def test_transition_roster_pairs_all_claims_and_reuses_only_same_customer_sources(self):
+        result = valid_transition_result()
+        customer = result["snapshot"]["customers"][0]
+        fields = ("current_service", "direction", "decision", "next_milestone", "accountability", "blocker")
+        statuses = ("verified", "proposed", "unconfirmed", "last_known", "verified", "unconfirmed")
+        shared = "https://example.com/shared-primary"
+        claim_links = (
+            [shared, "https://example.com/service-primary"], [shared],
+            ["https://example.com/decision-primary"], [shared, "https://example.com/milestone-primary"],
+            ["https://example.com/decision-primary"], ["https://example.com/blocker-primary"],
+        )
+        for index, (field, status, links) in enumerate(zip(fields, statuses, claim_links)):
+            customer["transition"][field].update(
+                text=f"Distinct synthetic {field} detail.", status=status,
+                evidence_date=f"2026-09-{14 + index:02d}", links=links,
+            )
+        customer["links"] = [shared, "https://example.com/admission-primary"]
+        result["snapshot"]["customers"][1]["transition"]["current_service"]["links"] = [shared]
+        original = copy.deepcopy(customer)
+        report, snapshot = self.validate(result)
+        record = report.split("### Aster Example\n", 1)[1].split("### Birch Example\n", 1)[0]
+        paragraphs = [paragraph for paragraph in record.strip().split("\n\n") if paragraph]
+        self.assertEqual(len(paragraphs), 4)
+        for index, (field, status) in enumerate(zip(fields, statuses)):
+            self.assertIn(
+                f"Distinct synthetic {field} detail. ({status.replace('_', ' ').capitalize()} · 2026-09-{14 + index:02d}",
+                record,
+            )
+            self.assertEqual(snapshot["customers"][0]["transition"][field], original["transition"][field])
+        for links in claim_links:
+            for link in links:
+                self.assertEqual(record.count(f"]({link})"), 1)
+        self.assertIn("(Proposed · 2026-09-15 · source 1)", record)
+        self.assertIn("(Verified · 2026-09-18 · source 3)", record)
+        self.assertIn("Last known · 2026-09-17 · source 1, [source 4]", record)
+        self.assertIn("Proposed target: 2026-10-05", record)
+        self.assertIn("**Record evidence:** source 1, [source 6](https://example.com/admission-primary)", record)
+        self.assertIn("**Use case:** Synthetic service-desk routing.", record)
+        self.assertIn("Example CRM (connected)", record)
+        self.assertIn("Recorded Agentic contract ACV: $1K.", record)
+        self.assertIn("Synthetic VIP migration", record)
+        birch = report.split("### Birch Example\n", 1)[1].split("### Cedar Example\n", 1)[0]
+        self.assertIn(f"[source 1]({shared})", birch)
+        rendered = markdown_to_email_html(report)
+        anchor = "customer-" + hashlib.sha256(b"Aster Example").hexdigest()[:16]
+        body = rendered.split(f'id="{anchor}"', 1)[1].split("</h3>", 1)[1].split("<h3", 1)[0]
+        self.assertEqual(body.count('<p style="margin:0 0 8px">'), 4)
+        self.assertEqual(body.count("<a "), 6)
+        self.assertIn(f'href="#{anchor}"', rendered)
+
+    def test_transition_representative_full_roster_html_stays_compact(self):
+        result = valid_transition_result()
+        snapshot = result["snapshot"]
+        template = snapshot["customers"][0]
+        customers = []
+        for index in range(48):
+            customer = copy.deepcopy(template)
+            customer["account_name"] = f"Example Portfolio {index + 1:02d}"
+            customer["movement"] = "no_change"
+            customer["transition"].update(priority_cohorts=[], attention=False, attention_reason="")
+            shared = f"https://example.com/source/{index}/" + "record" * 20
+            customer["links"] = [shared]
+            for field in ("current_service", "direction", "decision", "next_milestone", "accountability", "blocker"):
+                customer["transition"][field]["links"] = [shared]
+            customers.append(customer)
+        snapshot.update(customers=customers, priority_cohorts=[])
+        snapshot["summary"].update(active_customer_count=48, movers_7d=0, customers_without_current_data=0)
+        report, _ = self.validate(result)
+        rendered = markdown_to_email_html(report)
+        self.assertLess(len(rendered.encode("utf-8")), 100_000)
+        self.assertEqual(len(re.findall(r'<h3 id="customer-[a-f0-9]{16}"', rendered)), 48)
+        self.assertEqual(rendered.count('<p style="margin:0 0 8px">'), 48 * 4 + 4)
+        for customer in customers:
+            self.assertIn(customer["account_name"], report)
+            self.assertIn(customer["links"][0], rendered)
+
     def test_transition_claim_status_and_evidence_checks(self):
         cases = (
             ("text", "", "text"), ("text", "x" * 321, "text"),
@@ -929,6 +1005,19 @@ class PulseValidationTests(unittest.TestCase):
                 'links': [SOURCE_LINKS['glean']],
             }
         return result
+
+    def test_schema6_retains_existing_paragraph_style_and_direct_evidence(self):
+        report, snapshot = validate_agent_result(
+            self.portfolio_result(), report_now=REPORT_NOW,
+            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+        )
+        rendered = markdown_to_email_html(report)
+        self.assertEqual(snapshot["schema_version"], 6)
+        self.assertNotIn("## Full roster and evidence gaps", report)
+        self.assertNotIn('<p style="margin:0 0 8px">', rendered)
+        self.assertNotIn("[source 1]", report)
+        self.assertIn('style="margin:0 0 18px;font-size:17px;line-height:1.7;color:#45403b"', rendered)
+        self.assertIn(SOURCE_LINKS["glean"], rendered)
 
     def test_portfolio_accepts_explicit_jira_count_gaps_without_rendering_counts(self):
         for unavailable in (("new_or_changed_7d",), ("open_customer_bugs",), ("new_or_changed_7d", "open_customer_bugs")):
@@ -2047,6 +2136,28 @@ class PulseDeliveryTests(unittest.TestCase):
         self.assertIn("01</td>", rendered)
         self.assertNotIn("background:#faf9fd", rendered)
         self.assertNotIn("[Verified fact]", rendered)
+
+    def test_email_preserves_source_urls_with_markdown_characters(self):
+        from html.parser import HTMLParser
+
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.targets = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "a":
+                    self.targets.append(dict(attrs)["href"])
+
+        target = "https://example.com/document/a_b_c?view=one_two&tab=main"
+        report = f"**Read [source]({target})** and _the note_."
+        rendered = markdown_to_email_html(report)
+        parser = Links()
+        parser.feed(rendered)
+        self.assertEqual(parser.targets, [target])
+        self.assertIn("<strong>Read <a ", rendered)
+        self.assertIn("<em>the note</em>", rendered)
+        self.assertNotIn("PULSELINK", rendered)
 
     def test_customer_dashboard_email_uses_large_stacked_customer_cards(self):
         report, _ = validate_agent_result(

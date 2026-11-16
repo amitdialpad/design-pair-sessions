@@ -1248,6 +1248,58 @@ def _render_transition_milestone(claim: dict[str, Any]) -> str:
     return text
 
 
+def _render_roster_sources(links: list[str], sources: dict[str, int]) -> str:
+    """Number sources within one customer, linking only their first occurrence."""
+    references = []
+    for link in links:
+        if link in sources:
+            references.append(f"source {sources[link]}")
+        else:
+            number = len(sources) + 1
+            sources[link] = number
+            references.append(f"[source {number}]({link})")
+    return ", ".join(references)
+
+
+def _render_roster_claim(claim: dict[str, Any], sources: dict[str, int], *, milestone: bool = False) -> str:
+    proof = [claim["status"].replace("_", " ").capitalize()]
+    if claim["evidence_date"] is not None:
+        proof.append(claim["evidence_date"])
+    if claim["links"]:
+        proof.append(_render_roster_sources(claim["links"], sources))
+    text = f"{claim['text']} ({' · '.join(proof)})"
+    if milestone and claim["target_date"] is not None:
+        text += f" · {claim['date_status'].capitalize()} target: {claim['target_date']}"
+    return text
+
+
+def _render_transition_roster_customer(customer: dict[str, Any], cohort_labels: dict[str, str]) -> list[str]:
+    """Keep each complete customer record in four readable logical paragraphs."""
+    transition = customer["transition"]
+    sources: dict[str, int] = {}
+    claims = {
+        field: _render_roster_claim(transition[field], sources, milestone=field == "next_milestone")
+        for field in TRANSITION_CLAIM_FIELDS
+    }
+    context = [f"**Use case:** {customer['agent_or_use_case']}"]
+    if customer["integrations"]:
+        context.append("**Systems:** " + "; ".join(f"{item['name']} ({item['status']})" for item in customer["integrations"]) + ".")
+    commercial = customer["commercial"]
+    context.append(f"**Commercial record:** {commercial['stage']}.")
+    if commercial["agentic_acv"] is not None:
+        context.append(f"Recorded Agentic contract ACV: {_money(commercial['agentic_acv'])}.")
+    if transition["priority_cohorts"]:
+        context.append("**Priority context:** " + "; ".join(cohort_labels[key] for key in transition["priority_cohorts"]) + ".")
+    context.append("**Record evidence:** " + _render_roster_sources(customer["links"], sources) + ".")
+    return [
+        "", f"### {customer['account_name']}", "",
+        f"**Current service:** {claims['current_service']} **Direction — {TRANSITION_ROUTE_LABELS[transition['route']]}:** {claims['direction']}",
+        "", f"**Next decision:** {claims['decision']} **Next gate:** {claims['next_milestone']}",
+        "", f"**Accountability:** {claims['accountability']} **Blocker / evidence gap:** {claims['blocker']}",
+        "", " ".join(context),
+    ]
+
+
 def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str:
     from pulse_transition_company_health import render_transition_company_health
 
@@ -1354,26 +1406,7 @@ def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str
     ])
     cohort_labels = {cohort["key"]: cohort["label"] for cohort in snapshot["priority_cohorts"]}
     for customer in sorted_customers:
-        transition = customer["transition"]
-        lines.extend([
-            "", f"### {customer['account_name']}", "",
-            f"**Current service:** {_render_transition_claim(transition['current_service'])}",
-            f"**Direction — {TRANSITION_ROUTE_LABELS[transition['route']]}:** {_render_transition_claim(transition['direction'])}",
-            f"**Next decision:** {_render_transition_claim(transition['decision'])}",
-            f"**Next gate:** {_render_transition_milestone(transition['next_milestone'])}",
-            f"**Accountability:** {_render_transition_claim(transition['accountability'])}",
-            f"**Blocker / evidence gap:** {_render_transition_claim(transition['blocker'])}",
-            f"**Use case:** {customer['agent_or_use_case']}",
-        ])
-        if customer["integrations"]:
-            lines.append("**Systems:** " + "; ".join(f"{item['name']} ({item['status']})" for item in customer["integrations"]) + ".")
-        commercial = customer["commercial"]
-        commercial_text = f"**Commercial record:** {commercial['stage']}."
-        if commercial["agentic_acv"] is not None:
-            commercial_text += f" Recorded Agentic contract ACV: {_money(commercial['agentic_acv'])}."
-        lines.append(commercial_text)
-        if transition["priority_cohorts"]:
-            lines.append("**Priority context:** " + "; ".join(cohort_labels[key] for key in transition["priority_cohorts"]) + ".")
+        lines.extend(_render_transition_roster_customer(customer, cohort_labels))
     if snapshot["unknowns"]:
         lines.extend(["", "**Portfolio evidence gaps:**", ""])
         lines.extend(f"- {gap}" for gap in snapshot["unknowns"])
@@ -1946,15 +1979,32 @@ def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
 
 def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     escaped = html.escape(value, quote=True)
+    links: list[str] = []
+    # Protect complete anchors before emphasis parsing: underscores in a source
+    # URL must never become markup inside href (many document IDs contain them).
+    token_prefix = "\x00PULSELINK"
+    while token_prefix in escaped:
+        token_prefix += "X"
+
+    def protect_link(match: re.Match[str]) -> str:
+        label, target = match.groups()
+        links.append(
+            f'<a href="{target}" style="color:{link_color};text-decoration:underline;'
+            f'text-decoration-thickness:1px;text-underline-offset:3px">{label}</a>'
+        )
+        return f"{token_prefix}{len(links) - 1}\x00"
+
     escaped = re.sub(
         r"\[([^]]+)]\((https://[^)]+|#customer-[a-f0-9]{16})\)",
-        rf'<a href="\2" style="color:{link_color};text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px">\1</a>',
+        protect_link,
         escaped,
     )
     escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
     escaped = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#e8e3db;padding:1px 4px\">\1</code>", escaped)
+    for index, link in enumerate(links):
+        escaped = escaped.replace(f"{token_prefix}{index}\x00", link)
     return escaped
 
 
@@ -2162,6 +2212,8 @@ def markdown_to_email_html(report: str) -> str:
                 style = "font-family:Georgia,'Times New Roman',serif;margin:0 0 18px;font-size:23px;line-height:1.48;letter-spacing:-0.2px;color:#2a2724"
             elif current_section == "What to trust":
                 style = "margin:0;color:#d6d0ca;font-size:16px;line-height:1.7"
+            elif current_section == "Full roster and evidence gaps":
+                style = "margin:0 0 8px"
             elif not current_section and line.startswith(("_", "*")):
                 style = "margin:0 0 30px;color:#6d6761;font-size:16px;line-height:1.6"
             else:
