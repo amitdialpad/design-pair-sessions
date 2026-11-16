@@ -73,6 +73,8 @@ Bookings context can be explicitly unavailable while the verified customer revie
 
 The Agentic monetary field is `Opportunity.Agent_AI_ACV__c`, not a whole-opportunity sum filtered by Product Interest. Reconcile the company-bookings cohort, dates, won stages, revenue/subtype/exclusion rules and currencies before deriving core or share. Broad won-opportunity ACV totals alone do not establish governed company bookings. Never clip signed adjustments, invent a currency conversion, or silently redefine bookings to pass validation.
 
+Schema-6 Jira audit counts may be explicit null with a specific per-row `jira.note` (nonempty, at most 320 characters) and a visible `unknowns` explanation. This is for unverified complete issue coverage or material-change history, not a substitute zero. Validated mapped keys remain required; key-list length and an `updated` timestamp alone do not establish the counters. Available values and all older schemas keep their existing numeric validation, and current read-only Jira source health remains required.
+
 ## Delivery protection
 
 The final report recipient is stored in the protected `PULSE_RECIPIENTS` repository secret rather than exposed as workflow configuration. It must contain only Amit's approved Dialpad address. Amit is placed in Bcc; To contains only `undisclosed-recipients:;` and Cc is absent. SMTP removes the Bcc header from the transmitted message. Any missing, additional, duplicate, different, or visible final recipient fails before SMTP. The internal Glean relay draft also remains addressed only to Amit.

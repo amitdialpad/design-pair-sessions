@@ -20,6 +20,8 @@ Schema 6 retains schema-5 fields and requires each customer to contain customer_
 
 A dated historic primary update supports the last-known position; it does not by itself confirm today's operational position or dependency. Without current primary confirmation, use unconfirmed with explicit last-known wording and the genuine evidence date. A recap's publication date never replaces the substantive source date.
 
+In schema 6, Jira audit counters may be explicit JSON null when complete customer-issue coverage or material-change history is unverified. Each row with a null `jira.new_or_changed_7d` or `jira.open_customer_bugs` requires a specific nonempty `jira.note` of at most 320 characters; retain validated mapped `jira.keys` and disclose the count limitation in `unknowns`. Do not infer either counter from the number of cited keys, infer material changes from `updated` alone, or use zero for an unperformed/incomplete audit. Missing fields still fail. Available counters retain all numeric checks, and older schemas remain nonnullable. Jira source health/freshness remains mandatory even when counters are unavailable.
+
 Require snapshot.coverage with status reconciled or partial, note (nonempty <=600 characters), and links (nonempty HTTPS roster sources). Explicitly describe gaps; never assert complete coverage without reconciliation. Summary active_customer_count is all rows; customers_without_current_data counts unconfirmed customer_insight rows. failing means a newly changed blocking dependency; moved requires real changed state; continuing holds are no_change. An unchanged customer needs no new weekly event to remain included.
 
 Render the executive signal, coverage, customer stories, material gaps, then company health. Omit ticket counts and duplicate Analysis. Each story explains purpose, position, dependency, owner, and business implication. Scale the length budget with the roster; never drop customers to fit the old 1600-word cap. The executive signal must synthesize customer outcomes/dependencies in plain language rather than ticket activity or metric summaries.
@@ -150,6 +152,8 @@ The Salesforce operational snapshot is not the Finance-certified ARR bridge. Bui
 - `current_arr`: opening-cohort current ARR plus new/reactivated/previously unsnapshotted ARR.
 - `net_arr_change`: current ARR minus quarter-start ARR; `net_arr_change_pct` uses quarter-start ARR as the denominator.
 - `paying_accounts` and `paid_licenses`: count accounts and sum `Total_Dialpad_License__c` where `Customer__c` is true and `ARR__c` is positive.
+
+The operational `paid_licenses` field is labeled "licenses on paying accounts" in the email: it sums total Dialpad product licenses in that account cohort, not a Finance-certified paid-seat measure.
 
 Do not describe the opening-cohort movement as churn or retention. It is a net of expansion, contraction, churn, reactivation, and Salesforce corrections. Retrieve the previous Monday's delivered review and compare only the three like-for-like stored values: current ARR, paying accounts, and paid licenses. If no prior operational snapshot is safely available, leave the comparison values null and state that the baseline was established.
 
