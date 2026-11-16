@@ -87,12 +87,3 @@ jobs:
           FAILURE_DEDUPE_DAILY: 'true'
           FAILURE_TIMEZONE: Asia/Kolkata
         run: python3 scripts/run-agentic-business-pulse.py
-
-      - name: Persist private pulse outputs
-        if: steps.pulse.outputs.handled_failure != 'true'
-        uses: actions/upload-artifact@v7
-        with:
-          name: agentic-business-pulse-${{ github.run_id }}
-          path: reports/agentic_business_pulse/
-          if-no-files-found: error
-          retention-days: 90
