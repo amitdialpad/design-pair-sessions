@@ -105,8 +105,10 @@ class TransitionCompanyHealthTests(unittest.TestCase):
             latest_arr_note="Finance has not supplied the bridge.",
         )
         text = self.render(business)
-        self.assertIn("| Weekly bookings · total | Unavailable | Unavailable |", text)
-        self.assertIn("| Quarter bookings · actual | Unavailable | Unavailable |", text)
+        self.assertIn("Weekly bookings: Unavailable", text)
+        self.assertIn("Quarter bookings / target: Unavailable", text)
+        self.assertNotIn("| Weekly bookings · total |", text)
+        self.assertNotIn("| Quarter bookings · actual |", text)
         self.assertIn("Weekly ledger extraction is pending.", text)
         self.assertIn("Current quarter bookings cannot be verified.", text)
         self.assertIn("Finance ARR bridge: Unavailable — Finance has not supplied the bridge.", text)

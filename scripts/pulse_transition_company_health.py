@@ -61,6 +61,7 @@ def render_transition_company_health(business: dict) -> list[str]:
     quarter = business["quarter"]
     finance = business["latest_arr_period"]
     source_gaps: list[str] = []
+    unavailable_bookings: list[str] = []
 
     lines = ["", "## Company revenue and sales", "", *_table()]
     if salesforce is None:
@@ -119,8 +120,7 @@ def render_transition_company_health(business: dict) -> list[str]:
     review_window = business.get("_review_window_label")
     weekly_period = review_window if isinstance(review_window, str) and review_window.strip() else UNAVAILABLE
     if weekly is None:
-        weekly_values = (UNAVAILABLE, UNAVAILABLE, UNAVAILABLE)
-        source_gaps.append(f"Weekly bookings: Unavailable — {_cell(business['weekly_sales_note'])}")
+        unavailable_bookings.append(f"Weekly bookings: Unavailable — {_cell(business['weekly_sales_note'])}")
     else:
         weekly_values = (
             _money(weekly["total_bookings"]),
@@ -129,19 +129,15 @@ def render_transition_company_health(business: dict) -> list[str]:
         )
         if weekly_period == UNAVAILABLE:
             source_gaps.append("Weekly bookings period: Unavailable in the supplied measure.")
-    for metric, value in zip(
-        ("Weekly bookings · total", "Weekly bookings · core / non-Agentic", "Weekly bookings · Agentic"),
-        weekly_values,
-        strict=True,
-    ):
-        lines.append(_row(metric, value, weekly_period))
+        for metric, value in zip(
+            ("Weekly bookings · total", "Weekly bookings · core / non-Agentic", "Weekly bookings · Agentic"),
+            weekly_values,
+            strict=True,
+        ):
+            lines.append(_row(metric, value, weekly_period))
 
     if quarter is None:
-        lines.extend(
-            _row(metric, UNAVAILABLE, UNAVAILABLE)
-            for metric in ("Quarter bookings · actual", "Quarter target / attainment", "Quarter bookings · Agentic")
-        )
-        source_gaps.append(f"Quarter bookings: Unavailable — {_cell(business['quarter_note'])}")
+        unavailable_bookings.append(f"Quarter bookings / target: Unavailable — {_cell(business['quarter_note'])}")
     else:
         period = quarter["label"]
         verified_target = quarter["target_status"] == "verified"
@@ -187,6 +183,9 @@ def render_transition_company_health(business: dict) -> list[str]:
                     "Previous quarter · exact period Unavailable",
                 )
             )
+
+    if unavailable_bookings:
+        lines.extend(["", "**Bookings / target availability:** " + " ".join(unavailable_bookings)])
 
     if finance is None:
         source_gaps.append(f"Finance ARR bridge: Unavailable — {_cell(business['latest_arr_note'])}")

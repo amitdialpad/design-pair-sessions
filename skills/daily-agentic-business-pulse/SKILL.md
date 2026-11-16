@@ -42,6 +42,8 @@ Research in this order, using each source only for the fact it owns:
 
 Generated reports, agent-written recaps, and search summaries are discovery aids only. Follow their primary links; they never independently corroborate a claim or refresh its evidence date. Document modification, meeting, query, or recap publication time does not replace substantive evidence time.
 
+For Salesforce, inspect dated manual notes and exact fields. Record updateTime and generated win-probability narratives are not dated customer events. Created By/Converted By do not establish current delivery ownership; commercial ownership is separate. Requested agent scope, active agents, and deployed integrations are different measures. An undated field stays undated instead of borrowing the record modification date. Show customer dollar ACV only from the dedicated Agentic field on a verified closed-won USD record; withhold open/lost, placeholder-zero or unconverted non-USD amounts rather than labeling them contract revenue.
+
 Salesforce, Jira, and Glean source families must each be healthy, fresh, linked, and read-only. Receipts use actual successful read/query time, not payload assembly time: at most 12 hours old at validation and no more than 10 minutes future-dated. Re-read to refresh; never only change a timestamp. Keep an additional receipt when optional production code is used. A fresh receipt does not make an old customer statement current.
 
 Each source_status receipt contains status: "ok", queried_at (ISO-8601 timestamp with timezone), nonempty direct HTTPS links, and access_mode: "read_only". Required keys are salesforce, jira, and glean.
