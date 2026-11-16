@@ -34,6 +34,17 @@ DASHBOARD_REQUIRED_SOURCES = ("salesforce", "jira", "glean")
 DASHBOARD_STAGES = {"build", "test", "validate", "publish", "live", "paused", "unknown"}
 DASHBOARD_MOVEMENTS = {"failing", "moved", "no_change"}
 DASHBOARD_MOVEMENT_ORDER = {"failing": 0, "moved": 1, "no_change": 2}
+TRANSITION_CLAIM_FIELDS = (
+    "current_service", "direction", "decision", "next_milestone", "accountability", "blocker"
+)
+TRANSITION_ROUTE_LABELS = {
+    "ada_new": "Ada new fulfillment",
+    "ada_migration": "Ada migration",
+    "dialpad": "Dialpad service",
+    "undecided": "Direction undecided",
+    "unknown": "Direction not established",
+}
+TRANSITION_CLAIM_STATUSES = {"verified", "last_known", "proposed", "unconfirmed"}
 DASHBOARD_SOURCE_LABELS = {
     "salesforce": "Customer and commercial records",
     "jira": "Customer bugs",
@@ -373,7 +384,7 @@ def build_agent_request(
         "required_sources": list(DASHBOARD_REQUIRED_SOURCES),
         "response_contract": {
             "content_type": "application/json",
-            "snapshot_schema_version": 6,
+            "snapshot_schema_version": 7,
             "fields": ["report_markdown", "snapshot", "agent_request_id", "data_status", "failures"],
             "no_markdown_fence": True,
         },
@@ -856,6 +867,8 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
 
 
 def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> str:
+    if snapshot.get("schema_version") == 7:
+        return render_transition_review(snapshot, workflow_url)
     if snapshot.get("schema_version") == 6:
         return render_customer_portfolio(snapshot, workflow_url)
     customers = sorted(
@@ -1210,6 +1223,318 @@ def render_customer_portfolio(snapshot: dict[str, Any], workflow_url: str) -> st
     return '\n'.join(lines).rstrip() + '\n'
 
 
+def _transition_customer_anchor(account_name: str) -> str:
+    return "customer-" + hashlib.sha256(account_name.encode("utf-8")).hexdigest()[:16]
+
+
+def _transition_customer_link(customer: dict[str, Any]) -> str:
+    return f"[{customer['account_name']}](#{_transition_customer_anchor(customer['account_name'])})"
+
+
+def _render_transition_claim(claim: dict[str, Any]) -> str:
+    status = claim["status"].replace("_", " ").capitalize()
+    proof = [status]
+    if claim["evidence_date"] is not None:
+        proof.append(claim["evidence_date"])
+    if claim["links"]:
+        proof.append(f"[evidence]({claim['links'][0]})")
+    return f"{claim['text']} ({' · '.join(proof)})"
+
+
+def _render_transition_milestone(claim: dict[str, Any]) -> str:
+    text = _render_transition_claim(claim)
+    if claim["target_date"] is not None:
+        text += f" · {claim['date_status'].capitalize()} target: {claim['target_date']}"
+    return text
+
+
+def _render_roster_sources(links: list[str], sources: dict[str, int]) -> str:
+    """Number sources within one customer, linking only their first occurrence."""
+    references = []
+    for link in links:
+        if link in sources:
+            references.append(f"source {sources[link]}")
+        else:
+            number = len(sources) + 1
+            sources[link] = number
+            references.append(f"[source {number}]({link})")
+    return ", ".join(references)
+
+
+def _render_roster_claim(claim: dict[str, Any], sources: dict[str, int], *, milestone: bool = False) -> str:
+    proof = [claim["status"].replace("_", " ").capitalize()]
+    if claim["evidence_date"] is not None:
+        proof.append(claim["evidence_date"])
+    if claim["links"]:
+        proof.append(_render_roster_sources(claim["links"], sources))
+    text = f"{claim['text']} ({' · '.join(proof)})"
+    if milestone and claim["target_date"] is not None:
+        text += f" · {claim['date_status'].capitalize()} target: {claim['target_date']}"
+    return text
+
+
+def _render_transition_roster_customer(customer: dict[str, Any], cohort_labels: dict[str, str]) -> list[str]:
+    """Keep each complete customer record in four readable logical paragraphs."""
+    transition = customer["transition"]
+    sources: dict[str, int] = {}
+    claims = {
+        field: _render_roster_claim(transition[field], sources, milestone=field == "next_milestone")
+        for field in TRANSITION_CLAIM_FIELDS
+    }
+    context = [f"**Use case:** {customer['agent_or_use_case']}"]
+    if customer["integrations"]:
+        context.append("**Systems:** " + "; ".join(f"{item['name']} ({item['status']})" for item in customer["integrations"]) + ".")
+    commercial = customer["commercial"]
+    context.append(f"**Commercial record:** {commercial['stage']}.")
+    if commercial["agentic_acv"] is not None:
+        context.append(f"Recorded Agentic contract ACV: {_money(commercial['agentic_acv'])}.")
+    if transition["priority_cohorts"]:
+        context.append("**Priority context:** " + "; ".join(cohort_labels[key] for key in transition["priority_cohorts"]) + ".")
+    additional_record_links = [link for link in customer["links"] if link not in sources]
+    if additional_record_links:
+        context.append("**Record evidence:** " + _render_roster_sources(additional_record_links, sources) + ".")
+    return [
+        "", f"### {customer['account_name']}", "",
+        f"**Current service:** {claims['current_service']} **Direction — {TRANSITION_ROUTE_LABELS[transition['route']]}:** {claims['direction']}",
+        "", f"**Next decision:** {claims['decision']} **Next gate:** {claims['next_milestone']}",
+        "", f"**Accountability:** {claims['accountability']} **Blocker / evidence gap:** {claims['blocker']}",
+        "", " ".join(context),
+    ]
+
+
+def render_transition_review(snapshot: dict[str, Any], workflow_url: str) -> str:
+    from pulse_transition_company_health import render_transition_company_health
+
+    customers = snapshot["customers"]
+    sorted_customers = sorted(customers, key=lambda customer: customer["account_name"].casefold())
+    # The producer ranks consequential customer items; alphabetize only the full roster.
+    changed = [customer for customer in customers if customer["movement"] in {"failing", "moved"}]
+    attention = [customer for customer in customers if customer["transition"]["attention"]]
+    highlighted = [
+        customer for customer in customers
+        if customer["movement"] in {"failing", "moved"} or customer["transition"]["attention"]
+    ]
+    lines = [
+        f"# Weekly Agentic Customer Review — {snapshot['report_date']}",
+        f"_Review: {snapshot['comparison_window']['label']}_",
+    ]
+    lines.extend(_render_executive_read(snapshot["executive_read"]))
+    lines.extend(["", "## What changed this week", ""])
+    lines.extend(f"- {_render_transition_claim(claim)}" for claim in snapshot["strategy_updates"])
+    if changed:
+        lines.append("- Customer movement: " + ", ".join(_transition_customer_link(customer) for customer in changed) + ". See the customer transitions below.")
+    if snapshot["changes_since_previous"]:
+        lines.extend(["", "**Since the previous review:**", ""])
+        lines.extend(f"- {change}" for change in snapshot["changes_since_previous"])
+    if not snapshot["strategy_updates"] and not changed and not snapshot["changes_since_previous"]:
+        lines.append("No supported operating or roster change was recorded for this review window.")
+
+    lines.extend(["", "## Priority context", "", "Reported cohorts may overlap. They are not additive portfolio totals or completed migrations."])
+    for cohort in snapshot["priority_cohorts"]:
+        matched = len(cohort["matched_customers"])
+        lines.extend([
+            "",
+            f"- **{cohort['label']}: {cohort['reported_count']} reported · {matched} matched · "
+            f"{cohort['reported_count'] - matched} unmapped.** Evidence: {cohort['evidence_date']} "
+            f"([source]({cohort['links'][0]})). {cohort['note']}",
+        ])
+        if matched:
+            by_name = {customer["account_name"]: customer for customer in customers}
+            lines.append("Matched records: " + ", ".join(_transition_customer_link(by_name[name]) for name in cohort["matched_customers"]) + ".")
+    if not snapshot["priority_cohorts"]:
+        lines.append("No source-backed priority cohort count is available; no zero or combined total is inferred.")
+
+    lines.extend(["", "## Customer transition", ""])
+    for customer in highlighted[:5]:
+        transition = customer["transition"]
+        consequence = customer["change_this_week"] if customer["movement"] in {"failing", "moved"} else transition["attention_reason"]
+        lines.append(
+            f"- {_transition_customer_link(customer)} — **{TRANSITION_ROUTE_LABELS[transition['route']]} "
+            f"({transition['direction']['status'].replace('_', ' ')}):** {consequence}"
+        )
+    if len(highlighted) > 5:
+        lines.append("Other updates in the full roster: " + ", ".join(_transition_customer_link(customer) for customer in highlighted[5:]) + ".")
+    if not highlighted:
+        lines.append("No material customer mover or attention item was recorded. The full roster retains dated positions below.")
+
+    lines.extend(["", "## Decisions needing attention", ""])
+    for customer in attention[:5]:
+        transition = customer["transition"]
+        milestone = transition["next_milestone"]
+        target = f" Next checkpoint: {milestone['text']}"
+        if milestone["target_date"] is not None:
+            target += f" ({milestone['date_status']} target: {milestone['target_date']})."
+        lines.append(
+            f"- {_transition_customer_link(customer)} — Decision: {transition['decision']['text']} "
+            f"({transition['decision']['status'].replace('_', ' ')}). "
+            f"Accountability: {transition['accountability']['text']} "
+            f"({transition['accountability']['status'].replace('_', ' ')}).{target}"
+        )
+    if len(attention) > 5:
+        lines.append("Additional attention items retain their full decisions and owners below: " + ", ".join(_transition_customer_link(customer) for customer in attention[5:]) + ".")
+    if not attention:
+        lines.append("No decision was explicitly flagged for attention.")
+
+    by_name = {customer["account_name"]: customer for customer in customers}
+    interpretation_lines = []
+    seen_interpretations: set[str] = set()
+    for insight in snapshot.get("insights", []):
+        customer = by_name[insight["account_name"]]
+        normalize = lambda text: re.sub(r"\W+", " ", text.casefold()).strip()
+        repeated_text = [customer["change_this_week"], customer["next_watch"], customer["transition"].get("attention_reason", "")]
+        repeated_text.extend(customer["transition"][field]["text"] for field in TRANSITION_CLAIM_FIELDS)
+        normalized = normalize(insight["text"])
+        if normalized in {normalize(text) for text in repeated_text} or normalized in seen_interpretations:
+            continue
+        seen_interpretations.add(normalized)
+        interpretation_lines.append(
+            f"- {_transition_customer_link(customer)} — **Interpretation / proposed consideration:** "
+            f"{insight['text']} ([evidence]({insight['links'][0]}))."
+        )
+        if len(interpretation_lines) == 2:
+            break
+    if interpretation_lines:
+        lines.extend(["", "### Product and design implications", "", *interpretation_lines])
+
+    business = {**snapshot["business_health"], "_review_window_label": snapshot["comparison_window"]["label"]}
+    lines.extend(render_transition_company_health(business))
+    if snapshot.get("company_context"):
+        lines.extend(["", "### Company context and outlook", ""])
+        lines.extend(f"- {_render_transition_claim(claim)}" for claim in snapshot["company_context"])
+    service_gaps = snapshot["summary"]["customers_without_current_data"]
+    lines.extend([
+        "", "## Full roster and evidence gaps", "",
+        f"**{len(customers)} customer records · {len(customers) - service_gaps} with verified current-service evidence · "
+        f"{service_gaps} without verified current-service evidence.** {snapshot['coverage']['note']}",
+        "Claims retain their own status and evidence date; a missing decision or owner does not erase a known service position.",
+        "Reference section: Dialpad service can be a current or interim path, not a permanent exception to the Ada strategy. If your email app clips this long roster, choose View entire message to read every record.",
+        "Amounts shown are recorded Agentic contract ACV, not recognized revenue or a new Ada sale. Missing amounts are not zero.",
+    ])
+    cohort_labels = {cohort["key"]: cohort["label"] for cohort in snapshot["priority_cohorts"]}
+    for customer in sorted_customers:
+        lines.extend(_render_transition_roster_customer(customer, cohort_labels))
+    if snapshot["unknowns"]:
+        lines.extend(["", "**Portfolio evidence gaps:**", ""])
+        lines.extend(f"- {gap}" for gap in snapshot["unknowns"])
+    lines.extend(["", "## Evidence", "", " · ".join(
+        [f"[Portfolio source {index + 1}]({link})" for index, link in enumerate(snapshot["coverage"]["links"])]
+        + [f"[Workflow run]({workflow_url})"]
+    )])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _transition_evidence_date(value: Any, path: str, report_date: str, *, allow_null: bool = False) -> None:
+    if value is None and allow_null:
+        return
+    try:
+        parsed = date.fromisoformat(value) if isinstance(value, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", value) else None
+    except ValueError as error:
+        raise ValidationError(f"{path} must be an ISO date") from error
+    if parsed is None:
+        raise ValidationError(f"{path} must be an ISO date")
+    if parsed > date.fromisoformat(report_date):
+        raise ValidationError(f"{path} cannot be future dated")
+
+
+def _validate_transition_claim(
+    value: Any, path: str, report_date: str, *, require_evidence: bool = False
+) -> dict[str, Any]:
+    claim = _require_mapping(value, path)
+    text = claim.get("text")
+    if not isinstance(text, str) or not text.strip() or len(text) > 320:
+        raise ValidationError(f"{path}.text must be a nonempty statement of at most 320 characters")
+    if claim.get("status") not in TRANSITION_CLAIM_STATUSES:
+        raise ValidationError(f"{path}.status is invalid")
+    if "evidence_date" not in claim:
+        raise ValidationError(f"{path}.evidence_date is required (explicit null only for unconfirmed claims)")
+    needs_evidence = require_evidence or claim["status"] != "unconfirmed"
+    _transition_evidence_date(claim["evidence_date"], f"{path}.evidence_date", report_date, allow_null=not needs_evidence)
+    links = _require_list(claim.get("links"), f"{path}.links")
+    if (needs_evidence and not links) or not all(_valid_link(link) for link in links):
+        raise ValidationError(f"{path}.links must contain HTTPS evidence")
+    return claim
+
+
+def _validate_transition_context(snapshot: dict[str, Any], customers: list[dict[str, Any]], report_date: str) -> None:
+    names = [customer["account_name"] for customer in customers]
+    if len({name.casefold() for name in names}) != len(names):
+        raise ValidationError("snapshot.customers cannot contain case-insensitive duplicate account names")
+    for index, customer in enumerate(customers):
+        path = f"snapshot.customers[{index}].transition"
+        transition = _require_mapping(customer.get("transition"), path)
+        if transition.get("route") not in TRANSITION_ROUTE_LABELS:
+            raise ValidationError(f"{path}.route is invalid")
+        for field in TRANSITION_CLAIM_FIELDS:
+            _validate_transition_claim(transition.get(field), f"{path}.{field}", report_date)
+        milestone = transition["next_milestone"]
+        if "target_date" not in milestone or milestone.get("date_status") not in {"none", "proposed", "committed"}:
+            raise ValidationError(f"{path}.next_milestone requires target_date and date_status")
+        if milestone["date_status"] == "none":
+            if milestone["target_date"] is not None:
+                raise ValidationError(f"{path}.next_milestone target_date must be null when date_status is none")
+        else:
+            if milestone["status"] == "unconfirmed":
+                raise ValidationError(f"{path}.next_milestone dated target requires sourced milestone evidence")
+            _validate_transition_claim(milestone, f"{path}.next_milestone", report_date, require_evidence=True)
+            try:
+                target = date.fromisoformat(milestone["target_date"]) if isinstance(milestone["target_date"], str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", milestone["target_date"]) else None
+            except ValueError as error:
+                raise ValidationError(f"{path}.next_milestone.target_date must be an ISO date") from error
+            if target is None:
+                raise ValidationError(f"{path}.next_milestone.target_date must be an ISO date")
+        if milestone["date_status"] == "committed" and milestone["status"] != "verified":
+            raise ValidationError(f"{path}.next_milestone committed date requires verified evidence")
+        if not isinstance(transition.get("attention"), bool):
+            raise ValidationError(f"{path}.attention must be a boolean")
+        reason = transition.get("attention_reason", "")
+        if not isinstance(reason, str) or len(reason) > 320 or (transition["attention"] and not reason.strip()):
+            raise ValidationError(f"{path}.attention_reason must explain attention in at most 320 characters")
+        tags = _require_list(transition.get("priority_cohorts"), f"{path}.priority_cohorts")
+        if not all(isinstance(key, str) and key.strip() for key in tags) or len(set(tags)) != len(tags):
+            raise ValidationError(f"{path}.priority_cohorts must contain unique cohort keys")
+
+    for index, claim in enumerate(_require_list(snapshot.get("strategy_updates"), "snapshot.strategy_updates")):
+        _validate_transition_claim(claim, f"snapshot.strategy_updates[{index}]", report_date, require_evidence=True)
+    company_context = _require_list(snapshot.get("company_context", []), "snapshot.company_context")
+    if len(company_context) > 8:
+        raise ValidationError("snapshot.company_context must contain at most eight concise claims")
+    for index, claim in enumerate(company_context):
+        _validate_transition_claim(claim, f"snapshot.company_context[{index}]", report_date)
+    cohorts = _require_list(snapshot.get("priority_cohorts"), "snapshot.priority_cohorts")
+    cohort_keys: set[str] = set()
+    for index, value in enumerate(cohorts):
+        path = f"snapshot.priority_cohorts[{index}]"
+        cohort = _require_mapping(value, path)
+        key, label = cohort.get("key"), cohort.get("label")
+        if not isinstance(key, str) or not key.strip() or key.casefold() in cohort_keys:
+            raise ValidationError(f"{path}.key must be a unique nonempty cohort key")
+        cohort_keys.add(key.casefold())
+        if not isinstance(label, str) or not label.strip():
+            raise ValidationError(f"{path}.label is required")
+        count = cohort.get("reported_count")
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValidationError(f"{path}.reported_count must be a nonnegative integer")
+        _transition_evidence_date(cohort.get("evidence_date"), f"{path}.evidence_date", report_date)
+        links = _require_list(cohort.get("links"), f"{path}.links")
+        if not links or not all(_valid_link(link) for link in links):
+            raise ValidationError(f"{path}.links must contain HTTPS evidence")
+        note = cohort.get("note")
+        if not isinstance(note, str) or len(note) > 600:
+            raise ValidationError(f"{path}.note must be a statement of at most 600 characters")
+        matched = _require_list(cohort.get("matched_customers"), f"{path}.matched_customers")
+        if not all(isinstance(name, str) and name in names for name in matched):
+            raise ValidationError(f"{path}.matched_customers must name canonical customer rows")
+        if len(set(matched)) != len(matched) or len(matched) > count:
+            raise ValidationError(f"{path}.matched_customers must be unique and cannot exceed reported_count")
+        tagged = {customer["account_name"] for customer in customers if key in customer["transition"]["priority_cohorts"]}
+        if set(matched) != tagged:
+            raise ValidationError(f"{path}.matched_customers must match reciprocal customer cohort tags")
+    defined_keys = {cohort["key"] for cohort in cohorts}
+    for customer in customers:
+        if not set(customer["transition"]["priority_cohorts"]).issubset(defined_keys):
+            raise ValidationError("customer transition.priority_cohorts references an unknown cohort key")
+
+
 def _validate_customer_insight(customer: dict[str, Any], report_date: str) -> None:
     insight = _require_mapping(customer.get('customer_insight'), 'customer_insight')
     for field in ('engagement', 'current_position', 'primary_dependency', 'dependency_owner', 'business_implication'):
@@ -1298,8 +1623,8 @@ def validate_customer_dashboard_result(
         raise IntegrationError("Customer dashboard requires healthy read-only sources; no report was sent")
     report_date = report_now.date().isoformat()
     schema_version = snapshot.get("schema_version")
-    if schema_version not in {2, 3, 4, 5, 6}:
-        raise ValidationError("snapshot.schema_version must be 2, 3, 4, 5, or 6")
+    if schema_version not in {2, 3, 4, 5, 6, 7}:
+        raise ValidationError("snapshot.schema_version must be 2, 3, 4, 5, 6, or 7")
     if snapshot.get("report_date") != report_date:
         raise ValidationError("Snapshot report date does not match the current IST date")
     generated_at = _parse_datetime(snapshot.get("generated_at"), "snapshot.generated_at")
@@ -1329,12 +1654,15 @@ def validate_customer_dashboard_result(
     if not customers:
         raise ValidationError("snapshot.customers must contain at least one verified customer signal")
     validated_customers = [
-        _validate_dashboard_customer(value, index, allow_unknown_jira_counts=schema_version == 6)
+        _validate_dashboard_customer(value, index, allow_unknown_jira_counts=schema_version in {6, 7})
         for index, value in enumerate(customers)
     ]
-    if schema_version == 6:
+    if schema_version == 7:
+        _validate_transition_context(snapshot, validated_customers, report_date)
+    elif schema_version == 6:
         for customer in validated_customers:
             _validate_customer_insight(customer, report_date)
+    if schema_version in {6, 7}:
         coverage = _require_mapping(snapshot.get('coverage'), 'snapshot.coverage')
         if coverage.get('status') not in {'reconciled', 'partial'}:
             raise ValidationError('coverage.status must be reconciled or partial')
@@ -1360,7 +1688,12 @@ def validate_customer_dashboard_result(
         "active_customer_count": len(validated_customers),
         "movers_7d": sum(customer["movement"] in {"failing", "moved"} for customer in validated_customers),
         "customers_with_changed_blockers_7d": sum(customer["movement"] == "failing" for customer in validated_customers),
-        "customers_without_current_data": sum(c['customer_insight']['status'] == 'unconfirmed' for c in validated_customers) if schema_version == 6 else 0,
+        "customers_without_current_data": (
+            sum(customer["transition"]["current_service"]["status"] != "verified" for customer in validated_customers)
+            if schema_version == 7
+            else sum(customer["customer_insight"]["status"] == "unconfirmed" for customer in validated_customers)
+            if schema_version == 6 else 0
+        ),
         "commercial_moves_7d": sum(
             customer["commercial"]["movement_7d"] != "no_change"
             for customer in validated_customers
@@ -1371,7 +1704,7 @@ def validate_customer_dashboard_result(
         if summary[field] != expected:
             raise ValidationError(f"snapshot.summary.{field} does not match customer rows")
 
-    insights = _require_list(snapshot.get("insights"), "snapshot.insights")
+    insights = _require_list(snapshot.get("insights", [] if schema_version == 7 else None), "snapshot.insights")
     customer_by_name = {customer["account_name"]: customer for customer in validated_customers}
     if len(insights) > len(validated_customers):
         raise ValidationError("snapshot.insights cannot outnumber customers")
@@ -1389,17 +1722,25 @@ def validate_customer_dashboard_result(
     if len(set(insight_names)) != len(insight_names):
         raise ValidationError("snapshot.insights cannot repeat a customer")
 
-    _require_list(snapshot.get("commercial_changes"), "snapshot.commercial_changes")
+    _require_list(snapshot.get("commercial_changes", [] if schema_version == 7 else None), "snapshot.commercial_changes")
     _require_list(snapshot.get("unknowns"), "snapshot.unknowns")
     _require_list(snapshot.get("changes_since_previous"), "snapshot.changes_since_previous")
-    if schema_version in {3, 4, 5, 6}:
-        _validate_business_health(snapshot, require_salesforce_snapshot=schema_version in {4, 5, 6})
-    if schema_version in {5, 6}:
+    if schema_version == 7:
+        for field in ("unknowns", "changes_since_previous"):
+            if not all(isinstance(item, str) and item.strip() for item in snapshot[field]):
+                raise ValidationError(f"snapshot.{field} must contain nonempty statements")
+    if schema_version in {3, 4, 5, 6, 7}:
+        _validate_business_health(snapshot, require_salesforce_snapshot=schema_version in {4, 5, 6, 7})
+    if schema_version in {5, 6, 7}:
         _validate_executive_read(snapshot)
     snapshot["data_status"] = "complete"
     report = render_customer_dashboard(snapshot, workflow_url)
-    if _visible_word_count(report) > (max(1600, 700 + len(customers) * 180) if schema_version == 6 else 1600):
-        raise ValidationError("Customer dashboard exceeds 1600 visible words")
+    word_limit = (
+        max(2200, 1000 + len(customers) * 340 + len(snapshot["strategy_updates"]) * 80 + len(snapshot["priority_cohorts"]) * 160)
+        if schema_version == 7 else max(1600, 700 + len(customers) * 180) if schema_version == 6 else 1600
+    )
+    if _visible_word_count(report) > word_limit:
+        raise ValidationError(f"Customer dashboard exceeds {word_limit} visible words")
     _walk_forbidden_keys(snapshot)
     _scan_sensitive_text(report, "report_markdown")
     _scan_sensitive_text(json.dumps(snapshot, sort_keys=True), "snapshot")
@@ -1445,7 +1786,7 @@ def validate_agent_result(
         raise ValidationError("report_markdown is required")
     report = report.rstrip() + "\n"
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3, 4, 5, 6}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5, 6, 7}:
         return validate_customer_dashboard_result(
             result,
             snapshot=snapshot,
@@ -1634,7 +1975,7 @@ def validate_agent_result(
 
 def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
     required_sources = (
-        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3, 4, 5, 6} else REQUIRED_SOURCES
+        DASHBOARD_REQUIRED_SOURCES if snapshot.get("schema_version") in {2, 3, 4, 5, 6, 7} else REQUIRED_SOURCES
     )
     return {
         source: snapshot["source_status"][source]["queried_at"]
@@ -1644,15 +1985,31 @@ def _source_freshness(snapshot: dict[str, Any]) -> dict[str, Any]:
 
 def _inline_markdown(value: str, *, link_color: str = "#6f3fc8") -> str:
     escaped = html.escape(value, quote=True)
+    links: list[str] = []
+    # Protect complete anchors before emphasis parsing: underscores in a source
+    # URL must never become markup inside href (many document IDs contain them).
+    token_prefix = "\x00PULSELINK"
+    while token_prefix in escaped:
+        token_prefix += "X"
+
+    def protect_link(match: re.Match[str]) -> str:
+        label, target = match.groups()
+        links.append(
+            f'<a href="{target}" style="color:{link_color}">{label}</a>'
+        )
+        return f"{token_prefix}{len(links) - 1}\x00"
+
     escaped = re.sub(
-        r"\[([^]]+)]\((https://[^)]+)\)",
-        rf'<a href="\2" style="color:{link_color};text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px">\1</a>',
+        r"\[([^]]+)]\((https://[^)]+|#customer-[a-f0-9]{16})\)",
+        protect_link,
         escaped,
     )
     escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
     escaped = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"<em>\1</em>", escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code style=\"background:#e8e3db;padding:1px 4px\">\1</code>", escaped)
+    for index, link in enumerate(links):
+        escaped = escaped.replace(f"{token_prefix}{index}\x00", link)
     return escaped
 
 
@@ -1667,12 +2024,24 @@ def _is_markdown_table_separator(line: str) -> bool:
     return bool(cells) and all(re.fullmatch(r":?-{3,}:?", cell) for cell in cells)
 
 
-def _render_markdown_table(lines: list[str]) -> str:
+def _render_markdown_table(lines: list[str], *, compact_metrics: bool = False) -> str:
     header = _markdown_table_cells(lines[0])
     rows = [_markdown_table_cells(line) for line in lines[2:]]
     column_count = len(header)
     if any(len(row) != column_count for row in rows):
         raise ValidationError("Customer dashboard table rows must match the header")
+    if compact_metrics and header == ["Metric", "Value", "Period"]:
+        headings = "".join(
+            f'<th align="left" scope="col" style="padding:10px 12px;font-size:13px;color:#6d6761;border-bottom:2px solid #d8d2c9">{_inline_markdown(cell)}</th>'
+            for cell in header
+        )
+        body = "".join(
+            '<tr>' + "".join(
+                f'<td valign="top" style="padding:10px 12px;font-size:15px;line-height:1.45;border-bottom:1px solid #d8d2c9">{_inline_markdown(cell)}</td>'
+                for cell in row
+            ) + '</tr>' for row in rows
+        )
+        return f'<table class="pulse-company-metrics" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 20px"><thead><tr>{headings}</tr></thead><tbody>{body}</tbody></table>'
     row_html: list[str] = []
     for row in rows:
         detail_rows = []
@@ -1733,7 +2102,7 @@ def markdown_to_email_html(report: str) -> str:
             while line_index < len(report_lines) and report_lines[line_index].strip().startswith("|"):
                 table_lines.append(report_lines[line_index].strip())
                 line_index += 1
-            parts.append(_render_markdown_table(table_lines))
+            parts.append(_render_markdown_table(table_lines, compact_metrics=current_section == "Company revenue and sales"))
             continue
         if line.startswith("# "):
             close_list()
@@ -1773,7 +2142,13 @@ def markdown_to_email_html(report: str) -> str:
         elif line.startswith("### "):
             close_list()
             story_label, separator, story_headline = line[4:].partition(" — ")
-            if separator:
+            if current_section == "Full roster and evidence gaps":
+                anchor = _transition_customer_anchor(line[4:])
+                parts.append(
+                    f'<h3 id="{anchor}" class="story-headline" style="font-family:Georgia,serif;font-size:25px;'
+                    f'line-height:1.22;margin:28px 0 10px">{_inline_markdown(line[4:])}</h3>'
+                )
+            elif separator:
                 parts.append(
                     f'<p style="margin:30px 0 7px;font-size:13px;line-height:1.4;letter-spacing:1.2px;'
                     f'text-transform:uppercase;color:#b72e79;font-weight:700">{_inline_markdown(story_label)}</p>'
@@ -1842,6 +2217,8 @@ def markdown_to_email_html(report: str) -> str:
                 style = "font-family:Georgia,'Times New Roman',serif;margin:0 0 18px;font-size:23px;line-height:1.48;letter-spacing:-0.2px;color:#2a2724"
             elif current_section == "What to trust":
                 style = "margin:0;color:#d6d0ca;font-size:16px;line-height:1.7"
+            elif current_section == "Full roster and evidence gaps":
+                style = "margin:0 0 8px"
             elif not current_section and line.startswith(("_", "*")):
                 style = "margin:0 0 30px;color:#6d6761;font-size:16px;line-height:1.6"
             else:
@@ -1860,7 +2237,8 @@ def markdown_to_email_html(report: str) -> str:
         '<style>@media only screen and (max-width:600px){.pulse-outer{padding:0!important}.pulse-shell{border:0!important}'
         '.pulse-content{padding:34px 24px 40px!important}.pulse-trust{padding:30px 24px 34px!important}'
         '.pulse-title{font-size:38px!important}.story-headline{font-size:25px!important}'
-        '.pulse-customer-card td{padding-left:18px!important;padding-right:18px!important}}</style></head>'
+        '.pulse-customer-card td{padding-left:18px!important;padding-right:18px!important}'
+        '.pulse-company-metrics th,.pulse-company-metrics td{padding:10px 7px!important;font-size:13px!important}}</style></head>'
         '<body style="margin:0;background:#ebe9e4;padding:0">'
         '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ebe9e4">'
         '<tr><td class="pulse-outer" align="center" style="padding:28px 12px">'
@@ -2016,7 +2394,7 @@ def parse_glean_draft(message: Message, *, report_date: str, workflow_url: str) 
             result["agent_request_id"] = f"glean-{hashlib.sha256(agent_request_id.encode()).hexdigest()[:32]}"
 
     snapshot = _require_mapping(result.get("snapshot"), "snapshot")
-    if snapshot.get("schema_version") in {2, 3, 4, 5, 6}:
+    if snapshot.get("schema_version") in {2, 3, 4, 5, 6, 7}:
         comparison = _require_mapping(snapshot.get("comparison_window"), "snapshot.comparison_window")
         for canonical, glean_name in (("start", "iso_start"), ("end", "iso_end")):
             if canonical not in comparison and isinstance(comparison.get(glean_name), str):
