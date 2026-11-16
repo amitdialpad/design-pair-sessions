@@ -79,12 +79,12 @@ The final report recipient is stored in the protected `PULSE_RECIPIENTS` reposit
 
 The live email and failure notification use deterministic IST-date Message-IDs. Gmail Sent is checked before delivery, so retries and fallback schedules cannot send duplicates. The email contains no attachments or machine JSON.
 
-Runtime files remain private:
+Runtime files are written only to the ephemeral runner for validation and email preparation:
 
 - `reports/agentic_business_pulse/YYYY-MM-DD.md`
 - `reports/agentic_business_pulse/YYYY-MM-DD.json`
 
-They are retained only in the private GitHub Actions artifact.
+This repository is public. Never upload report bodies, snapshots, source drafts or customer evidence as GitHub Actions artifacts, job summaries, logs or repository files. The workflow deliberately has no artifact-upload step. Private Gmail draft persistence remains mandatory before SMTP; the delivered report stays in Gmail. Normalized source evidence and recovery files stay in the private Glean run. Runtime files disappear with the runner.
 
 ## Failure behavior
 

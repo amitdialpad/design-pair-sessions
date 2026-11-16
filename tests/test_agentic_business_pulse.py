@@ -2079,17 +2079,20 @@ class PulseWorkflowTests(unittest.TestCase):
         self.assertIn("FAILURE_DEDUPE_DAILY: 'true'", workflow)
         self.assertIn("FAILURE_TIMEZONE: Asia/Kolkata", workflow)
         self.assertIn("id: pulse", workflow)
-        self.assertIn("if: steps.pulse.outputs.handled_failure != 'true'", workflow)
         self.assertNotIn("\n  notify-failure:", workflow)
         self.assertIn("timeout-minutes: 345", workflow)
         self.assertIn("actions/checkout@v7", workflow)
         self.assertIn("actions/setup-python@v7", workflow)
-        self.assertIn("actions/upload-artifact@v7", workflow)
-        self.assertIn("retention-days: 90", workflow)
         self.assertNotIn("PULSE_AGENT_TOKEN", workflow)
         self.assertNotIn("/api/agents/", workflow)
         self.assertNotIn("fixture", workflow.lower())
         self.assertIn("if: github.event_name != 'pull_request'", workflow)
+
+    def test_workflow_never_uploads_pulse_report_artifacts(self):
+        workflow = (ROOT / ".github" / "workflows" / "daily-agentic-business-pulse.yml").read_text()
+        self.assertNotIn("actions/upload-artifact@", workflow)
+        self.assertIn("python3 scripts/run-agentic-business-pulse.py", workflow)
+        self.assertIn("PULSE_REPORTS_DIR: reports/agentic_business_pulse", workflow)
 
     def test_internal_source_document_ids_are_not_in_public_files(self):
         forbidden_direct_link_prefixes = (
