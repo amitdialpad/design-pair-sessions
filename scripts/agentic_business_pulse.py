@@ -773,10 +773,11 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
     salesforce_snapshot = business.get("salesforce_operational_snapshot")
     latest = business["latest_arr_period"]
     quarter = business["quarter"]
-    target = quarter["target_bookings"]
-    if quarter["target_status"] == "verified":
+    if quarter is None:
+        quarter_line = f"- **Quarter bookings unavailable:** {business['quarter_note']}"
+    elif quarter["target_status"] == "verified":
         quarter_line = (
-            f"- **{quarter['label']}: {_money(quarter['actual_bookings'])} of {_money(target)}** "
+            f"- **{quarter['label']}: {_money(quarter['actual_bookings'])} of {_money(quarter['target_bookings'])}** "
             f"({quarter['attainment_pct']:.1f}%) · gap {_money(quarter['gap_to_target'])} · "
             f"required weekly pace {_money(quarter['required_weekly_pace'])}."
         )
@@ -786,16 +787,22 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
             f"Overall target is withheld because it is {quarter['target_status']}: {quarter['target_note']}"
         )
     forecast = []
-    if quarter["commit_forecast"] is not None:
-        forecast.append(f"commit {_money(quarter['commit_forecast'])}")
-    if quarter["best_case_forecast"] is not None:
-        forecast.append(f"best case {_money(quarter['best_case_forecast'])}")
+    if quarter is not None:
+        if quarter["commit_forecast"] is not None:
+            forecast.append(f"commit {_money(quarter['commit_forecast'])}")
+        if quarter["best_case_forecast"] is not None:
+            forecast.append(f"best case {_money(quarter['best_case_forecast'])}")
+    weekly_line = (
+        f"- **This week's bookings unavailable:** {business['weekly_sales_note']}"
+        if weekly is None
+        else f"- **This week's bookings:** {_money(weekly['total_bookings'])}; core/non-Agentic {_money(weekly['core_bookings'])}; Agentic {_money(weekly['agentic_bookings'])} ({weekly['agentic_share_pct']:.1f}%)."
+    )
     lines = [
         "",
         "## CEO View — Company Health",
         "",
         f"- **{business['verdict'].title()}** — {business['verdict_reason']}",
-        f"- **This week's bookings:** {_money(weekly['total_bookings'])}; core/non-Agentic {_money(weekly['core_bookings'])}; Agentic {_money(weekly['agentic_bookings'])} ({weekly['agentic_share_pct']:.1f}%).",
+        weekly_line,
         quarter_line,
     ]
     if isinstance(salesforce_snapshot, dict):
@@ -840,10 +847,11 @@ def _render_business_health(business: dict[str, Any]) -> list[str]:
         )
     if forecast:
         lines.append(f"- **Quarter forecast:** {' · '.join(forecast)}.")
-    lines.append(
-        f"- **Agentic share of quarter bookings:** {quarter['agentic_share_pct']:.1f}% "
-        f"({_money(quarter['agentic_bookings'])})."
-    )
+    if quarter is not None:
+        lines.append(
+            f"- **Agentic share of quarter bookings:** {quarter['agentic_share_pct']:.1f}% "
+            f"({_money(quarter['agentic_bookings'])})."
+        )
     return lines
 
 
@@ -943,6 +951,22 @@ def render_customer_dashboard(snapshot: dict[str, Any], workflow_url: str) -> st
     return "\n".join(lines).rstrip() + "\n"
 
 
+def _business_health_measure(business: dict[str, Any], field: str) -> dict[str, Any] | None:
+    path = f"snapshot.business_health.{field}"
+    if field not in business:
+        raise ValidationError(f"{path} must be an object or explicit null")
+    value = business[field]
+    note_field = f"{field}_note"
+    note = business.get(note_field)
+    if value is None:
+        if not isinstance(note, str) or not note.strip() or len(note) > 320:
+            raise ValidationError(f"unavailable {path} requires {note_field} (nonempty, at most 320 characters)")
+        return None
+    if note not in (None, ""):
+        raise ValidationError(f"available {path} must not include {note_field}")
+    return _require_mapping(value, path)
+
+
 def _validate_business_health(
     snapshot: dict[str, Any], *, require_salesforce_snapshot: bool = False
 ) -> None:
@@ -953,17 +977,20 @@ def _validate_business_health(
     if not isinstance(reason, str) or not reason.strip() or len(reason) > 320:
         raise ValidationError("snapshot.business_health.verdict_reason is required")
 
-    weekly = _require_mapping(business.get("weekly_sales"), "snapshot.business_health.weekly_sales")
-    for field in ("total_bookings", "core_bookings", "agentic_bookings", "agentic_share_pct"):
-        _dashboard_number(weekly.get(field), f"snapshot.business_health.weekly_sales.{field}")
-    if not math.isclose(weekly["core_bookings"] + weekly["agentic_bookings"], weekly["total_bookings"], abs_tol=1.0):
-        raise ValidationError("weekly sales core plus Agentic must equal total bookings")
-    expected_share = 0 if weekly["total_bookings"] == 0 else weekly["agentic_bookings"] / weekly["total_bookings"] * 100
-    if not math.isclose(weekly["agentic_share_pct"], expected_share, abs_tol=0.1):
-        raise ValidationError("weekly Agentic share does not match bookings")
+    weekly = _business_health_measure(business, "weekly_sales")
+    quarter = _business_health_measure(business, "quarter")
+    if weekly is not None:
+        for field in ("total_bookings", "core_bookings", "agentic_bookings", "agentic_share_pct"):
+            _dashboard_number(weekly.get(field), f"snapshot.business_health.weekly_sales.{field}")
+        if not math.isclose(weekly["core_bookings"] + weekly["agentic_bookings"], weekly["total_bookings"], abs_tol=1.0):
+            raise ValidationError("weekly sales core plus Agentic must equal total bookings")
+        expected_share = 0 if weekly["total_bookings"] == 0 else weekly["agentic_bookings"] / weekly["total_bookings"] * 100
+        if not math.isclose(weekly["agentic_share_pct"], expected_share, abs_tol=0.1):
+            raise ValidationError("weekly Agentic share does not match bookings")
 
     salesforce_snapshot = business.get("salesforce_operational_snapshot")
-    if require_salesforce_snapshot and salesforce_snapshot is None:
+    bookings_unavailable = weekly is None or quarter is None
+    if (require_salesforce_snapshot or bookings_unavailable) and salesforce_snapshot is None:
         raise ValidationError(
             "snapshot.business_health.salesforce_operational_snapshot is required"
         )
@@ -973,7 +1000,7 @@ def _validate_business_health(
             "snapshot.business_health.salesforce_operational_snapshot",
         )
         try:
-            date.fromisoformat(str(salesforce_snapshot.get("as_of_date", "")))
+            snapshot_date = date.fromisoformat(str(salesforce_snapshot.get("as_of_date", "")))
         except ValueError as error:
             raise ValidationError(
                 "snapshot.business_health.salesforce_operational_snapshot.as_of_date must be an ISO date"
@@ -982,6 +1009,14 @@ def _validate_business_health(
             raise ValidationError(
                 "snapshot.business_health.salesforce_operational_snapshot.quarter_label is required"
             )
+        if bookings_unavailable and snapshot_date.isoformat() != snapshot["report_date"]:
+            raise ValidationError("Salesforce operational snapshot as_of_date must match the current report date")
+        if quarter is None:
+            fiscal_quarter = (snapshot_date.month - 2) % 12 // 3 + 1
+            fiscal_year = snapshot_date.year + (snapshot_date.month >= 2)
+            expected_label = f"Q{fiscal_quarter} FY{fiscal_year % 100:02d}"
+            if salesforce_snapshot["quarter_label"] != expected_label:
+                raise ValidationError("Salesforce operational snapshot quarter_label must match the report fiscal quarter")
         for field in (
             "quarter_start_arr",
             "current_arr",
@@ -1084,7 +1119,8 @@ def _validate_business_health(
             if not isinstance(value, int) or isinstance(value, bool):
                 raise ValidationError(f"snapshot.business_health.latest_arr_period.{field} must be an integer")
 
-    quarter = _require_mapping(business.get("quarter"), "snapshot.business_health.quarter")
+    if quarter is None:
+        return
     if quarter.get("target_status") not in {"verified", "unverified", "unavailable"}:
         raise ValidationError("snapshot.business_health.quarter.target_status is invalid")
     for field in ("actual_bookings", "agentic_bookings", "agentic_share_pct"):
