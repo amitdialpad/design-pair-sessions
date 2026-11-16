@@ -1229,7 +1229,9 @@ def _validate_customer_insight(customer: dict[str, Any], report_date: str) -> No
         raise ValidationError('customer_insight.links needs evidence')
 
 
-def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, Any]:
+def _validate_dashboard_customer(
+    customer_value: Any, index: int, *, allow_unknown_jira_counts: bool = False
+) -> dict[str, Any]:
     path = f"snapshot.customers[{index}]"
     customer = _require_mapping(customer_value, path)
     if customer.get("name_permitted") is not True:
@@ -1260,8 +1262,16 @@ def _validate_dashboard_customer(customer_value: Any, index: int) -> dict[str, A
             raise ValidationError(f"{path}.{field} must be a short plain-language statement")
 
     jira = _require_mapping(customer.get("jira"), f"{path}.jira")
-    _dashboard_number(jira.get("new_or_changed_7d"), f"{path}.jira.new_or_changed_7d")
-    _dashboard_number(jira.get("open_customer_bugs"), f"{path}.jira.open_customer_bugs")
+    unknown_jira_counts = False
+    for field in ("new_or_changed_7d", "open_customer_bugs"):
+        if field not in jira:
+            raise ValidationError(f"{path}.jira.{field} is required")
+        _dashboard_number(jira[field], f"{path}.jira.{field}", allow_null=allow_unknown_jira_counts)
+        unknown_jira_counts = unknown_jira_counts or jira[field] is None
+    if unknown_jira_counts:
+        note = jira.get("note")
+        if not isinstance(note, str) or not note.strip() or len(note) > 320:
+            raise ValidationError(f"{path}.jira.note is required for unknown counts (nonempty, at most 320 characters)")
     keys = _require_list(jira.get("keys"), f"{path}.jira.keys")
     if not all(isinstance(key, str) and re.fullmatch(r"[A-Z][A-Z0-9]+-\d+", key) for key in keys):
         raise ValidationError(f"{path}.jira.keys must contain Jira keys")
@@ -1318,7 +1328,10 @@ def validate_customer_dashboard_result(
     customers = _require_list(snapshot.get("customers"), "snapshot.customers")
     if not customers:
         raise ValidationError("snapshot.customers must contain at least one verified customer signal")
-    validated_customers = [_validate_dashboard_customer(value, index) for index, value in enumerate(customers)]
+    validated_customers = [
+        _validate_dashboard_customer(value, index, allow_unknown_jira_counts=schema_version == 6)
+        for index, value in enumerate(customers)
+    ]
     if schema_version == 6:
         for customer in validated_customers:
             _validate_customer_insight(customer, report_date)

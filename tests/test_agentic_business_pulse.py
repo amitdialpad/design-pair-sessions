@@ -506,6 +506,110 @@ class PulseValidationTests(unittest.TestCase):
             }
         return result
 
+    def test_portfolio_accepts_explicit_jira_count_gaps_without_rendering_counts(self):
+        for unavailable in (("new_or_changed_7d",), ("open_customer_bugs",), ("new_or_changed_7d", "open_customer_bugs")):
+            with self.subTest(unavailable=unavailable):
+                result = self.portfolio_result()
+                customer = result["snapshot"]["customers"][0]
+                for field in unavailable:
+                    customer["jira"][field] = None
+                customer["jira"]["note"] = "Current authorized Jira evidence did not yield reconciled customer-level counts."
+
+                report, snapshot = validate_agent_result(
+                    result, report_now=REPORT_NOW,
+                    source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                )
+
+                for field in unavailable:
+                    self.assertIsNone(snapshot["customers"][0]["jira"][field])
+                self.assertIn(customer["account_name"], report)
+                self.assertNotIn("Jira change", report)
+                self.assertNotIn("open bug", report)
+
+    def test_portfolio_requires_short_note_for_jira_count_gaps(self):
+        missing = object()
+        for invalid in (missing, None, "", "   ", 7, [], {}, True, "x" * 321):
+            with self.subTest(note=repr(invalid)):
+                result = self.portfolio_result()
+                jira = result["snapshot"]["customers"][0]["jira"]
+                jira["new_or_changed_7d"] = None
+                jira["open_customer_bugs"] = None
+                if invalid is not missing:
+                    jira["note"] = invalid
+                with self.assertRaisesRegex(ValidationError, "jira.note"):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_portfolio_rejects_missing_jira_count_fields(self):
+        for missing, other in (("new_or_changed_7d", "open_customer_bugs"), ("open_customer_bugs", "new_or_changed_7d")):
+            with self.subTest(missing=missing):
+                result = self.portfolio_result()
+                jira = result["snapshot"]["customers"][0]["jira"]
+                jira.pop(missing)
+                jira[other] = None
+                jira["note"] = "Current authorized Jira evidence did not yield reconciled customer-level counts."
+                with self.assertRaisesRegex(ValidationError, missing):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_schema5_rejects_null_jira_counts(self):
+        result = valid_ceo_view_result()
+        jira = result["snapshot"]["customers"][0]["jira"]
+        jira["new_or_changed_7d"] = None
+        jira["note"] = "Current authorized Jira evidence did not yield reconciled customer-level counts."
+        with self.assertRaisesRegex(ValidationError, "jira.new_or_changed_7d"):
+            validate_agent_result(
+                result, report_now=REPORT_NOW,
+                source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+            )
+
+    def test_portfolio_jira_gap_does_not_bypass_provided_count_validation(self):
+        for provided, unavailable in (("new_or_changed_7d", "open_customer_bugs"), ("open_customer_bugs", "new_or_changed_7d")):
+            for invalid in (-1, float("inf"), float("nan"), "unknown", True, {}, []):
+                with self.subTest(provided=provided, invalid=repr(invalid)):
+                    result = self.portfolio_result()
+                    jira = result["snapshot"]["customers"][0]["jira"]
+                    jira[provided] = invalid
+                    jira[unavailable] = None
+                    jira["note"] = "Current authorized Jira evidence did not yield reconciled customer-level counts."
+                    with self.assertRaisesRegex(ValidationError, provided):
+                        validate_agent_result(
+                            result, report_now=REPORT_NOW,
+                            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                        )
+
+    def test_portfolio_jira_gap_does_not_bypass_key_validation(self):
+        missing = object()
+        for invalid in (missing, None, "DP-200001", ["not-a-jira-key"], [None]):
+            with self.subTest(keys=repr(invalid)):
+                result = self.portfolio_result()
+                jira = result["snapshot"]["customers"][0]["jira"]
+                jira["new_or_changed_7d"] = None
+                jira["note"] = "Current authorized Jira evidence did not yield reconciled customer-level counts."
+                if invalid is missing:
+                    jira.pop("keys")
+                else:
+                    jira["keys"] = invalid
+                with self.assertRaisesRegex(ValidationError, "jira.keys"):
+                    validate_agent_result(
+                        result, report_now=REPORT_NOW,
+                        source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+                    )
+
+    def test_portfolio_accepts_optional_jira_note_with_numeric_counts(self):
+        result = self.portfolio_result()
+        result["snapshot"]["customers"][0]["jira"]["note"] = "Customer Jira counts were reconciled against current authorized issue evidence."
+        report, snapshot = validate_agent_result(
+            result, report_now=REPORT_NOW,
+            source_max_age_hours=12, workflow_url=WORKFLOW_URL,
+        )
+        self.assertIsInstance(snapshot["customers"][0]["jira"]["new_or_changed_7d"], int)
+        self.assertNotIn("Jira change", report)
+
     def bookings_gap_result(self, *, weekly: bool = True, quarter: bool = True, schema: int = 6):
         result = self.portfolio_result() if schema == 6 else valid_ceo_view_result()
         result["snapshot"]["schema_version"] = schema
