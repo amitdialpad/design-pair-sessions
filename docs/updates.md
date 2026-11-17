@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:e0a0f4e039bba4685c872e8fc1d76f41a66df6c0 -->
+
+**Open Tidewater as Mara Kettering**
+
+Beacon now opens Tidewater as Mara Kettering, the event operations manager, so a plain ?company=tidewater lands on someone with chat instead of an empty Inbox. Mara is also a company admin, so the Users and Offices settings pages are there on first open.
+
+<span class="release-meta">[dialpad/design#459](https://github.com/dialpad/design/pull/459) · 17 November 2026</span>
+
+---
+
+<!-- beacon-change:2c9a82fc753ea660406c01c1ccdca1f28b910022 -->
+
+**Show Tidewater chat in Beacon from its data model records**
+
+Tidewater's month of internal chat now shows in Beacon. The chat records from the data model become the rows Beacon reads, a check compares those rows with the records, and Tidewater's bundle ships them. Nothing is written to Firestore.
+
+<span class="release-meta">[dialpad/design#457](https://github.com/dialpad/design/pull/457) · 17 November 2026</span>
+
+---
+
+<!-- beacon-change:b3c196ab88d994236d8cf5ad19cc1d18f42b58ea -->
+
+**Check conversation records and emit Tidewater chat as spec records**
+
+Tidewater's planned month of internal chat now becomes data-model records, and the data model checks conversations across records. Nothing is written to Beacon or Firestore yet.
+
+<span class="release-meta">[dialpad/design#455](https://github.com/dialpad/design/pull/455) · 17 November 2026</span>
+
+---
+
+<!-- beacon-change:3c3141209fc7e0e9896063b811aba0f22cedcfc8 -->
+
+**Add the Tidewater chat pack, catalog and dry run with recorded Jev choices**
+
+Tidewater, the generated sports club, gets its internal chat planned from the reviewed content pack. Nothing is written to Beacon or Firestore yet: this adds the pack, the club's chat catalog, a planner and a dry run that prints what the month of chat would look like. At the bundle's run date the month holds 611 messages. Exact and near duplicates are 0.3% each and the largest opener or closer is 0.5%, inside the engine's limits. Chat stays routine: no escalations in the month.
+
+<span class="release-meta">[dialpad/design#439](https://github.com/dialpad/design/pull/439) · 16 November 2026</span>
+
+---
+
 <!-- beacon-change:22ea5dee7cf67803acf53c8c5d30cc0dbab0f728 -->
 
 **Move both callbars to callbarkit 3.0.0-next.3**
@@ -48,6 +88,8 @@ The sports-club test company (Tidewater) gets its groups, generated from the dat
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:ea37b4fcd81170bb26f8a666f185200d31d47aba -->
 
 **Name the round checker and row check for every round**
@@ -87,8 +129,6 @@ Beacon's company picker now offers Tidewater's Firebase copy, next to Aerolabs's
 <span class="release-meta">[dialpad/design#398](https://github.com/dialpad/design/pull/398) · 11 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:7b5bed52ccd921ad90c6f6c318a6e3b390b33b18 -->
 
