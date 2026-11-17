@@ -2361,6 +2361,12 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Linked billing on the Claude Platform](https://claude.com/resources/articles/linked-billing-on-claude-platform)**<br><small>Nov 17, 2026 · Product updates</small>
+
+Linked billing is now in beta on the Claude Platform. Third-party platforms can let customers pay for Claude API usage without sharing an API key.
+
+---
+
 **[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 13, 2026 · Best practices</small>
 
 Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
@@ -2377,13 +2383,13 @@ Always-on agents run indefinitely, deciding how and when to act across many sess
 
 Here's Opus 5.5 compares with Anthropic's other models for daily work.
 
----
+:::details View past updates
 
 **[Operate Claude Managed Agents inside your security perimeter](https://claude.com/resources/articles/self-hosted-claude-managed-agents)**<br><small>Nov 12, 2026 · Product updates</small>
 
 Introducing self-hosted Claude Managed Agents in private beta. Now you can run agents in your own environment, whether that’s in your own cloud or on-premise.
 
-:::details View past updates
+---
 
 **[J. Crew brings its signature approach to styling to life with Claude](https://claude.com/resources/articles/j-crew-style-advisor-with-claude)**<br><small>Nov 12, 2026 · Enterprise announcements</small>
 
@@ -2407,13 +2413,7 @@ Claude for Manufacturing drafts quotes, quality reports, and supplier requests f
 
 Brainstorm on a shared whiteboard, build a spreadsheet, and share dashboards with your team, all with Claude. Available today on all paid plans.
 
----
-
-**[More ways to work with Claude: Sheets, Whiteboards, and Interactive Connectors](https://claude.com/resources/articles/more-ways-to-work-with-claude-sheets-whiteboards-and-interactive-connectors)**<br><small>Nov 10, 2026 · Product updates</small>
-
-Anthropic introduces Claude Sheets and Claude Whiteboards, and an upgrade to interactive connectors.
-
 :::
 
-*Updated November 16, 2026*
+*Updated November 17, 2026*
 <!-- CLAUDE_FEED_END -->
