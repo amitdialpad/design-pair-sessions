@@ -1,6 +1,6 @@
 {
   "repo": "dialpad/design",
-  "generated": "2026-11-14T15:23:41.563319+00:00",
+  "generated": "2026-11-18T17:39:15.847731+00:00",
   "files": [
     {
       "path": ".agents/skills/branch-prune/SKILL.md",
@@ -40,7 +40,7 @@
     },
     {
       "path": ".agents/skills/decision-surface/SKILL.md",
-      "sha": "036ff45663e4e9febaed0dd5272a9e7a1bacb129"
+      "sha": "44d06dd9b7ee5b3cc427206d5f6166c7ff6cbcd0"
     },
     {
       "path": ".agents/skills/delegate/SKILL.md",
@@ -200,7 +200,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/README.md",
-      "sha": "96e829f4afe051472fa334d5660ea364dd9376fd"
+      "sha": "52fc76e375d7fae636b2fa3efae146f2ab3d9cde"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/ai-prompts.md",
@@ -255,6 +255,10 @@
       "sha": "31aba71bc9710978c9712c7d404daf296c5760b8"
     },
     {
+      "path": "apps/beacon/.agents/resources/rules/messaging.md",
+      "sha": "ce42cef8b664d86aea5c70d4aee14d99ef6d75b7"
+    },
+    {
       "path": "apps/beacon/.agents/resources/rules/navigation.md",
       "sha": "8a1a08a30339875e3b2832da62514b31b99e75f9"
     },
@@ -284,7 +288,7 @@
     },
     {
       "path": "apps/beacon/.agents/resources/rules/testing.md",
-      "sha": "e5d37c507a5ec1d40a62cef097ded80fa5d7940a"
+      "sha": "e0e42e0a7d44987a76c92071befa5542bd1e534e"
     },
     {
       "path": "apps/beacon/.agents/resources/rules/theme.md",
