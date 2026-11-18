@@ -2361,9 +2361,21 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Using a "chaos loop" to harden the Claude Docs launch: 60 server errors across billions of requests](https://claude.dev/blog/chaos-loop-claude-docs-launch/)**<br><small>Nov 17, 2026 · Best practices</small>
+
+Claude Docs is a doc editor that you, your teammates, and Claude all work in together. The interesting part is that a Claude session anywhere, from chat to Claude Code, can open the same doc and read, write, and comment in it live, right next to you. We released Docs on September 16, 2026. This post is about the service that runs underneath it.
+
+---
+
 **[Linked billing on the Claude Platform](https://claude.com/resources/articles/linked-billing-on-claude-platform)**<br><small>Nov 17, 2026 · Product updates</small>
 
 Linked billing is now in beta on the Claude Platform. Third-party platforms can let customers pay for Claude API usage without sharing an API key.
+
+---
+
+**[How the Claude Code team thinks about verification](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)**<br><small>Nov 16, 2026 · Best practices</small>
+
+How end-to-end, property and differential tests let coding agents verify their work with evidence, and what the Claude Code team does to keep its verifiers honest.
 
 ---
 
@@ -2371,7 +2383,7 @@ Linked billing is now in beta on the Claude Platform. Third-party platforms can 
 
 Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
 
----
+:::details View past updates
 
 **[Building always-on agents](https://claude.com/resources/articles/building-always-on-agents)**<br><small>Nov 13, 2026 · Best practices</small>
 
@@ -2383,7 +2395,7 @@ Always-on agents run indefinitely, deciding how and when to act across many sess
 
 Here's Opus 5.5 compares with Anthropic's other models for daily work.
 
-:::details View past updates
+---
 
 **[Operate Claude Managed Agents inside your security perimeter](https://claude.com/resources/articles/self-hosted-claude-managed-agents)**<br><small>Nov 12, 2026 · Product updates</small>
 
@@ -2401,19 +2413,7 @@ J.Crew’s new Style Advisor uses Claude to help customers shop JCrew.com by com
 
 Add Claude to your video calls to take notes, answer questions, and build docs and whiteboards while your team talks.
 
----
-
-**[Introducing Claude for Manufacturing](https://claude.com/resources/articles/claude-for-manufacturing)**<br><small>Nov 12, 2026 · Product updates</small>
-
-Claude for Manufacturing drafts quotes, quality reports, and supplier requests from your plant’s own records, for your team to review and approve.
-
----
-
-**[Introducing Claude Whiteboards, Claude Sheets, and Claude Data](https://claude.com/resources/articles/sheets-whiteboards-data)**<br><small>Nov 10, 2026 · Product updates</small>
-
-Brainstorm on a shared whiteboard, build a spreadsheet, and share dashboards with your team, all with Claude. Available today on all paid plans.
-
 :::
 
-*Updated November 17, 2026*
+*Updated November 18, 2026*
 <!-- CLAUDE_FEED_END -->
