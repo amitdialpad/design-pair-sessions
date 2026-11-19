@@ -8,6 +8,26 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:061d90be2ebbf2a07b84569d8ef01969c96b72e6 -->
+
+**Grow the Tidewater chat with direct chats and call talk**
+
+Tidewater, the generated sports club, now has chat that reads like a working club. All wording and reply rhythm come from a committed log of Jev's choices. A build replays that log and refuses to run if any step has no recorded answer, or if Jev judged that no line fits.
+
+<span class="release-meta">[dialpad/design#471](https://github.com/dialpad/design/pull/471) · 19 November 2026</span>
+
+---
+
+<!-- beacon-change:39b073e6ef8cd9e180784d4636eb736eef45ee45 -->
+
+**Coworker calls in direct conversations**
+
+Tidewater, the generated sports club, now has phone calls between coworkers. Over its 30 days there are 66 calls: answered, missed and declined, some with a voicemail. Each call sits in the two people's direct conversation, the same place their messages go. Most go to 40 pairs of coworkers in the same office who had not messaged each other; the two direct chats that already held messages get two calls each after their last message. The data model's README now says when a direct conversation exists: any two staff have one before anything happens, and a first message or call only adds its first row. The record checker gains two rules: two people have at most one direct conversation, and a d...
+
+<span class="release-meta">[dialpad/design#464](https://github.com/dialpad/design/pull/464) · 18 November 2026</span>
+
+---
+
 <!-- beacon-change:e0a0f4e039bba4685c872e8fc1d76f41a66df6c0 -->
 
 **Open Tidewater as Mara Kettering**
@@ -68,6 +88,8 @@ All five Settings lists (Users, Offices, Coaching Teams, Groups and Phone Number
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:6a1395611d88d833d3a66c6d47e41dde23d1379c -->
 
 **Add Groups and Phone Numbers tables to Settings**
@@ -87,8 +109,6 @@ The sports-club test company (Tidewater) gets its groups, generated from the dat
 <span class="release-meta">[dialpad/design#418](https://github.com/dialpad/design/pull/418) · 13 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:ea37b4fcd81170bb26f8a666f185200d31d47aba -->
 
