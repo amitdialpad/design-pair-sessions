@@ -2435,5 +2435,5 @@ Add Claude to your video calls to take notes, answer questions, and build docs a
 
 :::
 
-*Updated November 18, 2026*
+*Updated November 19, 2026*
 <!-- CLAUDE_FEED_END -->
