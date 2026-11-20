@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:ba48f5e6fd7f6ac67d40466a9a242fb37a2de1a2 -->
+
+**Remove six functions nothing calls**
+
+Removes six Beacon functions that nothing calls. Four lost their last callers when the test cleanup deleted the specs that used them; one never had a caller. git grep over the whole repo (apps, packages, docs, rules, stories, mocks) finds no other use, no spread of these composables' return values, and no mock that stubs these names.
+
+<span class="release-meta">[dialpad/design#479](https://github.com/dialpad/design/pull/479) · 20 November 2026</span>
+
+---
+
 <!-- beacon-change:061d90be2ebbf2a07b84569d8ef01969c96b72e6 -->
 
 **Grow the Tidewater chat with direct chats and call talk**
@@ -78,6 +88,8 @@ Moves Beacon's call bar and meeting bar to callbarkit 3.0.0-next.3, the version 
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:320406f842a1aa1a612b3d8bca6deb0620382d05 -->
 
 **Give the Settings lists one shared table layout with a docked header**
@@ -87,8 +99,6 @@ All five Settings lists (Users, Offices, Coaching Teams, Groups and Phone Number
 <span class="release-meta">[dialpad/design#429](https://github.com/dialpad/design/pull/429) · 14 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:6a1395611d88d833d3a66c6d47e41dde23d1379c -->
 
