@@ -1016,6 +1016,48 @@ Every Monday. The week's Beacon changes, in plain English.
 
 <!-- BEACON_BRIEF_START -->
 
+### Week of 16–22 Nov 2026
+
+7 changes merged into Beacon this week: Remove six functions nothing calls; Grow the Tidewater chat with direct chats and call talk; Coworker calls in direct conversations; Open Tidewater as Mara Kettering; Show Tidewater chat in Beacon from its data model records; Check conversation records and emit Tidewater chat as spec records; Add the Tidewater chat pack, catalog and dry run with recorded Jev choices. The details below come directly from the merged monorepo PRs.
+
+#### What actually changed
+
+- **[Remove six functions nothing calls](https://github.com/dialpad/design/pull/479)** (dialpad/design#479). Removes six Beacon functions that nothing calls. Four lost their last callers when the test cleanup deleted the specs that used them; one never had a caller. git grep over the whole repo (apps, packages, docs, rules, stories, mocks) finds no other use, no spread of these composables' return values, and no mock that stubs these names.
+- **[Grow the Tidewater chat with direct chats and call talk](https://github.com/dialpad/design/pull/471)** (dialpad/design#471). Tidewater, the generated sports club, now has chat that reads like a working club. All wording and reply rhythm come from a committed log of Jev's choices. A build replays that log and refuses to run if any step has no recorded answer, or if Jev judged that no line fits.
+- **[Coworker calls in direct conversations](https://github.com/dialpad/design/pull/464)** (dialpad/design#464). Tidewater, the generated sports club, now has phone calls between coworkers. Over its 30 days there are 66 calls: answered, missed and declined, some with a voicemail. Each call sits in the two people's direct conversation, the same place their messages go. Most go to 40 pairs of coworkers in the same office who had not messaged each other; the two direct chats that already held messages get two calls each after their last message. The data model's README now says when a direct conversation exists: any two staff have one before anything happens, and a first message or call only adds its first row. The record checker gains two rules: two people have at most one direct conversation, and a direct conversation has exactly two people.
+- **[Open Tidewater as Mara Kettering](https://github.com/dialpad/design/pull/459)** (dialpad/design#459). Beacon now opens Tidewater as Mara Kettering, the event operations manager, so a plain ?company=tidewater lands on someone with chat instead of an empty Inbox. Mara is also a company admin, so the Users and Offices settings pages are there on first open.
+- **[Show Tidewater chat in Beacon from its data model records](https://github.com/dialpad/design/pull/457)** (dialpad/design#457). Tidewater's month of internal chat now shows in Beacon. The chat records from the data model become the rows Beacon reads, a check compares those rows with the records, and Tidewater's bundle ships them. Nothing is written to Firestore.
+- **[Check conversation records and emit Tidewater chat as spec records](https://github.com/dialpad/design/pull/455)** (dialpad/design#455). Tidewater's planned month of internal chat now becomes data-model records, and the data model checks conversations across records. Nothing is written to Beacon or Firestore yet.
+- **[Add the Tidewater chat pack, catalog and dry run with recorded Jev choices](https://github.com/dialpad/design/pull/439)** (dialpad/design#439). Tidewater, the generated sports club, gets its internal chat planned from the reviewed content pack. Nothing is written to Beacon or Firestore yet: this adds the pack, the club's chat catalog, a planner and a dry run that prints what the month of chat would look like. At the bundle's run date the month holds 611 messages. Exact and near duplicates are 0.3% each and the largest opener or closer is 0.5%, inside the engine's limits. Chat stays routine: no escalations in the month.
+
+#### The bigger shift
+
+This was a focused week with 7 merged Beacon changes. No broader pattern is claimed beyond those source records.
+
+#### Where things are still messy
+
+No unresolved issue was explicitly documented in this week's merged Beacon changes.
+
+#### What's coming next
+
+- `originalContent` in `useMessageEdit` is now written but never read; removing it also changes `enterEditMode`'s arguments, so it is left for a separate change. - Publish Tidewater with the new chat (a gated cloud step). - Beacon's empty-start sentence for a direct chat changes in a small follow-up. - Pack growth can tie replies to scenes more closely. Today two scenes in one room can share the same minutes. - Publishing coworker voicemails to the cloud needs a contract change. They are left out of the publication for now and counted as left out, so the reconciliation shows them. - The content pass gives coworker calls sports-club talk with a recap, and longer chat messages. - Known Beacon behaviour, not changed here: when Beacon loads a voicemail, it sets the conversation's joined time to the voicemail's time. - Beacon's empty-start sentence changes in a small follow-up. - Coworker calls in direct chats, then a gated publish of Tidewater to its test database (erase and republish). - Threads, replies and two-person direct chats with real topics come with the pack growth. - Beacon chat rows from these records, then coworker calls in direct chats, then a gated publish to Tidewater. - Before coworker calls: decide when a call's people count as joined (at the call's start or when it is accepted), since the sender check reads a call by its start. - Thread summaries need their own storage key once threads are emitted. - Growing the pack: two-person direct chats with real topics, and threads. - Spec records for this chat and the cross-record checker for conversations. A build fails if any recorded Jev answer is missing. - Beacon chat rows from those records, then coworker calls in direct chats, then a gated publish to Tidewater. - Growing the pack: two-person direct-chat scenes with real topics, more versions of each line, and three small wording fixes that change what Jev sees, so they wait for the next recorded run.
+
+#### Try this
+
+Open the changed Beacon area and compare it with the linked merged PR before using it in a prototype.
+
+#### Quick notes
+
+- Source: merged commits and pull requests touching `apps/beacon` in `dialpad/design`.
+- Window: Monday 00:00 through Sunday 23:59 UTC.
+- A migration is reported as a migration, not as a new product release.
+
+#### One thing to remember
+
+The week's Beacon record is Remove six functions nothing calls, Grow the Tidewater chat with direct chats and call talk, Coworker calls in direct conversations, Open Tidewater as Mara Kettering, Show Tidewater chat in Beacon from its data model records, Check conversation records and emit Tidewater chat as spec records, Add the Tidewater chat pack, catalog and dry run with recorded Jev choices.
+
+---
+
 ### Week of 9–15 Nov 2026
 
 16 changes merged into Beacon this week: Move both callbars to callbarkit 3.0.0-next.3; Give the Settings lists one shared table layout with a docked header; Add Groups and Phone Numbers tables to Settings; Give Tidewater regions, department groups and memberships; Name the round checker and row check for every round; Give Tidewater phone numbers, contact centers and customers; Publish a round's rows and spec records one gated step at a time; Offer Tidewater's Firebase twin; Require --company for real publish writes; Publish a named company, including a people-only one; Restore inbox jump to conversation; DDT-2577, DDT-2578 tidy the data model spec and add the Company record; Run the meeting room controls on the callbarkit bar; DDT-2562, DDT-2564 add built-in roles as data and the cancelled-call pointer; Add Tidewater Gulls, a people-only company from the spec; Adopt callbarkit 3.0.0-next.2 in the call bar. The details below come directly from the merged monorepo PRs.
@@ -1158,7 +1200,7 @@ From `apps/beacon`, run `pnpm firebase:rules:test`. It starts the local emulator
 
 The week's Beacon record is Add read-only rules and indexes for the companies database, Measure a function that keeps one sidebar row per person per conversation, Add one shared hovercard for contacts, groups and channels, Sign in to Firebase before a published company opens from the DevTools picker, DDT-2482, DDT-2483 open customer history to the groups that deal with them, Keep Jira keys out of comments and doc prose.
 
----
+:::details View October 2026
 
 ### Week of 19–25 Oct 2026
 
@@ -2327,6 +2369,8 @@ Collapse your right panel right now and watch the feed expand. If you're working
 #### One thing to remember
 
 Less hunting for context means more time actually designing.
+
+:::
 
 :::
 
