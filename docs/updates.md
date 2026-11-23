@@ -2435,6 +2435,30 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[Zero data retention with Enterprise Frontier Safeguards is now in beta](https://claude.com/resources/articles/zero-data-retention-with-enterprise-frontier-safeguards)**<br><small>Nov 23, 2026 · Product updates</small>
+
+Enterprise Frontier Safeguards is now in public beta, providing detection of sophisticated misuse while remaining compatible with zero data retention.
+
+---
+
+**[KPMG's Todd Lohr on AI when your data is also your clients' data](https://claude.com/resources/articles/kpmg-todd-lohr-on-ai-when-your-data-is-also-your-clients-data)**<br><small>Nov 23, 2026 · Perspectives</small>
+
+Adopting frontier AI and building safeguards at the same time, and what that means for a firm that holds its clients' most sensitive data.
+
+---
+
+**[Introducing Claude Ship](https://claude.com/resources/articles/introducing-claude-ship)**<br><small>Nov 23, 2026 · Blog</small>
+
+Open a pull request and get back to building. Claude can now review pull requests, fix them, and approve the ones that a team's policy allows.
+
+---
+
+**[The enterprise guide to securing coding agents](https://claude.com/resources/articles/enterprise-guide-to-securing-coding-agents)**<br><small>Nov 23, 2026 · Best practices</small>
+
+How security and technical leaders can scope and bound coding agent risk: AI-specific risks, Claude Code’s layered defenses, and centrally enforced policy.
+
+:::details View past updates
+
 **[Using a "chaos loop" to harden the Claude Docs launch: 60 server errors across billions of requests](https://claude.dev/blog/chaos-loop-claude-docs-launch/)**<br><small>Nov 17, 2026 · Best practices</small>
 
 Claude Docs is a doc editor that you, your teammates, and Claude all work in together. The interesting part is that a Claude session anywhere, from chat to Claude Code, can open the same doc and read, write, and comment in it live, right next to you. We released Docs on September 16, 2026. This post is about the service that runs underneath it.
@@ -2453,41 +2477,17 @@ How end-to-end, property and differential tests let coding agents verify their w
 
 ---
 
+**[Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations)**<br><small>Nov 13, 2026 · Insights</small>
+
+Recommendations for designing, running, and reporting safety evaluations, based on our own experiences.
+
+---
+
 **[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 13, 2026 · Best practices</small>
 
 Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
 
-:::details View past updates
-
-**[Building always-on agents](https://claude.com/resources/articles/building-always-on-agents)**<br><small>Nov 13, 2026 · Best practices</small>
-
-Always-on agents run indefinitely, deciding how and when to act across many sessions. This guide walks through their core primitives and how they fit together.
-
----
-
-**[Using Claude Opus 5.5 as your daily driver for knowledge work](https://claude.com/resources/articles/using-claude-opus-5-5-as-your-daily-driver-for-knowledge-work)**<br><small>Nov 12, 2026 · Blog</small>
-
-Here's Opus 5.5 compares with Anthropic's other models for daily work.
-
----
-
-**[Operate Claude Managed Agents inside your security perimeter](https://claude.com/resources/articles/self-hosted-claude-managed-agents)**<br><small>Nov 12, 2026 · Product updates</small>
-
-Introducing self-hosted Claude Managed Agents in private beta. Now you can run agents in your own environment, whether that’s in your own cloud or on-premise.
-
----
-
-**[J. Crew brings its signature approach to styling to life with Claude](https://claude.com/resources/articles/j-crew-style-advisor-with-claude)**<br><small>Nov 12, 2026 · Enterprise announcements</small>
-
-J.Crew’s new Style Advisor uses Claude to help customers shop JCrew.com by complete outfit, drawing on looks created by J.Crew’s own stylists.
-
----
-
-**[Introducing Claude Meetings](https://claude.com/resources/articles/claude-meetings)**<br><small>Nov 12, 2026 · Product updates</small>
-
-Add Claude to your video calls to take notes, answer questions, and build docs and whiteboards while your team talks.
-
 :::
 
-*Updated November 22, 2026*
+*Updated November 23, 2026*
 <!-- CLAUDE_FEED_END -->
