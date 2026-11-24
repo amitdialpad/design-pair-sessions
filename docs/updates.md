@@ -2445,6 +2445,18 @@ Less hunting for context means more time actually designing.
 Latest announcements from Anthropic.
 
 <!-- CLAUDE_FEED_START -->
+**[MCP servers can now ship skills, run tasks, and more with Claude](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more)**<br><small>Nov 24, 2026 · Product updates</small>
+
+Skills over MCP is in public beta in Claude, so MCP servers can ship skills alongside their tools. Tasks and Elicitation are now generally available, and File Uploads is rolling out soon.
+
+---
+
+**[Turn artifacts into Mac and Windows apps](https://claude.com/resources/articles/install-as-app)**<br><small>Nov 24, 2026 · Product updates</small>
+
+Open the artifacts you use every day like any other app, and let them do more on your computer. Rolling out in beta in Claude for Mac and Windows.
+
+---
+
 **[Zero data retention with Enterprise Frontier Safeguards is now in beta](https://claude.com/resources/articles/zero-data-retention-with-enterprise-frontier-safeguards)**<br><small>Nov 23, 2026 · Product updates</small>
 
 Enterprise Frontier Safeguards is now in public beta, providing detection of sophisticated misuse while remaining compatible with zero data retention.
@@ -2455,9 +2467,9 @@ Enterprise Frontier Safeguards is now in public beta, providing detection of sop
 
 Adopting frontier AI and building safeguards at the same time, and what that means for a firm that holds its clients' most sensitive data.
 
----
+:::details View past updates
 
-**[Introducing Claude Ship](https://claude.com/resources/articles/introducing-claude-ship)**<br><small>Nov 23, 2026 · Blog</small>
+**[Introducing Claude Ship](https://claude.com/resources/articles/introducing-claude-ship)**<br><small>Nov 23, 2026 · Product updates</small>
 
 Open a pull request and get back to building. Claude can now review pull requests, fix them, and approve the ones that a team's policy allows.
 
@@ -2467,7 +2479,7 @@ Open a pull request and get back to building. Claude can now review pull request
 
 How security and technical leaders can scope and bound coding agent risk: AI-specific risks, Claude Code’s layered defenses, and centrally enforced policy.
 
-:::details View past updates
+---
 
 **[Using a "chaos loop" to harden the Claude Docs launch: 60 server errors across billions of requests](https://claude.dev/blog/chaos-loop-claude-docs-launch/)**<br><small>Nov 17, 2026 · Best practices</small>
 
@@ -2485,19 +2497,7 @@ Linked billing is now in beta on the Claude Platform. Third-party platforms can 
 
 How end-to-end, property and differential tests let coding agents verify their work with evidence, and what the Claude Code team does to keep its verifiers honest.
 
----
-
-**[Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations)**<br><small>Nov 13, 2026 · Insights</small>
-
-Recommendations for designing, running, and reporting safety evaluations, based on our own experiences.
-
----
-
-**[The Claude Tag guide for startups](https://claude.com/resources/articles/claude-tag-guide-for-startups)**<br><small>Nov 13, 2026 · Best practices</small>
-
-Which Slack channels to tag Claude in first: use cases, starter instructions, and a rollout checklist from eight startups using Claude Tag.
-
 :::
 
-*Updated November 23, 2026*
+*Updated November 24, 2026*
 <!-- CLAUDE_FEED_END -->
