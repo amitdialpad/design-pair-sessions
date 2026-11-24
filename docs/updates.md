@@ -8,6 +8,16 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:7334ea4334e0b4578d114dd5dc6830be3b5aa9e2 -->
+
+**DDT-2624, DDT-2635, DDT-2636, DDT-2637 start line, Recents, offline ring, scroll**
+
+A direct conversation in Beacon now opens with "This is the start of your conversation with X." instead of "This is a private conversation between X and you." A conversation between two people exists before either says anything, so its top reads as a starting point. Reviewing that line turned up four more things, fixed here one commit each:
+
+<span class="release-meta">[dialpad/design#490](https://github.com/dialpad/design/pull/490) · 23 November 2026</span>
+
+---
+
 <!-- beacon-change:ba48f5e6fd7f6ac67d40466a9a242fb37a2de1a2 -->
 
 **Remove six functions nothing calls**
@@ -78,6 +88,8 @@ Tidewater, the generated sports club, gets its internal chat planned from the re
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:22ea5dee7cf67803acf53c8c5d30cc0dbab0f728 -->
 
 **Move both callbars to callbarkit 3.0.0-next.3**
@@ -87,8 +99,6 @@ Moves Beacon's call bar and meeting bar to callbarkit 3.0.0-next.3, the version 
 <span class="release-meta">[dialpad/design#430](https://github.com/dialpad/design/pull/430) · 15 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:320406f842a1aa1a612b3d8bca6deb0620382d05 -->
 
