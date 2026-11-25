@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:9f0932fd262ab5a9ad1c5c65d52390c446c87da1 -->
+
+**Specify contact-center routing and call outcomes**
+
+The first slice of contact-center operations. Until now the spec didn't say how a contact center rings its operators, how long callers may wait, or what an operator records when a call ends. Round 5 generates calls on Tidewater's contact centers, so these fields have to exist first. Most centers use a queued mode. The limits are README facts and aren't checked, because agents are role assignments. The planned routing field on the phone line is removed. - **Queue settings, on the contact center:** wrap-up time, longest wait, and a service level (percent answered within a number of seconds). Queue depth, recording, surveys, callback, overflow and alerts stay planned. - **Call outcomes (disp...
+
+<span class="release-meta">[dialpad/design#503](https://github.com/dialpad/design/pull/503) · 25 November 2026</span>
+
+---
+
+<!-- beacon-change:5932fa9f046494f273091ed6510dad66672b0ef6 -->
+
+**Show Tidewater staff calls with sponsors in Beacon**
+
+Beacon now shows the calls and voicemail between Tidewater's partnership staff and their sponsors that #494 writes as spec records. **One fix that also touches Aerolabs.** When Beacon loaded a voicemail, it set the conversation's last activity to the voicemail's time, even when later calls existed. That sorted the conversation too far back in Recents. It now only moves last activity forward. Aerolabs' data is unchanged. Only how one conversation sorts changes: the default user Talia Tran's conversation with Akira Nakamura, whose voicemail is from Oct 8 with later activity on Nov 5, now sits first in Recents after a reload.
+
+<span class="release-meta">[dialpad/design#495](https://github.com/dialpad/design/pull/495) · 25 November 2026</span>
+
+---
+
+<!-- beacon-change:cd2972fbefee115e9cd8f1c1d0662d5580b48668 -->
+
+**Write Tidewater staff calls with sponsors as spec records**
+
+Tidewater's spec output now includes the sponsor calls that #493 plans. These are calls between partnership staff and sponsor contacts on each staff member's own direct line. Every record is graded and passes the company record rules from #491.
+
+<span class="release-meta">[dialpad/design#494](https://github.com/dialpad/design/pull/494) · 25 November 2026</span>
+
+---
+
+<!-- beacon-change:e21f75574629203a3afac21ea407531dca234699 -->
+
+**Plan Tidewater staff calls with sponsors in a dry run**
+
+This adds the reviewed sponsor and travel call pack to Tidewater's sports-club content, and a planner that turns it into a month of calls between partnership staff and their sponsors on each staff member's own direct line. A dry run prints the plan; it writes no spec records, bundle files or Beacon rows.
+
+<span class="release-meta">[dialpad/design#493](https://github.com/dialpad/design/pull/493) · 25 November 2026</span>
+
+---
+
 <!-- beacon-change:7334ea4334e0b4578d114dd5dc6830be3b5aa9e2 -->
 
 **DDT-2624, DDT-2635, DDT-2636, DDT-2637 start line, Recents, offline ring, scroll**
@@ -48,6 +88,8 @@ Tidewater, the generated sports club, now has phone calls between coworkers. Ove
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:e0a0f4e039bba4685c872e8fc1d76f41a66df6c0 -->
 
 **Open Tidewater as Mara Kettering**
@@ -87,8 +129,6 @@ Tidewater, the generated sports club, gets its internal chat planned from the re
 <span class="release-meta">[dialpad/design#439](https://github.com/dialpad/design/pull/439) · 16 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:22ea5dee7cf67803acf53c8c5d30cc0dbab0f728 -->
 
