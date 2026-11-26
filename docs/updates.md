@@ -2579,5 +2579,5 @@ How end-to-end, property and differential tests let coding agents verify their w
 
 :::
 
-*Updated November 25, 2026*
+*Updated November 26, 2026*
 <!-- CLAUDE_FEED_END -->
