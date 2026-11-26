@@ -8,6 +8,46 @@ Auto-synced from Beacon changes merged into [`apps/beacon` in the `dialpad/desig
 
 <!-- BEACON_RELEASES_START -->
 
+<!-- beacon-change:ba2ce41e1e4796c90d0b6eca9ec5c90930773ede -->
+
+**Load Tidewater contact-center calls and sponsor voicemails into Beacon data**
+
+Round 5 wrote Tidewater's shared-line calls as spec records (#512). This turns them into Beacon's contact-center rows, the same shape Aerolabs's contact centers use, and rebuilds Tidewater's committed data. No view changes in this PR. Beacon has no screen for a contact center's finished calls yet, so the user chose a real History tab as its own ticket, prototyped next.
+
+<span class="release-meta">[dialpad/design#513](https://github.com/dialpad/design/pull/513) · 26 November 2026</span>
+
+---
+
+<!-- beacon-change:39b19b3a7115b74cd67c28f3ef9f691d7abc3635 -->
+
+**Write Tidewater contact-center line calls, sessions and engagements as spec records**
+
+Round 5's calls half planned Tidewater's shared-line calls in a dry run (#510, #511). This slice writes that plan as spec records, beside round 4's staff-line calls. Beacon rows don't change; showing these in Beacon is the next slice. Tidewater's build preview (as of 2026-11-09), before → after: Call 133 → 214, Conversation and ConversationSummary 104 → 185, Participant 272 → 424, ReadPosition 242 → 245 (staff legs only), Session 0 → 78, Engagement 0 → 68, CallJourneyEvent 0 → 169, Company 0 → 1. Every record passes checkCompanyRecords, every call and session ends before the run date, and two builds are byte-identical.
+
+<span class="release-meta">[dialpad/design#512](https://github.com/dialpad/design/pull/512) · 26 November 2026</span>
+
+---
+
+<!-- beacon-change:7d36e4cb148467036664034b77f9726a606a713e -->
+
+**Entry-problem calls as ticket transfers, a partnerships line, box office hours**
+
+This applies the user's answers to the "three small gaps" review on top of the merged shared-line call plan (#510).
+
+<span class="release-meta">[dialpad/design#511](https://github.com/dialpad/design/pull/511) · 26 November 2026</span>
+
+---
+
+<!-- beacon-change:74c8f5828d2db33964b4aa3daf1f5d6db3db1138 -->
+
+**Plan Tidewater shared-line calls in a dry run**
+
+Round 5 gives Tidewater its shared lines, the numbers a team answers together. This is the first slice of the calls half. It brings in the content pack the user approved on 2026-11-25 and plans the calls in a dry run. Nothing is written yet.
+
+<span class="release-meta">[dialpad/design#510](https://github.com/dialpad/design/pull/510) · 25 November 2026</span>
+
+---
+
 <!-- beacon-change:9f0932fd262ab5a9ad1c5c65d52390c446c87da1 -->
 
 **Specify contact-center routing and call outcomes**
@@ -48,6 +88,8 @@ This adds the reviewed sponsor and travel call pack to Tidewater's sports-club c
 
 ---
 
+:::details View older updates
+
 <!-- beacon-change:7334ea4334e0b4578d114dd5dc6830be3b5aa9e2 -->
 
 **DDT-2624, DDT-2635, DDT-2636, DDT-2637 start line, Recents, offline ring, scroll**
@@ -87,8 +129,6 @@ Tidewater, the generated sports club, now has phone calls between coworkers. Ove
 <span class="release-meta">[dialpad/design#464](https://github.com/dialpad/design/pull/464) · 18 November 2026</span>
 
 ---
-
-:::details View older updates
 
 <!-- beacon-change:e0a0f4e039bba4685c872e8fc1d76f41a66df6c0 -->
 
